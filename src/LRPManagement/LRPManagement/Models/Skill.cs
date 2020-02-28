@@ -8,6 +8,6 @@ namespace LRPManagement.Models
     public class Skill
     {
         public int Id { get; set; }
-        public string Desc { get; set; }
+        public string Name { get; set; }
     }
 }
