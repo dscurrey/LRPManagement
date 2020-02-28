@@ -1,0 +1,7 @@
+component_depth: 4
+languages:
+- csharp
+- javascript
+exclude:
+- src/LRPManagement/LRPManagement/wwwroot/**
+- src/LRPManagement/LRPManagement/Data/Migrations/**
