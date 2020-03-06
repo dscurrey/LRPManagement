@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using LRP.Players.Data;
-using LRP.Players.Data.Players;
+using LRP.Characters.Data;
+using LRP.Characters.Data.Characters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace LRP.Players
+namespace LRP.Characters
 {
     public class Startup
     {
@@ -29,14 +29,13 @@ namespace LRP.Players
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddDbContext<PlayerDbContext>
+            services.AddDbContext<CharacterDbContext>
             (
                 options =>
                 {
                     options.UseSqlServer
                     (
-                        Configuration.GetConnectionString("PlayerDb"),
+                        Configuration.GetConnectionString("CharacterDb"),
                         sqlServerOptionsAction: sqlOptions =>
                         {
                             sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
@@ -49,7 +48,7 @@ namespace LRP.Players
             );
 
             services.AddControllers();
-            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
