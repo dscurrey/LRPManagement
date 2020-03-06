@@ -68,7 +68,7 @@ namespace LRP.Players.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlayerExists(id))
+                if (! await PlayerExists(id))
                 {
                     return NotFound();
                 }
