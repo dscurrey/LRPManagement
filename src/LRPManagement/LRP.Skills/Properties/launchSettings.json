@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:52601",
-      "sslPort": 44384
+      "applicationUrl": "http://localhost:59344",
+      "sslPort": 44312
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -12,15 +12,15 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/characters",
+      "launchUrl": "api/skills",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "LRP.Characters": {
+    "LRP.Skills": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/characters",
+      "launchUrl": "api/skills",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -29,7 +29,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/characters",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/skills",
       "publishAllPorts": true,
       "useSSL": true
     }
