@@ -88,7 +88,7 @@ namespace LRP.Characters.Controllers
         public async Task<ActionResult<Character>> PostCharacter(Character character)
         {
             // TODO - At Char Creation, populate player id using OAUTH/PlayerRepo?
-            await _repository.InsertCharacter(character);
+            _repository.InsertCharacter(character);
             await _repository.Save();
 
             return CreatedAtAction("GetCharacter", new { id = character.Id }, character);

@@ -3,46 +3,78 @@ using LRP.Skills.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using LRP.Skills.Data.Skills;
+using LRP.Skills.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LRP.Skills.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class SkillsControllerTests
     {
-        [TestMethod()]
-        public void SkillsControllerTest()
+        private static class TestData
         {
-            throw new NotImplementedException();
+            public static List<Skill> Skills() => new List<Skill>
+            {
+                new Skill { Id = 1, Name = "Test Skill 1"},
+                new Skill { Id = 2, Name = "Test Skill 2"},
+                new Skill { Id = 3, Name = "Test Skill 3"}
+            };
         }
 
-        [TestMethod()]
-        public void GetSkillTest()
+        [TestMethod]
+        public async Task GetSkillTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var repo = new FakeSkillRepository(TestData.Skills());
+            var controller = new SkillsController(repo, null);
+            var skillId = 1;
+
+            // Act
+            var result = await controller.GetSkill(skillId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            var testItem = TestData.Skills().Find(s => s.Id == skillId);
+            Assert.AreEqual(testItem.Id, result.Value.Id);
+            Assert.AreEqual(testItem.Name, result.Value.Name);
         }
 
-        [TestMethod()]
-        public void GetSkillTest1()
+        [TestMethod]
+        public async Task PostSkillTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var repo = new FakeSkillRepository(TestData.Skills());
+            var controller = new SkillsController(repo, null);
+            var skill = new Skill {Id = 4, Name = "TestSkill"};
+
+            // Act
+            var result = await controller.PostSkill(skill);
+
+            // Assert
+            Assert.IsNotNull(result);
+            var objResult = result.Result as CreatedAtActionResult;
+            Assert.IsNotNull(objResult);
+            var retResult = objResult.Value as Skill;
+            Assert.IsNotNull(retResult);
+            Assert.AreEqual(skill, retResult);
         }
 
-        [TestMethod()]
-        public void PutSkillTest()
+        [TestMethod]
+        public async Task DeleteSkillTest()
         {
-            throw new NotImplementedException();
-        }
+            // Arrange
+            var repo = new FakeSkillRepository(TestData.Skills());
+            var controller = new SkillsController(repo, null);
+            var skillId = 1;
 
-        [TestMethod()]
-        public void PostSkillTest()
-        {
-            throw new NotImplementedException();
-        }
+            // Act
+            var result = await controller.DeleteSkill(1);
 
-        [TestMethod()]
-        public void DeleteSkillTest()
-        {
-            throw new NotImplementedException();
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(skillId, result.Value.Id);
         }
     }
 }

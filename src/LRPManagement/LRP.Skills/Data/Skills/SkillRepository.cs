@@ -26,7 +26,7 @@ namespace LRP.Skills.Data.Skills
             return await _context.Skill.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task InsertSkill(Skill skill)
+        public void InsertSkill(Skill skill)
         {
             _context.Skill.Add(skill);
         }

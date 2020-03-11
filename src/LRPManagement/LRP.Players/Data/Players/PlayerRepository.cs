@@ -26,7 +26,7 @@ namespace LRP.Players.Data.Players
             return await _context.Player.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task InsertPlayer(Player player)
+        public void InsertPlayer(Player player)
         {
             _context.Player.Add(player);
         }

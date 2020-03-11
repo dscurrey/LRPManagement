@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LRP.Skills.Data;
+using LRP.Skills.Data.Skills;
 using LRP.Skills.Models;
+using Microsoft.Extensions.Logging;
 
 namespace LRP.Skills.Controllers
 {
@@ -14,25 +16,27 @@ namespace LRP.Skills.Controllers
     [ApiController]
     public class SkillsController : ControllerBase
     {
-        private readonly SkillDbContext _context;
+        private readonly ISkillRepository _repository;
+        private readonly ILogger<SkillsController> _logger;
 
-        public SkillsController(SkillDbContext context)
+        public SkillsController(ISkillRepository repository, ILogger<SkillsController> logger)
         {
-            _context = context;
+            _repository = repository;
+            _logger = logger;
         }
 
         // GET: api/Skills
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Skill>>> GetSkill()
         {
-            return await _context.Skill.ToListAsync();
+            return await _repository.GetAll();
         }
 
         // GET: api/Skills/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Skill>> GetSkill(int id)
         {
-            var skill = await _context.Skill.FindAsync(id);
+            var skill = await _repository.GetSkill(id);
 
             if (skill == null)
             {
@@ -53,20 +57,22 @@ namespace LRP.Skills.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(skill).State = EntityState.Modified;
+            _repository.UpdateSkill(skill);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _logger.LogInformation("Saving updated skill");
+                await _repository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SkillExists(id))
+                if (!await SkillExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
+                    _logger.LogError("Error occured when saving updated player.");
                     throw;
                 }
             }
@@ -80,8 +86,8 @@ namespace LRP.Skills.Controllers
         [HttpPost]
         public async Task<ActionResult<Skill>> PostSkill(Skill skill)
         {
-            _context.Skill.Add(skill);
-            await _context.SaveChangesAsync();
+            _repository.InsertSkill(skill);
+            await _repository.Save();
 
             return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);
         }
@@ -90,21 +96,23 @@ namespace LRP.Skills.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Skill>> DeleteSkill(int id)
         {
-            var skill = await _context.Skill.FindAsync(id);
-            if (skill == null)
+            if (!await SkillExists(id))
             {
                 return NotFound();
             }
 
-            _context.Skill.Remove(skill);
-            await _context.SaveChangesAsync();
+            var player = await _repository.GetSkill(id);
 
-            return skill;
+            _repository.DeleteSkill(id);
+            await _repository.Save();
+
+            return player;
         }
 
-        private bool SkillExists(int id)
+        private async Task<bool> SkillExists(int id)
         {
-            return _context.Skill.Any(e => e.Id == id);
+            var all = await _repository.GetAll();
+            return all.Any(p => p.Id == id);
         }
     }
 }
