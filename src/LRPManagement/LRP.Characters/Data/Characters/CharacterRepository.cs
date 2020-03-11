@@ -26,7 +26,7 @@ namespace LRP.Characters.Data.Characters
             return await _context.Character.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task InsertCharacter(Character character)
+        public void InsertCharacter(Character character)
         {
             _context.Character.Add(character);
         }
