@@ -90,7 +90,7 @@ namespace LRP.Players.Controllers
         {
             // TODO - At player creation, create user in auth server
 
-            await _repository.InsertPlayer(player);
+            _repository.InsertPlayer(player);
             await _repository.Save();
 
             return CreatedAtAction("GetPlayer", new { id = player.Id }, player);

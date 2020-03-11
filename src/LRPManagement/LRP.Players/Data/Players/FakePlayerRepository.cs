@@ -31,7 +31,7 @@ namespace LRP.Players.Data.Players
             return Task.FromResult(_players.FirstOrDefault(p => p.Id == id));
         }
 
-        public Task InsertPlayer(Player player)
+        public void InsertPlayer(Player player)
         {
             _players.Add(player);
         }
