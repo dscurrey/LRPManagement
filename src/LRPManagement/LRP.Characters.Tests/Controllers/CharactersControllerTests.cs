@@ -13,8 +13,7 @@ namespace LRP.Characters.Controllers.Tests
 {
     [TestClass]
     public class CharactersControllerTests
-    {
-        
+    {        
         private static class TestData
         {
             public static List<Character> Characters() => new List<Character>
@@ -45,7 +44,6 @@ namespace LRP.Characters.Controllers.Tests
             Assert.AreEqual(testItem.Name, result.Value.Name);
             Assert.AreEqual(testItem.PlayerId, result.Value.PlayerId);
         } 
-
 
         [TestMethod]
         public async Task PostCharacterTest()
