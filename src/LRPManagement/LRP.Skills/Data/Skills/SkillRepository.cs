@@ -37,7 +37,7 @@ namespace LRP.Skills.Data.Skills
             _context.Skill.Remove(skill);
         }
 
-        public async void UpdateSkill(Skill skill)
+        public void UpdateSkill(Skill skill)
         {
             _context.Entry(skill).State = EntityState.Modified;
         }

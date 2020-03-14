@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,14 +30,24 @@ namespace LRP.Players.Controllers
 
         // GET: api/Players
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Player>>> GetPlayer()
+        public async Task<ActionResult<IEnumerable<PlayerDTO>>> GetPlayer()
         {
-            return await _repository.GetAll();
+            var players = await _repository.GetAll();
+            return players.Select
+            (
+                p => new PlayerDTO
+                {
+                    Id = p.Id,
+                    DateJoined = p.DateJoined,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName
+                }
+            ).ToList();
         }
 
         // GET: api/Players/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Player>> GetPlayer(int id)
+        public async Task<ActionResult<PlayerDTO>> GetPlayer(int id)
         {
             var player = await _repository.GetPlayer(id);
 
@@ -45,7 +56,15 @@ namespace LRP.Players.Controllers
                 return NotFound();
             }
 
-            return player;
+            PlayerDTO playDto = new PlayerDTO
+            {
+                DateJoined = player.DateJoined,
+                FirstName = player.FirstName,
+                Id = player.Id,
+                LastName = player.LastName
+            };
+
+            return playDto;
         }
 
         // PUT: api/Players/5

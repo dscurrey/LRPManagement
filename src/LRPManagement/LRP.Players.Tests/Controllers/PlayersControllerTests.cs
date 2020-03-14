@@ -38,7 +38,6 @@ namespace LRP.Players.Controllers.Tests
             var testItem = TestData.Players().Find(c => c.Id == playerId);
             Assert.AreEqual(testItem.Id, result.Value.Id);
             Assert.AreEqual(testItem.FirstName, result.Value.FirstName);
-            Assert.AreEqual(testItem.IsActive, result.Value.IsActive);
             Assert.AreEqual(testItem.LastName, result.Value.LastName);
         }
 
