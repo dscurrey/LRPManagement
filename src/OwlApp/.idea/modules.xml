@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OwlApp.iml" filepath="$PROJECT_DIR$/OwlApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OwlApp.iml" filepath="$PROJECT_DIR$/OwlApp.iml" group="OwlApp" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="OwlApp/app" />
     </modules>
   </component>
 </project>
