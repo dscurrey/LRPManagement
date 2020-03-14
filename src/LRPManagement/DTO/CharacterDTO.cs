@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DTO
 {
-    class CharacterDTO
+    public class CharacterDTO
     {
         public int Id { get; set; }
         public int PlayerId { get; set; }
