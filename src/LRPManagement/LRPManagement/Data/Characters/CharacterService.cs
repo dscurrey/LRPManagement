@@ -3,9 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace LRPManagement.Data.Characters
 {
@@ -61,6 +64,60 @@ namespace LRPManagement.Data.Characters
             }
 
             return null;
+        }
+
+        public async Task<CharacterDTO> UpdateCharacter(CharacterDTO character)
+        {
+            try
+            {
+                var resp = await _httpClient.PutAsync("api/characters/" + character.Id, character, new JsonMediaTypeFormatter());
+                if (resp.IsSuccessStatusCode)
+                {
+                    return character;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning(""+ex);
+            }
+
+            return null;
+        }
+
+        public async Task<CharacterDTO> CreateCharacter(CharacterDTO character)
+        {
+            try
+            {
+                var resp = await _httpClient.PostAsync("api/characters/", character, new JsonMediaTypeFormatter());
+                if (resp.IsSuccessStatusCode)
+                {
+                    return character;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning("" + ex);
+            }
+
+            return null;
+        }
+
+        public async Task<int> DeleteCharacter(int id)
+        {
+            try
+            {
+                var resp = await _httpClient.DeleteAsync("api/characters/" + id);
+                if (resp.IsSuccessStatusCode)
+                {
+                    return id;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning("" + ex);
+            }
+
+            return 0;
         }
 
         private HttpClient GetHttpClient(string s)

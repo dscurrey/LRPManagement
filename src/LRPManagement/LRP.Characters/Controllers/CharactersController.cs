@@ -73,14 +73,23 @@ namespace LRP.Characters.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        public async Task<IActionResult> PutCharacter(int id, CharacterDTO character)
         {
             if (id != character.Id)
             {
                 return BadRequest();
             }
 
-            _repository.UpdateCharacter(character);
+            var updChar = new Character
+            {
+                Id = character.Id,
+                PlayerId = character.PlayerId,
+                IsActive = character.IsActive,
+                IsRetired = character.IsRetired,
+                Name = character.Name
+            };
+
+            _repository.UpdateCharacter(updChar);
 
             try
             {
@@ -106,10 +115,20 @@ namespace LRP.Characters.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        public async Task<ActionResult<Character>> PostCharacter(CharacterDTO character)
         {
             // TODO - At Char Creation, populate player id using OAUTH/PlayerRepo?
-            _repository.InsertCharacter(character);
+
+            var newCharacter = new Character
+            {
+                Id = character.Id,
+                PlayerId = character.PlayerId,
+                IsActive = character.IsActive,
+                IsRetired = character.IsRetired,
+                Name = character.Name
+            };
+
+            _repository.InsertCharacter(newCharacter);
             await _repository.Save();
 
             return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
