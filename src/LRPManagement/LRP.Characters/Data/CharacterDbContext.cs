@@ -29,7 +29,8 @@ namespace LRP.Characters.Data
                 // Seed Data (Dev)
                 builder.Entity<Character>().HasData
                 (
-                    new Character {Id = 1, Name = "Test user's 1st Character'", IsActive = true, IsRetired = false, PlayerId = 1}
+                    new Character {Id = 1, Name = "Test user's 1st Character'", IsActive = true, IsRetired = false, PlayerId = 1},
+                    new Character {Id = 2, Name = "Test user 2's 1st Character'", IsActive = true, IsRetired = false, PlayerId = 2 }
                 );
             }
         }

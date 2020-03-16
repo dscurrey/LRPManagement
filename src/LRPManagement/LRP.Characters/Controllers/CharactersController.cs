@@ -32,7 +32,7 @@ namespace LRP.Characters.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacter()
         {
-            var chars =  await _repository.GetAll();
+            var chars = await _repository.GetAll();
             return chars.Select
             (
                 c => new CharacterDTO
