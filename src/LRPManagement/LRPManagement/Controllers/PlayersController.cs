@@ -7,40 +7,41 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
-using LRPManagement.Data.Characters;
+using LRPManagement.Data.Players;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
-    public class CharactersController : Controller
+    public class PlayersController : Controller
     {
-        private readonly ICharacterService _characterService;
+        private readonly IPlayerService _playerService;
 
-        public CharactersController(ICharacterService characterService)
+        public PlayersController(IPlayerService playerService)
         {
-            _characterService = characterService;
+            _playerService = playerService;
         }
 
-        // GET: Characters
+        // GET: Players
         public async Task<IActionResult> Index()
         {
-            TempData["CharInoperativeMsg"] = "";
+            TempData["PlayInoperativeMsg"] = "";
             try
             {
-                var characters = await _characterService.GetAll();
-                return View(characters);
+                var players = await _playerService.GetAll();
+                return View(players);
             }
             catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
             }
+
             return View();
         }
 
-        // GET: Characters/Details/5
+        // GET: Players/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            TempData["CharInoperativeMsg"] = "";
+            TempData["PlayInoperativeMsg"] = "";
             if (id == null)
             {
                 return NotFound();
@@ -48,44 +49,45 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var character = await _characterService.GetCharacter(id.Value);
-                if (character == null)
+                var player = await _playerService.GetPlayer(id.Value);
+                if (player == null)
                 {
                     return NotFound();
                 }
 
-                return View(character);
+                return View(player);
             }
-            catch (BrokenCircuitException)
+            catch
             {
                 HandleBrokenCircuit();
             }
+
             return View();
         }
 
-        //// GET: Characters/Create
+        //// GET: Players/Create
         //public IActionResult Create()
         //{
         //    return View();
         //}
 
-        //// POST: Characters/Create
+        //// POST: Players/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,PlayerId,Name,IsActive,IsRetired")] CharacterDTO characterDTO)
+        //public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateJoined")] PlayerDTO playerDTO)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        _context.Add(characterDTO);
+        //        _context.Add(playerDTO);
         //        await _context.SaveChangesAsync();
         //        return RedirectToAction(nameof(Index));
         //    }
-        //    return View(characterDTO);
+        //    return View(playerDTO);
         //}
 
-        //// GET: Characters/Edit/5
+        //// GET: Players/Edit/5
         //public async Task<IActionResult> Edit(int? id)
         //{
         //    if (id == null)
@@ -93,22 +95,22 @@ namespace LRPManagement.Controllers
         //        return NotFound();
         //    }
 
-        //    var characterDTO = await _context.CharacterDTO.FindAsync(id);
-        //    if (characterDTO == null)
+        //    var playerDTO = await _context.PlayerDTO.FindAsync(id);
+        //    if (playerDTO == null)
         //    {
         //        return NotFound();
         //    }
-        //    return View(characterDTO);
+        //    return View(playerDTO);
         //}
 
-        //// POST: Characters/Edit/5
+        //// POST: Players/Edit/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,PlayerId,Name,IsActive,IsRetired")] CharacterDTO characterDTO)
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DateJoined")] PlayerDTO playerDTO)
         //{
-        //    if (id != characterDTO.Id)
+        //    if (id != playerDTO.Id)
         //    {
         //        return NotFound();
         //    }
@@ -117,12 +119,12 @@ namespace LRPManagement.Controllers
         //    {
         //        try
         //        {
-        //            _context.Update(characterDTO);
+        //            _context.Update(playerDTO);
         //            await _context.SaveChangesAsync();
         //        }
         //        catch (DbUpdateConcurrencyException)
         //        {
-        //            if (!CharacterDTOExists(characterDTO.Id))
+        //            if (!PlayerDTOExists(playerDTO.Id))
         //            {
         //                return NotFound();
         //            }
@@ -133,10 +135,10 @@ namespace LRPManagement.Controllers
         //        }
         //        return RedirectToAction(nameof(Index));
         //    }
-        //    return View(characterDTO);
+        //    return View(playerDTO);
         //}
 
-        //// GET: Characters/Delete/5
+        //// GET: Players/Delete/5
         //public async Task<IActionResult> Delete(int? id)
         //{
         //    if (id == null)
@@ -144,36 +146,36 @@ namespace LRPManagement.Controllers
         //        return NotFound();
         //    }
 
-        //    var characterDTO = await _context.CharacterDTO
+        //    var playerDTO = await _context.PlayerDTO
         //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (characterDTO == null)
+        //    if (playerDTO == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    return View(characterDTO);
+        //    return View(playerDTO);
         //}
 
-        //// POST: Characters/Delete/5
+        //// POST: Players/Delete/5
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> DeleteConfirmed(int id)
         //{
-        //    var characterDTO = await _context.CharacterDTO.FindAsync(id);
-        //    _context.CharacterDTO.Remove(characterDTO);
+        //    var playerDTO = await _context.PlayerDTO.FindAsync(id);
+        //    _context.PlayerDTO.Remove(playerDTO);
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}
 
-        private async Task<bool> CharacterDTOExists(int id)
+        private async Task<bool> PlayerExists(int id)
         {
-            var character = await _characterService.GetCharacter(id);
-            return character != null;
+            var player = await _playerService.GetPlayer(id);
+            return player != null;
         }
 
         private void HandleBrokenCircuit()
         {
-            TempData["CharInoperativeMsg"] = "Character Service Currently Unavailable.";
+            TempData["PlaInoperativeMsg"] = "Player Service Currently Unavailable";
         }
     }
 }

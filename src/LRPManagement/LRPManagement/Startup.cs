@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using LRPManagement.Data;
 using LRPManagement.Data.Characters;
+using LRPManagement.Data.Players;
+using LRPManagement.Data.Skills;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +58,8 @@ namespace LRPManagement
             services.AddControllersWithViews();
 
             services.AddScoped<ICharacterService, CharacterService>();
+            services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<IPlayerService, PlayerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

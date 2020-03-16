@@ -46,12 +46,20 @@ namespace LRPManagement.Data.Characters
 
         public async Task<CharacterDTO> GetCharacter(int id)
         {
-            var resp = await _httpClient.GetAsync("api/characters/" + id);
-            if (resp.IsSuccessStatusCode)
+            try
             {
-                var characters = await resp.Content.ReadAsAsync<CharacterDTO>();
-                return characters;
+                var resp = await _httpClient.GetAsync("api/characters/" + id);
+                if (resp.IsSuccessStatusCode)
+                {
+                    var characters = await resp.Content.ReadAsAsync<CharacterDTO>();
+                    return characters;
+                }
             }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning(""+ex);
+            }
+
             return null;
         }
 
