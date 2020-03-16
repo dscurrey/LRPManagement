@@ -1,5 +1,4 @@
 ﻿using DTO;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace LRPManagement.Data.Characters
     {
         private readonly HttpClient _httpClient;
 
-        public CharacterService(HttpClient httpClient, IConfiguration config)
+        public CharacterService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -28,9 +27,15 @@ namespace LRPManagement.Data.Characters
             return null;
         }
 
-        public Task<CharacterDTO> GetCharacter(int id)
+        public async Task<CharacterDTO> GetCharacter(int id)
         {
-            throw new NotImplementedException();
+            var resp = await _httpClient.GetAsync("api/characters/" + id);
+            if (resp.IsSuccessStatusCode)
+            {
+                var characters = await resp.Content.ReadAsAsync<CharacterDTO>();
+                return characters;
+            }
+            return null;
         }
     }
 }
