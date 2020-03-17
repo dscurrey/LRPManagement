@@ -10,5 +10,8 @@ namespace LRPManagement.Data.Players
     {
         Task<List<PlayerDTO>> GetAll();
         Task<PlayerDTO> GetPlayer(int id);
+        Task<PlayerDTO> UpdatePlayer(PlayerDTO player);
+        Task<PlayerDTO> CreatePlayer(PlayerDTO player);
+        Task<int> DeletePlayer(int id);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using LRPManagement.Models;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,42 @@ namespace LRPManagement.Data.Skills
             _config = config;
 
             _httpClient = GetHttpClient("StandardRequest");
+        }
+
+        public async Task<SkillDTO> CreateSkill(SkillDTO skill)
+        {
+            try
+            {
+                var resp = await _httpClient.PostAsync("api/skills/", skill, new JsonMediaTypeFormatter());
+                if (resp.IsSuccessStatusCode)
+                {
+                    return skill;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning(""+ex);
+            }
+
+            return null;
+        }
+
+        public async Task<int> DeleteSkill(int id)
+        {
+            try
+            {
+                var resp = await _httpClient.DeleteAsync("api/skills" + id);
+                if (resp.IsSuccessStatusCode)
+                {
+                    return id;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning("" + ex);
+            }
+
+            return 0;
         }
 
         public async Task<List<SkillDTO>> GetAll()
@@ -60,6 +97,20 @@ namespace LRPManagement.Data.Skills
             {
                 _logger.LogWarning(""+ex);
             }
+            return null;
+        }
+
+        public async Task<SkillDTO> UpdateSkill(SkillDTO skill)
+        {
+            try
+            {
+                var resp = await _httpClient.PutAsync("api/skills" + skill.Id, skill, new JsonMediaTypeFormatter());
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning("" + ex);
+            }
+
             return null;
         }
 
