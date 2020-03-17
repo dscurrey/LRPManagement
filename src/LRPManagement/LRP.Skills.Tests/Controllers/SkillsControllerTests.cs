@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using DTO;
 using LRP.Skills.Data.Skills;
 using LRP.Skills.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ namespace LRP.Skills.Controllers.Tests
             // Arrange
             var repo = new FakeSkillRepository(TestData.Skills());
             var controller = new SkillsController(repo, null);
-            var skill = new Skill {Id = 4, Name = "TestSkill"};
+            var skill = new SkillDTO {Id = 4, Name = "TestSkill"};
 
             // Act
             var result = await controller.PostSkill(skill);
@@ -56,7 +57,7 @@ namespace LRP.Skills.Controllers.Tests
             Assert.IsNotNull(result);
             var objResult = result.Result as CreatedAtActionResult;
             Assert.IsNotNull(objResult);
-            var retResult = objResult.Value as Skill;
+            var retResult = objResult.Value as SkillDTO;
             Assert.IsNotNull(retResult);
             Assert.AreEqual(skill, retResult);
         }

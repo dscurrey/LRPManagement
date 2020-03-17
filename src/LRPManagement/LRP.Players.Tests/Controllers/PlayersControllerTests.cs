@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using DTO;
 using LRP.Players.Data.Players;
 using LRP.Players.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -47,8 +48,8 @@ namespace LRP.Players.Controllers.Tests
             // Arrange
             var repo = new FakePlayerRepository(TestData.Players());
             var controller = new PlayersController(repo, null);
-            var player = new Player
-                {Id = 3, IsActive = true, LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now};
+            var player = new PlayerDTO
+                {Id = 3, LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now};
 
             // Act
             var result = await controller.PostPlayer(player);
@@ -57,7 +58,7 @@ namespace LRP.Players.Controllers.Tests
             Assert.IsNotNull(result);
             var objResult = result.Result as CreatedAtActionResult;
             Assert.IsNotNull(objResult);
-            var retResult = objResult.Value as Player;
+            var retResult = objResult.Value as PlayerDTO;
             Assert.IsNotNull(retResult);
             Assert.AreEqual(player, retResult);
         }
