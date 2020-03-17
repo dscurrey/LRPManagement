@@ -71,14 +71,23 @@ namespace LRP.Players.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayer(int id, Player player)
+        public async Task<IActionResult> PutPlayer(int id, PlayerDTO player)
         {
             if (id != player.Id)
             {
                 return BadRequest();
             }
 
-            _repository.UpdatePlayer(player);
+            var updPlayer = new Player
+            {
+                DateJoined = player.DateJoined,
+                FirstName = player.FirstName,
+                Id = player.Id,
+                LastName = player.LastName,
+                IsActive = true
+            };
+
+            _repository.UpdatePlayer(updPlayer);
 
             try
             {
@@ -105,11 +114,20 @@ namespace LRP.Players.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Player>> PostPlayer(Player player)
+        public async Task<ActionResult<Player>> PostPlayer(PlayerDTO player)
         {
             // TODO - At player creation, create user in auth server
 
-            _repository.InsertPlayer(player);
+            var newPlayer = new Player
+            {
+                DateJoined = DateTime.Now.Date,
+                FirstName = player.FirstName,
+                Id = player.Id,
+                IsActive = true,
+                LastName = player.LastName
+            };
+
+            _repository.InsertPlayer(newPlayer);
             await _repository.Save();
 
             return CreatedAtAction("GetPlayer", new { id = player.Id }, player);
@@ -126,7 +144,7 @@ namespace LRP.Players.Controllers
 
             var player = await _repository.GetPlayer(id);
 
-            _repository.DeletePlayer(id);
+            await _repository.DeletePlayer(id);
             await _repository.Save();
 
             return player;

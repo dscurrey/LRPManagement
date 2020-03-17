@@ -31,14 +31,14 @@ namespace LRP.Players.Data.Players
             _context.Player.Add(player);
         }
 
-        public async void DeletePlayer(int id)
+        public async Task DeletePlayer(int id)
         {
             var player = await _context.Player.FirstOrDefaultAsync(p => p.Id == id);
             player.IsActive = false;
             _context.Player.Update(player);
         }
 
-        public async void UpdatePlayer(Player player)
+        public void UpdatePlayer(Player player)
         {
             _context.Entry(player).State = EntityState.Modified;
         }
