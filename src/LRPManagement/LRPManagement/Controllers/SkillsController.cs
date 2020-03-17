@@ -65,107 +65,130 @@ namespace LRPManagement.Controllers
             return View();
         }
 
-        //// GET: Skills/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Skills/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Skills/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name")] SkillDTO skillDTO)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(skillDTO);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(skillDTO);
-        //}
+        // POST: Skills/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name")] SkillDTO skillDTO)
+        {
+            TempData["SkillInoperativeMsg"] = "";
+            try
+            {
+                var resp = await _skillService.CreateSkill(skillDTO);
+                if (resp == null)
+                {
+                    // Unsuccessful/Error
+                    return View(skillDTO);
+                }
+            }
+            catch (BrokenCircuitException)
+            {
+                HandleBrokenCircuit();
+            }
 
-        //// GET: Skills/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+            return RedirectToAction(nameof(Index));
+        }
 
-        //    var skillDTO = await _context.SkillDTO.FindAsync(id);
-        //    if (skillDTO == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(skillDTO);
-        //}
+        // GET: Skills/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //// POST: Skills/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] SkillDTO skillDTO)
-        //{
-        //    if (id != skillDTO.Id)
-        //    {
-        //        return NotFound();
-        //    }
+            try
+            {
+                var skill = await _skillService.GetSkill(id.Value);
+                if (skill != null)
+                {
+                    return View(skill);
+                }
+            }
+            catch (BrokenCircuitException)
+            {
+                HandleBrokenCircuit();
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(skillDTO);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!SkillDTOExists(skillDTO.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(skillDTO);
-        //}
+            return NotFound();
+        }
 
-        //// GET: Skills/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // POST: Skills/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] SkillDTO skillDTO)
+        {
+            if (id != skillDTO.Id)
+            {
+                return NotFound();
+            }
 
-        //    var skillDTO = await _context.SkillDTO
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (skillDTO == null)
-        //    {
-        //        return NotFound();
-        //    }
+            try
+            {
+                var resp = await _skillService.UpdateSkill(skillDTO);
+                if (resp != null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (BrokenCircuitException)
+            {
+                HandleBrokenCircuit();
+            }
 
-        //    return View(skillDTO);
-        //}
+            return View(skillDTO);
+        }
 
-        //// POST: Skills/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var skillDTO = await _context.SkillDTO.FindAsync(id);
-        //    _context.SkillDTO.Remove(skillDTO);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        // GET: Skills/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var skill = await _skillService.GetSkill(id.Value);
+                if (skill != null)
+                {
+                    return View(skill);
+                }
+            }
+            catch (BrokenCircuitException)
+            {
+                HandleBrokenCircuit();
+            }
+
+            return NotFound();
+        }
+
+        // POST: Skills/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            TempData["SkillInoperativeMsg"] = "";
+            try
+            {
+                await _skillService.DeleteSkill(id);
+            }
+            catch (BrokenCircuitException)
+            {
+                HandleBrokenCircuit();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
         private async Task<bool> SkillExists(int id)
         {
