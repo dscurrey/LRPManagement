@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,14 +28,22 @@ namespace LRP.Skills.Controllers
 
         // GET: api/Skills
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Skill>>> GetSkill()
+        public async Task<ActionResult<IEnumerable<SkillDTO>>> GetSkill()
         {
-            return await _repository.GetAll();
+            var skills =  await _repository.GetAll();
+            return skills.Select
+            (
+                s => new SkillDTO
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                }
+            ).ToList();
         }
 
         // GET: api/Skills/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Skill>> GetSkill(int id)
+        public async Task<ActionResult<SkillDTO>> GetSkill(int id)
         {
             var skill = await _repository.GetSkill(id);
 
@@ -43,21 +52,33 @@ namespace LRP.Skills.Controllers
                 return NotFound();
             }
 
-            return skill;
+            var skillDto = new SkillDTO
+            {
+                Id = skill.Id,
+                Name = skill.Name
+            };
+
+            return skillDto;
         }
 
         // PUT: api/Skills/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSkill(int id, Skill skill)
+        public async Task<IActionResult> PutSkill(int id, SkillDTO skill)
         {
             if (id != skill.Id)
             {
                 return BadRequest();
             }
 
-            _repository.UpdateSkill(skill);
+            var updSkill = new Skill
+            {
+                Id = skill.Id,
+                Name = skill.Name
+            };
+
+            _repository.UpdateSkill(updSkill);
 
             try
             {
@@ -84,9 +105,15 @@ namespace LRP.Skills.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Skill>> PostSkill(Skill skill)
+        public async Task<ActionResult<Skill>> PostSkill(SkillDTO skill)
         {
-            _repository.InsertSkill(skill);
+            var newSkill = new Skill
+            {
+                Id = skill.Id,
+                Name = skill.Name
+            };
+
+            _repository.InsertSkill(newSkill);
             await _repository.Save();
 
             return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);

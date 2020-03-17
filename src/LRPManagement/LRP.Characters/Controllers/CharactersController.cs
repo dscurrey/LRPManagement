@@ -9,6 +9,7 @@ using LRP.Characters.Data;
 using LRP.Characters.Data.Characters;
 using LRP.Characters.Models;
 using Microsoft.Extensions.Logging;
+using DTO;
 
 namespace LRP.Characters.Controllers
 {
@@ -29,14 +30,25 @@ namespace LRP.Characters.Controllers
 
         // GET: api/Characters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharacter()
+        public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacter()
         {
-            return await _repository.GetAll();
+            var chars = await _repository.GetAll();
+            return chars.Select
+            (
+                c => new CharacterDTO
+                {
+                    Id = c.Id,
+                    IsActive = c.IsActive,
+                    IsRetired = c.IsRetired,
+                    Name = c.Name,
+                    PlayerId = c.PlayerId
+                }
+            ).ToList();
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterDTO>> GetCharacter(int id)
         {
             var character = await _repository.GetCharacter(id);
 
@@ -45,21 +57,39 @@ namespace LRP.Characters.Controllers
                 return NotFound();
             }
 
-            return character;
+            CharacterDTO charDto = new CharacterDTO
+            {
+                Id = character.Id,
+                IsActive = character.IsActive,
+                IsRetired = character.IsRetired,
+                Name = character.Name,
+                PlayerId = character.PlayerId
+            };
+
+            return charDto;
         }
 
         // PUT: api/Characters/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        public async Task<IActionResult> PutCharacter(int id, CharacterDTO character)
         {
             if (id != character.Id)
             {
                 return BadRequest();
             }
 
-            _repository.UpdateCharacter(character);
+            var updChar = new Character
+            {
+                Id = character.Id,
+                PlayerId = character.PlayerId,
+                IsActive = character.IsActive,
+                IsRetired = character.IsRetired,
+                Name = character.Name
+            };
+
+            _repository.UpdateCharacter(updChar);
 
             try
             {
@@ -85,10 +115,20 @@ namespace LRP.Characters.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        public async Task<ActionResult<Character>> PostCharacter(CharacterDTO character)
         {
             // TODO - At Char Creation, populate player id using OAUTH/PlayerRepo?
-            _repository.InsertCharacter(character);
+
+            var newCharacter = new Character
+            {
+                Id = character.Id,
+                PlayerId = character.PlayerId,
+                IsActive = character.IsActive,
+                IsRetired = character.IsRetired,
+                Name = character.Name
+            };
+
+            _repository.InsertCharacter(newCharacter);
             await _repository.Save();
 
             return CreatedAtAction("GetCharacter", new { id = character.Id }, character);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using LRP.Characters.Data.Characters;
 using System.Threading.Tasks;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,7 +52,7 @@ namespace LRP.Characters.Controllers.Tests
             // Arrange
             var repo = new FakeCharacterRepository(TestData.Characters());
             var controller = new CharactersController(repo, null);
-            var character = new Character { Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = "Created Character" };
+            var character = new CharacterDTO { Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = "Created Character" };
 
             // Act
             var result = await controller.PostCharacter(character);
@@ -60,7 +61,7 @@ namespace LRP.Characters.Controllers.Tests
             Assert.IsNotNull(result);
             var objResult = result.Result as CreatedAtActionResult;
             Assert.IsNotNull(objResult);
-            var retResult = objResult.Value as Character;
+            var retResult = objResult.Value as CharacterDTO;
             Assert.IsNotNull(retResult);
             Assert.AreEqual(character, retResult);
         }

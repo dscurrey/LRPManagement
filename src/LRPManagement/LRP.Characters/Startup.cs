@@ -52,11 +52,10 @@ namespace LRP.Characters
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
-                logger.LogInformation("In Development Environment");
                 app.UseDeveloperExceptionPage();
             }
 

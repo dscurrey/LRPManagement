@@ -38,7 +38,7 @@ namespace LRP.Players.Data.Players
             _context.Player.Update(player);
         }
 
-        public async void UpdatePlayer(Player player)
+        public void UpdatePlayer(Player player)
         {
             _context.Entry(player).State = EntityState.Modified;
         }
