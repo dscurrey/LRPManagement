@@ -107,7 +107,6 @@ namespace LRP.Skills.Controllers
         [HttpPost]
         public async Task<ActionResult<Skill>> PostSkill(SkillDTO skill)
         {
-
             var newSkill = new Skill
             {
                 Id = skill.Id,
