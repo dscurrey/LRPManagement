@@ -31,7 +31,7 @@ namespace LRP.Players.Data.Players
             _context.Player.Add(player);
         }
 
-        public async Task DeletePlayer(int id)
+        public async void DeletePlayer(int id)
         {
             var player = await _context.Player.FirstOrDefaultAsync(p => p.Id == id);
             player.IsActive = false;

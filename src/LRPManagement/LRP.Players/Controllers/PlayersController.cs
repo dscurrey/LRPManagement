@@ -144,7 +144,7 @@ namespace LRP.Players.Controllers
 
             var player = await _repository.GetPlayer(id);
 
-            await _repository.DeletePlayer(id);
+            _repository.DeletePlayer(id);
             await _repository.Save();
 
             return player;
