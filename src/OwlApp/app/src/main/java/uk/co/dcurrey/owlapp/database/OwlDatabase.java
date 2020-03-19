@@ -14,10 +14,16 @@ import java.util.concurrent.ForkJoinPool;
 
 import uk.co.dcurrey.owlapp.database.character.CharacterDao;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.player.PlayerDao;
+import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
+import uk.co.dcurrey.owlapp.database.skill.SkillDao;
+import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 
 @Database(
         entities = {
-                CharacterEntity.class
+                CharacterEntity.class,
+                SkillEntity.class,
+                PlayerEntity.class
         },
         version = 1,
         exportSchema = false
@@ -25,6 +31,8 @@ import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 public abstract class OwlDatabase extends RoomDatabase
 {
     public abstract CharacterDao characterDao();
+    public abstract SkillDao skillDao();
+    public abstract PlayerDao playerDao();
 
     private static volatile OwlDatabase INSTANCE;
     private static final int NUMBER_THREADS = 4;
