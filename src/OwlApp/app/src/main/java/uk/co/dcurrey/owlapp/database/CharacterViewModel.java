@@ -19,7 +19,7 @@ public class CharacterViewModel extends AndroidViewModel
         mChars = mRepo.getAllChars();
     }
 
-    LiveData<List<CharacterEntity>> getAllChars()
+    public LiveData<List<CharacterEntity>> getAllChars()
     {
         return mChars;
     }

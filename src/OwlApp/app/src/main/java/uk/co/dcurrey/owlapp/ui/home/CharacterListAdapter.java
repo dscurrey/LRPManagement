@@ -55,7 +55,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         }
     }
 
-    void setChars(List<CharacterEntity> characters)
+    public void setChars(List<CharacterEntity> characters)
     {
         mChars = characters;
         notifyDataSetChanged();
