@@ -1,4 +1,4 @@
-package uk.co.dcurrey.owlapp.database;
+package uk.co.dcurrey.owlapp.database.character;
 
 import android.app.Application;
 

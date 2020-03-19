@@ -1,4 +1,4 @@
-package uk.co.dcurrey.owlapp.database;
+package uk.co.dcurrey.owlapp.database.character;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -8,6 +8,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
+
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 
 @Dao
 public interface CharacterDao

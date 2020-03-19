@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import uk.co.dcurrey.owlapp.R;
-import uk.co.dcurrey.owlapp.database.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 
 public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>
 {

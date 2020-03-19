@@ -10,6 +10,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
+
+import uk.co.dcurrey.owlapp.database.character.CharacterDao;
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 
 @Database(
         entities = {
@@ -24,9 +28,9 @@ public abstract class OwlDatabase extends RoomDatabase
 
     private static volatile OwlDatabase INSTANCE;
     private static final int NUMBER_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_THREADS);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_THREADS);
 
-    static OwlDatabase getDb(final Context context)
+    public static OwlDatabase getDb(final Context context)
     {
         if (INSTANCE == null)
         {

@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.lifecycle.Observer;
@@ -21,13 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import java.util.List;
 
-import uk.co.dcurrey.owlapp.database.CharacterEntity;
-import uk.co.dcurrey.owlapp.database.CharacterViewModel;
-import uk.co.dcurrey.owlapp.database.OwlDatabase;
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
 import uk.co.dcurrey.owlapp.ui.home.CharacterListAdapter;
 
 public class MainActivity extends AppCompatActivity

@@ -1,10 +1,12 @@
-package uk.co.dcurrey.owlapp.database;
+package uk.co.dcurrey.owlapp.database.character;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+
+import uk.co.dcurrey.owlapp.database.OwlDatabase;
 
 public class CharacterRepository
 {
