@@ -30,7 +30,7 @@ public class NewCharacterActivity extends AppCompatActivity
                 Intent replyIntent = new Intent();
                 if (TextUtils.isEmpty(mEditCharView.getText()))
                 {
-                    setResult(RESULT_CANCELED, replyIntent);;
+                    setResult(RESULT_CANCELED, replyIntent);
                 }
                 else
                 {
