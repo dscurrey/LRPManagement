@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity
 {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private CharacterViewModel mCharacterViewModel;
-    public static final int NEW_CHAR_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,60 +44,16 @@ public class MainActivity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_slideshow, R.id.nav_gallery)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Recycler
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final CharacterListAdapter adapter = new CharacterListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // ViewModel
-        mCharacterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
-        mCharacterViewModel.getAllChars().observe(this, new Observer<List<CharacterEntity>>()
-        {
-            @Override
-            public void onChanged(List<CharacterEntity> characterEntities)
-            {
-                // Update char cache in adapter
-                adapter.setChars(characterEntities);
-            }
-        });
-
-        // FAB
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
-                startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE);
-            }
-        });
-
     }
 
-    public void onActivityResult(int reqCode, int resCode, Intent data)
-    {
-        super.onActivityResult(reqCode, reqCode, data);
 
-        if (reqCode == NEW_CHAR_ACTIVITY_REQUEST_CODE && resCode == RESULT_OK)
-        {
-            CharacterEntity characterEntity = new CharacterEntity();
-            characterEntity.Name = data.getStringExtra(NewCharacterActivity.EXTRA_REPLY);
-            mCharacterViewModel.insert(characterEntity);
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

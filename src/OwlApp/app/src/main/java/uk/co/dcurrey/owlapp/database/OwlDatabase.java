@@ -46,7 +46,7 @@ public abstract class OwlDatabase extends RoomDatabase
             {
                 if (INSTANCE == null)
                 {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), OwlDatabase.class, "owl_db").addCallback(sOwlDatabaseCallback).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), OwlDatabase.class, "owl_db").fallbackToDestructiveMigration().addCallback(sOwlDatabaseCallback).build();
                 }
             }
         }
@@ -62,14 +62,24 @@ public abstract class OwlDatabase extends RoomDatabase
             databaseWriteExecutor.execute(() ->
             {
                 // populate
-                CharacterDao dao = INSTANCE.characterDao();
-                dao.deleteAll();
+                CharacterDao charDao = INSTANCE.characterDao();
+                charDao.deleteAll();
 
                 CharacterEntity character = new CharacterEntity();
                 character.Name = "Test1";
-                dao.insertAll(character);
+                charDao.insertAll(character);
                 character.Name = "Test2";
-                dao.insertAll(character);
+                charDao.insertAll(character);
+
+                PlayerDao playDao = INSTANCE.playerDao();
+                PlayerEntity player = new PlayerEntity();
+                player.FirstName = "Player 1";
+                playDao.insertAll(player);
+
+                SkillDao skillDao = INSTANCE.skillDao();
+                SkillEntity skill = new SkillEntity();
+                skill.Name = "Skill 1";
+                skillDao.insertAll(skill);
             });
         }
     };
