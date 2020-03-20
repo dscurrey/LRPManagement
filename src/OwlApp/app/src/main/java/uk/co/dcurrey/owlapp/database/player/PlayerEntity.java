@@ -1,5 +1,6 @@
 package uk.co.dcurrey.owlapp.database.player;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,8 +11,9 @@ public class PlayerEntity
     {
     }
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int Id;
     public String FirstName;
+    @Nullable
     public String LastName;
 }

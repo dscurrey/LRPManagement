@@ -10,7 +10,7 @@ public class SkillEntity
     {
     }
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int Id;
     public String Name;
 }
