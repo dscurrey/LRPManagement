@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PlayerViewModel extends ViewModel
+public class PlayerUIViewModel extends ViewModel
 {
 
     private MutableLiveData<String> mText;
 
-    public PlayerViewModel()
+    public PlayerUIViewModel()
     {
         mText = new MutableLiveData<>();
         mText.setValue("This is the player fragment");

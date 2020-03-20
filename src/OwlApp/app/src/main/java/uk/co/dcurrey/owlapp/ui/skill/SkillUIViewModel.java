@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SkillViewModel extends ViewModel
+public class SkillUIViewModel extends ViewModel
 {
 
     private MutableLiveData<String> mText;
 
-    public SkillViewModel()
+    public SkillUIViewModel()
     {
         mText = new MutableLiveData<>();
         mText.setValue("This is the skill fragment");

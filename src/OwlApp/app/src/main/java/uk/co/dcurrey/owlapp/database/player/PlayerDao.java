@@ -26,6 +26,6 @@ public interface PlayerDao
     @Delete
     void deleteSkill(SkillEntity skill);
 
-    @Query("DELETE FROM skill")
+    @Query("DELETE FROM player")
     void deleteAll();
 }

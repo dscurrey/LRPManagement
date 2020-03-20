@@ -71,11 +71,13 @@ public abstract class OwlDatabase extends RoomDatabase
                 charDao.insertAll(character);
 
                 PlayerDao playDao = INSTANCE.playerDao();
+                playDao.deleteAll();
                 PlayerEntity player = new PlayerEntity();
                 player.FirstName = "Player 1";
                 playDao.insertAll(player);
 
                 SkillDao skillDao = INSTANCE.skillDao();
+                skillDao.deleteAll();
                 SkillEntity skill = new SkillEntity();
                 skill.Name = "Skill 1";
                 skillDao.insertAll(skill);
