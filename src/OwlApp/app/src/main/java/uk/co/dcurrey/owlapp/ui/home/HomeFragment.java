@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import uk.co.dcurrey.owlapp.MainActivity;
 import uk.co.dcurrey.owlapp.NewCharacterActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;

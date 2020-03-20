@@ -1,18 +1,18 @@
-package uk.co.dcurrey.owlapp.ui.gallery;
+package uk.co.dcurrey.owlapp.ui.skill;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel
+public class SkillViewModel extends ViewModel
 {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel()
+    public SkillViewModel()
     {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is the skill fragment");
     }
 
     public LiveData<String> getText()

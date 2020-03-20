@@ -1,4 +1,4 @@
-package uk.co.dcurrey.owlapp.ui.slideshow;
+package uk.co.dcurrey.owlapp.ui.skill;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,19 +14,19 @@ import androidx.lifecycle.ViewModelProviders;
 
 import uk.co.dcurrey.owlapp.R;
 
-public class SlideshowFragment extends Fragment
+public class SkillFragment extends Fragment
 {
 
-    private SlideshowViewModel slideshowViewModel;
+    private SkillViewModel skillViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
+        skillViewModel =
+                ViewModelProviders.of(this).get(SkillViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_skill, container, false);
+        final TextView textView = root.findViewById(R.id.text_skill);
+        skillViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
         {
             @Override
             public void onChanged(@Nullable String s)

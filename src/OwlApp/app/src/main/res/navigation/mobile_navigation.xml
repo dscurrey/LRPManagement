@@ -30,14 +30,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="uk.co.dcurrey.owlapp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_skill"
+        android:name="uk.co.dcurrey.owlapp.ui.skill.SkillFragment"
+        android:label="@string/menu_skill"
+        tools:layout="@layout/fragment_skill" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="uk.co.dcurrey.owlapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:id="@+id/nav_player"
+        android:name="uk.co.dcurrey.owlapp.ui.player.PlayerFragment"
+        android:label="@string/menu_player"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
