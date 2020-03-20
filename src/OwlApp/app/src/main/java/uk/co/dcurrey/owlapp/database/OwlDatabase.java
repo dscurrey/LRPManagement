@@ -10,14 +10,19 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
 
 import uk.co.dcurrey.owlapp.database.character.CharacterDao;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.player.PlayerDao;
+import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
+import uk.co.dcurrey.owlapp.database.skill.SkillDao;
+import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 
 @Database(
         entities = {
-                CharacterEntity.class
+                CharacterEntity.class,
+                SkillEntity.class,
+                PlayerEntity.class
         },
         version = 1,
         exportSchema = false
@@ -25,6 +30,8 @@ import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 public abstract class OwlDatabase extends RoomDatabase
 {
     public abstract CharacterDao characterDao();
+    public abstract SkillDao skillDao();
+    public abstract PlayerDao playerDao();
 
     private static volatile OwlDatabase INSTANCE;
     private static final int NUMBER_THREADS = 4;
@@ -38,7 +45,7 @@ public abstract class OwlDatabase extends RoomDatabase
             {
                 if (INSTANCE == null)
                 {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), OwlDatabase.class, "owl_db").addCallback(sOwlDatabaseCallback).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), OwlDatabase.class, "owl_db").fallbackToDestructiveMigration().addCallback(sOwlDatabaseCallback).build();
                 }
             }
         }
@@ -54,14 +61,26 @@ public abstract class OwlDatabase extends RoomDatabase
             databaseWriteExecutor.execute(() ->
             {
                 // populate
-                CharacterDao dao = INSTANCE.characterDao();
-                dao.deleteAll();
+                CharacterDao charDao = INSTANCE.characterDao();
+                charDao.deleteAll();
 
                 CharacterEntity character = new CharacterEntity();
                 character.Name = "Test1";
-                dao.insertAll(character);
+                charDao.insertAll(character);
                 character.Name = "Test2";
-                dao.insertAll(character);
+                charDao.insertAll(character);
+
+                PlayerDao playDao = INSTANCE.playerDao();
+                playDao.deleteAll();
+                PlayerEntity player = new PlayerEntity();
+                player.FirstName = "Player 1";
+                playDao.insertAll(player);
+
+                SkillDao skillDao = INSTANCE.skillDao();
+                skillDao.deleteAll();
+                SkillEntity skill = new SkillEntity();
+                skill.Name = "Skill 1";
+                skillDao.insertAll(skill);
             });
         }
     };

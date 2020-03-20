@@ -1,38 +1,22 @@
 package uk.co.dcurrey.owlapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
-import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
-import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
-import uk.co.dcurrey.owlapp.ui.home.CharacterListAdapter;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
 {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private CharacterViewModel mCharacterViewModel;
-    public static final int NEW_CHAR_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,60 +30,16 @@ public class MainActivity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_player, R.id.nav_skill)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Recycler
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final CharacterListAdapter adapter = new CharacterListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // ViewModel
-        mCharacterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
-        mCharacterViewModel.getAllChars().observe(this, new Observer<List<CharacterEntity>>()
-        {
-            @Override
-            public void onChanged(List<CharacterEntity> characterEntities)
-            {
-                // Update char cache in adapter
-                adapter.setChars(characterEntities);
-            }
-        });
-
-        // FAB
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
-                startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE);
-            }
-        });
-
     }
 
-    public void onActivityResult(int reqCode, int resCode, Intent data)
-    {
-        super.onActivityResult(reqCode, reqCode, data);
 
-        if (reqCode == NEW_CHAR_ACTIVITY_REQUEST_CODE && resCode == RESULT_OK)
-        {
-            CharacterEntity characterEntity = new CharacterEntity();
-            characterEntity.Name = data.getStringExtra(NewCharacterActivity.EXTRA_REPLY);
-            mCharacterViewModel.insert(characterEntity);
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

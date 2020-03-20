@@ -12,5 +12,7 @@ public class CharacterEntity
 
     @PrimaryKey(autoGenerate = true)
     public int Id;
+    public int PlayerId;
     public String Name;
+    public boolean IsRetired;
 }

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewCharacterActivity"></activity>
+        <activity android:name=".NewSkillActivity"></activity>
+        <activity android:name=".NewPlayerActivity" />
+        <activity android:name=".NewCharacterActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

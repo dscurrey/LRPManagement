@@ -6,10 +6,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
-
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 
 @Dao
 public interface CharacterDao
@@ -22,6 +21,9 @@ public interface CharacterDao
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(CharacterEntity... characters);
+
+    @Update
+    void update(CharacterEntity character);
 
     @Delete
     void deleteCharacter(CharacterEntity character);

@@ -8,12 +8,20 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_skill">Skill</string>
+    <string name="menu_player">Player</string>
 
     <string name="home_second">Home Second</string>
 
     <string name="hint_character">Character...</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Character not saved because it is empty.</string>
+
+    <string name="hint_skill">Skill...</string>
+    <string name="button_skill">Save</string>
+    <string name="empty_not_saved_skill">Skill not saved because it is empty.</string>
+
+    <string name="hint_player">Player...</string>
+    <string name="button_player">Save</string>
+    <string name="empty_not_saved_player">Player not saved because it is empty.</string>
 </resources>
