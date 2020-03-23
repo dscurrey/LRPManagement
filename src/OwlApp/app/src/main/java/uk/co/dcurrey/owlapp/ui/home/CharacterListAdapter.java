@@ -17,12 +17,16 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 {
     class CharacterViewHolder extends RecyclerView.ViewHolder
     {
-        private final TextView charItemView;
+        private final TextView charNameView;
+        private final TextView charPlayerView;
+        private final TextView charRetireView;
 
         private CharacterViewHolder(View itemView)
         {
             super(itemView);
-            charItemView = itemView.findViewById(R.id.textView);
+            charNameView = itemView.findViewById(R.id.charName);
+            charPlayerView = itemView.findViewById(R.id.charPlayer);
+            charRetireView = itemView.findViewById(R.id.charRetired);
         }
     }
 
@@ -37,7 +41,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     @Override
     public CharacterViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View itemView = mInflater.inflate(R.layout.recycler_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.recycler_item_character, parent, false);
         return new CharacterViewHolder(itemView);
     }
 
@@ -46,12 +50,14 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         if (mChars != null)
         {
             CharacterEntity current = mChars.get(pos);
-            holder.charItemView.setText(current.Name);
+            holder.charNameView.setText(current.Name);
+            holder.charRetireView.setText(""+current.IsRetired);
+            holder.charPlayerView.setText(""+current.PlayerId);
         }
         else
         {
             // Data not ready
-            holder.charItemView.setText("No Characters Loaded");
+            holder.charNameView.setText("No Characters Loaded");
         }
     }
 

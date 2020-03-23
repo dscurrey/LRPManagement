@@ -66,6 +66,8 @@ public abstract class OwlDatabase extends RoomDatabase
 
                 CharacterEntity character = new CharacterEntity();
                 character.Name = "Test1";
+                character.IsRetired = false;
+                character.PlayerId = 1;
                 charDao.insertAll(character);
                 character.Name = "Test2";
                 charDao.insertAll(character);
