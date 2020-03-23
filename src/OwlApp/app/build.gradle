@@ -35,6 +35,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
+    implementation 'com.android.volley:volley:1.1.1'
+
     // Lifecycle components
     // implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     // annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"

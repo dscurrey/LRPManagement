@@ -12,17 +12,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eb34de62-b7fb-455a-ba3b-d1a142e2af48" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/OwlDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/OwlDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/player/PlayerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/player/PlayerDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/player/PlayerFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/player/PlayerFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/player/PlayerViewModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/skill/SkillFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/skill/SkillFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/skill/SkillViewModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_skill.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_skill.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_slideshow.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +20,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="9WV7N18428036850" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -75,7 +64,7 @@
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Syski/syski_client_android" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
