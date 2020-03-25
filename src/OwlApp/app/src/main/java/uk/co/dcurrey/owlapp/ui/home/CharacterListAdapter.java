@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         private final TextView charNameView;
         private final TextView charPlayerView;
         private final TextView charRetireView;
+        private final ImageView charSyncView;
 
         private CharacterViewHolder(View itemView)
         {
@@ -27,6 +29,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             charNameView = itemView.findViewById(R.id.charName);
             charPlayerView = itemView.findViewById(R.id.charPlayer);
             charRetireView = itemView.findViewById(R.id.charRetired);
+            charSyncView = itemView.findViewById(R.id.charSync);
         }
     }
 
@@ -53,11 +56,25 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             holder.charNameView.setText(current.Name);
             holder.charRetireView.setText(""+current.IsRetired);
             holder.charPlayerView.setText(""+current.PlayerId);
+
+            boolean sync = current.IsSynced;
+            if (sync)
+            {
+                //SYNC OK
+                holder.charSyncView.setImageResource(R.drawable.ok);
+
+            }
+            else
+            {
+                holder.charSyncView.setImageResource(R.drawable.fail);
+            }
+            holder.charSyncView.setVisibility(View.VISIBLE);
         }
         else
         {
             // Data not ready
             holder.charNameView.setText("No Characters Loaded");
+            holder.charSyncView.setVisibility(View.INVISIBLE);
         }
     }
 

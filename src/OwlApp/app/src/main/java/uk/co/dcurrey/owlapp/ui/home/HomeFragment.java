@@ -1,6 +1,9 @@
 package uk.co.dcurrey.owlapp.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import java.util.List;
 
 import uk.co.dcurrey.owlapp.NewCharacterActivity;
 import uk.co.dcurrey.owlapp.R;
+import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
 
@@ -94,11 +98,32 @@ public class HomeFragment extends Fragment
         {
             CharacterEntity characterEntity = new CharacterEntity();
             characterEntity.Name = data.getStringExtra(NewCharacterActivity.EXTRA_REPLY);
-            mCharacterViewModel.insert(characterEntity);
+            saveCharacter(characterEntity);
         }
         else
         {
             Toast.makeText(getContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public boolean checkNetConnectivity()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private void saveCharacter(CharacterEntity characterEntity)
+    {
+        if (checkNetConnectivity())
+        {
+            // TODO - Send to API
+            Toast.makeText(getContext(), "Character would be sent to api here.", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            characterEntity.IsRetired = false;
+            mCharacterViewModel.insert(characterEntity);
         }
     }
 }

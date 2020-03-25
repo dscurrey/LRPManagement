@@ -12,10 +12,14 @@
   <component name="ChangeListManager">
     <list default="true" id="eb34de62-b7fb-455a-ba3b-d1a142e2af48" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/OwlDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/OwlDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/character/CharacterEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/character/CharacterEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/player/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/player/PlayerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/skill/SkillEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/skill/SkillEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/home/CharacterListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/home/CharacterListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/home/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/recycler_item_character.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/recycler_item_character.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,6 +78,9 @@
   <component name="RecentsManager">
     <key name="android.template.packageName">
       <recent name="uk.co.dcurrey.owlapp" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="I:\GitHub\LRPManagement\src\OwlApp\app\src\main\res\drawable-v24" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -181,11 +188,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/database/skill/SkillViewModel.java</url>
           <line>28</line>
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/uk/co/dcurrey/owlapp/ui/home/CharacterListAdapter.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

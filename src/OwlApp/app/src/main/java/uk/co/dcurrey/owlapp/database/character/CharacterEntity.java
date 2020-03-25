@@ -15,4 +15,5 @@ public class CharacterEntity
     public int PlayerId;
     public String Name;
     public boolean IsRetired;
+    public boolean IsSynced;
 }
