@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 
@@ -12,6 +13,7 @@ public class CharacterRepository
 {
     private CharacterDao mCharacterDao;
     private LiveData<List<CharacterEntity>> mAllChars;
+    private List<CharacterEntity> mUnSynced;
 
     CharacterRepository(Application application)
     {
@@ -24,6 +26,12 @@ public class CharacterRepository
     {
         return mAllChars;
     }
+
+    List<CharacterEntity> getUnsynced()
+    {
+        return mUnSynced;
+    }
+
 
     void insert(CharacterEntity character)
     {

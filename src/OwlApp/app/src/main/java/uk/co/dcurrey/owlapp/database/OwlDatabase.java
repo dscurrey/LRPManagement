@@ -52,6 +52,15 @@ public abstract class OwlDatabase extends RoomDatabase
         return INSTANCE;
     }
 
+    public static OwlDatabase getDb()
+    {
+        if (INSTANCE == null)
+        {
+            throw new IllegalStateException();
+        }
+        return INSTANCE;
+    }
+
     private static OwlDatabase.Callback sOwlDatabaseCallback = new RoomDatabase.Callback()
     {
         @Override

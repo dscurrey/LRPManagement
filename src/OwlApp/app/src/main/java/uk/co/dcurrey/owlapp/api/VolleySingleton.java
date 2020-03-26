@@ -28,6 +28,15 @@ public class VolleySingleton
         return mInstance;
     }
 
+    public static synchronized VolleySingleton getInstance()
+    {
+        if (mInstance == null)
+        {
+            throw new IllegalStateException(VolleySingleton.class.getSimpleName()+" is not initialised, call getInstance(context) first.");
+        }
+        return mInstance;
+    }
+
     public RequestQueue getRequestQueue()
     {
         if (mRequestQueue == null)

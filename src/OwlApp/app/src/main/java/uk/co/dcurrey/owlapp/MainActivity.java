@@ -1,5 +1,6 @@
 package uk.co.dcurrey.owlapp;
 
+import android.net.Network;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -13,6 +14,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+import uk.co.dcurrey.owlapp.database.OwlDatabase;
+import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
+
 public class MainActivity extends AppCompatActivity
 {
 
@@ -22,6 +26,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        OwlDatabase.getDb(this);
+
+        NetworkMonitor networkMonitor = new NetworkMonitor();
+        networkMonitor.enable(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -36,10 +46,7 @@ public class MainActivity extends AppCompatActivity
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

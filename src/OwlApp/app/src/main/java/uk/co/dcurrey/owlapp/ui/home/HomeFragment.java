@@ -1,7 +1,9 @@
 package uk.co.dcurrey.owlapp.ui.home;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,15 +22,28 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import uk.co.dcurrey.owlapp.NewCharacterActivity;
 import uk.co.dcurrey.owlapp.R;
+import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
+import uk.co.dcurrey.owlapp.api.requests.POSTCharacterRequest;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
+import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -42,7 +57,6 @@ public class HomeFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -118,12 +132,50 @@ public class HomeFragment extends Fragment
         if (checkNetConnectivity())
         {
             // TODO - Send to API
-            Toast.makeText(getContext(), "Character would be sent to api here.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "DEBUG: Char -> API", Toast.LENGTH_LONG).show();
+            saveAPI(characterEntity);
         }
         else
         {
-            characterEntity.IsRetired = false;
-            mCharacterViewModel.insert(characterEntity);
+            saveLocal(characterEntity);
         }
+    }
+
+    private void saveLocal(CharacterEntity characterEntity)
+    {
+        characterEntity.IsRetired = false;
+        mCharacterViewModel.insert(characterEntity);
+    }
+
+    private void saveAPI(CharacterEntity characterEntity)
+    {
+        Map<String, String> params = new HashMap();
+        params.put("Name", characterEntity.Name);
+
+        // TODO - Refactor requests to separate classes
+
+        JSONObject parameters = new JSONObject(params);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getURL(getContext())+"api/characters", parameters, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response)
+            {
+                // Success
+                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
+                characterEntity.IsSynced = true;
+                saveLocal(characterEntity);
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        //Failure
+                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        saveLocal(characterEntity);
+                    }
+                });
+        VolleySingleton.getInstance(getContext()).getRequestQueue().add(req);
     }
 }

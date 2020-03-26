@@ -11,12 +11,14 @@ public class CharacterViewModel extends AndroidViewModel
 {
     private CharacterRepository mRepo;
     private LiveData<List<CharacterEntity>> mChars;
+    private List<CharacterEntity> mUnsynced;
 
     public CharacterViewModel(Application application)
     {
         super(application);
         mRepo = new CharacterRepository(application);
         mChars = mRepo.getAllChars();
+        mUnsynced = mRepo.getUnsynced();
     }
 
     public LiveData<List<CharacterEntity>> getAllChars()
@@ -27,5 +29,10 @@ public class CharacterViewModel extends AndroidViewModel
     public void insert(CharacterEntity character)
     {
         mRepo.insert(character);
+    }
+
+    public List<CharacterEntity> getUnsynced()
+    {
+        return mUnsynced;
     }
 }
