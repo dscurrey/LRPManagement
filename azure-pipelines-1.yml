@@ -5,6 +5,11 @@
 
 trigger:
 - master
+- develop
+
+pr:
+- develop
+- master
 
 pool:
   vmImage: 'macos-latest'
@@ -12,8 +17,8 @@ pool:
 steps:
 - task: Gradle@2
   inputs:
-    workingDirectory: '/src/OwlApp'
-    gradleWrapperFile: '/src/OwlApp/gradlew'
+    workingDirectory: 'src/OwlApp'
+    gradleWrapperFile: 'src/OwlApp/gradlew'
     gradleOptions: '-Xmx3072m'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
