@@ -110,7 +110,9 @@ public class HomeFragment extends Fragment
         if (reqCode == NEW_CHAR_ACTIVITY_REQUEST_CODE && resCode == RESULT_OK)
         {
             CharacterEntity characterEntity = new CharacterEntity();
-            characterEntity.Name = data.getStringExtra(NewCharacterActivity.EXTRA_REPLY);
+            characterEntity.Name = data.getStringExtra(NewCharacterActivity.EXTRA_REPLY_CHARNAME);
+            characterEntity.IsRetired = data.getBooleanExtra(NewCharacterActivity.EXTRA_REPLY_CHARERETIRED, false);
+            characterEntity.PlayerId = Integer.parseInt(data.getStringExtra(NewCharacterActivity.EXTRA_REPLY_CHARPLAYER));
             saveCharacter(characterEntity);
         }
         else
@@ -150,6 +152,8 @@ public class HomeFragment extends Fragment
     {
         Map<String, String> params = new HashMap();
         params.put("Name", characterEntity.Name);
+        params.put("IsRetired", ""+characterEntity.IsRetired);
+        params.put("PlayerId", ""+characterEntity.PlayerId);
 
         // TODO - Refactor requests to separate classes
 

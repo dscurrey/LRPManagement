@@ -6,9 +6,11 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 
 @Dao
@@ -25,6 +27,9 @@ public interface PlayerDao
 
     @Delete
     void deleteSkill(SkillEntity skill);
+
+    @Update
+    void update(PlayerEntity player);
 
     @Query("DELETE FROM player")
     void deleteAll();

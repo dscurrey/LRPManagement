@@ -5,7 +5,19 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_player"
+        android:id="@+id/newPlayFName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/hint_player"
+        android:inputType="textAutoComplete"
+        android:padding="@dimen/small_padding"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/big_padding"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/newPlayLName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"

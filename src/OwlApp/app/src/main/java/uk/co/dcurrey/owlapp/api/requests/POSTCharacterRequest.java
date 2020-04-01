@@ -45,12 +45,10 @@ public class POSTCharacterRequest extends APIAuthorisationRequest<JSONArray>
     protected Map<String, String> getParams()
     {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("Id", ""+characterEntity.Id);
+        //params.put("Id", ""+characterEntity.Id);
         params.put("Name", characterEntity.Name);
         params.put("IsRetired", ""+characterEntity.IsRetired);
         params.put("PlayerId", ""+characterEntity.PlayerId);
-
-
         return params;
     }
 }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_char"
+        android:id="@+id/newCharName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
@@ -16,8 +16,22 @@
         android:layout_marginTop="@dimen/big_padding"
         android:textSize="18sp" />
 
+    <EditText
+        android:id="@+id/newCharPlayId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/Player_Id"
+        android:inputType="number" />
+
+    <CheckBox
+        android:id="@+id/newCharRetired"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Is_Retired" />
+
     <Button
-        android:id="@+id/button_save"
+        android:id="@+id/char_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
