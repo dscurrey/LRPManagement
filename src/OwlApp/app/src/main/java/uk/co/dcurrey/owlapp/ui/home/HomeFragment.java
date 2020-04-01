@@ -40,7 +40,6 @@ import uk.co.dcurrey.owlapp.NewCharacterActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
-import uk.co.dcurrey.owlapp.api.requests.POSTCharacterRequest;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;

@@ -19,12 +19,14 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 {
     class PlayerViewHolder extends RecyclerView.ViewHolder
     {
-        private final TextView playerItemView;
+        private final TextView playerFName;
+        private final TextView playerLName;
 
         private PlayerViewHolder(View itemView)
         {
             super(itemView);
-            playerItemView = itemView.findViewById(R.id.textView);
+            playerFName = itemView.findViewById(R.id.playFName);
+            playerLName = itemView.findViewById(R.id.playLName);
         }
     }
 
@@ -39,7 +41,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     @Override
     public PlayerListAdapter.PlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View itemView = mInflater.inflate(R.layout.recycler_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.recycler_item_player, parent, false);
         return new PlayerListAdapter.PlayerViewHolder(itemView);
     }
 
@@ -48,12 +50,13 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         if (mPlayers != null)
         {
             PlayerEntity current = mPlayers.get(pos);
-            holder.playerItemView.setText(current.FirstName+" "+current.LastName);
+            holder.playerFName.setText(current.FirstName);
+            holder.playerLName.setText(current.LastName);
         }
         else
         {
             // Data not ready
-            holder.playerItemView.setText("No Players Loaded");
+            holder.playerFName.setText("No Players Loaded");
         }
     }
 

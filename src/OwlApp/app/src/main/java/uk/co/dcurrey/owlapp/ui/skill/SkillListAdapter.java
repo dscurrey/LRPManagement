@@ -18,12 +18,12 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
 {
     class SkillViewHolder extends RecyclerView.ViewHolder
     {
-        private final TextView skillItemView;
+        private final TextView skillNameView;
 
         private SkillViewHolder(View itemView)
         {
             super(itemView);
-            skillItemView = itemView.findViewById(R.id.textView);
+            skillNameView = itemView.findViewById(R.id.skillName);
         }
     }
 
@@ -38,7 +38,7 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
     @Override
     public SkillListAdapter.SkillViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View itemView = mInflater.inflate(R.layout.recycler_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.recycler_item_skill, parent, false);
         return new SkillListAdapter.SkillViewHolder(itemView);
     }
 
@@ -47,11 +47,11 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
         if(mSkills != null)
         {
             SkillEntity current = mSkills.get(pos);
-            holder.skillItemView.setText(current.Name);
+            holder.skillNameView.setText(current.Name);
         }
         else
         {
-            holder.skillItemView.setText("No Skills Loaded");
+            holder.skillNameView.setText("No Skills Loaded");
         }
     }
 
