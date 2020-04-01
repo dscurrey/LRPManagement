@@ -33,4 +33,13 @@ public interface PlayerDao
 
     @Query("DELETE FROM player")
     void deleteAll();
+
+    @Query("SELECT * FROM player")
+    public abstract List<PlayerEntity> get();
+
+    @Query("SELECT * FROM player WHERE Id = :id")
+    public abstract PlayerEntity get(int id);
+
+    @Query("SELECT * FROM player WHERE Id IN (:Ids)")
+    public abstract List<PlayerEntity> get(int... Ids);
 }

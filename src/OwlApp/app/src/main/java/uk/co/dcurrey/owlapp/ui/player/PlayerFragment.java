@@ -1,6 +1,9 @@
 package uk.co.dcurrey.owlapp.ui.player;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +20,22 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import uk.co.dcurrey.owlapp.NewPlayerActivity;
 import uk.co.dcurrey.owlapp.R;
+import uk.co.dcurrey.owlapp.api.APIPaths;
+import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerViewModel;
 
@@ -90,12 +103,68 @@ public class PlayerFragment extends Fragment
         if (reqCode == NEW_PLAYER_ACTIVITY_REQUEST_CODE && resCode == RESULT_OK)
         {
             PlayerEntity playerEntity = new PlayerEntity();
-            playerEntity.FirstName = data.getStringExtra(NewPlayerActivity.EXTRA_REPLY);
-            mPlayerViewModel.insert(playerEntity);
+            playerEntity.FirstName = data.getStringExtra(NewPlayerActivity.EXTRA_REPLY_FNAME);
+            playerEntity.LastName = data.getStringExtra(NewPlayerActivity.EXTRA_REPLY_LNAME);
+            savePlayer(playerEntity);
         }
         else
         {
             Toast.makeText(getContext(), "Player not saved", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public boolean checkNetConnectivity()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private void savePlayer(PlayerEntity player)
+    {
+        if (checkNetConnectivity())
+        {
+            saveApi(player);
+        }
+        else
+        {
+            saveLocal(player);
+        }
+    }
+
+    private void saveLocal(PlayerEntity player)
+    {
+        mPlayerViewModel.insert(player);
+    }
+
+    private void saveApi(PlayerEntity player)
+    {
+        Map<String, String> params = new HashMap<>();
+        params.put("FirstName", player.FirstName);
+        params.put("LastName", player.LastName);
+
+        // TODO - Refactor Requests
+
+        JSONObject parameters = new JSONObject(params);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getURL(getContext()) + "api/players", parameters, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response)
+            {
+                // Success
+                player.IsSynced = true;
+                saveLocal(player);
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        // Fail - fallback
+                        saveLocal(player);
+                    }
+                });
+        VolleySingleton.getInstance(getContext()).getRequestQueue().add(req);
     }
 }

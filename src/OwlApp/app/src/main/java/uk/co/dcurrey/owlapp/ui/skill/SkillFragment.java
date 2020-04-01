@@ -1,6 +1,9 @@
 package uk.co.dcurrey.owlapp.ui.skill;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +20,28 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import uk.co.dcurrey.owlapp.NewPlayerActivity;
 import uk.co.dcurrey.owlapp.NewSkillActivity;
 import uk.co.dcurrey.owlapp.R;
+import uk.co.dcurrey.owlapp.api.APIPaths;
+import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerViewModel;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillViewModel;
+import uk.co.dcurrey.owlapp.ui.home.HomeFragment;
 import uk.co.dcurrey.owlapp.ui.player.PlayerListAdapter;
 
 import static android.app.Activity.RESULT_OK;
@@ -94,11 +108,65 @@ public class SkillFragment extends Fragment
         {
             SkillEntity skillEntity = new SkillEntity();
             skillEntity.Name = data.getStringExtra(NewSkillActivity.EXTRA_REPLY);
-            mSkillViewModel.insert(skillEntity);
+            saveSkill(skillEntity);
         }
         else
         {
             Toast.makeText(getContext(), "Skill not saved", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public boolean checkNetConnectivity()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private void saveSkill(SkillEntity skill)
+    {
+        if (checkNetConnectivity())
+        {
+            saveAPI(skill);
+        }
+        else
+        {
+            saveLocal(skill);
+        }
+    }
+
+    private void saveLocal(SkillEntity skill)
+    {
+        mSkillViewModel.insert(skill);
+    }
+
+    private void saveAPI(SkillEntity skill)
+    {
+        Map<String, String> params = new HashMap();
+        params.put("Name", skill.Name);
+
+        // TODO - Refactor API Requests
+
+        JSONObject parameters = new JSONObject(params);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getURL(getContext()) + "api/skills", parameters, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response)
+            {
+                //Success
+                skill.IsSynced = true;
+                saveLocal(skill);
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        // Fail
+                        saveLocal(skill);
+                    }
+                });
+        VolleySingleton.getInstance(getContext()).getRequestQueue().add(req);
     }
 }

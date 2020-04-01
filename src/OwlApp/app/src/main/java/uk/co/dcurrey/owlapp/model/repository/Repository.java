@@ -13,4 +13,14 @@ public enum Repository
     {
         return CharacterRepository.INSTANCE;
     }
+
+    public synchronized PlayerRepository getPlayerRepository()
+    {
+        return PlayerRepository.INSTANCE;
+    }
+
+    public synchronized SkillRepository getSkillRepository()
+    {
+        return SkillRepository.INSTANCE;
+    }
 }

@@ -132,7 +132,6 @@ public class HomeFragment extends Fragment
     {
         if (checkNetConnectivity())
         {
-            // TODO - Send to API
             Toast.makeText(getContext(), "DEBUG: Char -> API", Toast.LENGTH_LONG).show();
             saveAPI(characterEntity);
         }

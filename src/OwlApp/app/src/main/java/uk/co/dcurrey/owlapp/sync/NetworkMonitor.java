@@ -70,6 +70,30 @@ public class NetworkMonitor extends ConnectivityManager.NetworkCallback
                 sendToAPI(mContext, character);
             }
         }
+
+        HashMap<Integer, PlayerEntity> players = Repository.getInstance().getPlayerRepository().get();
+
+        it = players.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry playEntry = (Map.Entry)it.next();
+            PlayerEntity player = (PlayerEntity) playEntry.getValue();
+            if (!player.IsSynced){
+                sendToAPI(mContext, player);
+            }
+        }
+
+        HashMap<Integer, SkillEntity> skills = Repository.getInstance().getSkillRepository().get();
+
+        it = skills.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry skillEntry = (Map.Entry)it.next();
+            SkillEntity skill = (SkillEntity) skillEntry.getValue();
+            if (!skill.IsSynced){
+                sendToAPI(mContext, skill);
+            }
+        }
     }
 
 //    public boolean checkNetConnectivity(Context context)
