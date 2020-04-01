@@ -32,4 +32,9 @@ public class PlayerRepository
             mDao.insertAll(player);
         });
     }
+
+    void update(PlayerEntity player)
+    {
+        mDao.update(player);
+    }
 }

@@ -30,4 +30,13 @@ public interface CharacterDao
 
     @Query("DELETE FROM character")
     void deleteAll();
+
+    @Query("SELECT * FROM character")
+    public abstract List<CharacterEntity> get();
+
+    @Query("SELECT * FROM character WHERE Id = :uuid")
+    public abstract CharacterEntity get(int uuid);
+
+    @Query("SELECT * FROM character WHERE Id IN (:Ids)")
+    public abstract List<CharacterEntity> get(int... Ids);
 }

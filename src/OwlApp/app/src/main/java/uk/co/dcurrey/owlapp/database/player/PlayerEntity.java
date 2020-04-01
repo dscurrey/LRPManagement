@@ -16,4 +16,5 @@ public class PlayerEntity
     public String FirstName;
     @Nullable
     public String LastName;
+    public boolean IsSynced;
 }

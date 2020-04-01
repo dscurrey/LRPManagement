@@ -12,8 +12,10 @@ import android.widget.EditText;
 public class NewPlayerActivity extends AppCompatActivity
 {
 
-    public static final String EXTRA_REPLY = "uk.co.dcurrey.owlapp.REPLY";
-    private EditText mEditPlayerView;
+    public static final String EXTRA_REPLY_FNAME = "uk.co.dcurrey.owlapp.REPLY_FNAME";
+    public static final String EXTRA_REPLY_LNAME = "uk.co.dcurrey.owlapp.REPLY_LNAME";
+    private EditText fnameView;
+    private EditText lnameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,7 +23,8 @@ public class NewPlayerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_player);
 
-        mEditPlayerView = findViewById(R.id.edit_player);
+        fnameView = findViewById(R.id.newPlayFName);
+        lnameView = findViewById(R.id.newPlayLName);
 
         final Button btn = findViewById(R.id.btn_player);
         btn.setOnClickListener(new View.OnClickListener()
@@ -30,14 +33,17 @@ public class NewPlayerActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mEditPlayerView.getText()))
+                if (TextUtils.isEmpty(fnameView.getText()) || TextUtils.isEmpty(lnameView.getText()))
                 {
                     setResult(RESULT_CANCELED, replyIntent);
                 }
                 else
                 {
-                    String player = mEditPlayerView.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY, player);
+                    String fname = fnameView.getText().toString();
+                    String lname = lnameView.getText().toString();
+
+                    replyIntent.putExtra(EXTRA_REPLY_FNAME, fname);
+                    replyIntent.putExtra(EXTRA_REPLY_LNAME, lname);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();

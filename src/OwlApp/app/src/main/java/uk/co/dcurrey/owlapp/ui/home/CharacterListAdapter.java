@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +18,18 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 {
     class CharacterViewHolder extends RecyclerView.ViewHolder
     {
-        private final TextView charItemView;
+        private final TextView charNameView;
+        private final TextView charPlayerView;
+        private final TextView charRetireView;
+        private final ImageView charSyncView;
 
         private CharacterViewHolder(View itemView)
         {
             super(itemView);
-            charItemView = itemView.findViewById(R.id.textView);
+            charNameView = itemView.findViewById(R.id.charName);
+            charPlayerView = itemView.findViewById(R.id.charPlayer);
+            charRetireView = itemView.findViewById(R.id.charRetired);
+            charSyncView = itemView.findViewById(R.id.charSync);
         }
     }
 
@@ -37,7 +44,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     @Override
     public CharacterViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View itemView = mInflater.inflate(R.layout.recycler_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.recycler_item_character, parent, false);
         return new CharacterViewHolder(itemView);
     }
 
@@ -46,12 +53,28 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         if (mChars != null)
         {
             CharacterEntity current = mChars.get(pos);
-            holder.charItemView.setText(current.Name);
+            holder.charNameView.setText(current.Name);
+            holder.charRetireView.setText(""+current.IsRetired);
+            holder.charPlayerView.setText(""+current.PlayerId);
+
+            boolean sync = current.IsSynced;
+            if (sync)
+            {
+                //SYNC OK
+                holder.charSyncView.setImageResource(R.drawable.ok);
+
+            }
+            else
+            {
+                holder.charSyncView.setImageResource(R.drawable.fail);
+            }
+            holder.charSyncView.setVisibility(View.VISIBLE);
         }
         else
         {
             // Data not ready
-            holder.charItemView.setText("No Characters Loaded");
+            holder.charNameView.setText("No Characters Loaded");
+            holder.charSyncView.setVisibility(View.INVISIBLE);
         }
     }
 

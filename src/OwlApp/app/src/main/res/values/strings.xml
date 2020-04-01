@@ -24,4 +24,11 @@
     <string name="hint_player">Player...</string>
     <string name="button_player">Save</string>
     <string name="empty_not_saved_player">Player not saved because it is empty.</string>
+
+    <string name="pref_api_url">51.83.43.152</string>
+    <string name="pref_api_port">8080</string>
+    <string name="pref_api_path">/</string>
+
+    <string name="Player_Id">Player Id</string>
+    <string name="Is_Retired">Is Retired?</string>
 </resources>

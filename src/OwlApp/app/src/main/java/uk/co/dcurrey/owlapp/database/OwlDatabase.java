@@ -24,7 +24,7 @@ import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
                 SkillEntity.class,
                 PlayerEntity.class
         },
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 public abstract class OwlDatabase extends RoomDatabase
@@ -52,6 +52,15 @@ public abstract class OwlDatabase extends RoomDatabase
         return INSTANCE;
     }
 
+    public static OwlDatabase getDb()
+    {
+        if (INSTANCE == null)
+        {
+            throw new IllegalStateException();
+        }
+        return INSTANCE;
+    }
+
     private static OwlDatabase.Callback sOwlDatabaseCallback = new RoomDatabase.Callback()
     {
         @Override
@@ -66,6 +75,8 @@ public abstract class OwlDatabase extends RoomDatabase
 
                 CharacterEntity character = new CharacterEntity();
                 character.Name = "Test1";
+                character.IsRetired = false;
+                character.PlayerId = 1;
                 charDao.insertAll(character);
                 character.Name = "Test2";
                 charDao.insertAll(character);
@@ -73,7 +84,8 @@ public abstract class OwlDatabase extends RoomDatabase
                 PlayerDao playDao = INSTANCE.playerDao();
                 playDao.deleteAll();
                 PlayerEntity player = new PlayerEntity();
-                player.FirstName = "Player 1";
+                player.FirstName = "Player";
+                player.LastName = "1";
                 playDao.insertAll(player);
 
                 SkillDao skillDao = INSTANCE.skillDao();
