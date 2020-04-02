@@ -26,7 +26,7 @@ public interface PlayerDao
     void insertAll(PlayerEntity... players);
 
     @Delete
-    void deleteSkill(SkillEntity skill);
+    void deleteSkill(PlayerEntity skill);
 
     @Update
     void update(PlayerEntity player);
