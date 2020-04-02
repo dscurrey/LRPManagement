@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
-import uk.co.dcurrey.owlapp.database.character.CharacterDao;
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillDao;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 
@@ -58,6 +56,17 @@ public enum SkillRepository
         return mSkills;
     }
 
+    public void insert(SkillEntity skill)
+    {
+        try
+        {
+            new insertSkillEntitiesAsyncTask(mSkillDao, skill).execute().get();
+        } catch (ExecutionException | InterruptedException e)
+        {
+            Log.e(this.name(), "An error occurred inserting characters into the database", e);
+        }
+    }
+
     private static class loadSkillEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, SkillEntity>>
     {
         private SkillDao mSkillDao;
@@ -77,6 +86,24 @@ public enum SkillRepository
             return mSkillEntities;
         }
 
+    }
+
+    private static class insertSkillEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
+    {
+        private SkillDao mDao;
+        private SkillEntity skillEntity;
+
+        insertSkillEntitiesAsyncTask(SkillDao skillDao, SkillEntity skill)
+        {
+            mDao = skillDao;
+            skillEntity = skill;
+        }
+
+        protected Void doInBackground(final Void... voids)
+        {
+            mDao.insertAll(skillEntity);
+            return null;
+        }
     }
 
 }

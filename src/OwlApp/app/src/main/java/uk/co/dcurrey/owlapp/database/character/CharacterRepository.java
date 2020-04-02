@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 

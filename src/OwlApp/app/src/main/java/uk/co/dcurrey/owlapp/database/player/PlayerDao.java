@@ -10,9 +10,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
-import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
-
 @Dao
 public interface PlayerDao
 {
@@ -35,11 +32,11 @@ public interface PlayerDao
     void deleteAll();
 
     @Query("SELECT * FROM player")
-    public abstract List<PlayerEntity> get();
+    List<PlayerEntity> get();
 
     @Query("SELECT * FROM player WHERE Id = :id")
-    public abstract PlayerEntity get(int id);
+    PlayerEntity get(int id);
 
     @Query("SELECT * FROM player WHERE Id IN (:Ids)")
-    public abstract List<PlayerEntity> get(int... Ids);
+    List<PlayerEntity> get(int... Ids);
 }

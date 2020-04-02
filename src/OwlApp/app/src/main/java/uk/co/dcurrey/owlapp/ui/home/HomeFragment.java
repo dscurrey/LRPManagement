@@ -1,9 +1,7 @@
 package uk.co.dcurrey.owlapp.ui.home;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -22,12 +20,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
@@ -121,16 +117,9 @@ public class HomeFragment extends Fragment
         }
     }
 
-    public boolean checkNetConnectivity()
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
     private void saveCharacter(CharacterEntity characterEntity)
     {
-        if (checkNetConnectivity())
+        if (NetworkMonitor.checkNetConnectivity(getContext()))
         {
             Toast.makeText(getContext(), "DEBUG: Char -> API", Toast.LENGTH_LONG).show();
             saveAPI(characterEntity);

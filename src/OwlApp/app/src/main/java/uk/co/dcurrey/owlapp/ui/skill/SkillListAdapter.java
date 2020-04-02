@@ -12,7 +12,6 @@ import java.util.List;
 
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
-import uk.co.dcurrey.owlapp.database.skill.SkillViewModel;
 
 public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.SkillViewHolder>
 {
