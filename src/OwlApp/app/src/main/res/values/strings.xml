@@ -31,4 +31,5 @@
 
     <string name="Player_Id">Player Id</string>
     <string name="Is_Retired">Is Retired?</string>
+    <string name="action_db">Update from Server</string>
 </resources>
