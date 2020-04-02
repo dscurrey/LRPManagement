@@ -82,7 +82,7 @@ public enum CharacterRepository
             new insertCharacterEntitiesAsyncTask(mCharacterDao, characterEntity).execute().get();
         } catch (ExecutionException | InterruptedException e)
         {
-            Log.e(this.name(), "An error occured inserting characters into the database", e);
+            Log.e(this.name(), "An error occurred inserting characters into the database", e);
         }
     }
 

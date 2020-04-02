@@ -1,6 +1,7 @@
 package uk.co.dcurrey.owlapp.model.repository;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -50,6 +51,17 @@ public enum PlayerRepository
         return mPlayers;
     }
 
+    public void insert(PlayerEntity player)
+    {
+        try
+        {
+            new insertPlayerEntitiesAsyncTask(mPlayerDao, player).execute().get();
+        } catch (ExecutionException | InterruptedException e)
+        {
+            Log.e(this.name(), "An error occurred inserting characters into the database", e);
+        }
+    }
+
     private static class loadPlayerEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, PlayerEntity>>
     {
         private PlayerDao mPlayerDao;
@@ -68,6 +80,24 @@ public enum PlayerRepository
                 mPlayerEntities.put(playerEntity.Id, playerEntity);
             }
             return mPlayerEntities;
+        }
+    }
+
+    private static class insertPlayerEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
+    {
+        private PlayerDao mDao;
+        private PlayerEntity playerEntity;
+
+        insertPlayerEntitiesAsyncTask(PlayerDao dao, PlayerEntity player)
+        {
+            mDao = dao;
+            playerEntity = player;
+        }
+
+        protected Void doInBackground(final Void... voids)
+        {
+            mDao.insertAll(playerEntity);
+            return null;
         }
     }
 }
