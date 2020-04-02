@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
+import uk.co.dcurrey.owlapp.sync.Synchroniser;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -79,11 +80,8 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.action_getapi:
                 // Update DB
-                if (networkMonitor == null)
-                {
-                    setupNetworkMonitor();
-                }
-                networkMonitor.resetDb();
+                // TODO - Check if any entities are un-synced and warn
+                Synchroniser.resetDb();
                 return true;
 
             default:
