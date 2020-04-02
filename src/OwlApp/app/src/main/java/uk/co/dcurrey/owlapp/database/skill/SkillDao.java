@@ -40,5 +40,5 @@ public interface SkillDao
     public abstract SkillEntity get(int id);
 
     @Query("SELECT * FROM skill WHERE Id IN (:Ids)")
-    public abstract List<SkillDao> get(int... Ids);
+    public abstract List<SkillEntity> get(int... Ids);
 }
