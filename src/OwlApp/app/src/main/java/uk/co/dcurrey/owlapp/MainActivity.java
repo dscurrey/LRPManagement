@@ -1,7 +1,6 @@
 package uk.co.dcurrey.owlapp;
 
 import android.content.Intent;
-import android.net.Network;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;

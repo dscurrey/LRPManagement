@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
-import uk.co.dcurrey.owlapp.database.character.CharacterDao;
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillDao;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 

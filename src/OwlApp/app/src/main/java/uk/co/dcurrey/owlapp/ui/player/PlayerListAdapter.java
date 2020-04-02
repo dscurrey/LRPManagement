@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import uk.co.dcurrey.owlapp.R;
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
-import uk.co.dcurrey.owlapp.ui.home.CharacterListAdapter;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder>
 {

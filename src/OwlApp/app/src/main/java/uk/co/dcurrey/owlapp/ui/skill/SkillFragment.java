@@ -32,17 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import uk.co.dcurrey.owlapp.NewPlayerActivity;
 import uk.co.dcurrey.owlapp.NewSkillActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
-import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
-import uk.co.dcurrey.owlapp.database.player.PlayerViewModel;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillViewModel;
-import uk.co.dcurrey.owlapp.ui.home.HomeFragment;
-import uk.co.dcurrey.owlapp.ui.player.PlayerListAdapter;
 
 import static android.app.Activity.RESULT_OK;
 

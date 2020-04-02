@@ -1,15 +1,10 @@
 package uk.co.dcurrey.owlapp.api.requests;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
 
 import androidx.annotation.Nullable;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class APIAuthorisationRequest<T> extends APIRequest<T>
 {
