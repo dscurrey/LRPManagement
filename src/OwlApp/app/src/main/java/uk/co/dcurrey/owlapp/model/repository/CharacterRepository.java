@@ -1,6 +1,7 @@
 package uk.co.dcurrey.owlapp.model.repository;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -72,5 +73,34 @@ public enum CharacterRepository
             return mCharacterEntities;
         }
 
+    }
+
+    public void insert(CharacterEntity characterEntity)
+    {
+        try
+        {
+            new insertCharacterEntitiesAsyncTask(mCharacterDao, characterEntity).execute().get();
+        } catch (ExecutionException | InterruptedException e)
+        {
+            Log.e(this.name(), "An error occured inserting characters into the database", e);
+        }
+    }
+
+    private static class insertCharacterEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
+    {
+        private CharacterDao mDao;
+        private CharacterEntity characterEntity;
+
+        insertCharacterEntitiesAsyncTask(CharacterDao characterDao, CharacterEntity character)
+        {
+            mDao = characterDao;
+            characterEntity = character;
+        }
+
+        protected Void doInBackground(final Void... voids)
+        {
+            mDao.insertAll(characterEntity);
+            return null;
+        }
     }
 }

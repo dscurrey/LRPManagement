@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
                 // TODO - Check if any entities are un-synced and warn
                 if (NetworkMonitor.checkNetConnectivity(this))
                 {
-                    Synchroniser.resetDb();
+                    Synchroniser.resetDb(this);
                 }
                 else
                 {

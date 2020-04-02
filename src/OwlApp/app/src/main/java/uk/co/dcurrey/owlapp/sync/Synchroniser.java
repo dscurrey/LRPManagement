@@ -1,12 +1,16 @@
 package uk.co.dcurrey.owlapp.sync;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,14 +19,17 @@ import java.util.Map;
 
 import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
+import uk.co.dcurrey.owlapp.api.requests.APIRequest;
+import uk.co.dcurrey.owlapp.api.requests.GETCharactersRequest;
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
+import uk.co.dcurrey.owlapp.model.repository.Repository;
 
 public class Synchroniser
 {
-    public static void resetDb()
+    public static void resetDb(Context context)
     {
         // Clear DB
         OwlDatabase.databaseWriteExecutor.execute(() ->
@@ -54,10 +61,13 @@ public class Synchroniser
             character.IsSynced = false;
             character.Name = "Repop Character";
             OwlDatabase.getDb().characterDao().insertAll(character);
+
+            Synchroniser synchroniser = new Synchroniser();
+            synchroniser.getCharactersApi(context);
         });
     }
 
-    public static void sendToAPI(Context context, CharacterEntity character)
+    public void sendToAPI(Context context, CharacterEntity character)
     {
         Map<String, String> params = new HashMap();
         params.put("Name", character.Name);
@@ -99,7 +109,7 @@ public class Synchroniser
         VolleySingleton.getInstance(context).getRequestQueue().add(req);
     }
 
-    public static void sendToAPI(Context context, PlayerEntity player)
+    public void sendToAPI(Context context, PlayerEntity player)
     {
         Map<String, String> params = new HashMap();
         params.put("FirstName", player.FirstName);
@@ -140,7 +150,7 @@ public class Synchroniser
         VolleySingleton.getInstance(context).getRequestQueue().add(req);
     }
 
-    public static void sendToAPI(Context context, SkillEntity skill)
+    public void sendToAPI(Context context, SkillEntity skill)
     {
         Map<String, String> params = new HashMap();
         params.put("Name", skill.Name);
@@ -179,4 +189,70 @@ public class Synchroniser
                 });
         VolleySingleton.getInstance(context).getRequestQueue().add(req);
     }
+
+    public void getFromAPI(Context context)
+    {
+        // Characters
+        getCharactersApi(context);
+
+        // Players
+        getPlayersApi(context);
+
+        // Skills
+        getSkillsApi(context);
+    }
+
+    private void getCharactersApi(Context context)
+    {
+        // Get
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, APIPaths.getURL(context) + "api/characters", null, new Response.Listener<JSONArray>()
+        {
+            @Override
+            public void onResponse(JSONArray resp)
+            {
+                // Success
+                Log.d(this.toString(), "GET CHARACTERS SUCCESS");
+
+                for (int i = 0; i < resp.length(); i++)
+                {
+                    CharacterEntity characterEntity = new CharacterEntity();
+                    try
+                    {
+
+                        characterEntity.Id = Integer.valueOf(((JSONObject) resp.get(i)).getString("id"));
+                        characterEntity.Name = ((JSONObject) resp.get(i)).getString("name");
+                        characterEntity.IsRetired = Boolean.getBoolean(((JSONObject) resp.get(i)).getString("isRetired"));
+                        characterEntity.PlayerId = Integer.valueOf(((JSONObject) resp.get(i)).getString("playerId"));
+                    } catch (JSONException e)
+                    {
+                        Log.e(this.toString(), "Error Occured Parsing JSON", e);
+                        //e.printStackTrace();
+                    }
+                    Repository.getInstance().getCharacterRepository().insert(characterEntity);
+                }
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        // Fail
+                        Log.i(this.toString(), "GET CHARACTERS FAIL");
+                    }
+                });
+
+        VolleySingleton.getInstance(context).getRequestQueue().add(req);
+    }
+
+    private void getPlayersApi(Context context)
+    {
+
+    }
+
+    private void getSkillsApi(Context context)
+    {
+
+    }
+
 }
