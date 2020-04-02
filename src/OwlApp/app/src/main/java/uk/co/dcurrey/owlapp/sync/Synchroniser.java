@@ -202,9 +202,9 @@ public class Synchroniser
         getSkillsApi(context);
     }
 
+    // TODO - Refactor Request code (see uk.co.dcurrey.owlapp.api.requests)
     private void getCharactersApi(Context context)
     {
-        // Get
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, APIPaths.getURL(context) + "api/characters", null, new Response.Listener<JSONArray>()
         {
             @Override
@@ -223,9 +223,10 @@ public class Synchroniser
                         characterEntity.Name = ((JSONObject) resp.get(i)).getString("name");
                         characterEntity.IsRetired = Boolean.getBoolean(((JSONObject) resp.get(i)).getString("isRetired"));
                         characterEntity.PlayerId = Integer.valueOf(((JSONObject) resp.get(i)).getString("playerId"));
+                        characterEntity.IsSynced = true;
                     } catch (JSONException e)
                     {
-                        Log.e(this.toString(), "Error Occured Parsing JSON", e);
+                        Log.e(this.toString(), "Error Occurred Parsing JSON", e);
                         //e.printStackTrace();
                     }
                     Repository.getInstance().getCharacterRepository().insert(characterEntity);
@@ -247,12 +248,85 @@ public class Synchroniser
 
     private void getPlayersApi(Context context)
     {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, APIPaths.getURL(context) + "api/players", null, new Response.Listener<JSONArray>()
+        {
+            @Override
+            public void onResponse(JSONArray resp)
+            {
+                // Success
+                Log.d(this.toString(), "GET players SUCCESS");
 
+                for (int i = 0; i < resp.length(); i++)
+                {
+                    PlayerEntity playerEntity = new PlayerEntity();
+                    try
+                    {
+
+                        playerEntity.Id = Integer.valueOf(((JSONObject) resp.get(i)).getString("id"));
+                        playerEntity.FirstName = ((JSONObject) resp.get(i)).getString("firstName");
+                        playerEntity.LastName = ((JSONObject) resp.get(i)).getString("lastName");
+                        playerEntity.IsSynced = true;
+                    } catch (JSONException e)
+                    {
+                        Log.e(this.toString(), "Error Occurred Parsing JSON", e);
+                        //e.printStackTrace();
+                    }
+                    Repository.getInstance().getPlayerRepository().insert(playerEntity);
+                }
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        // Fail
+                        Log.i(this.toString(), "GET players FAIL");
+                    }
+                });
+
+        VolleySingleton.getInstance(context).getRequestQueue().add(req);
     }
 
     private void getSkillsApi(Context context)
     {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, APIPaths.getURL(context) + "api/skills", null, new Response.Listener<JSONArray>()
+        {
+            @Override
+            public void onResponse(JSONArray resp)
+            {
+                // Success
+                Log.d(this.toString(), "GET skills SUCCESS");
 
+                for (int i = 0; i < resp.length(); i++)
+                {
+                    SkillEntity skillEntity = new SkillEntity();
+                    try
+                    {
+
+                        skillEntity.Id = Integer.valueOf(((JSONObject) resp.get(i)).getString("id"));
+                        skillEntity.Name = ((JSONObject) resp.get(i)).getString("name");
+                        skillEntity.IsSynced = true;
+                    } catch (JSONException e)
+                    {
+                        Log.e(this.toString(), "Error Occurred Parsing JSON", e);
+                        //e.printStackTrace();
+                    }
+                    Repository.getInstance().getSkillRepository().insert(skillEntity);
+                }
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        // Fail
+                        Log.i(this.toString(), "GET skill FAIL");
+                    }
+                });
+
+        VolleySingleton.getInstance(context).getRequestQueue().add(req);
     }
 
 }
