@@ -1,5 +1,6 @@
 package uk.co.dcurrey.owlapp;
 
+import android.content.Intent;
 import android.net.Network;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,8 @@ import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
 public class MainActivity extends AppCompatActivity
 {
 
+    NetworkMonitor networkMonitor;
+
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -30,8 +33,7 @@ public class MainActivity extends AppCompatActivity
 
         OwlDatabase.getDb(this);
 
-        NetworkMonitor networkMonitor = new NetworkMonitor();
-        networkMonitor.enable(this);
+        setupNetworkMonitor();
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -47,6 +49,12 @@ public class MainActivity extends AppCompatActivity
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    private void setupNetworkMonitor()
+    {
+        networkMonitor = new NetworkMonitor();
+        networkMonitor.enable(this);
     }
 
     @Override
@@ -65,10 +73,17 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.action_settings:
                 // Settings
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                MainActivity.this.startActivity(settingsIntent);
                 return true;
 
             case R.id.action_getapi:
                 // Update DB
+                if (networkMonitor == null)
+                {
+                    setupNetworkMonitor();
+                }
+                networkMonitor.resetDb();
                 return true;
 
             default:

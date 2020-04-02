@@ -225,4 +225,41 @@ public class NetworkMonitor extends ConnectivityManager.NetworkCallback
                 });
         VolleySingleton.getInstance(context).getRequestQueue().add(req);
     }
+
+    // TODO - refactor
+    public void resetDb()
+    {
+        // Clear DB
+        OwlDatabase.databaseWriteExecutor.execute(() ->
+        {
+            OwlDatabase.getDb().skillDao().deleteAll();
+            OwlDatabase.getDb().characterDao().deleteAll();
+            OwlDatabase.getDb().playerDao().deleteAll();
+        });
+
+        // Repopulate Db
+        // TODO - Implement API Get Requests
+        // Dev:
+        OwlDatabase.databaseWriteExecutor.execute(() ->
+        {
+            SkillEntity skill = new SkillEntity();
+            skill.Name = "Repop Skill";
+            skill.IsSynced = false;
+            OwlDatabase.getDb().skillDao().insertAll(skill);
+
+            PlayerEntity player = new PlayerEntity();
+            player.FirstName = "Repopulated";
+            player.LastName = "Player";
+            player.IsSynced = false;
+            OwlDatabase.getDb().playerDao().insertAll(player);
+
+            CharacterEntity character = new CharacterEntity();
+            character.PlayerId = 42;
+            character.IsRetired = true;
+            character.IsSynced = false;
+            character.Name = "Repop Character";
+            OwlDatabase.getDb().characterDao().insertAll(character);
+
+        });
+    }
 }
