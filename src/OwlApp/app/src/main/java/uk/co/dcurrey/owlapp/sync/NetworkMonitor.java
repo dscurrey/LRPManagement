@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 
 import java.util.HashMap;
@@ -73,5 +74,12 @@ public class NetworkMonitor extends ConnectivityManager.NetworkCallback
                 Synchroniser.sendToAPI(mContext, skill);
             }
         }
+    }
+
+    public static boolean checkNetConnectivity(Context context)
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 }

@@ -38,6 +38,7 @@ import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillViewModel;
+import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -111,16 +112,9 @@ public class SkillFragment extends Fragment
         }
     }
 
-    public boolean checkNetConnectivity()
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
     private void saveSkill(SkillEntity skill)
     {
-        if (checkNetConnectivity())
+        if (NetworkMonitor.checkNetConnectivity(getContext()))
         {
             saveAPI(skill);
         }

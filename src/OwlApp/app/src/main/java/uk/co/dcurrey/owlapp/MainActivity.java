@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -80,7 +81,14 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_getapi:
                 // Update DB
                 // TODO - Check if any entities are un-synced and warn
-                Synchroniser.resetDb();
+                if (NetworkMonitor.checkNetConnectivity(this))
+                {
+                    Synchroniser.resetDb();
+                }
+                else
+                {
+                    Toast.makeText(this, "Not Connected to Network", Toast.LENGTH_SHORT).show();
+                }
                 return true;
 
             default:

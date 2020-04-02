@@ -38,6 +38,7 @@ import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerViewModel;
+import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -113,16 +114,9 @@ public class PlayerFragment extends Fragment
         }
     }
 
-    public boolean checkNetConnectivity()
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
     private void savePlayer(PlayerEntity player)
     {
-        if (checkNetConnectivity())
+        if (NetworkMonitor.checkNetConnectivity(getContext()))
         {
             saveApi(player);
         }

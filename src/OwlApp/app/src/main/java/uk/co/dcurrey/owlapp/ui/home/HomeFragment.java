@@ -38,6 +38,7 @@ import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
+import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -116,16 +117,9 @@ public class HomeFragment extends Fragment
         }
     }
 
-    public boolean checkNetConnectivity()
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
     private void saveCharacter(CharacterEntity characterEntity)
     {
-        if (checkNetConnectivity())
+        if (NetworkMonitor.checkNetConnectivity(getContext()))
         {
             Toast.makeText(getContext(), "DEBUG: Char -> API", Toast.LENGTH_LONG).show();
             saveAPI(characterEntity);
