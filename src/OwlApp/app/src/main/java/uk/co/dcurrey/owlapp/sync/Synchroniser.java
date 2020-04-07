@@ -6,7 +6,6 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
@@ -19,8 +18,6 @@ import java.util.Map;
 
 import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
-import uk.co.dcurrey.owlapp.api.requests.APIRequest;
-import uk.co.dcurrey.owlapp.api.requests.GETCharactersRequest;
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
@@ -310,7 +307,6 @@ public class Synchroniser
                     } catch (JSONException e)
                     {
                         Log.e(this.toString(), "Error Occurred Parsing JSON", e);
-                        //e.printStackTrace();
                     }
                     Repository.getInstance().getSkillRepository().insert(skillEntity);
                 }
