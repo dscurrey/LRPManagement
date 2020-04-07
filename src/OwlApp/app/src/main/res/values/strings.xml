@@ -34,6 +34,10 @@
     <string name="action_db">Update from Server</string>
     <string name="title_activity_settings">Settings</string>
 
+    <string name="pref_charId_key">uk.co.dcurrey.owlapp.CHARID</string>
+    <string name="pref_playerId_key">uk.co.dcurrey.owlapp.PLAYERID</string>
+    <string name="pref_skillId_key">uk.co.dcurrey.owlapp.SKILLID</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

@@ -1,6 +1,8 @@
 package uk.co.dcurrey.owlapp.ui.player;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import uk.co.dcurrey.owlapp.PlayerDetailsActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 
@@ -30,10 +33,16 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 
     private final LayoutInflater mInflater;
     private List<PlayerEntity> mPlayers; // player Cache
+    private final Context mContext;
+    SharedPreferences prefs;
+    SharedPreferences.Editor prefEditor;
 
     public PlayerListAdapter(Context context)
     {
         mInflater = LayoutInflater.from(context);
+        mContext = context;
+        prefs = mContext.getSharedPreferences(context.getString(R.string.pref_playerId_key), Context.MODE_PRIVATE);
+        prefEditor = prefs.edit();
     }
 
     @Override
@@ -50,6 +59,11 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             PlayerEntity current = mPlayers.get(pos);
             holder.playerFName.setText(current.FirstName);
             holder.playerLName.setText(current.LastName);
+
+            // OnClick
+            holder.itemView.setOnClickListener((v) -> {
+                openPlayer(current.Id);
+            });
         }
         else
         {
@@ -73,5 +87,13 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         }
         else
             return 0;
+    }
+
+    private void openPlayer(int playerId)
+    {
+        Intent intent = new Intent(mContext, PlayerDetailsActivity.class);
+        prefEditor.putInt(mContext.getString(R.string.pref_playerId_key), playerId);
+        prefEditor.apply();
+        mContext.startActivity(intent);
     }
 }

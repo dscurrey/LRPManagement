@@ -13,9 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SkillDetailsActivity"></activity>
+        <activity android:name=".PlayerDetailsActivity" />
+        <activity android:name=".CharacterDetailsActivity" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
 
         <receiver android:name=".sync.NetworkMonitor">
             <intent-filter>

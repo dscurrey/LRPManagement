@@ -1,6 +1,8 @@
 package uk.co.dcurrey.owlapp.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import uk.co.dcurrey.owlapp.CharacterDetailsActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 
@@ -35,10 +38,16 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     private final LayoutInflater mInflater;
     private List<CharacterEntity> mChars; // Character Cache
+    private final Context mContext;
+    SharedPreferences prefs;
+    SharedPreferences.Editor prefEditor;
 
     public CharacterListAdapter(Context context)
     {
         mInflater = LayoutInflater.from(context);
+        mContext = context;
+        prefs = mContext.getSharedPreferences(context.getString(R.string.pref_charId_key), Context.MODE_PRIVATE);
+        prefEditor = prefs.edit();
     }
 
     @Override
@@ -62,13 +71,17 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             {
                 //SYNC OK
                 holder.charSyncView.setImageResource(R.drawable.ok);
-
             }
             else
             {
                 holder.charSyncView.setImageResource(R.drawable.fail);
             }
             holder.charSyncView.setVisibility(View.VISIBLE);
+
+            // OnClick
+            holder.itemView.setOnClickListener((v) -> {
+                openCharacter(current.Id);
+            });
         }
         else
         {
@@ -76,6 +89,14 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             holder.charNameView.setText("No Characters Loaded");
             holder.charSyncView.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void openCharacter(int charId)
+    {
+        Intent intent = new Intent(mContext, CharacterDetailsActivity.class);
+        prefEditor.putInt(mContext.getString(R.string.pref_charId_key), charId);
+        prefEditor.apply();
+        mContext.startActivity(intent);
     }
 
     public void setChars(List<CharacterEntity> characters)
