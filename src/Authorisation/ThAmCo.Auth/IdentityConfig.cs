@@ -27,6 +27,11 @@ namespace LRP.Auth
                 new ApiResource("lrp_account_api", "LRP Account Management")
                 {
                     UserClaims = { "name", "role" }
+                },
+
+                new ApiResource("lrp_web_api", "LRP Web Services")
+                {
+                    UserClaims = {"name", "role" }
                 }
             };
         }
@@ -68,7 +73,6 @@ namespace LRP.Auth
                     {
                         // Interact with auth server
                         "lrp_account_api",
-
                         // Use LRP API
                         "lrp_web_api",
 

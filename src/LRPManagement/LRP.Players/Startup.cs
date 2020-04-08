@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -49,6 +50,20 @@ namespace LRP.Players
 
             services.AddControllers();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+
+            // Auth
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            // Config Auth Middleware
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer
+                (
+                    "Bearer", options =>
+                    {
+                        // URL of Auth server
+                        options.Authority = "https://localhost:5099";
+                        options.Audience = "lrp_web_api";
+                    }
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +74,8 @@ namespace LRP.Players
                 logger.LogInformation("In Development Environment");
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 
