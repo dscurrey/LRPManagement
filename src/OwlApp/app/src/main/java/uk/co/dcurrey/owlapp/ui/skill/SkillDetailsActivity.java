@@ -40,6 +40,12 @@ public class SkillDetailsActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Toast.makeText(SkillDetailsActivity.this, "DEBUG: Skill Updated", Toast.LENGTH_SHORT).show();
+                if (skill.Name != skillName.getText().toString())
+                {
+                    skill.Name = skillName.getText().toString();
+                    skill.IsSynced = false;
+                    Repository.getInstance().getSkillRepository().update(skill);
+                }
                 finish();
             }
         });

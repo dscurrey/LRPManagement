@@ -64,7 +64,7 @@ public enum SkillRepository
             new insertSkillEntitiesAsyncTask(mSkillDao, skill).execute().get();
         } catch (ExecutionException | InterruptedException e)
         {
-            Log.e(this.name(), "An error occurred inserting characters into the database", e);
+            Log.e(this.name(), "An error occurred inserting skills into the database", e);
         }
     }
 
@@ -103,6 +103,35 @@ public enum SkillRepository
         protected Void doInBackground(final Void... voids)
         {
             mDao.insertAll(skillEntity);
+            return null;
+        }
+    }
+
+    public void update(SkillEntity skillEntity)
+    {
+        try
+        {
+            new updateSkillEntitiesAsyncTask(mSkillDao, skillEntity).execute().get();
+        } catch (ExecutionException | InterruptedException e)
+        {
+            Log.e(this.name(), "DB Error Occurred");
+        }
+    }
+
+    private static class updateSkillEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
+    {
+        private SkillDao mDao;
+        private SkillEntity skillEntity;
+
+        updateSkillEntitiesAsyncTask(SkillDao skillDao, SkillEntity skill)
+        {
+            mDao = skillDao;
+            skillEntity = skill;
+        }
+
+        protected Void doInBackground(final Void... voids)
+        {
+            mDao.update(skillEntity);
             return null;
         }
     }

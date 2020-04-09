@@ -41,6 +41,13 @@ public class PlayerDetailsActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Toast.makeText(PlayerDetailsActivity.this, "DEBUG: Player Updated", Toast.LENGTH_SHORT).show();
+                if (player.FirstName != playerFname.getText().toString() || player.LastName != playerLname.getText().toString())
+                {
+                    player.FirstName = playerFname.getText().toString();
+                    player.LastName = playerLname.getText().toString();
+                    player.IsSynced = false;
+                    Repository.getInstance().getPlayerRepository().update(player);
+                }
                 finish();
             }
         });
