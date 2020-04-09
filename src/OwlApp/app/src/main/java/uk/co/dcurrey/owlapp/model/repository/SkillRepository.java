@@ -46,6 +46,7 @@ public enum SkillRepository
 
     public SkillEntity get(int id)
     {
+        loadFromDatabase();
         return mSkills.get(id);
     }
 

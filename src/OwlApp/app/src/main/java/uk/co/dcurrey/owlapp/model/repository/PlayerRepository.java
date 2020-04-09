@@ -41,6 +41,7 @@ public enum PlayerRepository
 
     public PlayerEntity get(int id)
     {
+        loadFromDatabase();
         return mPlayers.get(id);
     }
 
