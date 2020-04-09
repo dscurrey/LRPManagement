@@ -1,4 +1,4 @@
-package uk.co.dcurrey.owlapp.ui.home;
+package uk.co.dcurrey.owlapp.ui.character;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

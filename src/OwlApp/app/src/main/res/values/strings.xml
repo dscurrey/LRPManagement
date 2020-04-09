@@ -2,12 +2,12 @@
     <string name="app_name">OwlApp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">OwlApp</string>
+    <string name="nav_header_subtitle">LRP Refereeing</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Characters</string>
     <string name="menu_skill">Skill</string>
     <string name="menu_player">Player</string>
 
@@ -34,6 +34,10 @@
     <string name="action_db">Update from Server</string>
     <string name="title_activity_settings">Settings</string>
 
+    <string name="pref_charId_key">uk.co.dcurrey.owlapp.CHARID</string>
+    <string name="pref_playerId_key">uk.co.dcurrey.owlapp.PLAYERID</string>
+    <string name="pref_skillId_key">uk.co.dcurrey.owlapp.SKILLID</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -48,4 +52,19 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- Details Pages -->
+    <string name="detailsName">Name: </string>
+    <string name="skillNameHint">Skill Name</string>
+    <string name="skillDetailsTitle">Skill Details</string>
+    <string name="saveSkill">Save Skill</string>
+    <string name="playerDetailsTitle">Player Details</string>
+    <string name="playerDetailsFName">First Name: </string>
+    <string name="playerDetailsLName">Last Name: </string>
+    <string name="playerNameHint">Player Name</string>
+    <string name="savePlayer">Save Player</string>
+    <string name="charDetailsTitle">Character Details</string>
+    <string name="charNameHint">Character Name</string>
+    <string name="charIsRetired">Is Retired?</string>
+    <string name="saveChar">Save Character</string>
 </resources>

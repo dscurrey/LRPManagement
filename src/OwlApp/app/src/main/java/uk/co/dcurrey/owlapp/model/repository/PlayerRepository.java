@@ -41,6 +41,7 @@ public enum PlayerRepository
 
     public PlayerEntity get(int id)
     {
+        loadFromDatabase();
         return mPlayers.get(id);
     }
 
@@ -97,6 +98,35 @@ public enum PlayerRepository
         protected Void doInBackground(final Void... voids)
         {
             mDao.insertAll(playerEntity);
+            return null;
+        }
+    }
+
+    public void update(PlayerEntity playerEntity)
+    {
+        try
+        {
+            new updatePlayerEntitiesAsyncTask(mPlayerDao, playerEntity).execute().get();
+        } catch (ExecutionException | InterruptedException e)
+        {
+            Log.e(this.name(), "DB Error Occurred");
+        }
+    }
+
+    private static class updatePlayerEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
+    {
+        private PlayerDao mDao;
+        private PlayerEntity playerEntity;
+
+        updatePlayerEntitiesAsyncTask(PlayerDao playerDao, PlayerEntity player)
+        {
+            mDao = playerDao;
+            playerEntity = player;
+        }
+
+        protected Void doInBackground(final Void... voids)
+        {
+            mDao.update(playerEntity);
             return null;
         }
     }

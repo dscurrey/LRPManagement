@@ -1,9 +1,6 @@
-package uk.co.dcurrey.owlapp.ui.home;
+package uk.co.dcurrey.owlapp.ui.character;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import uk.co.dcurrey.owlapp.NewCharacterActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;

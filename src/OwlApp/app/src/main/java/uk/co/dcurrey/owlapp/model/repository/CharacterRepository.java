@@ -44,6 +44,7 @@ public enum CharacterRepository
 
     public CharacterEntity get(int id)
     {
+        loadFromDatabase();
         return mCharacters.get(id);
     }
 
@@ -100,6 +101,35 @@ public enum CharacterRepository
         protected Void doInBackground(final Void... voids)
         {
             mDao.insertAll(characterEntity);
+            return null;
+        }
+    }
+
+    public void update(CharacterEntity characterEntity)
+    {
+        try
+        {
+            new updateCharacterEntitiesAsyncTask(mCharacterDao, characterEntity).execute().get();
+        } catch (ExecutionException | InterruptedException e)
+        {
+            Log.e(this.name(), "DB Error Occurred");
+        }
+    }
+
+    private static class updateCharacterEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
+    {
+        private CharacterDao mDao;
+        private CharacterEntity characterEntity;
+
+        updateCharacterEntitiesAsyncTask(CharacterDao characterDao, CharacterEntity character)
+        {
+            mDao = characterDao;
+            characterEntity = character;
+        }
+
+        protected Void doInBackground(final Void... voids)
+        {
+            mDao.update(characterEntity);
             return null;
         }
     }
