@@ -50,6 +50,6 @@ public class CharacterDetailsActivity extends AppCompatActivity
     {
         charName = findViewById(R.id.detailsCharName);
         isRetired = findViewById(R.id.detailsCharIsRetired);
-        saveChanges = findViewById(R.id.btnEditChar);
+        saveChanges = findViewById(R.id.btnEditCharacter);
     }
 }

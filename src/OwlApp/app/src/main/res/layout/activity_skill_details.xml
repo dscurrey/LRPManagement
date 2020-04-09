@@ -6,11 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".ui.skill.SkillDetailsActivity">
 
-    <TextView
-        android:id="@+id/textView4"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Skill Details Placeholder"
-        android:gravity="center" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Skill Details"
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name:"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/detailsSkillName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Skill Name"
+                        android:inputType="textPersonName" />
+
+                </TableRow>
+
+            </TableLayout>
+        </FrameLayout>
+
+
+        <Button
+            android:id="@+id/btnEditSkill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Skill" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
