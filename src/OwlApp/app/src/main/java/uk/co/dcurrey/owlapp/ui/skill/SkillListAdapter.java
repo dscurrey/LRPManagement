@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import uk.co.dcurrey.owlapp.R;
-import uk.co.dcurrey.owlapp.SkillDetailsActivity;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 
 public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.SkillViewHolder>

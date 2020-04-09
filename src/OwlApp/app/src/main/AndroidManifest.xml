@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SkillDetailsActivity"></activity>
-        <activity android:name=".PlayerDetailsActivity" />
-        <activity android:name=".CharacterDetailsActivity" />
+        <activity android:name=".ui.skill.SkillDetailsActivity"></activity>
+        <activity android:name=".ui.player.PlayerDetailsActivity" />
+        <activity android:name=".ui.character.CharacterDetailsActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -26,9 +26,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".NewSkillActivity" />
-        <activity android:name=".NewPlayerActivity" />
-        <activity android:name=".NewCharacterActivity" />
+        <activity android:name=".ui.skill.NewSkillActivity" />
+        <activity android:name=".ui.player.NewPlayerActivity" />
+        <activity android:name=".ui.character.NewCharacterActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

@@ -1,10 +1,12 @@
-package uk.co.dcurrey.owlapp;
+package uk.co.dcurrey.owlapp.ui.player;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import uk.co.dcurrey.owlapp.R;
 
 public class PlayerDetailsActivity extends AppCompatActivity
 {

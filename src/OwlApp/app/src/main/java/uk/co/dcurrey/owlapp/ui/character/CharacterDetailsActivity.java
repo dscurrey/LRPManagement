@@ -1,9 +1,6 @@
-package uk.co.dcurrey.owlapp;
+package uk.co.dcurrey.owlapp.ui.character;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,13 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
+import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
-import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
 import uk.co.dcurrey.owlapp.model.repository.Repository;
 
 public class CharacterDetailsActivity extends AppCompatActivity

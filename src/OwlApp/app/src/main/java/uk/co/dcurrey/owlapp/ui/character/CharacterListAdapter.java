@@ -1,4 +1,4 @@
-package uk.co.dcurrey.owlapp.ui.home;
+package uk.co.dcurrey.owlapp.ui.character;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import uk.co.dcurrey.owlapp.CharacterDetailsActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 

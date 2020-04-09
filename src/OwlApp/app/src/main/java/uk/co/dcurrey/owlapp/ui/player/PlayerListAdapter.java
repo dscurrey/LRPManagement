@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import uk.co.dcurrey.owlapp.PlayerDetailsActivity;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 

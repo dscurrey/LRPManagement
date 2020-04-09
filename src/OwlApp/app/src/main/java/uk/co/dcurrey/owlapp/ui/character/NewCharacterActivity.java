@@ -1,4 +1,4 @@
-package uk.co.dcurrey.owlapp;
+package uk.co.dcurrey.owlapp.ui.character;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import uk.co.dcurrey.owlapp.R;
 
 public class NewCharacterActivity extends AppCompatActivity
 {
