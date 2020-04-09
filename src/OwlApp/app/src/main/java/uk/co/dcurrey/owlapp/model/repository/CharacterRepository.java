@@ -44,6 +44,7 @@ public enum CharacterRepository
 
     public CharacterEntity get(int id)
     {
+        loadFromDatabase();
         return mCharacters.get(id);
     }
 
