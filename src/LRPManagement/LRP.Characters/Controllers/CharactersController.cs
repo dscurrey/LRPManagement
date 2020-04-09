@@ -33,7 +33,7 @@ namespace LRP.Characters.Controllers
         public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacter()
         {
             var chars = await _repository.GetAll();
-            return chars.Select
+            return Ok(chars.Select
             (
                 c => new CharacterDTO
                 {
@@ -43,7 +43,7 @@ namespace LRP.Characters.Controllers
                     Name = c.Name,
                     PlayerId = c.PlayerId
                 }
-            ).ToList();
+            ).ToList());
         }
 
         // GET: api/Characters/5
@@ -66,7 +66,7 @@ namespace LRP.Characters.Controllers
                 PlayerId = character.PlayerId
             };
 
-            return charDto;
+            return Ok(charDto);
         }
 
         // PUT: api/Characters/5
@@ -88,6 +88,11 @@ namespace LRP.Characters.Controllers
                 IsRetired = character.IsRetired,
                 Name = character.Name
             };
+
+            if (!await CharacterExists(id))
+            {
+                return NotFound();
+            }
 
             _repository.UpdateCharacter(updChar);
 
@@ -118,6 +123,11 @@ namespace LRP.Characters.Controllers
         public async Task<ActionResult<Character>> PostCharacter(CharacterDTO character)
         {
             // TODO - At Char Creation, populate player id using OAUTH/PlayerRepo?
+
+            if (String.IsNullOrEmpty(character.Name))
+            {
+                return BadRequest("Name cannot be empty.");
+            }
 
             var newCharacter = new Character
             {
