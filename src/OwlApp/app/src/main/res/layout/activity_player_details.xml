@@ -15,7 +15,7 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Player Details"
+            android:text="@string/playerDetailsTitle"
             android:textAlignment="center"
             android:textSize="30sp" />
 
@@ -35,7 +35,7 @@
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="First Name:"
+                        android:text="@string/playerDetailsFName"
                         android:textSize="20sp" />
 
                     <EditText
@@ -43,7 +43,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Player Name"
+                        android:hint="@string/playerNameHint"
                         android:inputType="textPersonName" />
 
                 </TableRow>
@@ -56,7 +56,7 @@
                         android:id="@+id/textView7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Last Name:"
+                        android:text="@string/playerDetailsLName"
                         android:textSize="20sp" />
 
                     <EditText
@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Player Name"
+                        android:hint="@string/playerNameHint"
                         android:inputType="textPersonName" />
 
                 </TableRow>
@@ -77,7 +77,7 @@
             android:id="@+id/btnEditPlayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Player" />
+            android:text="@string/savePlayer" />
 
     </LinearLayout>
 
