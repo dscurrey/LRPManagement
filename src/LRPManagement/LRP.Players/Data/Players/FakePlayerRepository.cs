@@ -43,7 +43,9 @@ namespace LRP.Players.Data.Players
 
         public void UpdatePlayer(Player player)
         {
-            throw new NotImplementedException();
+            var tgt = _players.Find(s => s.Id == player.Id);
+            _players.Remove(tgt);
+            _players.Add(player);
         }
     }
 }
