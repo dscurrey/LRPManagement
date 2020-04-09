@@ -43,7 +43,9 @@ namespace LRP.Skills.Data.Skills
 
         public void UpdateSkill(Skill skill)
         {
-            throw new NotImplementedException();
+            var tgt = _skills.Find(s => s.Id == skill.Id);
+            _skills.Remove(tgt);
+            _skills.Add(skill);
         }
     }
 }
