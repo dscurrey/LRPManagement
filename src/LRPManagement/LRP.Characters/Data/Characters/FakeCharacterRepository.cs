@@ -28,7 +28,7 @@ namespace LRP.Characters.Data.Characters
 
         public Task<Character> GetCharacter(int id)
         {
-            return Task.FromResult(_characters.Where(c => c.Id == id).FirstOrDefault());
+            return Task.FromResult(_characters.FirstOrDefault(c => c.Id == id));
         }
 
         public void InsertCharacter(Character character)
@@ -43,7 +43,9 @@ namespace LRP.Characters.Data.Characters
 
         public void UpdateCharacter(Character character)
         {
-            throw new NotImplementedException();
+            var tgt = _characters.Find(s => s.Id == character.Id);
+            _characters.Remove(tgt);
+            _characters.Add(character);
         }
     }
 }

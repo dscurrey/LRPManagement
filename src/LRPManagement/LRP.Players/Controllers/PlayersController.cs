@@ -33,7 +33,7 @@ namespace LRP.Players.Controllers
         public async Task<ActionResult<IEnumerable<PlayerDTO>>> GetPlayer()
         {
             var players = await _repository.GetAll();
-            return players.Select
+            return Ok(players.Select
             (
                 p => new PlayerDTO
                 {
@@ -42,7 +42,7 @@ namespace LRP.Players.Controllers
                     FirstName = p.FirstName,
                     LastName = p.LastName
                 }
-            ).ToList();
+            ).ToList());
         }
 
         // GET: api/Players/5
@@ -64,7 +64,7 @@ namespace LRP.Players.Controllers
                 LastName = player.LastName
             };
 
-            return playDto;
+            return Ok(playDto);
         }
 
         // PUT: api/Players/5
@@ -86,6 +86,11 @@ namespace LRP.Players.Controllers
                 LastName = player.LastName,
                 IsActive = true
             };
+
+            if (!await PlayerExists(id))
+            {
+                return NotFound();
+            }
 
             _repository.UpdatePlayer(updPlayer);
 
@@ -117,6 +122,11 @@ namespace LRP.Players.Controllers
         public async Task<ActionResult<Player>> PostPlayer(PlayerDTO player)
         {
             // TODO - At player creation, create user in auth server
+
+            if (String.IsNullOrEmpty(player.FirstName) || String.IsNullOrEmpty(player.LastName))
+            {
+                return BadRequest("Requires First and Last Names");
+            }
 
             var newPlayer = new Player
             {

@@ -31,14 +31,14 @@ namespace LRP.Skills.Controllers
         public async Task<ActionResult<IEnumerable<SkillDTO>>> GetSkill()
         {
             var skills =  await _repository.GetAll();
-            return skills.Select
+            return Ok(skills.Select
             (
                 s => new SkillDTO
                 {
                     Id = s.Id,
                     Name = s.Name
                 }
-            ).ToList();
+            ).ToList());
         }
 
         // GET: api/Skills/5
@@ -58,7 +58,7 @@ namespace LRP.Skills.Controllers
                 Name = skill.Name
             };
 
-            return skillDto;
+            return Ok(skillDto);
         }
 
         // PUT: api/Skills/5
@@ -77,6 +77,11 @@ namespace LRP.Skills.Controllers
                 Id = skill.Id,
                 Name = skill.Name
             };
+
+            if (!await SkillExists(id))
+            {
+                return NotFound();
+            }
 
             _repository.UpdateSkill(updSkill);
 
@@ -107,6 +112,11 @@ namespace LRP.Skills.Controllers
         [HttpPost]
         public async Task<ActionResult<Skill>> PostSkill(SkillDTO skill)
         {
+            if (String.IsNullOrEmpty(skill.Name))
+            {
+                return BadRequest("Name cannot be empty");
+            }
+
             var newSkill = new Skill
             {
                 Id = skill.Id,
