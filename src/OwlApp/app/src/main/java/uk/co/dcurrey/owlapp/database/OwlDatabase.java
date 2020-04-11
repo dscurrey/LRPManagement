@@ -80,6 +80,8 @@ public abstract class OwlDatabase extends RoomDatabase
                 charDao.insertAll(character);
                 character.Name = "Test2";
                 charDao.insertAll(character);
+                character.Name = "Character";
+                charDao.insertAll(character);
 
                 PlayerDao playDao = INSTANCE.playerDao();
                 playDao.deleteAll();
