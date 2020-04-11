@@ -25,7 +25,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_player"
-                tools:listitem="@layout/recycler_item_character"
+                tools:listitem="@layout/recycler_item_skill"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </FrameLayout>
