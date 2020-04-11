@@ -2,9 +2,12 @@ package uk.co.dcurrey.owlapp.ui.player;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +36,7 @@ import java.util.Map;
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.api.APIPaths;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
@@ -44,6 +49,9 @@ public class PlayerFragment extends Fragment
     private PlayerUIViewModel slideshowViewModel;
     public static final int NEW_PLAYER_ACTIVITY_REQUEST_CODE = 1;
     private uk.co.dcurrey.owlapp.database.player.PlayerViewModel mPlayerViewModel;
+    private PlayerListAdapter adapter;
+    private EditText searchTerm;
+    private List<PlayerEntity> players;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -51,19 +59,12 @@ public class PlayerFragment extends Fragment
         slideshowViewModel =
                 ViewModelProviders.of(this).get(PlayerUIViewModel.class);
         View root = inflater.inflate(R.layout.fragment_player, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
-        {
-            @Override
-            public void onChanged(@Nullable String s)
-            {
-                textView.setText(s);
-            }
-        });
+
+        searchTerm = root.findViewById(R.id.playerSearch);
 
         // RecyclerView
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview_player);
-        final PlayerListAdapter adapter = new PlayerListAdapter(getContext());
+        adapter = new PlayerListAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -74,7 +75,8 @@ public class PlayerFragment extends Fragment
             @Override
             public void onChanged(List<PlayerEntity> playerEntities)
             {
-                adapter.setPlayers(playerEntities);
+                players = playerEntities;
+                adapter.setPlayers(players);
             }
         });
 
@@ -90,7 +92,40 @@ public class PlayerFragment extends Fragment
             }
         });
 
+        searchTerm.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                filter(s.toString());
+            }
+        });
         return root;
+    }
+
+    private void filter(String text)
+    {
+        List<PlayerEntity> filteredPlayers = new ArrayList<>();
+        for (PlayerEntity p : players)
+        {
+            if ((p.FirstName.toLowerCase().contains(text.toLowerCase())) || (p.LastName.toLowerCase().contains(text.toLowerCase())) || String.valueOf(p.Id).contains(text))
+            {
+                filteredPlayers.add(p);
+            }
+        }
+        adapter.setPlayers(filteredPlayers);
     }
 
     public void onActivityResult(int reqCode, int resCode, Intent data)
