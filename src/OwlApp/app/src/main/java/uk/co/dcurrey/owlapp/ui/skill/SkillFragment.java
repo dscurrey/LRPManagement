@@ -2,9 +2,12 @@ package uk.co.dcurrey.owlapp.ui.skill;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +47,9 @@ public class SkillFragment extends Fragment
     private SkillUIViewModel skillUIViewModel;
     public static final int NEW_SKILL_ACTIVITY_REQUEST_CODE = 1;
     private SkillViewModel mSkillViewModel;
+    private SkillListAdapter adapter;
+    private EditText searchTerm;
+    private List<SkillEntity> skills;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -50,19 +57,12 @@ public class SkillFragment extends Fragment
         skillUIViewModel =
                 ViewModelProviders.of(this).get(SkillUIViewModel.class);
         View root = inflater.inflate(R.layout.fragment_skill, container, false);
-        final TextView textView = root.findViewById(R.id.text_skill);
-        skillUIViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
-        {
-            @Override
-            public void onChanged(@Nullable String s)
-            {
-                textView.setText(s);
-            }
-        });
+
+        searchTerm = root.findViewById(R.id.skillSearch);
 
         // Recycler
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview_skill);
-        final SkillListAdapter adapter = new SkillListAdapter(getContext());
+        adapter = new SkillListAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -73,7 +73,8 @@ public class SkillFragment extends Fragment
             @Override
             public void onChanged(List<SkillEntity> skillEntities)
             {
-                adapter.setSkills(skillEntities);
+                skills = skillEntities;
+                adapter.setSkills(skills);
             }
         });
 
@@ -89,7 +90,41 @@ public class SkillFragment extends Fragment
             }
         });
 
+        searchTerm.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                filter(s.toString());
+            }
+        });
+
         return root;
+    }
+
+    private void filter(String text)
+    {
+        List<SkillEntity> filteredSkills = new ArrayList<>();
+        for (SkillEntity s : skills)
+        {
+            if ((s.Name.toLowerCase().contains(text.toLowerCase()) || (String.valueOf(s.Id).contains(text)) ))
+            {
+                filteredSkills.add(s);
+            }
+        }
+        adapter.setSkills(filteredSkills);
     }
 
     public void onActivityResult(int reqCode, int resCode, Intent data)

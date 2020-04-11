@@ -67,4 +67,7 @@
     <string name="charNameHint">Character Name</string>
     <string name="charIsRetired">Is Retired?</string>
     <string name="saveChar">Save Character</string>
+    <string name="char_search">Search for Character...</string>
+    <string name="player_search">Search for Player...</string>
+    <string name="skill_search">Search for Skill...</string>
 </resources>

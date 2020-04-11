@@ -2,9 +2,12 @@ package uk.co.dcurrey.owlapp.ui.character;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +48,9 @@ public class HomeFragment extends Fragment
     private HomeViewModel homeViewModel;
     public static final int NEW_CHAR_ACTIVITY_REQUEST_CODE = 1;
     private CharacterViewModel mCharacterViewModel;
+    private CharacterListAdapter adapter;
+    private EditText searchTerm;
+    private List<CharacterEntity> characters;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -51,19 +58,11 @@ public class HomeFragment extends Fragment
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
-        {
-            @Override
-            public void onChanged(@Nullable String s)
-            {
-                textView.setText(s);
-            }
-        });
 
         // Recycler
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
-        final CharacterListAdapter adapter = new CharacterListAdapter(getContext());
+        searchTerm = root.findViewById(R.id.charSearch);
+        adapter = new CharacterListAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -75,7 +74,8 @@ public class HomeFragment extends Fragment
             public void onChanged(List<CharacterEntity> characterEntities)
             {
                 // Update char cache in adapter
-                adapter.setChars(characterEntities);
+                characters = characterEntities;
+                adapter.setChars(characters);
             }
         });
 
@@ -91,8 +91,41 @@ public class HomeFragment extends Fragment
             }
         });
 
+        searchTerm.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                filter(s.toString());
+            }
+        });
 
         return root;
+    }
+
+    private void filter(String text)
+    {
+        List<CharacterEntity> filteredChars = new ArrayList<>();
+        for(CharacterEntity c : characters)
+        {
+            if (c.Name.toLowerCase().contains(text.toLowerCase()) || String.valueOf(c.Id).contains(text))
+            {
+                filteredChars.add(c);
+            }
+        }
+        adapter.setChars(filteredChars);
     }
 
     public void onActivityResult(int reqCode, int resCode, Intent data)
