@@ -119,7 +119,7 @@ public class SkillFragment extends Fragment
         List<SkillEntity> filteredSkills = new ArrayList<>();
         for (SkillEntity s : skills)
         {
-            if ((s.Name.contains(text) || (String.valueOf(s.Id).contains(text)) ))
+            if ((s.Name.toLowerCase().contains(text.toLowerCase()) || (String.valueOf(s.Id).contains(text)) ))
             {
                 filteredSkills.add(s);
             }
