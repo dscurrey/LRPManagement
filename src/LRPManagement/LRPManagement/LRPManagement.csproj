@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200413210210_ImproveCharacters.cs" />
+    <Compile Remove="Data\Migrations\20200413210210_ImproveCharacters.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200413210436_ImproveCharacters.cs" />
+    <Compile Remove="Data\Migrations\20200413210436_ImproveCharacters.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNet.WebApi.Client" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />

@@ -31,6 +31,14 @@ namespace LRPManagement.Data
             context.SaveChanges();
 
             // TODO - Seed Players
+            var players = new Player[]
+            {
+                new Player {Id = 1, Name = "Player"}
+            };
+            foreach (var p in players)
+            {
+                context.Players.Add(p);
+            }
             // TODO - Seed Characters
         }
     }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Characters;
+using LRPManagement.Models;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
@@ -15,16 +16,43 @@ namespace LRPManagement.Controllers
     public class CharactersController : Controller
     {
         private readonly ICharacterService _characterService;
+        private readonly ICharacterRepository _characterRepository;
 
-        public CharactersController(ICharacterService characterService)
+        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository)
         {
             _characterService = characterService;
+            _characterRepository = characterRepository;
         }
 
         // GET: Characters
         public async Task<IActionResult> Index()
         {
             TempData["CharInoperativeMsg"] = "";
+
+            try
+            {
+                var characters = await _characterService.GetAll();
+                if (characters != null)
+                {
+                    foreach (var character in characters)
+                    {
+                        var newChar = new Character
+                        {
+                            Name = character.Name,
+                            IsActive = character.IsActive,
+                            IsRetired = character.IsRetired,
+                            PlayerId = 1
+                        };
+                        _characterRepository.InsertCharacter(newChar);
+                    }
+                }
+                await _characterRepository.Save();
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
+
             try
             {
                 var characters = await _characterService.GetAll();
