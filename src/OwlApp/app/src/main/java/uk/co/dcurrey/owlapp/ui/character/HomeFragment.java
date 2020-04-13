@@ -150,7 +150,6 @@ public class HomeFragment extends Fragment
     {
         if (NetworkMonitor.checkNetConnectivity(getContext()))
         {
-            Toast.makeText(getContext(), "DEBUG: Char -> API", Toast.LENGTH_LONG).show();
             saveAPI(characterEntity);
         }
         else
