@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Skills;
+using LRPManagement.Models;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
@@ -15,16 +17,40 @@ namespace LRPManagement.Controllers
     public class SkillsController : Controller
     {
         private readonly ISkillService _skillService;
+        private readonly ISkillRepository _skillRepository;
 
-        public SkillsController(ISkillService skillService)
+        public SkillsController(ISkillService skillService, ISkillRepository skillRepository)
         {
             _skillService = skillService;
+            _skillRepository = skillRepository;
         }
 
         // GET: Skills
         public async Task<IActionResult> Index()
         {
             TempData["SkillInoperativeMsg"] = "";
+
+            try
+            {
+                var skills = await _skillService.GetAll();
+                if (skills != null)
+                {
+                    foreach (var skill in skills)
+                    {
+                        var newSkill = new Skill
+                        {
+                            Name = skill.Name
+                        };
+                        _skillRepository.InsertSkill(newSkill);
+                    }
+                }
+                await _skillRepository.Save();
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
+
             try
             {
                 var skills = await _skillService.GetAll();

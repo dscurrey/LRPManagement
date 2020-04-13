@@ -62,6 +62,8 @@ namespace LRPManagement
             services.AddScoped<IPlayerService, PlayerService>();
 
             services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

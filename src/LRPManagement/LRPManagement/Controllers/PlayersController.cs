@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Players;
+using LRPManagement.Models;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
@@ -15,16 +16,40 @@ namespace LRPManagement.Controllers
     public class PlayersController : Controller
     {
         private readonly IPlayerService _playerService;
+        private readonly IPlayerRepository _playerRepository;
 
-        public PlayersController(IPlayerService playerService)
+        public PlayersController(IPlayerService playerService, IPlayerRepository playerRepository)
         {
             _playerService = playerService;
+            _playerRepository = playerRepository;
         }
 
         // GET: Players
         public async Task<IActionResult> Index()
         {
             TempData["PlayInoperativeMsg"] = "";
+
+            try
+            {
+                var players = await _playerService.GetAll();
+                if (players != null)
+                {
+                    foreach (var player in players)
+                    {
+                        var newPlayer = new Player
+                        {
+                            Name = player.FirstName+" "+player.LastName
+                        };
+                        _playerRepository.InsertPlayer(newPlayer);
+                    }
+                }
+                await _playerRepository.Save();
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
+
             try
             {
                 var players = await _playerService.GetAll();

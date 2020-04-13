@@ -29,6 +29,11 @@ namespace LRPManagement.Data
                 .HasKey(c => new { c.CharId, c.SkillId });
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Player>().HasData
+            (
+                new Player {Id = 1, Name = "Test Character"}
+            );
         }
     }
 }
