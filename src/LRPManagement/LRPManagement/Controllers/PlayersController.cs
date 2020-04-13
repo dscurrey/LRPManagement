@@ -198,7 +198,7 @@ namespace LRPManagement.Controllers
 
         private void HandleBrokenCircuit()
         {
-            TempData["PlaInoperativeMsg"] = "Player Service Currently Unavailable";
+            TempData["PlayInoperativeMsg"] = "Player Service Currently Unavailable";
         }
     }
 }
