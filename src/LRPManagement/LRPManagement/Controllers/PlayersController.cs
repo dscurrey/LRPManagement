@@ -118,6 +118,14 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
+            var newPlayer = new Player
+            {
+                Name = playerDTO.FirstName + " " + playerDTO.LastName
+            };
+
+            _playerRepository.InsertPlayer(newPlayer);
+            await _playerRepository.Save();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -164,6 +172,15 @@ namespace LRPManagement.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
+                var updPlayer = new Player
+                {
+                    Id = playerDTO.Id,
+                    Name = playerDTO.FirstName + " " + playerDTO.LastName
+                };
+
+                _playerRepository.UpdatePlayer(updPlayer);
+                await _playerRepository.Save();
             }
             catch (BrokenCircuitException)
             {
@@ -206,6 +223,9 @@ namespace LRPManagement.Controllers
             try
             {
                 await _playerService.DeletePlayer(id);
+
+                await _playerRepository.DeletePlayer(id);
+                await _playerRepository.Save();
             }
             catch (BrokenCircuitException)
             {

@@ -119,6 +119,14 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
+            var newSkill = new Skill
+            {
+                Name = skillDTO.Name
+            };
+            
+            _skillRepository.InsertSkill(newSkill);
+            await _skillRepository.Save();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -165,6 +173,14 @@ namespace LRPManagement.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
+                var updSkill = new Skill
+                {
+                    Name = skillDTO.Name
+                };
+
+                _skillRepository.UpdateSkill(updSkill);
+                await _skillRepository.Save();
             }
             catch (BrokenCircuitException)
             {
@@ -207,6 +223,9 @@ namespace LRPManagement.Controllers
             try
             {
                 await _skillService.DeleteSkill(id);
+
+                _skillRepository.DeleteSkill(id);
+                await _skillRepository.Save();
             }
             catch (BrokenCircuitException)
             {

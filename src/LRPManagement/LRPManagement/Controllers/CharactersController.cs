@@ -115,6 +115,17 @@ namespace LRPManagement.Controllers
                     // Unsuccessful/Error
                     return View(characterDto);
                 }
+
+                var newChar = new Character
+                {
+                    IsRetired = characterDto.IsRetired,
+                    IsActive = characterDto.IsActive,
+                    Name = characterDto.Name,
+                    PlayerId = characterDto.PlayerId
+                };
+
+                _characterRepository.InsertCharacter(newChar);
+                await _characterRepository.Save();
             }
             catch (BrokenCircuitException)
             {
@@ -167,6 +178,17 @@ namespace LRPManagement.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
+                var updChar = new Character
+                {
+                    IsActive = characterDTO.IsActive,
+                    IsRetired = characterDTO.IsRetired,
+                    Name = characterDTO.Name,
+                    PlayerId = characterDTO.PlayerId
+                };
+
+                _characterRepository.UpdateCharacter(updChar);
+                await _characterRepository.Save();
             }
             catch (BrokenCircuitException)
             {
@@ -209,6 +231,9 @@ namespace LRPManagement.Controllers
             try
             {
                 await _characterService.DeleteCharacter(id);
+
+                _characterRepository.DeleteCharacter(id);
+                await _characterRepository.Save();
             }
             catch (BrokenCircuitException)
             {
