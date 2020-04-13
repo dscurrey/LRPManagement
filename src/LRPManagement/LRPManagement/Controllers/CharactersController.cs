@@ -62,6 +62,7 @@ namespace LRPManagement.Controllers
             {
                 HandleBrokenCircuit();
             }
+
             return View();
         }
 
@@ -93,7 +94,8 @@ namespace LRPManagement.Controllers
 
         // GET: Characters/Create
         public IActionResult Create()
-        {
+        { 
+            // TODO - Skill ViewBag
             return View();
         }
 
@@ -102,16 +104,16 @@ namespace LRPManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PlayerId,Name,IsActive,IsRetired")] CharacterDTO characterDTO)
+        public async Task<IActionResult> Create([Bind("Id,PlayerId,Name,IsActive,IsRetired")] CharacterDTO characterDto)
         {
             TempData["CharInoperativeMsg"] = "";
             try
             {
-                var resp = await _characterService.CreateCharacter(characterDTO);
+                var resp = await _characterService.CreateCharacter(characterDto);
                 if (resp == null)
                 {
                     // Unsuccessful/Error
-                    return View(characterDTO);
+                    return View(characterDto);
                 }
             }
             catch (BrokenCircuitException)
