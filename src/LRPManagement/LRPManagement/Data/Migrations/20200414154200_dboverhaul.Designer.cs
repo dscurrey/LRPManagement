@@ -3,14 +3,16 @@ using LRPManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LRPManagement.Data.Migrations
 {
     [DbContext(typeof(LrpDbContext))]
-    partial class LrpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200414154200_dboverhaul")]
+    partial class dboverhaul
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,8 +40,8 @@ namespace LRPManagement.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CharacterRef")
-                        .HasColumnType("int")
+                    b.Property<string>("CharacterRef")
+                        .HasColumnType("nchar(10)")
                         .IsFixedLength(true)
                         .HasMaxLength(10);
 

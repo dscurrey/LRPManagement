@@ -36,17 +36,23 @@ namespace LRPManagement.Controllers
                 {
                     foreach (var character in characters)
                     {
+                        if (await _characterRepository.GetCharacterRef(character.Id) != null)
+                        {
+                            break;
+                        }
                         var newChar = new Character
                         {
+                            Id = character.Id,
                             Name = character.Name,
                             IsActive = character.IsActive,
                             IsRetired = character.IsRetired,
+                            CharacterRef = character.Id,
                             PlayerId = 1
                         };
                         _characterRepository.InsertCharacter(newChar);
+                        await _characterRepository.Save();
                     }
                 }
-                await _characterRepository.Save();
             }
             catch (BrokenCircuitException e)
             {
@@ -77,7 +83,8 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var character = await _characterService.GetCharacter(id.Value);
+                //var character = await _characterService.GetCharacter(id.Value);
+                var character = await _characterRepository.GetCharacter(id.Value);
                 if (character == null)
                 {
                     return NotFound();

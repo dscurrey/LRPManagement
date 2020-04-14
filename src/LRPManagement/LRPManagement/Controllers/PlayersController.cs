@@ -38,7 +38,8 @@ namespace LRPManagement.Controllers
                     {
                         var newPlayer = new Player
                         {
-                            Name = player.FirstName+" "+player.LastName
+                            FirstName = player.FirstName,
+                            LastName = player.LastName
                         };
                         _playerRepository.InsertPlayer(newPlayer);
                     }
@@ -120,7 +121,8 @@ namespace LRPManagement.Controllers
 
             var newPlayer = new Player
             {
-                Name = playerDTO.FirstName + " " + playerDTO.LastName
+                FirstName = playerDTO.FirstName,
+                LastName = playerDTO.LastName
             };
 
             _playerRepository.InsertPlayer(newPlayer);
@@ -176,7 +178,8 @@ namespace LRPManagement.Controllers
                 var updPlayer = new Player
                 {
                     Id = playerDTO.Id,
-                    Name = playerDTO.FirstName + " " + playerDTO.LastName
+                    FirstName = playerDTO.FirstName,
+                    LastName = playerDTO.LastName
                 };
 
                 _playerRepository.UpdatePlayer(updPlayer);

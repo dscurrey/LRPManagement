@@ -12,7 +12,7 @@ namespace LRPManagement.Data
         public static void Initialise(LrpDbContext context)
         {
             context.Database.EnsureCreated();
-            //context.Database.Migrate();
+            context.Database.Migrate();
 
             if (context.Skills.Any())
             {
@@ -33,7 +33,7 @@ namespace LRPManagement.Data
             // TODO - Seed Players
             var players = new Player[]
             {
-                new Player {Id = 1, Name = "Player"}
+                new Player {Id = 1, FirstName = "Player", LastName = "1"}
             };
             foreach (var p in players)
             {
