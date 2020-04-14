@@ -4,8 +4,6 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRPManagement", "LRPManagement\LRPManagement.csproj", "{6CA4E3A4-0E28-4BAC-BE41-2D7042BF4828}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthorisationServer", "AuthorisationServer\AuthorisationServer.csproj", "{D5FDB39E-3562-45FB-ABFC-19FE8AF9B09D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRP.Players", "LRP.Players\LRP.Players.csproj", "{C6F90014-AC4C-4E67-A311-9B5E8702215D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRP.Characters", "LRP.Characters\LRP.Characters.csproj", "{AE711167-F8C6-4E74-A3AE-AD6C83B6EF02}"
@@ -20,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRP.Skills.Tests", "LRP.Ski
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{48AF3313-95A4-431D-A293-8A50460E741C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "Authentication\Authentication.csproj", "{56BAAA66-82BB-4FF4-8017-AA006FCE73D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,10 +30,6 @@ Global
 		{6CA4E3A4-0E28-4BAC-BE41-2D7042BF4828}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CA4E3A4-0E28-4BAC-BE41-2D7042BF4828}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CA4E3A4-0E28-4BAC-BE41-2D7042BF4828}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5FDB39E-3562-45FB-ABFC-19FE8AF9B09D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5FDB39E-3562-45FB-ABFC-19FE8AF9B09D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5FDB39E-3562-45FB-ABFC-19FE8AF9B09D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5FDB39E-3562-45FB-ABFC-19FE8AF9B09D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C6F90014-AC4C-4E67-A311-9B5E8702215D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6F90014-AC4C-4E67-A311-9B5E8702215D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6F90014-AC4C-4E67-A311-9B5E8702215D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,6 +58,10 @@ Global
 		{48AF3313-95A4-431D-A293-8A50460E741C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48AF3313-95A4-431D-A293-8A50460E741C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48AF3313-95A4-431D-A293-8A50460E741C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56BAAA66-82BB-4FF4-8017-AA006FCE73D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56BAAA66-82BB-4FF4-8017-AA006FCE73D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56BAAA66-82BB-4FF4-8017-AA006FCE73D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56BAAA66-82BB-4FF4-8017-AA006FCE73D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
