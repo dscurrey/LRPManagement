@@ -10,11 +10,14 @@ namespace Authentication.Services
     public class UserService : IUserService
     {
 
-        private List<User> _users = new List<User>();
-
-        public async Task<User> Authenticate(string uname, string pword)
+        private List<User> _users = new List<User>
         {
-            var user = await Task.Run( () => _users.FirstOrDefault(u => u.Username == uname && u.Password == pword));
+            new User { Id = 1, FirstName = "John", LastName = "Smith", Username = "JSmith", Password = "TestPassword1"}
+        };
+
+        public async Task<User> Authenticate(string username, string password)
+        {
+            var user = await Task.Run( () => _users.FirstOrDefault(u => u.Username == username && u.Password == password));
 
             if (user == null)
             {
