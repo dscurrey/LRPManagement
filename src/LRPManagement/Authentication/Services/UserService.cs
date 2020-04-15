@@ -17,7 +17,9 @@ namespace Authentication.Services
 
         private readonly List<User> _users = new List<User>
         {
-            new User { Id = 1, FirstName = "John", LastName = "Smith", Username = "JSmith", Password = "TestPassword1"}
+            new User { Id = 1, Username = "JSmith", Password = "TestPassword1", Role = Role.User, FirstName = "John", LastName = "Smith"},
+            new User {Id = 2, Username = "admin", Password = "TestPassword1", Role = Role.Admin, FirstName = "Admin", LastName = "User"},
+            new User {Id = 3, Username = "referee", Password = "TestPassword1", Role = Role.Referee, FirstName = "Referee", LastName = "User"}
         };
 
         private readonly AppSettings _settings;
@@ -47,6 +49,7 @@ namespace Authentication.Services
                     new Claim[]
                     {
                         new Claim(ClaimTypes.Name, user.Id.ToString()),
+                        new Claim(ClaimTypes.Role, user.Role) 
                     }
                 ),
                 Expires = DateTime.UtcNow.AddDays(7),
@@ -62,6 +65,12 @@ namespace Authentication.Services
         public async Task<List<User>> GetAll()
         {
             return await Task.Run(() => _users.WithoutPasswords());
+        }
+
+        public async Task<User> GetById(int id)
+        {
+            var user = await Task.Run(() => _users.FirstOrDefault(u => u.Id == id));
+            return user.WithoutPassword();
         }
     }
 }

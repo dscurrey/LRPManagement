@@ -41,11 +41,33 @@ namespace Authentication.Controllers
             return Ok(user);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAll();
             return Ok(users);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var curId = int.Parse(User.Identity.Name);
+            if (id != curId && !User.IsInRole(Role.Admin))
+            {
+                // User is looking for a user other than itself
+                // And is not admin
+                return Forbid();
+            }
+
+            var user = await _userService.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = "User with ID: "+ id + "not found." });
+            }
+
+            return Ok(user);
         }
     }
 }

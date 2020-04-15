@@ -10,5 +10,6 @@ namespace Authentication.Services
     {
         Task<User> Authenticate(string username, string password);
         Task<List<User>> GetAll();
+        Task<User> GetById(int id);
     }
 }
