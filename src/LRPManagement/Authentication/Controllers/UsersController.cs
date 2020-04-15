@@ -23,6 +23,28 @@ namespace Authentication.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("test")]
+        public async Task<IActionResult> TestAuth()
+        {
+            if (User.IsInRole(Role.User))
+            {
+                return Ok(Role.User);
+            }
+
+            if (User.IsInRole(Role.Referee))
+            {
+                return Ok(Role.Referee);
+            }
+
+            if (User.IsInRole(Role.Admin))
+            {
+                return Ok(Role.Admin);
+            }
+
+            return Ok("Unregistered");
+        }
+
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return Ok("Hello World");
