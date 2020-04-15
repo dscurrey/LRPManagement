@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Authentication.Models;
 using Authentication.Services;
+using Authentication.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -68,6 +69,30 @@ namespace Authentication.Controllers
             }
 
             return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterUser(RegisterDTO model)
+        {
+            var user = new User
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Password = model.Password,
+                Username = model.UserName
+            };
+
+            try
+            {
+                _userService.Create(user, user.Password);
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

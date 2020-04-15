@@ -14,7 +14,7 @@ namespace Authentication.Services
 {
     public class UserService : IUserService
     {
-
+        // TODO - Create database
         private readonly List<User> _users = new List<User>
         {
             new User { Id = 1, Username = "JSmith", Password = "TestPassword1", Role = Role.User, FirstName = "John", LastName = "Smith"},
@@ -71,6 +71,36 @@ namespace Authentication.Services
         {
             var user = await Task.Run(() => _users.FirstOrDefault(u => u.Id == id));
             return user.WithoutPassword();
+        }
+
+        public async Task<User> Create(User user, string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                // TODO - Handle empty password
+            }
+
+            if (_users.Any(u => u.Username == user.Username))
+            {
+                // TODO - Handle Username Exists
+            }
+
+            // TODO - Password hashing
+
+            user.Role = Role.User;
+
+            await Task.Run(() => _users.Add(user));
+            return user;
+        }
+
+        public void Update(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
         }
     }
 }
