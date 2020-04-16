@@ -112,5 +112,54 @@ namespace Authentication.Services
         {
             throw new NotImplementedException();
         }
+
+        private static void CreatePasswordHash(string password, out byte[] hash, out byte[] salt)
+        {
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new ArgumentException("Password cannot be empty");
+            }
+
+            using var hmac = new System.Security.Cryptography.HMACSHA512();
+            salt = hmac.Key;
+            hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        }
+
+        private static bool VerifyPasswordHash(string password, byte[] hash, byte[] salt)
+        {
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new ArgumentException("Password cannot be empty");
+            }
+
+            if (hash.Length != 64 || salt.Length != 128)
+            {
+                throw new ArgumentException("Invalid length of hash/salt");
+            }
+
+            using var hmac = new System.Security.Cryptography.HMACSHA512(salt);
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != hash[i])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }
