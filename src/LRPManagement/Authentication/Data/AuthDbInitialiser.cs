@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Authentication.Models;
+using Authentication.Services;
 
 namespace Authentication.Data
 {
@@ -16,11 +17,13 @@ namespace Authentication.Data
                 return;
             }
 
-            var users = new List<User>
-            {
-            };
+            var user = new User {FirstName = "Admin", LastName = "User", Username = "admin", Role = Role.Admin};
+            byte[] hash, salt;
+            UserService.CreatePasswordHash("TestPassword1", out hash, out salt);
+            user.PasswordHash = hash;
+            user.PasswordSalt = salt;
 
-            users.ForEach(u => context.Users.Add(u));
+            context.Users.Add(user);
             await context.SaveChangesAsync();
         }
     }

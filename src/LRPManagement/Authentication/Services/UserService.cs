@@ -129,7 +129,7 @@ namespace Authentication.Services
             throw new NotImplementedException();
         }
 
-        private static void CreatePasswordHash(string password, out byte[] hash, out byte[] salt)
+        public static void CreatePasswordHash(string password, out byte[] hash, out byte[] salt)
         {
             if (password == null)
             {
