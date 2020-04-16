@@ -60,10 +60,25 @@ namespace Authentication
                         a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                     }
                 )
-                .AddJwtBearer
-                (
+                .AddJwtBearer(
                     a =>
                     {
+                        a.Events = new JwtBearerEvents
+                        {
+                            OnTokenValidated = context =>
+                            {
+                                var userService =
+                                    context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                                var userId = int.Parse(context.Principal.Identity.Name);
+                                var user = userService.GetById(userId);
+                                if (user == null)
+                                {
+                                    // User doesn't exist
+                                    context.Fail("Unauthorised User");
+                                }
+                                return Task.CompletedTask;
+                            }
+                        };
                         a.RequireHttpsMetadata = false;
                         a.SaveToken = true;
                         a.TokenValidationParameters = new TokenValidationParameters
@@ -73,8 +88,7 @@ namespace Authentication
                             ValidateIssuer = false,
                             ValidateAudience = false
                         };
-                    }
-                );
+                    });
 
             services.AddScoped<IUserService, UserService>();
         }
