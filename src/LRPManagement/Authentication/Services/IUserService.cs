@@ -11,7 +11,7 @@ namespace Authentication.Services
         Task<User> Authenticate(string username, string password);
         Task<List<User>> GetAll();
         Task<User> GetById(int id);
-        Task<User> Create(User user, string password);
+        Task<User> Create(User user, string password, string role);
         void Update(User user);
         void Delete();
     }

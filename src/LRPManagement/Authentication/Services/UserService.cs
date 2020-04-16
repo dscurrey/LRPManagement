@@ -70,7 +70,7 @@ namespace Authentication.Services
             return user.WithoutPassword();
         }
 
-        public async Task<User> Create(User user, string password)
+        public async Task<User> Create(User user, string password, string role)
         {
             if (string.IsNullOrWhiteSpace(password))
             {
@@ -84,7 +84,18 @@ namespace Authentication.Services
 
             // TODO - Password hashing
 
-            user.Role = Role.User;
+            if (role.Equals(Role.Admin))
+            {
+                user.Role = Role.Admin;
+            }
+            else if (role.Equals(Role.Referee))
+            {
+                user.Role = Role.Referee;
+            }
+            else
+            {
+                user.Role = Role.User;
+            }
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
