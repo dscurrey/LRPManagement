@@ -17,7 +17,7 @@ namespace Authentication.Services
     public class UserService : IUserService
     {
         private readonly AppSettings _settings;
-        private AuthDbContext _context;
+        private readonly AuthDbContext _context;
 
         public UserService(IOptions<AppSettings> appSettings, AuthDbContext context)
         {
@@ -27,11 +27,21 @@ namespace Authentication.Services
 
         public async Task<User> Authenticate(string username, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                return null;
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
             {
                 // User Not found
+                return null;
+            }
+
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
                 return null;
             }
 
@@ -82,7 +92,13 @@ namespace Authentication.Services
                 throw new AuthException("Username \""+ user.Username +"\" already exists");
             }
 
-            // TODO - Password hashing
+
+            // Password Hashing
+            byte[] hash, salt;
+            CreatePasswordHash(password, out hash, out salt);
+
+            user.PasswordHash = hash;
+            user.PasswordSalt = salt;
 
             if (role.Equals(Role.Admin))
             {

@@ -101,19 +101,17 @@ namespace Authentication.Controllers
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Password = model.Password,
                 Username = model.UserName
             };
 
             try
             {
-                await Task.Run( () => _userService.Create(user, user.Password, Role.User));
+                await Task.Run( () => _userService.Create(user, model.Password, Role.User));
                 return Ok(model);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return BadRequest(new {message = e.Message});
             }
         }
     }

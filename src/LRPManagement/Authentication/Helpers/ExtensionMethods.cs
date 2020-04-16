@@ -15,7 +15,8 @@ namespace Authentication.Helpers
 
         public static User WithoutPassword(this User user)
         {
-            user.Password = null;
+            user.PasswordHash = null;
+            user.PasswordSalt = null;
             return user;
         }
     }
