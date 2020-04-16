@@ -107,7 +107,7 @@ namespace Authentication.Controllers
 
             try
             {
-                _userService.Create(user, user.Password);
+                await Task.Run( () => _userService.Create(user, user.Password));
                 return Ok(model);
             }
             catch (Exception e)

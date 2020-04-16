@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication.Data;
 using Authentication.Helpers;
 using Authentication.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,11 +21,11 @@ namespace Authentication
 {
     public class Startup
     {
-        public IConfiguration Configuration;
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration config)
         {
-            Configuration = config;
+            _configuration = config;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -33,8 +35,18 @@ namespace Authentication
             services.AddCors();
             services.AddControllers();
 
+            // DB
+            services.AddDbContext<AuthDbContext>
+            (
+                options => options.UseSqlServer
+                (
+                    _configuration.GetConnectionString("AuthDb"),
+                    optionsBuilder => optionsBuilder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(10), null)
+                )
+            );
+
             // Config appsettings class
-            var appSettingsSection = Configuration.GetSection("AppSettings");
+            var appSettingsSection = _configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
             // Config JWT
