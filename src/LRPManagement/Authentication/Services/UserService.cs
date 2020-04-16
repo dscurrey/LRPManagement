@@ -6,7 +6,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication.Data;
 using Authentication.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,24 +16,18 @@ namespace Authentication.Services
 {
     public class UserService : IUserService
     {
-        // TODO - Create database
-        private readonly List<User> _users = new List<User>
-        {
-            new User { Id = 1, Username = "JSmith", Password = "TestPassword1", Role = Role.User, FirstName = "John", LastName = "Smith"},
-            new User {Id = 2, Username = "admin", Password = "TestPassword1", Role = Role.Admin, FirstName = "Admin", LastName = "User"},
-            new User {Id = 3, Username = "referee", Password = "TestPassword1", Role = Role.Referee, FirstName = "Referee", LastName = "User"}
-        };
-
         private readonly AppSettings _settings;
+        private AuthDbContext _context;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, AuthDbContext context)
         {
             _settings = appSettings.Value;
+            _context = context;
         }
 
         public async Task<User> Authenticate(string username, string password)
         {
-            var user = await Task.Run( () => _users.FirstOrDefault(u => u.Username == username && u.Password == password));
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
 
             if (user == null)
             {
@@ -64,12 +60,13 @@ namespace Authentication.Services
 
         public async Task<List<User>> GetAll()
         {
-            return await Task.Run(() => _users.WithoutPasswords());
+            var users = await _context.Users.ToListAsync();
+            return users.WithoutPasswords();
         }
 
         public async Task<User> GetById(int id)
         {
-            var user = await Task.Run(() => _users.FirstOrDefault(u => u.Id == id));
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             return user.WithoutPassword();
         }
 
@@ -80,7 +77,7 @@ namespace Authentication.Services
                 // TODO - Handle empty password
             }
 
-            if (_users.Any(u => u.Username == user.Username))
+            if (_context.Users.Any(u => u.Username == user.Username))
             {
                 // TODO - Handle Username Exists
             }
@@ -89,7 +86,9 @@ namespace Authentication.Services
 
             user.Role = Role.User;
 
-            await Task.Run(() => _users.Add(user));
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+
             return user;
         }
 
