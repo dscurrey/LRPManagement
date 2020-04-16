@@ -74,12 +74,12 @@ namespace Authentication.Services
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                // TODO - Handle empty password
+                throw new AuthException("Password is Required");
             }
 
             if (_context.Users.Any(u => u.Username == user.Username))
             {
-                // TODO - Handle Username Exists
+                throw new AuthException("Username \""+ user.Username +"\" already exists");
             }
 
             // TODO - Password hashing
