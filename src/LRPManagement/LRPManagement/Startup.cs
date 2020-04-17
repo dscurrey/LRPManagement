@@ -81,6 +81,7 @@ namespace LRPManagement
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -88,6 +89,7 @@ namespace LRPManagement
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
         static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()

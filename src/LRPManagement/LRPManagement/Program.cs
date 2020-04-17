@@ -24,6 +24,8 @@ namespace LRPManagement
                 {
                     var context = services.GetRequiredService<LrpDbContext>();
                     DbInitialiser.Initialise(context);
+                    var authContext = services.GetRequiredService<AccountsContext>();
+                    authContext.Database.EnsureCreated();
                 }
                 catch (Exception e)
                 {
