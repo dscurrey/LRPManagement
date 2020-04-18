@@ -69,7 +69,7 @@ namespace LRPManagement.Data
 
             modelBuilder.Entity<Character>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CharacterRef)
                     .HasMaxLength(10)
