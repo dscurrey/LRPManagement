@@ -57,6 +57,12 @@ namespace LRPManagement
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddControllersWithViews();
+            services.AddAuthorization(
+                options =>
+                {
+                    options.AddPolicy("Staff", policy =>
+                        policy.RequireRole("Admin", "Referee"));
+                });
 
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<ISkillService, SkillService>();

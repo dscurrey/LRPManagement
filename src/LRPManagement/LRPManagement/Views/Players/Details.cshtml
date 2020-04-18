@@ -6,7 +6,7 @@
 
 <h1>Details</h1>
 
-<div>
+<div class="align-content-md-stretch">
     <h4>PlayerDTO</h4>
     <hr />
     <dl class="row">
@@ -22,14 +22,16 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateJoined)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateJoined)
-        </dd>*@
     </dl>
 </div>
+
+@if (Model.Characters.Any())
+{
+    <div>
+        <partial name="_PlayerCharacter"/>
+    </div>
+}
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize(Policy = "Staff")]
     public class RolesController : Controller
     {
         private readonly AccountsContext _context;
