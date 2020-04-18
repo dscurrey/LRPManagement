@@ -44,7 +44,6 @@ namespace LRPManagement.Areas.Identity
                     options.Password.RequiredUniqueChars = 1;
                 });
             });
-
         }
     }
 }
