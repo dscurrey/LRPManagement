@@ -20,6 +20,7 @@ namespace LRPManagement.Areas.Identity
                         context.Configuration.GetConnectionString("AccountsContextConnection")));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AccountsContext>();
 
                 // Identity Config
