@@ -134,7 +134,8 @@ namespace LRP.Players.Controllers
                 FirstName = player.FirstName,
                 Id = player.Id,
                 IsActive = true,
-                LastName = player.LastName
+                LastName = player.LastName,
+                AccountRef = player.AccountRef
             };
 
             _repository.InsertPlayer(newPlayer);

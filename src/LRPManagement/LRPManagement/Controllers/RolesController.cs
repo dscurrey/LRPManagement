@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LRPManagement.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,7 +16,7 @@ namespace LRPManagement.Controllers
     public class RolesController : Controller
     {
         private readonly AccountsContext _context;
-        private UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public RolesController(AccountsContext context, UserManager<IdentityUser> userManager)
         {

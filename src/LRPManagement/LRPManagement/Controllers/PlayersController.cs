@@ -9,6 +9,7 @@ using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Players;
 using LRPManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
@@ -98,6 +99,7 @@ namespace LRPManagement.Controllers
             return View();
         }
 
+        [Authorize]
         // GET: Players/Create
         public IActionResult Create()
         {
@@ -107,6 +109,7 @@ namespace LRPManagement.Controllers
         // POST: Players/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateJoined")] PlayerDTO playerDTO)
@@ -114,6 +117,9 @@ namespace LRPManagement.Controllers
             TempData["PlayInoperativeMsg"] = "";
             try
             {
+                // Tie to account
+                playerDTO.AccountRef = User.Identity.Name;
+
                 var resp = await _playerService.CreatePlayer(playerDTO);
                 if (resp == null)
                 {
