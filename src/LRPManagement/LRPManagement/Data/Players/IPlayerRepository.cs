@@ -10,6 +10,7 @@ namespace LRPManagement.Data.Players
     {
         Task<List<Player>> GetAll();
         Task<Player> GetPlayer(int id);
+        Task<Player> GetPlayerRef(int id);
         void InsertPlayer(Player player);
         Task DeletePlayer(int id);
         void UpdatePlayer(Player player);

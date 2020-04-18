@@ -32,6 +32,11 @@ namespace LRPManagement.Data.Skills
             return await _context.Skills.FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<Skill> GetSkillRef(int id)
+        {
+            return await _context.Skills.FirstOrDefaultAsync(s => s.SkillRef == id);
+        }
+
         public void InsertSkill(Skill skill)
         {
             _context.Skills.Add(skill);

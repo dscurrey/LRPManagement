@@ -10,6 +10,7 @@ namespace LRPManagement.Data.Skills
     {
         Task<List<Skill>> GetAll();
         Task<Skill> GetSkill(int id);
+        Task<Skill> GetSkillRef(int id);
         void InsertSkill(Skill skill);
         void DeleteSkill(int id);
         void UpdateSkill(Skill skill);

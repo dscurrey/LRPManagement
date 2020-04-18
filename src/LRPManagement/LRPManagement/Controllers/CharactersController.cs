@@ -38,7 +38,7 @@ namespace LRPManagement.Controllers
                     {
                         if (await _characterRepository.GetCharacterRef(character.Id) != null)
                         {
-                            break;
+                            continue;
                         }
                         var newChar = new Character
                         {

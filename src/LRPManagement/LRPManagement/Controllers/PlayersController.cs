@@ -36,8 +36,15 @@ namespace LRPManagement.Controllers
                 {
                     foreach (var player in players)
                     {
+                        if (await _playerRepository.GetPlayerRef(player.Id) != null)
+                        {
+                            continue;
+                        }
+
                         var newPlayer = new Player
                         {
+                            Id = player.Id,
+                            PlayerRef = player.Id,
                             FirstName = player.FirstName,
                             LastName = player.LastName
                         };
