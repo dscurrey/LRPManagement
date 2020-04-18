@@ -44,15 +44,12 @@ namespace LRPManagement.Controllers
 
                         var newPlayer = new Player
                         {
-                            Id = player.Id,
                             PlayerRef = player.Id,
                             FirstName = player.FirstName,
                             LastName = player.LastName
                         };
-                        _playerRepository.InsertPlayer(newPlayer);
                     }
                 }
-                await _playerRepository.Save();
             }
             catch (BrokenCircuitException e)
             {

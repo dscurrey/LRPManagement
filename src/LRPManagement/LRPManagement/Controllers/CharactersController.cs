@@ -42,7 +42,6 @@ namespace LRPManagement.Controllers
                         }
                         var newChar = new Character
                         {
-                            Id = character.Id,
                             Name = character.Name,
                             IsActive = character.IsActive,
                             IsRetired = character.IsRetired,
@@ -130,9 +129,6 @@ namespace LRPManagement.Controllers
                     Name = characterDto.Name,
                     PlayerId = characterDto.PlayerId
                 };
-
-                _characterRepository.InsertCharacter(newChar);
-                await _characterRepository.Save();
             }
             catch (BrokenCircuitException)
             {
