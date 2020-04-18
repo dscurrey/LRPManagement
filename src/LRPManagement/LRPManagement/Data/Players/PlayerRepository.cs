@@ -23,7 +23,7 @@ namespace LRPManagement.Data.Players
 
         public async Task<Player> GetPlayer(int id)
         {
-            return await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Players.Include(p => p.Characters).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public void InsertPlayer(Player player)

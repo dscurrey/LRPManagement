@@ -19,7 +19,6 @@
     },
     "LRP.Skills": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/skills",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

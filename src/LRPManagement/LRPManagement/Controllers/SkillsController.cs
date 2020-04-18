@@ -42,7 +42,10 @@ namespace LRPManagement.Controllers
                             SkillRef = skill.Id,
                             Name = skill.Name
                         };
+                        _skillRepository.InsertSkill(newSkill);
                     }
+
+                    await _skillRepository.Save();
                 }
             }
             catch (BrokenCircuitException e)

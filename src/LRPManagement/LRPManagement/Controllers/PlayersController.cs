@@ -48,7 +48,10 @@ namespace LRPManagement.Controllers
                             FirstName = player.FirstName,
                             LastName = player.LastName
                         };
+                        _playerRepository.InsertPlayer(newPlayer);
                     }
+
+                    await _playerRepository.Save();
                 }
             }
             catch (BrokenCircuitException e)
@@ -80,7 +83,7 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var player = await _playerService.GetPlayer(id.Value);
+                var player = await _playerRepository.GetPlayer(id.Value);
                 if (player == null)
                 {
                     return NotFound();

@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div class="align-content-md-stretch">
-    <h4>PlayerDTO</h4>
+    <h4>Player</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -25,11 +25,18 @@
     </dl>
 </div>
 
+<h5>Player Characters</h5>
 @if (Model.Characters.Any())
 {
     <div>
-        <partial name="_PlayerCharacter"/>
+        @await Html.PartialAsync("_PlayerCharacter", Model.Characters)
     </div>
+}
+else
+{
+    <h6>No characters found</h6>
+    <a asp-action="Create" asp-controller="Characters">Create one here</a>
+    <hr/>
 }
 
 <div>
