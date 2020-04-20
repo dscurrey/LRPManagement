@@ -60,7 +60,8 @@ namespace LRPManagement.Controllers
                             IsActive = character.IsActive,
                             IsRetired = character.IsRetired,
                             CharacterRef = character.Id,
-                            PlayerId = character.PlayerId
+                            PlayerId = character.PlayerId,
+                            Xp = character.Xp
                         };
                         _characterRepository.InsertCharacter(newChar);
                         await _characterRepository.Save();
@@ -314,7 +315,13 @@ namespace LRPManagement.Controllers
                         );
                         ViewBag.Skills = list;
                     }
-                    return View(character);
+
+                    var viewModel = new CharacterSkillViewModel
+                    {
+                        CharId = character.Id
+                    };
+
+                    return View(viewModel);
                 }
 
             }
@@ -331,9 +338,29 @@ namespace LRPManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddSkill(int id, [Bind("CharId, SkillId")] CharacterSkillViewModel charSkill)
         {
-            _charSkillRepository.AddSkillToCharacter(charSkill.SkillId, id);
-            await _charSkillRepository.Save();
-            return RedirectToAction(nameof(Details), new {id});
+            var skill = await _skillRepository.GetSkill(charSkill.SkillId);
+            var character = await _characterRepository.GetCharacter(charSkill.CharId);
+
+            if (skill != null && character != null)
+            {
+                if (character.Xp - skill.XpCost >= 0)
+                {
+                    // Subtract cost from character, add and save to link table
+                    character.Xp -= skill.XpCost;
+                    _charSkillRepository.AddSkillToCharacter(charSkill.SkillId, id);
+                    await _charSkillRepository.Save();
+
+                    // Update Local and API
+                    // TODO - Fix
+                    //await _characterService.UpdateCharacter(character);
+                    _characterRepository.UpdateCharacter(character);
+                    await _characterRepository.Save();
+
+                    return RedirectToAction(nameof(Details), new { id });
+                }
+            }
+
+            return View();
         }
 
         private async Task<bool> CharacterExists(int id)

@@ -41,7 +41,8 @@ namespace LRP.Characters.Controllers
                     IsActive = c.IsActive,
                     IsRetired = c.IsRetired,
                     Name = c.Name,
-                    PlayerId = c.PlayerId
+                    PlayerId = c.PlayerId,
+                    Xp = c.Xp
                 }
             ).ToList());
         }

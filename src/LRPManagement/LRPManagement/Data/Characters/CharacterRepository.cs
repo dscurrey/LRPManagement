@@ -49,7 +49,7 @@ namespace LRPManagement.Data.Characters
 
         public void UpdateCharacter(Character character)
         {
-            throw new NotImplementedException();
+            _context.Characters.Update(character);
         }
     }
 }
