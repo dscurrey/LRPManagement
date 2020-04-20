@@ -83,11 +83,12 @@ namespace LRP.Characters.Controllers
 
             var updChar = new Character
             {
-                Id = character.Id,
+                Id = id,
                 PlayerId = character.PlayerId,
                 IsActive = character.IsActive,
                 IsRetired = character.IsRetired,
-                Name = character.Name
+                Name = character.Name,
+                Xp = character.Xp
             };
 
             if (!await CharacterExists(id))

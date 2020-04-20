@@ -155,8 +155,6 @@ namespace LRPManagement.Controllers
         {
             TempData["CharInoperativeMsg"] = "";
 
-            // TODO - Adding Skills
-
             try
             {
                 var player = await _playerRepository.GetPlayerAccountRef(User.Identity.Name);
@@ -351,22 +349,15 @@ namespace LRPManagement.Controllers
                     await _charSkillRepository.Save();
 
                     // Update Local and API
-                    // TODO - Fix
-                    //await _characterService.UpdateCharacter(character);
                     _characterRepository.UpdateCharacter(character);
                     await _characterRepository.Save();
+                    await _characterService.UpdateCharacter(character);
 
                     return RedirectToAction(nameof(Details), new { id });
                 }
             }
 
             return View();
-        }
-
-        private async Task<bool> CharacterExists(int id)
-        {
-            var character = await _characterService.GetCharacter(id);
-            return character != null;
         }
 
         private void HandleBrokenCircuit()

@@ -39,9 +39,10 @@ namespace LRP.Characters.Data.Characters
             _context.Character.Update(character);
         }
 
-        public void UpdateCharacter(Character character)
+        public async Task UpdateCharacter(Character character)
         {
-            _context.Entry(character).State = EntityState.Modified;
+            var _char = await _context.Character.FirstOrDefaultAsync(c => c.Id == character.Id);
+            _context.Entry(_char).CurrentValues.SetValues(character);
         }
 
         public async Task Save()

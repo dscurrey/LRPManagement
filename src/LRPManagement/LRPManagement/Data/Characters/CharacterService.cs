@@ -71,7 +71,7 @@ namespace LRPManagement.Data.Characters
         {
             var updCharacter = new CharacterDTO
             {
-                Id = character.Id,
+                Id = character.CharacterRef,
                 IsRetired = character.IsRetired,
                 IsActive = character.IsActive,
                 Name = character.Name,
