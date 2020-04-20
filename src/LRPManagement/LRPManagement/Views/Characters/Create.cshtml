@@ -27,6 +27,14 @@
                     <input class="form-check-input" asp-for="IsRetired" /> @Html.DisplayNameFor(model => model.IsRetired)
                 </label>
             </div>
+            @if (ViewBag.Skills != "")
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        @Html.DropDownList("Skill", (IEnumerable<SelectListItem>) ViewBag.Skills, "Select...")
+                    </label>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -9,6 +9,7 @@ using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Characters;
 using LRPManagement.Data.Players;
+using LRPManagement.Data.Skills;
 using LRPManagement.Models;
 using Polly.CircuitBreaker;
 
@@ -19,12 +20,14 @@ namespace LRPManagement.Controllers
         private readonly ICharacterService _characterService;
         private readonly ICharacterRepository _characterRepository;
         private readonly IPlayerRepository _playerRepository;
+        private readonly ISkillRepository _skillRepository;
 
-        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository, IPlayerRepository playerRepository)
+        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository, IPlayerRepository playerRepository, ISkillRepository skillRepository)
         {
             _characterService = characterService;
             _characterRepository = characterRepository;
             _playerRepository = playerRepository;
+            _skillRepository = skillRepository;
         }
 
         // GET: Characters
@@ -115,9 +118,26 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters/Create
-        public IActionResult Create()
-        { 
-            // TODO - Skill ViewBag
+        public async Task<IActionResult> Create()
+        {
+            var skills = await _skillRepository.GetAll();
+            if (skills.Any())
+            {
+                var list = skills.Select
+                (
+                    s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }
+                );
+                ViewBag.Skills = list;
+            }
+            else
+            {
+                ViewBag.Skills = "";
+            }
+
             return View();
         }
 
@@ -129,8 +149,18 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> Create([Bind("Id,PlayerId,Name,IsActive,IsRetired")] CharacterDTO characterDto)
         {
             TempData["CharInoperativeMsg"] = "";
+
+            // TODO - Adding Skills
+
             try
             {
+                var player = await _playerRepository.GetPlayerAccountRef(User.Identity.Name);
+                if (player == null)
+                {
+                    return View();
+                }
+
+                characterDto.PlayerId = player.Id;
                 var resp = await _characterService.CreateCharacter(characterDto);
                 if (resp == null)
                 {
@@ -138,21 +168,6 @@ namespace LRPManagement.Controllers
                     return View(characterDto);
                 }
 
-                var player = await _playerRepository.GetPlayerAccountRef(User.Identity.Name);
-                if (player == null)
-                {
-                    return View();
-                }
-
-                //var newChar = new Character
-                //{
-                //    IsRetired = characterDto.IsRetired,
-                //    IsActive = characterDto.IsActive,
-                //    Name = characterDto.Name,
-                //    PlayerId = player.Id
-                //};
-                //_characterRepository.InsertCharacter(newChar);
-                //await _characterRepository.Save();
             }
             catch (BrokenCircuitException)
             {
