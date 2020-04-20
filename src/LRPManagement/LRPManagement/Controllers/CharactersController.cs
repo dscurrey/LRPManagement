@@ -135,6 +135,7 @@ namespace LRPManagement.Controllers
             }
             else
             {
+                // Not Loaded from api
                 ViewBag.Skills = "";
             }
 

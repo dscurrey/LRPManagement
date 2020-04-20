@@ -37,6 +37,10 @@ namespace LRPManagement.Controllers
                 {
                     foreach (var skill in skills)
                     {
+                        if (await _skillRepository.GetSkillRef(skill.Id) != null)
+                        {
+                            continue;
+                        }
                         var newSkill = new Skill
                         {
                             SkillRef = skill.Id,
@@ -55,8 +59,15 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var skills = await _skillService.GetAll();
-                return View(skills);
+                var skills = await _skillRepository.GetAll();
+                var skillList = skills.Select
+                (
+                    s => new SkillDTO
+                    {
+                        Name = s.Name
+                    }
+                );
+                return View(skillList);
             }
             catch (BrokenCircuitException)
             {
