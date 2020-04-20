@@ -9,7 +9,6 @@ namespace LRPManagement.Data.Skills
 {
     public class SkillRepository : ISkillRepository
     {
-
         private readonly LrpDbContext _context;
 
         public SkillRepository(LrpDbContext context)

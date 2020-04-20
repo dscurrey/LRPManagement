@@ -96,7 +96,7 @@ namespace LRP.Characters.Controllers
                 return NotFound();
             }
 
-            _repository.UpdateCharacter(updChar);
+            await _repository.UpdateCharacter(updChar);
 
             try
             {

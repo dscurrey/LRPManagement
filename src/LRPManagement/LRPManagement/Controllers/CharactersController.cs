@@ -141,7 +141,7 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -170,7 +170,6 @@ namespace LRPManagement.Controllers
                     // Unsuccessful/Error
                     return View(characterDto);
                 }
-
             }
             catch (BrokenCircuitException)
             {
@@ -321,7 +320,6 @@ namespace LRPManagement.Controllers
 
                     return View(viewModel);
                 }
-
             }
             catch (BrokenCircuitException)
             {

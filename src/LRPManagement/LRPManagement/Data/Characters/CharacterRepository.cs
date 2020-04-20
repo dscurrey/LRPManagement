@@ -9,7 +9,6 @@ namespace LRPManagement.Data.Characters
 {
     public class CharacterRepository : ICharacterRepository
     {
-
         private readonly LrpDbContext _context;
 
         public CharacterRepository(LrpDbContext context)
