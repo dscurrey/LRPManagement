@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using LRPManagement.Data;
 using LRPManagement.Data.Characters;
+using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
 using Microsoft.AspNetCore.Builder;
@@ -71,6 +72,7 @@ namespace LRPManagement
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<ICharacterSkillRepository, CharacterSkillRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

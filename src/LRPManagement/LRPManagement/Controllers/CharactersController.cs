@@ -8,27 +8,33 @@ using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Characters;
+using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
 using LRPManagement.Models;
 using LRPManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize]
     public class CharactersController : Controller
     {
         private readonly ICharacterService _characterService;
         private readonly ICharacterRepository _characterRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly ISkillRepository _skillRepository;
+        private readonly ICharacterSkillRepository _charSkillRepository;
 
-        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository, IPlayerRepository playerRepository, ISkillRepository skillRepository)
+        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository, IPlayerRepository playerRepository,
+            ISkillRepository skillRepository, ICharacterSkillRepository charSkillRepository)
         {
             _characterService = characterService;
             _characterRepository = characterRepository;
             _playerRepository = playerRepository;
             _skillRepository = skillRepository;
+            _charSkillRepository = charSkillRepository;
         }
 
         // GET: Characters
@@ -102,7 +108,6 @@ namespace LRPManagement.Controllers
 
             try
             {
-                //var character = await _characterService.GetCharacter(id.Value);
                 var character = await _characterRepository.GetCharacter(id.Value);
                 if (character == null)
                 {
@@ -137,25 +142,6 @@ namespace LRPManagement.Controllers
         // GET: Characters/Create
         public async Task<IActionResult> Create()
         {
-            var skills = await _skillRepository.GetAll();
-            if (skills.Any())
-            {
-                var list = skills.Select
-                (
-                    s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
-                    }
-                );
-                ViewBag.Skills = list;
-            }
-            else
-            {
-                // Not Loaded from api
-                ViewBag.Skills = "";
-            }
-
             return View();
         }
 
@@ -303,7 +289,54 @@ namespace LRPManagement.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> CharacterDTOExists(int id)
+        public async Task<IActionResult> AddSkill(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var character = await _characterRepository.GetCharacter(id.Value);
+                if (character != null)
+                {
+                    var skills = await _skillRepository.GetAll();
+                    if (skills.Any())
+                    {
+                        var list = skills.Select
+                        (
+                            s => new SelectListItem
+                            {
+                                Value = s.Id.ToString(),
+                                Text = s.Name
+                            }
+                        );
+                        ViewBag.Skills = list;
+                    }
+                    return View(character);
+                }
+
+            }
+            catch (BrokenCircuitException)
+            {
+                HandleBrokenCircuit();
+            }
+
+            return NotFound();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddSkill(int id, [Bind("CharId, SkillId")] CharacterSkillViewModel charSkill)
+        {
+            _charSkillRepository.AddSkillToCharacter(charSkill.SkillId, id);
+            await _charSkillRepository.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<bool> CharacterExists(int id)
         {
             var character = await _characterService.GetCharacter(id);
             return character != null;
