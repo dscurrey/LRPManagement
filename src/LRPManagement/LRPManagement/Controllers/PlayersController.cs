@@ -14,6 +14,7 @@ using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize]
     public class PlayersController : Controller
     {
         private readonly IPlayerService _playerService;

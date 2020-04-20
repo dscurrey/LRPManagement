@@ -10,10 +10,12 @@ using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Skills;
 using LRPManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize]
     public class SkillsController : Controller
     {
         private readonly ISkillService _skillService;

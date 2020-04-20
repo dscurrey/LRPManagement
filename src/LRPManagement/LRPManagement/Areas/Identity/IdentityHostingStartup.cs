@@ -31,6 +31,8 @@ namespace LRPManagement.Areas.Identity
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                     options.Lockout.MaxFailedAccessAttempts = 5;
                     options.Lockout.AllowedForNewUsers = true;
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedEmail = false;
                 });
                 // Password
                 services.Configure<IdentityOptions>(options =>
