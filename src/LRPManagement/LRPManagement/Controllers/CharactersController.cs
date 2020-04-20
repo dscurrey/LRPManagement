@@ -11,6 +11,7 @@ using LRPManagement.Data.Characters;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
 using LRPManagement.Models;
+using LRPManagement.ViewModels;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
@@ -108,7 +109,23 @@ namespace LRPManagement.Controllers
                     return NotFound();
                 }
 
-                return View(character);
+                var skills = new List<Skill>();
+                foreach (var charSkill in character.CharacterSkills)
+                {
+                    skills.Add(charSkill.Skill);
+                }
+
+                var charView = new CharacterDetailsViewModel
+                {
+                    Id = character.Id,
+                    IsActive = character.IsActive,
+                    Name = character.Name,
+                    PlayerId = character.PlayerId,
+                    Skills = skills,
+                    Xp = character.Xp
+                };
+
+                return View(charView);
             }
             catch (BrokenCircuitException)
             {
