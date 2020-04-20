@@ -333,7 +333,7 @@ namespace LRPManagement.Controllers
         {
             _charSkillRepository.AddSkillToCharacter(charSkill.SkillId, id);
             await _charSkillRepository.Save();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new {id});
         }
 
         private async Task<bool> CharacterExists(int id)

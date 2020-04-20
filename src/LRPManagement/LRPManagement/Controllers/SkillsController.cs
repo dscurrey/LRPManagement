@@ -44,7 +44,8 @@ namespace LRPManagement.Controllers
                         var newSkill = new Skill
                         {
                             SkillRef = skill.Id,
-                            Name = skill.Name
+                            Name = skill.Name,
+                            XpCost = skill.XpCost
                         };
                         _skillRepository.InsertSkill(newSkill);
                     }
@@ -64,7 +65,8 @@ namespace LRPManagement.Controllers
                 (
                     s => new SkillDTO
                     {
-                        Name = s.Name
+                        Name = s.Name,
+                        XpCost = s.XpCost
                     }
                 );
                 return View(skillList);
@@ -134,7 +136,8 @@ namespace LRPManagement.Controllers
 
             var newSkill = new Skill
             {
-                Name = skillDTO.Name
+                Name = skillDTO.Name,
+                XpCost = skillDTO.XpCost
             };
             
             _skillRepository.InsertSkill(newSkill);
@@ -189,7 +192,8 @@ namespace LRPManagement.Controllers
 
                 var updSkill = new Skill
                 {
-                    Name = skillDTO.Name
+                    Name = skillDTO.Name,
+                    XpCost = skillDTO.XpCost
                 };
 
                 _skillRepository.UpdateSkill(updSkill);
