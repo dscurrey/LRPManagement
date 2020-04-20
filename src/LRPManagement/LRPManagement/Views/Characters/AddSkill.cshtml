@@ -1,0 +1,28 @@
+﻿@model LRPManagement.ViewModels.CharacterSkillViewModel
+
+@{
+    ViewData["Title"] = "AddSkill";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>AddSkill</h1>
+@if (ViewBag.Skills != "")
+{
+<form asp-action="AddSkill">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="CharId" />
+    <div class="form-group">
+        Skill: @Html.DropDownList("SkillId", (IEnumerable<SelectListItem>)ViewBag.Skills, "Select...")
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>
+}
+else
+{
+    <div class="form-group form-check" style="background-color:yellow;">
+        <p>Skills temporarily unavailable</p>
+        <a asp-action="Index">Character Index</a>
+    </div>
+}

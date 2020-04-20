@@ -8,27 +8,47 @@ using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Players;
+using LRPManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize]
     public class PlayersController : Controller
     {
         private readonly IPlayerService _playerService;
+        private readonly IPlayerRepository _playerRepository;
 
-        public PlayersController(IPlayerService playerService)
+        public PlayersController(IPlayerService playerService, IPlayerRepository playerRepository)
         {
             _playerService = playerService;
+            _playerRepository = playerRepository;
         }
 
         // GET: Players
         public async Task<IActionResult> Index()
         {
             TempData["PlayInoperativeMsg"] = "";
+
+            await UpdateDb();
+
             try
             {
-                var players = await _playerService.GetAll();
-                return View(players);
+                var players = await _playerRepository.GetAll();
+
+                var playerList = players.Select
+                (
+                    p => new PlayerDTO
+                    {
+                        AccountRef = p.AccountRef,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName,
+                        Id = p.Id
+                    }
+                );
+
+                return View(playerList);
             }
             catch (BrokenCircuitException)
             {
@@ -49,7 +69,7 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var player = await _playerService.GetPlayer(id.Value);
+                var player = await _playerRepository.GetPlayer(id.Value);
                 if (player == null)
                 {
                     return NotFound();
@@ -65,6 +85,7 @@ namespace LRPManagement.Controllers
             return View();
         }
 
+        [Authorize]
         // GET: Players/Create
         public IActionResult Create()
         {
@@ -74,6 +95,7 @@ namespace LRPManagement.Controllers
         // POST: Players/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateJoined")] PlayerDTO playerDTO)
@@ -81,6 +103,10 @@ namespace LRPManagement.Controllers
             TempData["PlayInoperativeMsg"] = "";
             try
             {
+                // Tie to account
+                playerDTO.AccountRef = User.Identity.Name;
+                playerDTO.DateJoined = DateTime.Now;
+
                 var resp = await _playerService.CreatePlayer(playerDTO);
                 if (resp == null)
                 {
@@ -92,6 +118,8 @@ namespace LRPManagement.Controllers
             {
                 HandleBrokenCircuit();
             }
+
+            await UpdateDb();
 
             return RedirectToAction(nameof(Index));
         }
@@ -139,6 +167,16 @@ namespace LRPManagement.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
+                var updPlayer = new Player
+                {
+                    Id = playerDTO.Id,
+                    FirstName = playerDTO.FirstName,
+                    LastName = playerDTO.LastName
+                };
+
+                _playerRepository.UpdatePlayer(updPlayer);
+                await _playerRepository.Save();
             }
             catch (BrokenCircuitException)
             {
@@ -181,6 +219,9 @@ namespace LRPManagement.Controllers
             try
             {
                 await _playerService.DeletePlayer(id);
+
+                await _playerRepository.DeletePlayer(id);
+                await _playerRepository.Save();
             }
             catch (BrokenCircuitException)
             {
@@ -198,7 +239,40 @@ namespace LRPManagement.Controllers
 
         private void HandleBrokenCircuit()
         {
-            TempData["PlaInoperativeMsg"] = "Player Service Currently Unavailable";
+            TempData["PlayInoperativeMsg"] = "Player Service Currently Unavailable";
+        }
+
+        private async Task UpdateDb()
+        {
+            try
+            {
+                var players = await _playerService.GetAll();
+                if (players != null)
+                {
+                    foreach (var player in players)
+                    {
+                        if (await _playerRepository.GetPlayerRef(player.Id) != null)
+                        {
+                            continue;
+                        }
+
+                        var newPlayer = new Player
+                        {
+                            PlayerRef = player.Id,
+                            FirstName = player.FirstName,
+                            LastName = player.LastName,
+                            AccountRef = player.AccountRef
+                        };
+                        _playerRepository.InsertPlayer(newPlayer);
+                    }
+
+                    await _playerRepository.Save();
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

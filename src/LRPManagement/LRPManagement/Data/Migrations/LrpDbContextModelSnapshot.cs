@@ -18,19 +18,19 @@ namespace LRPManagement.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LRPManagement.Models.CharSkill", b =>
+            modelBuilder.Entity("LRPManagement.Models.Bond", b =>
                 {
-                    b.Property<int>("CharId")
+                    b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillId")
+                    b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.HasKey("CharId", "SkillId");
+                    b.HasKey("CharacterId", "ItemId");
 
-                    b.HasIndex("SkillId");
+                    b.HasIndex("ItemId");
 
-                    b.ToTable("CharacterSkills");
+                    b.ToTable("Bond");
                 });
 
             modelBuilder.Entity("LRPManagement.Models.Character", b =>
@@ -40,13 +40,25 @@ namespace LRPManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CharacterRef")
+                        .HasColumnType("int")
+                        .IsFixedLength(true)
+                        .HasMaxLength(10);
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRetired")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Xp")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -56,12 +68,57 @@ namespace LRPManagement.Data.Migrations
                     b.ToTable("Characters");
                 });
 
+            modelBuilder.Entity("LRPManagement.Models.CharacterSkill", b =>
+                {
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("CharacterSkills");
+                });
+
+            modelBuilder.Entity("LRPManagement.Models.Craftable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Craftables");
+                });
+
             modelBuilder.Entity("LRPManagement.Models.Player", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountRef")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PlayerRef")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -78,32 +135,53 @@ namespace LRPManagement.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SkillRef")
+                        .HasColumnType("int");
+
+                    b.Property<int>("XpCost")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
                 });
 
-            modelBuilder.Entity("LRPManagement.Models.CharSkill", b =>
+            modelBuilder.Entity("LRPManagement.Models.Bond", b =>
                 {
                     b.HasOne("LRPManagement.Models.Character", "Character")
-                        .WithMany()
-                        .HasForeignKey("CharId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("Bond")
+                        .HasForeignKey("CharacterId")
+                        .HasConstraintName("FK_Bond_Characters")
                         .IsRequired();
 
-                    b.HasOne("LRPManagement.Models.Skill", "Skill")
-                        .WithMany()
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("LRPManagement.Models.Craftable", "Item")
+                        .WithMany("Bond")
+                        .HasForeignKey("ItemId")
+                        .HasConstraintName("FK_Bond_Craftables")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("LRPManagement.Models.Character", b =>
                 {
                     b.HasOne("LRPManagement.Models.Player", "Player")
-                        .WithMany()
+                        .WithMany("Characters")
                         .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Characters_Players")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LRPManagement.Models.CharacterSkill", b =>
+                {
+                    b.HasOne("LRPManagement.Models.Character", "Character")
+                        .WithMany("CharacterSkills")
+                        .HasForeignKey("CharacterId")
+                        .HasConstraintName("FK_CharacterSkills_Characters")
+                        .IsRequired();
+
+                    b.HasOne("LRPManagement.Models.Skill", "Skill")
+                        .WithMany("CharacterSkills")
+                        .HasForeignKey("SkillId")
+                        .HasConstraintName("FK_CharacterSkills_Skills")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

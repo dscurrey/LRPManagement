@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LRPManagement.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,15 +13,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private readonly AccountsContext _context;
-        private UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public RolesController(AccountsContext context, UserManager<IdentityUser> userManager)
+        public RolesController(AccountsContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> Index()
@@ -130,6 +134,8 @@ namespace LRPManagement.Controllers
                 }
             );
 
+            await RefreshUserCookie();
+
             return View("ManageUserRoles");
         }
 
@@ -182,7 +188,15 @@ namespace LRPManagement.Controllers
                 }
             );
 
+            await RefreshUserCookie();
+
             return View("ManageUserRoles");
+        }
+
+        private async Task RefreshUserCookie()
+        {
+            var newUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            await _signInManager.SignInAsync(newUser, false);
         }
     }
 }

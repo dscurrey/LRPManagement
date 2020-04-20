@@ -19,7 +19,6 @@
     },
     "LRP.Characters": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/characters",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

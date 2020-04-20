@@ -26,6 +26,9 @@ namespace LRP.Players.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AccountRef")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("datetime2");
 
@@ -46,7 +49,7 @@ namespace LRP.Players.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateJoined = new DateTime(2020, 3, 6, 19, 55, 31, 264, DateTimeKind.Local).AddTicks(9356),
+                            DateJoined = new DateTime(2020, 4, 18, 17, 55, 14, 835, DateTimeKind.Local).AddTicks(9639),
                             FirstName = "Test",
                             IsActive = true,
                             LastName = "user"

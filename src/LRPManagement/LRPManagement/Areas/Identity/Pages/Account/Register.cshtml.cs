@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using LRPManagement.Controllers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -98,7 +99,8 @@ namespace LRPManagement.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        //return LocalRedirect(returnUrl);
+                        return RedirectToAction(nameof(PlayersController.Create), "Players");
                     }
                 }
                 foreach (var error in result.Errors)
