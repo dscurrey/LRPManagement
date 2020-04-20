@@ -36,7 +36,8 @@ namespace LRP.Skills.Controllers
                 s => new SkillDTO
                 {
                     Id = s.Id,
-                    Name = s.Name
+                    Name = s.Name,
+                    XpCost = s.XpCost
                 }
             ).ToList());
         }
@@ -55,7 +56,8 @@ namespace LRP.Skills.Controllers
             var skillDto = new SkillDTO
             {
                 Id = skill.Id,
-                Name = skill.Name
+                Name = skill.Name,
+                XpCost = skill.XpCost
             };
 
             return Ok(skillDto);
@@ -75,7 +77,8 @@ namespace LRP.Skills.Controllers
             var updSkill = new Skill
             {
                 Id = skill.Id,
-                Name = skill.Name
+                Name = skill.Name,
+                XpCost = skill.XpCost
             };
 
             if (!await SkillExists(id))
@@ -120,7 +123,8 @@ namespace LRP.Skills.Controllers
             var newSkill = new Skill
             {
                 Id = skill.Id,
-                Name = skill.Name
+                Name = skill.Name,
+                XpCost = skill.XpCost
             };
 
             _repository.InsertSkill(newSkill);
