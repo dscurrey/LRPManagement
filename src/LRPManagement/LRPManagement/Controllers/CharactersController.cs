@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Characters;
+using LRPManagement.Data.Players;
 using LRPManagement.Models;
 using Polly.CircuitBreaker;
 
@@ -17,11 +18,13 @@ namespace LRPManagement.Controllers
     {
         private readonly ICharacterService _characterService;
         private readonly ICharacterRepository _characterRepository;
+        private readonly IPlayerRepository _playerRepository;
 
-        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository)
+        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository, IPlayerRepository playerRepository)
         {
             _characterService = characterService;
             _characterRepository = characterRepository;
+            _playerRepository = playerRepository;
         }
 
         // GET: Characters
@@ -36,17 +39,18 @@ namespace LRPManagement.Controllers
                 {
                     foreach (var character in characters)
                     {
-                        if (await _characterRepository.GetCharacterRef(character.Id) != null)
+                        if (await _characterRepository.GetCharacterRef(character.Id) != null || await _playerRepository.GetPlayer(character.PlayerId) == null)
                         {
                             continue;
                         }
+
                         var newChar = new Character
                         {
                             Name = character.Name,
                             IsActive = character.IsActive,
                             IsRetired = character.IsRetired,
                             CharacterRef = character.Id,
-                            PlayerId = 1
+                            PlayerId = character.PlayerId
                         };
                         _characterRepository.InsertCharacter(newChar);
                         await _characterRepository.Save();
@@ -60,8 +64,20 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var characters = await _characterService.GetAll();
-                return View(characters);
+                var characters = await _characterRepository.GetAll();
+                var charList = characters.Select
+                (
+                    c => new CharacterDTO
+                    {
+                        Id = c.Id,
+                        IsRetired = c.IsRetired,
+                        IsActive = c.IsActive,
+                        Name = c.Name,
+                        PlayerId = c.PlayerId
+                    }
+                );
+
+                return View(charList);
             }
             catch (BrokenCircuitException)
             {
@@ -122,13 +138,21 @@ namespace LRPManagement.Controllers
                     return View(characterDto);
                 }
 
-                var newChar = new Character
+                var player = await _playerRepository.GetPlayerAccountRef(User.Identity.Name);
+                if (player == null)
                 {
-                    IsRetired = characterDto.IsRetired,
-                    IsActive = characterDto.IsActive,
-                    Name = characterDto.Name,
-                    PlayerId = characterDto.PlayerId
-                };
+                    return View();
+                }
+
+                //var newChar = new Character
+                //{
+                //    IsRetired = characterDto.IsRetired,
+                //    IsActive = characterDto.IsActive,
+                //    Name = characterDto.Name,
+                //    PlayerId = player.Id
+                //};
+                //_characterRepository.InsertCharacter(newChar);
+                //await _characterRepository.Save();
             }
             catch (BrokenCircuitException)
             {

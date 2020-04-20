@@ -30,39 +30,24 @@ namespace LRPManagement.Controllers
         {
             TempData["PlayInoperativeMsg"] = "";
 
+            await UpdateDb();
+
             try
             {
-                var players = await _playerService.GetAll();
-                if (players != null)
-                {
-                    foreach (var player in players)
+                var players = await _playerRepository.GetAll();
+
+                var playerList = players.Select
+                (
+                    p => new PlayerDTO
                     {
-                        if (await _playerRepository.GetPlayerRef(player.Id) != null)
-                        {
-                            continue;
-                        }
-
-                        var newPlayer = new Player
-                        {
-                            PlayerRef = player.Id,
-                            FirstName = player.FirstName,
-                            LastName = player.LastName
-                        };
-                        _playerRepository.InsertPlayer(newPlayer);
+                        AccountRef = p.AccountRef,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName,
+                        Id = p.Id
                     }
+                );
 
-                    await _playerRepository.Save();
-                }
-            }
-            catch (BrokenCircuitException e)
-            {
-                Console.WriteLine(e);
-            }
-
-            try
-            {
-                var players = await _playerService.GetAll();
-                return View(players);
+                return View(playerList);
             }
             catch (BrokenCircuitException)
             {
@@ -119,6 +104,7 @@ namespace LRPManagement.Controllers
             {
                 // Tie to account
                 playerDTO.AccountRef = User.Identity.Name;
+                playerDTO.DateJoined = DateTime.Now;
 
                 var resp = await _playerService.CreatePlayer(playerDTO);
                 if (resp == null)
@@ -132,14 +118,7 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
-            var newPlayer = new Player
-            {
-                FirstName = playerDTO.FirstName,
-                LastName = playerDTO.LastName
-            };
-
-            _playerRepository.InsertPlayer(newPlayer);
-            await _playerRepository.Save();
+            await UpdateDb();
 
             return RedirectToAction(nameof(Index));
         }
@@ -260,6 +239,39 @@ namespace LRPManagement.Controllers
         private void HandleBrokenCircuit()
         {
             TempData["PlayInoperativeMsg"] = "Player Service Currently Unavailable";
+        }
+
+        private async Task UpdateDb()
+        {
+            try
+            {
+                var players = await _playerService.GetAll();
+                if (players != null)
+                {
+                    foreach (var player in players)
+                    {
+                        if (await _playerRepository.GetPlayerRef(player.Id) != null)
+                        {
+                            continue;
+                        }
+
+                        var newPlayer = new Player
+                        {
+                            PlayerRef = player.Id,
+                            FirstName = player.FirstName,
+                            LastName = player.LastName,
+                            AccountRef = player.AccountRef
+                        };
+                        _playerRepository.InsertPlayer(newPlayer);
+                    }
+
+                    await _playerRepository.Save();
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

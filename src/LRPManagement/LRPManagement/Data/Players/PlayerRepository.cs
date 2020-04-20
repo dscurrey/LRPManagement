@@ -51,5 +51,10 @@ namespace LRPManagement.Data.Players
         {
             return await _context.Players.FirstOrDefaultAsync(p => p.PlayerRef == id);
         }
+
+        public async Task<Player> GetPlayerAccountRef(string id)
+        {
+            return await _context.Players.FirstOrDefaultAsync(p => p.AccountRef == id);
+        }
     }
 }
