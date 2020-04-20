@@ -41,8 +41,8 @@ namespace LRP.Characters.Data.Characters
 
         public async Task UpdateCharacter(Character character)
         {
-            var _char = await _context.Character.FirstOrDefaultAsync(c => c.Id == character.Id);
-            _context.Entry(_char).CurrentValues.SetValues(character);
+            var characterOrig = await _context.Character.FirstOrDefaultAsync(c => c.Id == character.Id);
+            _context.Entry(characterOrig).CurrentValues.SetValues(character);
         }
 
         public async Task Save()
