@@ -47,6 +47,7 @@ namespace LRPManagement
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("https://127.0.0.1:5001");
                 });
     }
 }

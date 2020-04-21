@@ -122,10 +122,8 @@ namespace LRP.Characters.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(CharacterDTO character)
+        public async Task<ActionResult<Character>> PostCharacter([FromBody] CharacterDTO character)
         {
-            // TODO - At Char Creation, populate player id using OAUTH/PlayerRepo?
-
             if (String.IsNullOrEmpty(character.Name))
             {
                 return BadRequest("Name cannot be empty.");
@@ -133,7 +131,6 @@ namespace LRP.Characters.Controllers
 
             var newCharacter = new Character
             {
-                Id = character.Id,
                 PlayerId = character.PlayerId,
                 IsActive = character.IsActive,
                 IsRetired = character.IsRetired,
