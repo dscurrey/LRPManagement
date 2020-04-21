@@ -41,7 +41,8 @@ namespace LRP.Characters.Controllers
                     IsActive = c.IsActive,
                     IsRetired = c.IsRetired,
                     Name = c.Name,
-                    PlayerId = c.PlayerId
+                    PlayerId = c.PlayerId,
+                    Xp = c.Xp
                 }
             ).ToList());
         }
@@ -82,11 +83,12 @@ namespace LRP.Characters.Controllers
 
             var updChar = new Character
             {
-                Id = character.Id,
+                Id = id,
                 PlayerId = character.PlayerId,
                 IsActive = character.IsActive,
                 IsRetired = character.IsRetired,
-                Name = character.Name
+                Name = character.Name,
+                Xp = character.Xp
             };
 
             if (!await CharacterExists(id))

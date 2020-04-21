@@ -40,7 +40,8 @@ namespace LRP.Players.Controllers
                     Id = p.Id,
                     DateJoined = p.DateJoined,
                     FirstName = p.FirstName,
-                    LastName = p.LastName
+                    LastName = p.LastName, 
+                    AccountRef = p.AccountRef
                 }
             ).ToList());
         }
@@ -61,7 +62,8 @@ namespace LRP.Players.Controllers
                 DateJoined = player.DateJoined,
                 FirstName = player.FirstName,
                 Id = player.Id,
-                LastName = player.LastName
+                LastName = player.LastName,
+                AccountRef = player.AccountRef
             };
 
             return Ok(playDto);
@@ -121,8 +123,6 @@ namespace LRP.Players.Controllers
         [HttpPost]
         public async Task<ActionResult<Player>> PostPlayer(PlayerDTO player)
         {
-            // TODO - At player creation, create user in auth server
-
             if (String.IsNullOrEmpty(player.FirstName) || String.IsNullOrEmpty(player.LastName))
             {
                 return BadRequest("Requires First and Last Names");
@@ -134,7 +134,8 @@ namespace LRP.Players.Controllers
                 FirstName = player.FirstName,
                 Id = player.Id,
                 IsActive = true,
-                LastName = player.LastName
+                LastName = player.LastName,
+                AccountRef = player.AccountRef
             };
 
             _repository.InsertPlayer(newPlayer);

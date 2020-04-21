@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,27 +9,69 @@ using Microsoft.EntityFrameworkCore;
 using DTO;
 using LRPManagement.Data;
 using LRPManagement.Data.Skills;
+using LRPManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize]
     public class SkillsController : Controller
     {
         private readonly ISkillService _skillService;
+        private readonly ISkillRepository _skillRepository;
 
-        public SkillsController(ISkillService skillService)
+        public SkillsController(ISkillService skillService, ISkillRepository skillRepository)
         {
             _skillService = skillService;
+            _skillRepository = skillRepository;
         }
 
         // GET: Skills
         public async Task<IActionResult> Index()
         {
             TempData["SkillInoperativeMsg"] = "";
+
             try
             {
                 var skills = await _skillService.GetAll();
-                return View(skills);
+                if (skills != null)
+                {
+                    foreach (var skill in skills)
+                    {
+                        if (await _skillRepository.GetSkillRef(skill.Id) != null)
+                        {
+                            continue;
+                        }
+                        var newSkill = new Skill
+                        {
+                            SkillRef = skill.Id,
+                            Name = skill.Name,
+                            XpCost = skill.XpCost
+                        };
+                        _skillRepository.InsertSkill(newSkill);
+                    }
+
+                    await _skillRepository.Save();
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
+
+            try
+            {
+                var skills = await _skillRepository.GetAll();
+                var skillList = skills.Select
+                (
+                    s => new SkillDTO
+                    {
+                        Name = s.Name,
+                        XpCost = s.XpCost
+                    }
+                );
+                return View(skillList);
             }
             catch (BrokenCircuitException)
             {
@@ -93,6 +136,15 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
+            var newSkill = new Skill
+            {
+                Name = skillDTO.Name,
+                XpCost = skillDTO.XpCost
+            };
+            
+            _skillRepository.InsertSkill(newSkill);
+            await _skillRepository.Save();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -139,6 +191,15 @@ namespace LRPManagement.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
+                var updSkill = new Skill
+                {
+                    Name = skillDTO.Name,
+                    XpCost = skillDTO.XpCost
+                };
+
+                _skillRepository.UpdateSkill(updSkill);
+                await _skillRepository.Save();
             }
             catch (BrokenCircuitException)
             {
@@ -181,6 +242,9 @@ namespace LRPManagement.Controllers
             try
             {
                 await _skillService.DeleteSkill(id);
+
+                _skillRepository.DeleteSkill(id);
+                await _skillRepository.Save();
             }
             catch (BrokenCircuitException)
             {

@@ -37,6 +37,9 @@ namespace LRP.Characters.Data.Migrations
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Xp")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Character");
@@ -48,7 +51,8 @@ namespace LRP.Characters.Data.Migrations
                             IsActive = true,
                             IsRetired = false,
                             Name = "Test user's 1st Character'",
-                            PlayerId = 1
+                            PlayerId = 1,
+                            Xp = 8
                         },
                         new
                         {
@@ -56,7 +60,8 @@ namespace LRP.Characters.Data.Migrations
                             IsActive = true,
                             IsRetired = false,
                             Name = "Test user 2's 1st Character'",
-                            PlayerId = 2
+                            PlayerId = 2,
+                            Xp = 8
                         });
                 });
 #pragma warning restore 612, 618

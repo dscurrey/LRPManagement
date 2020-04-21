@@ -5,12 +5,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using LRPManagement.Data;
 using LRPManagement.Data.Characters;
+using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,10 +58,21 @@ namespace LRPManagement
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddControllersWithViews();
+            services.AddAuthorization(
+                options =>
+                {
+                    options.AddPolicy("Staff", policy =>
+                        policy.RequireRole("Admin", "Referee"));
+                });
 
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<IPlayerService, PlayerService>();
+
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<ICharacterSkillRepository, CharacterSkillRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +94,7 @@ namespace LRPManagement
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -88,6 +102,7 @@ namespace LRPManagement
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
         static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()

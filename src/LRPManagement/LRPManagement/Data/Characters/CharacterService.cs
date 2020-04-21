@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
+using LRPManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -64,6 +65,20 @@ namespace LRPManagement.Data.Characters
             }
 
             return null;
+        }
+
+        public async Task<CharacterDTO> UpdateCharacter(Character character)
+        {
+            var updCharacter = new CharacterDTO
+            {
+                Id = character.CharacterRef,
+                IsRetired = character.IsRetired,
+                IsActive = character.IsActive,
+                Name = character.Name,
+                PlayerId = character.PlayerId,
+                Xp = character.Xp
+            };
+            return await UpdateCharacter(updCharacter);
         }
 
         public async Task<CharacterDTO> UpdateCharacter(CharacterDTO character)

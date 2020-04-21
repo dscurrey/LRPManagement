@@ -1,4 +1,4 @@
-﻿@model DTO.SkillDTO
+﻿@model Skill
 
 @{
     ViewData["Title"] = "Details";
@@ -10,11 +10,17 @@
     <h4>SkillDTO</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.XpCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.XpCost)
         </dd>
     </dl>
 </div>
