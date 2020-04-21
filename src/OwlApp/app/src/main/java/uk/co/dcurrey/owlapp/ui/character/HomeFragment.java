@@ -39,6 +39,7 @@ import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
+import uk.co.dcurrey.owlapp.sync.Synchroniser;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -166,35 +167,8 @@ public class HomeFragment extends Fragment
 
     private void saveAPI(CharacterEntity characterEntity)
     {
-        Map<String, String> params = new HashMap();
-        params.put("Name", characterEntity.Name);
-        params.put("IsRetired", ""+characterEntity.IsRetired);
-        params.put("PlayerId", ""+characterEntity.PlayerId);
-
-        // TODO - Refactor requests to separate classes
-
-        JSONObject parameters = new JSONObject(params);
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getURL(getContext())+"api/characters", parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                // Success
-                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
-                characterEntity.IsSynced = true;
-                saveLocal(characterEntity);
-            }
-        },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        //Failure
-                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                        saveLocal(characterEntity);
-                    }
-                });
-        VolleySingleton.getInstance(getContext()).getRequestQueue().add(req);
+        Synchroniser synchroniser = new Synchroniser();
+        synchroniser.sendToAPI(getContext(), characterEntity);
+        saveLocal(characterEntity);
     }
 }

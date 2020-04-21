@@ -171,7 +171,7 @@ public class PlayerFragment extends Fragment
         // TODO - Refactor Requests
 
         JSONObject parameters = new JSONObject(params);
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getURL(getContext()) + "api/players", parameters, new Response.Listener<JSONObject>()
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getPlayerURL(getContext()) + "api/players", parameters, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response)

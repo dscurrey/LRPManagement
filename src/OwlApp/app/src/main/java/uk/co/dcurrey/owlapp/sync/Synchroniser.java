@@ -68,16 +68,16 @@ public class Synchroniser
 
     public void sendToAPI(Context context, CharacterEntity character)
     {
-        String url = APIPaths.getURL(context)+"api/characters";
+        String url = APIPaths.getCharURL(context)+"api/characters";
         HttpsTrustManager.allowAllSSL();
 
         JSONObject parameters = new JSONObject();
         try
         {
-            parameters.put("playerid", character.IsRetired);
-            parameters.put("isretired", character.IsRetired);
-            parameters.put("name", character.Name);
-            parameters.put("id", character.Id);
+            parameters.put("Id", character.Id);
+            parameters.put("PlayerId", character.PlayerId);
+            parameters.put("Name", character.Name);
+            parameters.put("IsRetired", character.IsRetired);
         }
         catch (JSONException e)
         {
@@ -90,6 +90,8 @@ public class Synchroniser
             public void onResponse(JSONObject response)
             {
                 Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+                character.IsSynced = true;
+                Repository.getInstance().getCharacterRepository().update(character);
             }
         },
                 new Response.ErrorListener()
@@ -126,7 +128,7 @@ public class Synchroniser
     // TODO - Refactor Request code (see uk.co.dcurrey.owlapp.api.requests)
     private void getCharactersApi(Context context)
     {
-        String url = APIPaths.getURL(context);
+        String url = APIPaths.getCharURL(context);
         HttpsTrustManager.allowAllSSL();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"api/characters/", null, new Response.Listener<JSONArray>()
         {

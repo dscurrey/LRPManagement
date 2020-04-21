@@ -168,7 +168,7 @@ public class SkillFragment extends Fragment
         // TODO - Refactor API Requests
 
         JSONObject parameters = new JSONObject(params);
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getURL(getContext()) + "api/skills", parameters, new Response.Listener<JSONObject>()
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getSkillURL(getContext()) + "api/skills", parameters, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response)
