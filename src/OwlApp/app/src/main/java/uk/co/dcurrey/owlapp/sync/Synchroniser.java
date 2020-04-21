@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import uk.co.dcurrey.owlapp.api.APIPaths;
@@ -54,13 +55,6 @@ public class Synchroniser
             player.IsSynced = false;
             OwlDatabase.getDb().playerDao().insertAll(player);
 
-            CharacterEntity character = new CharacterEntity();
-            character.PlayerId = 42;
-            character.IsRetired = true;
-            character.IsSynced = false;
-            character.Name = "Repop Character";
-            OwlDatabase.getDb().characterDao().insertAll(character);
-
             Synchroniser synchroniser = new Synchroniser();
             synchroniser.getFromAPI(context);
         });
@@ -99,7 +93,7 @@ public class Synchroniser
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context, "POST FAIL", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
                     }
                 });
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
@@ -171,6 +165,46 @@ public class Synchroniser
 
     private void getSkillsApi(Context context)
     {
+    }
+
+    public void SyncDbToAPI(Context mContext)
+    {
+        HashMap<Integer, CharacterEntity> characters = Repository.getInstance().getCharacterRepository().get();
+
+        Iterator it = characters.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry charEntry = (Map.Entry)it.next();
+            CharacterEntity character = (CharacterEntity) charEntry.getValue();
+            if (!character.IsSynced){
+                sendToAPI(mContext, character);
+
+            }
+        }
+
+        HashMap<Integer, PlayerEntity> players = Repository.getInstance().getPlayerRepository().get();
+
+        it = players.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry playEntry = (Map.Entry)it.next();
+            PlayerEntity player = (PlayerEntity) playEntry.getValue();
+            if (!player.IsSynced){
+                sendToAPI(mContext, player);
+            }
+        }
+
+        HashMap<Integer, SkillEntity> skills = Repository.getInstance().getSkillRepository().get();
+
+        it = skills.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry skillEntry = (Map.Entry)it.next();
+            SkillEntity skill = (SkillEntity) skillEntry.getValue();
+            if (!skill.IsSynced){
+                sendToAPI(mContext, skill);
+            }
+        }
     }
 
 }

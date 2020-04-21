@@ -169,6 +169,7 @@ public class HomeFragment extends Fragment
     {
         Synchroniser synchroniser = new Synchroniser();
         synchroniser.sendToAPI(getContext(), characterEntity);
+        characterEntity.IsSynced = true;
         saveLocal(characterEntity);
     }
 }

@@ -70,19 +70,6 @@ public abstract class OwlDatabase extends RoomDatabase
             databaseWriteExecutor.execute(() ->
             {
                 // populate
-                CharacterDao charDao = INSTANCE.characterDao();
-                charDao.deleteAll();
-
-                CharacterEntity character = new CharacterEntity();
-                character.Name = "Test1";
-                character.IsRetired = false;
-                character.PlayerId = 1;
-                charDao.insertAll(character);
-                character.Name = "Test2";
-                charDao.insertAll(character);
-                character.Name = "Character";
-                charDao.insertAll(character);
-
                 PlayerDao playDao = INSTANCE.playerDao();
                 playDao.deleteAll();
                 PlayerEntity player = new PlayerEntity();

@@ -91,6 +91,18 @@ public class MainActivity extends AppCompatActivity
                 }
                 return true;
 
+            case R.id.action_forcesync:
+                if (NetworkMonitor.checkNetConnectivity(this))
+                {
+                    Synchroniser mSync = new Synchroniser();
+                    mSync.SyncDbToAPI(getApplicationContext());
+                }
+                else
+                {
+                    Toast.makeText(this, "Not Connected to Network", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
