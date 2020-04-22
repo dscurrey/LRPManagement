@@ -38,6 +38,7 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters
+        [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> Index()
         {
             TempData["CharInoperativeMsg"] = "";
