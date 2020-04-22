@@ -10,7 +10,7 @@ namespace LRPManagement.Data.Characters
         Task<Character> GetCharacter(int id);
         Task<Character> GetCharacterRef(int id);
         void InsertCharacter(Character character);
-        void DeleteCharacter(int id);
+        Task DeleteCharacter(int id);
         void UpdateCharacter(Character character);
         Task Save();
     }

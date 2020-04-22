@@ -74,4 +74,7 @@
     <string name="player_search">Search for Player...</string>
     <string name="skill_search">Search for Skill...</string>
     <string name="action_sync">Synchronise all</string>
+    <string name="prompt_title">Are you sure you want to reset the database?</string>
+    <string name="prompt_pos">Reset Database</string>
+    <string name="cancel">Cancel</string>
 </resources>

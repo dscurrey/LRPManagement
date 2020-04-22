@@ -85,10 +85,77 @@ public class Synchroniser
 
     public void sendToAPI(Context context, PlayerEntity player)
     {
+        String url = APIPaths.getPlayerURL(context)+"api/players";
+        HttpsTrustManager.allowAllSSL();
+
+        JSONObject parameters = new JSONObject();
+        try
+        {
+            parameters.put("Id", player.Id);
+            parameters.put("FirstName", player.FirstName);
+            parameters.put("LastName", player.LastName);
+        }
+        catch (JSONException e)
+        {
+            Log.e(this.toString(), "JSON ERROR", e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response)
+            {
+                Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+                player.IsSynced = true;
+                Repository.getInstance().getPlayerRepository().update(player);
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     public void sendToAPI(Context context, SkillEntity skill)
     {
+        String url = APIPaths.getSkillURL(context)+"api/skills";
+        HttpsTrustManager.allowAllSSL();
+
+        JSONObject parameters = new JSONObject();
+        try
+        {
+            parameters.put("Id", skill.Id);
+            parameters.put("Name", skill.Name);
+        }
+        catch (JSONException e)
+        {
+            Log.e(this.toString(), "JSON ERROR", e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response)
+            {
+                Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+                skill.IsSynced = true;
+                Repository.getInstance().getSkillRepository().update(skill);
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     public void getFromAPI(Context context)

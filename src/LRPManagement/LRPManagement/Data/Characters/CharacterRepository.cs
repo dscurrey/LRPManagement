@@ -16,9 +16,10 @@ namespace LRPManagement.Data.Characters
             _context = context;
         }
 
-        public void DeleteCharacter(int id)
+        public async Task DeleteCharacter(int id)
         {
-            throw new NotImplementedException();
+            var character = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
+            _context.Characters.Remove(character);
         }
 
         public async Task<List<Character>> GetAll()

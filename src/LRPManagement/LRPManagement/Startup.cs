@@ -61,7 +61,7 @@ namespace LRPManagement
             services.AddAuthorization(
                 options =>
                 {
-                    options.AddPolicy("Staff", policy =>
+                    options.AddPolicy("StaffOnly", policy =>
                         policy.RequireRole("Admin", "Referee"));
                 });
 

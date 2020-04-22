@@ -14,6 +14,7 @@ using LRPManagement.Data.Skills;
 using LRPManagement.Models;
 using LRPManagement.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
@@ -38,6 +39,7 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters
+        [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> Index()
         {
             TempData["CharInoperativeMsg"] = "";
@@ -115,23 +117,31 @@ namespace LRPManagement.Controllers
                     return NotFound();
                 }
 
-                var skills = new List<Skill>();
-                foreach (var charSkill in character.CharacterSkills)
+                var player = await _playerRepository.GetPlayerAccountRef(User.Identity.Name);
+                if (User.IsInRole("Admin") || User.IsInRole("Referee") || character.PlayerId == player.Id)
                 {
-                    skills.Add(charSkill.Skill);
+                    var skills = new List<Skill>();
+                    foreach (var charSkill in character.CharacterSkills)
+                    {
+                        skills.Add(charSkill.Skill);
+                    }
+
+                    var charView = new CharacterDetailsViewModel
+                    {
+                        Id = character.Id,
+                        IsActive = character.IsActive,
+                        Name = character.Name,
+                        PlayerId = character.PlayerId,
+                        Skills = skills,
+                        Xp = character.Xp
+                    };
+
+                    return View(charView);
                 }
-
-                var charView = new CharacterDetailsViewModel
+                else
                 {
-                    Id = character.Id,
-                    IsActive = character.IsActive,
-                    Name = character.Name,
-                    PlayerId = character.PlayerId,
-                    Skills = skills,
-                    Xp = character.Xp
-                };
-
-                return View(charView);
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch (BrokenCircuitException)
             {
