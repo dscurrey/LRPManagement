@@ -40,4 +40,9 @@
         android:name="uk.co.dcurrey.owlapp.ui.player.PlayerFragment"
         android:label="@string/menu_player"
         tools:layout="@layout/fragment_player" />
+    <fragment
+        android:id="@+id/nav_functions"
+        android:name="uk.co.dcurrey.owlapp.ui.functions.FunctionsFragment"
+        android:label="@string/menu_functions"
+        tools:layout="@layout/functions_fragment" />
 </navigation>
