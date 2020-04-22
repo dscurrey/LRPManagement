@@ -1,5 +1,7 @@
 package uk.co.dcurrey.owlapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -80,10 +82,9 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.action_getapi:
                 // Update DB
-                // TODO - Check if any entities are un-synced and warn
                 if (NetworkMonitor.checkNetConnectivity(this))
                 {
-                    Synchroniser.resetDb(this);
+                    PromptUpdate();
                 }
                 else
                 {
@@ -114,5 +115,31 @@ public class MainActivity extends AppCompatActivity
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    private void PromptUpdate()
+    {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        dialogBuilder.setTitle(R.string.prompt_title);
+
+        dialogBuilder.setPositiveButton(R.string.prompt_pos, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Synchroniser.resetDb(getApplicationContext());
+            }
+        })
+        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+            }
+        });
+
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
     }
 }
