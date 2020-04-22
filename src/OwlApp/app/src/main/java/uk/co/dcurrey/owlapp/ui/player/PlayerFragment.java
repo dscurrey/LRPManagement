@@ -40,6 +40,7 @@ import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
+import uk.co.dcurrey.owlapp.sync.Synchroniser;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -164,32 +165,7 @@ public class PlayerFragment extends Fragment
 
     private void saveApi(PlayerEntity player)
     {
-        Map<String, String> params = new HashMap<>();
-        params.put("FirstName", player.FirstName);
-        params.put("LastName", player.LastName);
-
-        // TODO - Refactor Requests
-
-        JSONObject parameters = new JSONObject(params);
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getPlayerURL(getContext()) + "api/players", parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                // Success
-                player.IsSynced = true;
-                saveLocal(player);
-            }
-        },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        // Fail - fallback
-                        saveLocal(player);
-                    }
-                });
-        VolleySingleton.getInstance(getContext()).getRequestQueue().add(req);
+        Synchroniser sync = new Synchroniser();
+        sync.sendToAPI(getContext(), player);
     }
 }

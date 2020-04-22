@@ -40,24 +40,8 @@ public class Synchroniser
         });
 
         // Repopulate Db
-        // TODO - Implement API Get Requests
-        // Dev:
-        OwlDatabase.databaseWriteExecutor.execute(() ->
-        {
-            SkillEntity skill = new SkillEntity();
-            skill.Name = "Repop Skill";
-            skill.IsSynced = false;
-            OwlDatabase.getDb().skillDao().insertAll(skill);
-
-            PlayerEntity player = new PlayerEntity();
-            player.FirstName = "Repopulated";
-            player.LastName = "Player";
-            player.IsSynced = false;
-            OwlDatabase.getDb().playerDao().insertAll(player);
-
-            Synchroniser synchroniser = new Synchroniser();
-            synchroniser.getFromAPI(context);
-        });
+        Synchroniser synchroniser = new Synchroniser();
+        synchroniser.getFromAPI(context);
     }
 
     public void sendToAPI(Context context, CharacterEntity character)
@@ -156,15 +140,79 @@ public class Synchroniser
         });
 
         VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
-
     }
 
     private void getPlayersApi(Context context)
     {
+        String url = APIPaths.getPlayerURL(context);
+        HttpsTrustManager.allowAllSSL();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"api/players/", null, new Response.Listener<JSONArray>()
+        {
+            @Override
+            public void onResponse(JSONArray response)
+            {
+                for (int i = 0; i < response.length(); i++)
+                {
+                    PlayerEntity player = new PlayerEntity();
+                    try
+                    {
+                        player.LastName = ((JSONObject) response.get(i)).getString("lastName");
+                        player.FirstName = ((JSONObject) response.get(i)).getString("firstName");
+                        player.Id = ((JSONObject) response.get(i)).getInt("id");
+                    } catch (JSONException e)
+                    {
+                        Log.e(this.toString(), "JSON ERROR", e);
+                    }
+                    player.IsSynced = true;
+                    Repository.getInstance().getPlayerRepository().insert(player);
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
 
     private void getSkillsApi(Context context)
     {
+        String url = APIPaths.getSkillURL(context);
+        HttpsTrustManager.allowAllSSL();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"api/skills/", null, new Response.Listener<JSONArray>()
+        {
+            @Override
+            public void onResponse(JSONArray response)
+            {
+                for (int i = 0; i < response.length(); i++)
+                {
+                    SkillEntity skill = new SkillEntity();
+                    try
+                    {
+                        skill.Id = ((JSONObject) response.get(i)).getInt("id");
+                        skill.Name = ((JSONObject) response.get(i)).getString("name");
+                    } catch (JSONException e)
+                    {
+                        Log.e(this.toString(), "JSON ERROR", e);
+                    }
+                    skill.IsSynced = true;
+                    Repository.getInstance().getSkillRepository().insert(skill);
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
 
     public void SyncDbToAPI(Context mContext)
