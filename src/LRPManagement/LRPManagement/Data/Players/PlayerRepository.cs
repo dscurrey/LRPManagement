@@ -39,7 +39,7 @@ namespace LRPManagement.Data.Players
 
         public void UpdatePlayer(Player player)
         {
-            throw new NotImplementedException();
+            _context.Players.Update(player);
         }
 
         public async Task Save()

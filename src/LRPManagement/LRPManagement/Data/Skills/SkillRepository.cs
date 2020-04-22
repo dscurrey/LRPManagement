@@ -16,9 +16,10 @@ namespace LRPManagement.Data.Skills
             _context = context;
         }
 
-        public void DeleteSkill(int id)
+        public async Task DeleteSkill(int id)
         {
-            throw new NotImplementedException();
+            var skill = await _context.Skills.FirstOrDefaultAsync(s => s.Id == id);
+            _context.Skills.Remove(skill);
         }
 
         public async Task<List<Skill>> GetAll()
@@ -48,7 +49,7 @@ namespace LRPManagement.Data.Skills
 
         public void UpdateSkill(Skill skill)
         {
-            throw new NotImplementedException();
+            _context.Skills.Update(skill);
         }
     }
 }
