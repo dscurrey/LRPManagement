@@ -40,24 +40,8 @@ public class Synchroniser
         });
 
         // Repopulate Db
-        // TODO - Implement API Get Requests
-        // Dev:
-        OwlDatabase.databaseWriteExecutor.execute(() ->
-        {
-            SkillEntity skill = new SkillEntity();
-            skill.Name = "Repop Skill";
-            skill.IsSynced = false;
-            OwlDatabase.getDb().skillDao().insertAll(skill);
-
-            PlayerEntity player = new PlayerEntity();
-            player.FirstName = "Repopulated";
-            player.LastName = "Player";
-            player.IsSynced = false;
-            OwlDatabase.getDb().playerDao().insertAll(player);
-
-            Synchroniser synchroniser = new Synchroniser();
-            synchroniser.getFromAPI(context);
-        });
+        Synchroniser synchroniser = new Synchroniser();
+        synchroniser.getFromAPI(context);
     }
 
     public void sendToAPI(Context context, CharacterEntity character)

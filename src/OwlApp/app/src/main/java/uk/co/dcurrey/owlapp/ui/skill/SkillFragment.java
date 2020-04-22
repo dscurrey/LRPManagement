@@ -39,6 +39,7 @@ import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
+import uk.co.dcurrey.owlapp.sync.Synchroniser;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -162,31 +163,7 @@ public class SkillFragment extends Fragment
 
     private void saveAPI(SkillEntity skill)
     {
-        Map<String, String> params = new HashMap();
-        params.put("Name", skill.Name);
-
-        // TODO - Refactor API Requests
-
-        JSONObject parameters = new JSONObject(params);
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, APIPaths.getSkillURL(getContext()) + "api/skills", parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                //Success
-                skill.IsSynced = true;
-                saveLocal(skill);
-            }
-        },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        // Fail
-                        saveLocal(skill);
-                    }
-                });
-        VolleySingleton.getInstance(getContext()).getRequestQueue().add(req);
+        Synchroniser sync = new Synchroniser();
+        sync.sendToAPI(getContext(), skill);
     }
 }
