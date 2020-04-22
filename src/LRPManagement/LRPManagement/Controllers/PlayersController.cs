@@ -10,6 +10,8 @@ using LRPManagement.Data;
 using LRPManagement.Data.Players;
 using LRPManagement.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
@@ -27,6 +29,7 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Players
+        [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> Index()
         {
             TempData["PlayInoperativeMsg"] = "";
@@ -75,7 +78,14 @@ namespace LRPManagement.Controllers
                     return NotFound();
                 }
 
-                return View(player);
+                if (player.AccountRef == User.Identity.Name || User.IsInRole("Admin") || User.IsInRole("Referee"))
+                {
+                    return View(player);
+                }
+                else
+                {
+                    return View(nameof(Index));
+                }
             }
             catch
             {
