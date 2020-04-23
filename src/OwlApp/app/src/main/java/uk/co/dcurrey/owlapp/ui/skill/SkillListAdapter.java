@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,11 +21,13 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
     class SkillViewHolder extends RecyclerView.ViewHolder
     {
         private final TextView skillNameView;
+        private final ImageView skillSyncView;
 
         private SkillViewHolder(View itemView)
         {
             super(itemView);
             skillNameView = itemView.findViewById(R.id.skillName);
+            skillSyncView = itemView.findViewById(R.id.skillSync);
         }
     }
 
@@ -56,6 +59,18 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
             SkillEntity current = mSkills.get(pos);
             holder.skillNameView.setText(current.Name);
 
+            boolean sync = current.IsSynced;
+            if (sync)
+            {
+                //SYNC OK
+                holder.skillSyncView.setImageResource(R.drawable.ok);
+            }
+            else
+            {
+                holder.skillSyncView.setImageResource(R.drawable.fail);
+            }
+            holder.skillSyncView.setVisibility(View.VISIBLE);
+
             // OnClick
             holder.itemView.setOnClickListener((v) -> {
                 openSkill(current.Id);
@@ -64,6 +79,7 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
         else
         {
             holder.skillNameView.setText("No Skills Loaded");
+            holder.skillSyncView.setVisibility(View.INVISIBLE);
         }
     }
 
