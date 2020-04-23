@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +22,14 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     {
         private final TextView playerFName;
         private final TextView playerLName;
+        private final ImageView playerSyncView;
 
         private PlayerViewHolder(View itemView)
         {
             super(itemView);
             playerFName = itemView.findViewById(R.id.playFName);
             playerLName = itemView.findViewById(R.id.playLName);
+            playerSyncView = itemView.findViewById(R.id.playSync);
         }
     }
 
@@ -59,6 +62,18 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             holder.playerFName.setText(current.FirstName);
             holder.playerLName.setText(current.LastName);
 
+            boolean sync = current.IsSynced;
+            if (sync)
+            {
+                //SYNC OK
+                holder.playerSyncView.setImageResource(R.drawable.ok);
+            }
+            else
+            {
+                holder.playerSyncView.setImageResource(R.drawable.fail);
+            }
+            holder.playerSyncView.setVisibility(View.VISIBLE);
+
             // OnClick
             holder.itemView.setOnClickListener((v) -> {
                 openPlayer(current.Id);
@@ -68,6 +83,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         {
             // Data not ready
             holder.playerFName.setText("No Players Loaded");
+            holder.playerSyncView.setVisibility(View.INVISIBLE);
         }
     }
 
