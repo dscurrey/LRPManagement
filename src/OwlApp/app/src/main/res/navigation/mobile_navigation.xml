@@ -45,4 +45,9 @@
         android:name="uk.co.dcurrey.owlapp.ui.functions.FunctionsFragment"
         android:label="@string/menu_functions"
         tools:layout="@layout/functions_fragment" />
+    <fragment
+        android:id="@+id/nav_items"
+        android:name="uk.co.dcurrey.owlapp.ui.items.ItemsFragment"
+        android:label="@string/menu_items"
+        tools:layout="@layout/items_fragment" />
 </navigation>

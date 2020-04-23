@@ -77,4 +77,5 @@
     <string name="prompt_title">Are you sure you want to reset the database?</string>
     <string name="prompt_pos">Reset Database</string>
     <string name="cancel">Cancel</string>
+    <string name="menu_items">Items</string>
 </resources>
