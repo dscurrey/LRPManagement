@@ -81,15 +81,7 @@ public class SkillFragment extends Fragment
 
         // FAB
         FloatingActionButton fab = root.findViewById(R.id.fab_skill);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getContext(), NewSkillActivity.class);
-                startActivityForResult(intent, NEW_SKILL_ACTIVITY_REQUEST_CODE);
-            }
-        });
+        fab.setVisibility(View.INVISIBLE);
 
         searchTerm.addTextChangedListener(new TextWatcher()
         {

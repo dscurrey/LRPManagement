@@ -59,15 +59,7 @@ public class ItemsFragment extends Fragment
 
         // FAB
         FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), NewItemActivity.class);
-                startActivityForResult(intent, NEW_ITEM_ACTIVITY_REQUEST_CODE);
-            }
-        });
+        fab.setVisibility(View.INVISIBLE);
 
         // Recycler
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview_item);

@@ -83,6 +83,7 @@ public class PlayerFragment extends Fragment
 
         // FAB
         FloatingActionButton fab = root.findViewById(R.id.fab_player);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override

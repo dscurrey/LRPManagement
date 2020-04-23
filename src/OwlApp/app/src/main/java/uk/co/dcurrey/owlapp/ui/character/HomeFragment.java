@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment
 
         // FAB
         FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
