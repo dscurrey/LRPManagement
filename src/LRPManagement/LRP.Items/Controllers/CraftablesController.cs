@@ -40,7 +40,7 @@ namespace LRP.Items.Controllers
                 return NotFound();
             }
 
-            return craftable;
+            return Ok(craftable);
         }
 
         // PUT: api/Craftables/5
@@ -97,10 +97,10 @@ namespace LRP.Items.Controllers
                 return NotFound();
             }
 
-            _craftRepository.DeleteCraftable(id);
+            await _craftRepository.DeleteCraftable(id);
             await _craftRepository.Save();
 
-            return craftable;
+            return Ok(craftable);
         }
 
         private async Task<bool> CraftableExists(int id)
