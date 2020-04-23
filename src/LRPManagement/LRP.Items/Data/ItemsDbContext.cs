@@ -31,6 +31,7 @@ namespace LRP.Items.Data
                     new Craftable
                     {
                         Id = 1,
+                        Name = "Apprentice's Blade",
                         Form = "Weapon, One Handed",
                         Requirement = "N/A",
                         Effect = "Spend one hero point to call CLEAVE",
