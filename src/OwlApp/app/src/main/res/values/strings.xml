@@ -78,4 +78,5 @@
     <string name="prompt_pos">Reset Database</string>
     <string name="cancel">Cancel</string>
     <string name="menu_items">Items</string>
+    <string name="pref_items_port">5011</string>
 </resources>
