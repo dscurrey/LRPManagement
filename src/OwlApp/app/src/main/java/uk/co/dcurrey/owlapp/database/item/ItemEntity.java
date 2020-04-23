@@ -14,7 +14,7 @@ public class ItemEntity
     public int Id;
     public String Name;
     public String Form;
-    public String Requirement;
+    public String Reqs;
     public String Effect;
     public String Materials;
     public boolean IsSynced;

@@ -66,7 +66,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             ItemEntity cur = mItems.get(pos);
             holder.itemMats.setText(cur.Materials);
             holder.itemEffect.setText(cur.Effect);
-            holder.itemReq.setText(cur.Requirement);
+            holder.itemReq.setText(cur.Reqs);
             holder.itemForm.setText(cur.Form);
             holder.itemName.setText(cur.Name);
 

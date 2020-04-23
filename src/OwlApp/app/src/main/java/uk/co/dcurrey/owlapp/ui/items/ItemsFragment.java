@@ -28,6 +28,7 @@ import java.util.List;
 
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.item.ItemEntity;
+import uk.co.dcurrey.owlapp.database.item.ItemViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
 import uk.co.dcurrey.owlapp.sync.Synchroniser;
 import uk.co.dcurrey.owlapp.ui.character.NewCharacterActivity;
@@ -37,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
 public class ItemsFragment extends Fragment
 {
 
-    private ItemsViewModel mViewModel;
+    private ItemViewModel mViewModel;
     public static final int NEW_ITEM_ACTIVITY_REQUEST_CODE = 1;
     private ItemListAdapter adapter;
     private EditText searchTerm;
@@ -83,7 +84,7 @@ public class ItemsFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(ItemsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         mViewModel.getAllItems().observe(getViewLifecycleOwner(), new Observer<List<ItemEntity>>()
         {
             @Override

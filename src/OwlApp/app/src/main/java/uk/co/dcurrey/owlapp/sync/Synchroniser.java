@@ -167,9 +167,12 @@ public class Synchroniser
         JSONObject parameters = new JSONObject();
         try
         {
-            // TODO - Update mappings
             parameters.put("Id", item.Id);
             parameters.put("Name", item.Name);
+            parameters.put("Form", item.Form);
+            parameters.put("Requirement", item.Reqs);
+            parameters.put("Effect", item.Effect);
+            parameters.put("Materials", item.Materials);
         }
         catch (JSONException e)
         {
@@ -338,9 +341,12 @@ public class Synchroniser
                     ItemEntity item = new ItemEntity();
                     try
                     {
-                        // TODO - Update mappings
                         item.Id = ((JSONObject) response.get(i)).getInt("id");
                         item.Name = ((JSONObject) response.get(i)).getString("name");
+                        item.Effect = ((JSONObject) response.get(i)).getString("effect");
+                        item.Form = ((JSONObject) response.get(i)).getString("form");
+                        item.Materials = ((JSONObject) response.get(i)).getString("materials");
+                        item.Reqs = ((JSONObject) response.get(i)).getString("requirement");
                     } catch (JSONException e)
                     {
                         Log.e(this.toString(), "JSON ERROR", e);

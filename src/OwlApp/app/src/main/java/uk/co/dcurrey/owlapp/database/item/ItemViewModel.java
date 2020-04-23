@@ -19,7 +19,7 @@ public class ItemViewModel extends AndroidViewModel
         mItems = mRepo.getAllItems();
     }
 
-    public LiveData<List<ItemEntity>> getAllChars()
+    public LiveData<List<ItemEntity>> getAllItems()
     {
         return mItems;
     }
