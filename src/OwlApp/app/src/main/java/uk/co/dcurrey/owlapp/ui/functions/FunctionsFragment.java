@@ -19,8 +19,6 @@ import uk.co.dcurrey.owlapp.R;
 public class FunctionsFragment extends Fragment
 {
 
-    private FunctionsViewModel mViewModel;
-
     public static FunctionsFragment newInstance()
     {
         return new FunctionsFragment();
@@ -30,7 +28,7 @@ public class FunctionsFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        mViewModel = ViewModelProviders.of(this).get(FunctionsViewModel.class);
+        FunctionsViewModel mViewModel = ViewModelProviders.of(this).get(FunctionsViewModel.class);
         View root = inflater.inflate(R.layout.functions_fragment, container, false);
         final TextView textView = root.findViewById(R.id.txtFunction);
         mViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()

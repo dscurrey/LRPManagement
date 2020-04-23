@@ -76,7 +76,6 @@ namespace LRP.Skills.Controllers
 
             var updSkill = new Skill
             {
-                Id = skill.Id,
                 Name = skill.Name,
                 XpCost = skill.XpCost
             };

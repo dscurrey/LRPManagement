@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,22 +18,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import uk.co.dcurrey.owlapp.R;
-import uk.co.dcurrey.owlapp.api.APIPaths;
-import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
@@ -46,23 +34,20 @@ import static android.app.Activity.RESULT_OK;
 public class HomeFragment extends Fragment
 {
 
-    private HomeViewModel homeViewModel;
     public static final int NEW_CHAR_ACTIVITY_REQUEST_CODE = 1;
     private CharacterViewModel mCharacterViewModel;
     private CharacterListAdapter adapter;
-    private EditText searchTerm;
     private List<CharacterEntity> characters;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Recycler
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
-        searchTerm = root.findViewById(R.id.charSearch);
+        EditText searchTerm = root.findViewById(R.id.charSearch);
         adapter = new CharacterListAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -216,7 +216,6 @@ public class Synchroniser
         getItemsApi(context);
     }
 
-    // TODO - Refactor Request code (see uk.co.dcurrey.owlapp.api.requests)
     private void getCharactersApi(Context context)
     {
         String url = APIPaths.getCharURL(context);

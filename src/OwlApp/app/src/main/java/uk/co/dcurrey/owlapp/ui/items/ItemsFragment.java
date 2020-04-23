@@ -2,7 +2,6 @@ package uk.co.dcurrey.owlapp.ui.items;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +30,6 @@ import uk.co.dcurrey.owlapp.database.item.ItemEntity;
 import uk.co.dcurrey.owlapp.database.item.ItemViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
 import uk.co.dcurrey.owlapp.sync.Synchroniser;
-import uk.co.dcurrey.owlapp.ui.character.NewCharacterActivity;
 
 import static android.app.Activity.RESULT_OK;
 
