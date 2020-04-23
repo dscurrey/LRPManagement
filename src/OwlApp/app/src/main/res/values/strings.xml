@@ -40,6 +40,7 @@
     <string name="pref_charId_key">uk.co.dcurrey.owlapp.CHARID</string>
     <string name="pref_playerId_key">uk.co.dcurrey.owlapp.PLAYERID</string>
     <string name="pref_skillId_key">uk.co.dcurrey.owlapp.SKILLID</string>
+    <string name="pref_itemId_key">uk.co.dcurrey.owlapp.ITEMID</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -77,4 +78,7 @@
     <string name="prompt_title">Are you sure you want to reset the database?</string>
     <string name="prompt_pos">Reset Database</string>
     <string name="cancel">Cancel</string>
+    <string name="menu_items">Items</string>
+    <string name="pref_items_port">5011</string>
+    <string name="item_search">Search for an Item...</string>
 </resources>

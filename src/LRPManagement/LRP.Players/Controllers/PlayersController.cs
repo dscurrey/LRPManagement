@@ -84,7 +84,6 @@ namespace LRP.Players.Controllers
             {
                 DateJoined = player.DateJoined,
                 FirstName = player.FirstName,
-                Id = player.Id,
                 LastName = player.LastName,
                 IsActive = true
             };

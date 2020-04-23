@@ -23,4 +23,9 @@ public enum Repository
     {
         return SkillRepository.INSTANCE;
     }
+
+    public synchronized ItemRepository getItemRepository()
+    {
+        return ItemRepository.INSTANCE;
+    }
 }

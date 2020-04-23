@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,23 +18,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import uk.co.dcurrey.owlapp.R;
-import uk.co.dcurrey.owlapp.api.APIPaths;
-import uk.co.dcurrey.owlapp.api.VolleySingleton;
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerViewModel;
 import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
@@ -47,21 +34,18 @@ import static android.app.Activity.RESULT_OK;
 public class PlayerFragment extends Fragment
 {
 
-    private PlayerUIViewModel slideshowViewModel;
     public static final int NEW_PLAYER_ACTIVITY_REQUEST_CODE = 1;
     private uk.co.dcurrey.owlapp.database.player.PlayerViewModel mPlayerViewModel;
     private PlayerListAdapter adapter;
-    private EditText searchTerm;
     private List<PlayerEntity> players;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(PlayerUIViewModel.class);
+        PlayerUIViewModel slideshowViewModel = ViewModelProviders.of(this).get(PlayerUIViewModel.class);
         View root = inflater.inflate(R.layout.fragment_player, container, false);
 
-        searchTerm = root.findViewById(R.id.playerSearch);
+        EditText searchTerm = root.findViewById(R.id.playerSearch);
 
         // RecyclerView
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview_player);
@@ -83,6 +67,7 @@ public class PlayerFragment extends Fragment
 
         // FAB
         FloatingActionButton fab = root.findViewById(R.id.fab_player);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override

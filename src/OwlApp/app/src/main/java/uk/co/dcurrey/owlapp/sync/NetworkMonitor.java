@@ -7,15 +7,6 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
-import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
-import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
-import uk.co.dcurrey.owlapp.model.repository.Repository;
-
 public class NetworkMonitor extends ConnectivityManager.NetworkCallback
 {
     final NetworkRequest networkRequest;

@@ -23,6 +23,7 @@ import uk.co.dcurrey.owlapp.api.HttpsTrustManager;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.item.ItemEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 import uk.co.dcurrey.owlapp.model.repository.Repository;
@@ -56,6 +57,7 @@ public class Synchroniser
             parameters.put("PlayerId", character.PlayerId);
             parameters.put("Name", character.Name);
             parameters.put("IsRetired", character.IsRetired);
+            parameters.put("xp", character.Xp);
         }
         catch (JSONException e)
         {
@@ -158,6 +160,47 @@ public class Synchroniser
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
+    public void sendToAPI(Context context, ItemEntity item)
+    {
+        String url = APIPaths.getSkillURL(context)+"api/craftables";
+        HttpsTrustManager.allowAllSSL();
+
+        JSONObject parameters = new JSONObject();
+        try
+        {
+            parameters.put("Id", item.Id);
+            parameters.put("Name", item.Name);
+            parameters.put("Form", item.Form);
+            parameters.put("Requirement", item.Reqs);
+            parameters.put("Effect", item.Effect);
+            parameters.put("Materials", item.Materials);
+        }
+        catch (JSONException e)
+        {
+            Log.e(this.toString(), "JSON ERROR", e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response)
+            {
+                Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+                item.IsSynced = true;
+                Repository.getInstance().getItemRepository().update(item);
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
     public void getFromAPI(Context context)
     {
         // Characters
@@ -168,9 +211,11 @@ public class Synchroniser
 
         // Skills
         getSkillsApi(context);
+
+        // Items
+        getItemsApi(context);
     }
 
-    // TODO - Refactor Request code (see uk.co.dcurrey.owlapp.api.requests)
     private void getCharactersApi(Context context)
     {
         String url = APIPaths.getCharURL(context);
@@ -186,9 +231,10 @@ public class Synchroniser
                     try
                     {
                         character.Name = ((JSONObject) response.get(i)).getString("name");
-                        character.IsRetired = ((JSONObject) response.get(i)).getBoolean("IsRetired");
-                        character.PlayerId = ((JSONObject) response.get(i)).getInt("PlayerId");
+                        character.IsRetired = ((JSONObject) response.get(i)).getBoolean("isRetired");
+                        character.PlayerId = ((JSONObject) response.get(i)).getInt("playerId");
                         character.Id = ((JSONObject) response.get(i)).getInt("id");
+                        character.Xp = ((JSONObject) response.get(i)).getInt("xp");
                     } catch (JSONException e)
                     {
                         Log.e(this.toString(), "JSON ERROR", e);
@@ -282,6 +328,46 @@ public class Synchroniser
         VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
 
+    private void getItemsApi(Context context)
+    {
+        String url = APIPaths.getItemsURL(context);
+        HttpsTrustManager.allowAllSSL();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"api/craftables/", null, new Response.Listener<JSONArray>()
+        {
+            @Override
+            public void onResponse(JSONArray response)
+            {
+                for (int i = 0; i < response.length(); i++)
+                {
+                    ItemEntity item = new ItemEntity();
+                    try
+                    {
+                        item.Id = ((JSONObject) response.get(i)).getInt("id");
+                        item.Name = ((JSONObject) response.get(i)).getString("name");
+                        item.Effect = ((JSONObject) response.get(i)).getString("effect");
+                        item.Form = ((JSONObject) response.get(i)).getString("form");
+                        item.Materials = ((JSONObject) response.get(i)).getString("materials");
+                        item.Reqs = ((JSONObject) response.get(i)).getString("requirement");
+                    } catch (JSONException e)
+                    {
+                        Log.e(this.toString(), "JSON ERROR", e);
+                    }
+                    item.IsSynced = true;
+                    Repository.getInstance().getItemRepository().insert(item);
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
+    }
+
     public void SyncDbToAPI(Context mContext)
     {
         HashMap<Integer, CharacterEntity> characters = Repository.getInstance().getCharacterRepository().get();
@@ -318,6 +404,18 @@ public class Synchroniser
             SkillEntity skill = (SkillEntity) skillEntry.getValue();
             if (!skill.IsSynced){
                 sendToAPI(mContext, skill);
+            }
+        }
+
+        HashMap<Integer, ItemEntity> items = Repository.getInstance().getItemRepository().get();
+
+        it = items.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry itemEntry = (Map.Entry)it.next();
+            ItemEntity item = (ItemEntity) itemEntry.getValue();
+            if (!item.IsSynced){
+                sendToAPI(mContext, item);
             }
         }
     }
