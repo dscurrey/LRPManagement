@@ -14,34 +14,38 @@ namespace LRP.Items.Data.Craftables
         {
             _items = items;
         }
+
         public async Task<List<Craftable>> GetAll()
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(_items.ToList());
         }
 
         public async Task<Craftable> GetCraftable(int id)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(_items.FirstOrDefault(i => i.Id == id));
         }
 
         public void InsertCraftable(Craftable craftable)
         {
-            throw new NotImplementedException();
+            _items.Add(craftable);
         }
 
         public async Task DeleteCraftable(int id)
         {
-            throw new NotImplementedException();
+            var item = await GetCraftable(id);
+            await Task.FromResult(_items.Remove(item));
         }
 
         public void UpdateCraftable(Craftable craftable)
         {
-            throw new NotImplementedException();
+            var tgt = _items.Find(s => s.Id == craftable.Id);
+            _items.Remove(tgt);
+            _items.Add(craftable);
         }
 
-        public async Task Save()
+        public Task Save()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

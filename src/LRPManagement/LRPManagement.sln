@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRP.Items", "LRP.Items\LRP.Items.csproj", "{31E2A66D-62C2-491B-AC6A-1D87ED1B6133}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRP.Items.Tests", "LRP.Items.Tests\LRP.Items.Tests.csproj", "{FAFC9165-9961-4454-B55C-DD256FDF4172}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{31E2A66D-62C2-491B-AC6A-1D87ED1B6133}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31E2A66D-62C2-491B-AC6A-1D87ED1B6133}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31E2A66D-62C2-491B-AC6A-1D87ED1B6133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAFC9165-9961-4454-B55C-DD256FDF4172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAFC9165-9961-4454-B55C-DD256FDF4172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAFC9165-9961-4454-B55C-DD256FDF4172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAFC9165-9961-4454-B55C-DD256FDF4172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
