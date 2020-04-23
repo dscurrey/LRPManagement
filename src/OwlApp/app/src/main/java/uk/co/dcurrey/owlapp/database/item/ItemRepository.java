@@ -13,19 +13,19 @@ public class ItemRepository
     private ItemDao mItemDao;
     private LiveData<List<ItemEntity>> mAllItems;
 
-    ItemRepository(Application application)
+    public ItemRepository(Application application)
     {
         OwlDatabase db = OwlDatabase.getDb(application);
         mItemDao = db.itemDao();
         mAllItems = mItemDao.getAll();
     }
 
-    LiveData<List<ItemEntity>> getAllItems()
+    public LiveData<List<ItemEntity>> getAllItems()
     {
         return mAllItems;
     }
 
-    void insert(ItemEntity item)
+    public void insert(ItemEntity item)
     {
         OwlDatabase.databaseWriteExecutor.execute(() -> {
             mItemDao.insertAll(item);

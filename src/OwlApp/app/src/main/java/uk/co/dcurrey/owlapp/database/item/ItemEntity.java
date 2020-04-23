@@ -16,5 +16,6 @@ public class ItemEntity
     public String Form;
     public String Requirement;
     public String Effect;
+    public String Materials;
     public boolean IsSynced;
 }
