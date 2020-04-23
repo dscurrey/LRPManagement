@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LRP.Items.Data;
+using LRP.Items.Data.Craftables;
 using LRP.Items.Models;
 
 namespace LRP.Items.Controllers
@@ -14,25 +15,25 @@ namespace LRP.Items.Controllers
     [ApiController]
     public class CraftablesController : ControllerBase
     {
-        private readonly ItemsDbContext _context;
+        private readonly ICraftableRepository _craftRepository;
 
-        public CraftablesController(ItemsDbContext context)
+        public CraftablesController(ICraftableRepository craftRepository)
         {
-            _context = context;
+            _craftRepository = craftRepository;
         }
 
         // GET: api/Craftables
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Craftable>>> GetCraftables()
         {
-            return await _context.Craftables.ToListAsync();
+            return await _craftRepository.GetAll();
         }
 
         // GET: api/Craftables/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Craftable>> GetCraftable(int id)
         {
-            var craftable = await _context.Craftables.FindAsync(id);
+            var craftable = await _craftRepository.GetCraftable(id);
 
             if (craftable == null)
             {
@@ -53,15 +54,15 @@ namespace LRP.Items.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(craftable).State = EntityState.Modified;
+            _craftRepository.UpdateCraftable(craftable);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _craftRepository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CraftableExists(id))
+                if (! await CraftableExists(id))
                 {
                     return NotFound();
                 }
@@ -80,8 +81,8 @@ namespace LRP.Items.Controllers
         [HttpPost]
         public async Task<ActionResult<Craftable>> PostCraftable(Craftable craftable)
         {
-            _context.Craftables.Add(craftable);
-            await _context.SaveChangesAsync();
+            _craftRepository.InsertCraftable(craftable);
+            await _craftRepository.Save();
 
             return CreatedAtAction("GetCraftable", new { id = craftable.Id }, craftable);
         }
@@ -90,21 +91,22 @@ namespace LRP.Items.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Craftable>> DeleteCraftable(int id)
         {
-            var craftable = await _context.Craftables.FindAsync(id);
+            var craftable = await _craftRepository.GetCraftable(id);
             if (craftable == null)
             {
                 return NotFound();
             }
 
-            _context.Craftables.Remove(craftable);
-            await _context.SaveChangesAsync();
+            _craftRepository.DeleteCraftable(id);
+            await _craftRepository.Save();
 
             return craftable;
         }
 
-        private bool CraftableExists(int id)
+        private async Task<bool> CraftableExists(int id)
         {
-            return _context.Craftables.Any(e => e.Id == id);
+            var items = await _craftRepository.GetAll();
+            return items.Any(e => e.Id == id);
         }
     }
 }

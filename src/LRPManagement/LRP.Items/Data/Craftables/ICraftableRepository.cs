@@ -9,7 +9,7 @@ namespace LRP.Items.Data.Craftables
         Task<List<Craftable>> GetAll();
         Task<Craftable> GetCraftable(int id);
         void InsertCraftable(Craftable craftable);
-        void DeleteCraftable(int id);
+        Task DeleteCraftable(int id);
         void UpdateCraftable(Craftable craftable);
         Task Save();
     }

@@ -16,9 +16,10 @@ namespace LRP.Items.Data.Craftables
             _context = context;
         }
 
-        public void DeleteCraftable(int id)
+        public async Task DeleteCraftable(int id)
         {
-            throw new NotImplementedException();
+            var item = await GetCraftable(id);
+            _context.Craftables.Remove(item);
         }
 
         public async Task<List<Craftable>> GetAll()
