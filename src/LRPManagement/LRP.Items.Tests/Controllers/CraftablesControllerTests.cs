@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DTO;
 using LRP.Items.Controllers;
 using LRP.Items.Data.Craftables;
 using LRP.Items.Models;
@@ -41,7 +42,7 @@ namespace LRP.Items.Tests.Controllers
             var testItem = TestData.Items().Find(i => i.Id == itemId);
             var objResult = result.Result as OkObjectResult;
             Assert.IsNotNull(objResult);
-            var valResult = objResult.Value as Craftable;
+            var valResult = objResult.Value as CraftableDTO;
             Assert.IsNotNull(valResult);
 
             Assert.AreEqual(testItem.Id, valResult.Id);
