@@ -28,4 +28,9 @@ public enum Repository
     {
         return ItemRepository.INSTANCE;
     }
+
+    public synchronized BondRepository getBondRepository()
+    {
+        return BondRepository.INSTANCE;
+    }
 }

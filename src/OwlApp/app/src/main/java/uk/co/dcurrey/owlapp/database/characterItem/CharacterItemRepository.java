@@ -17,7 +17,7 @@ public class CharacterItemRepository
     {
         OwlDatabase db = OwlDatabase.getDb(application);
         mDao = db.charItemDao();
-        mBonds = mDao.get();
+        mBonds = mDao.getAll();
     }
 
     LiveData<List<CharacterItemEntity>> getAllBonds()

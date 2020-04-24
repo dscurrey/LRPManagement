@@ -30,7 +30,7 @@ import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
                 ItemEntity.class,
                 CharacterItemEntity.class
         },
-        version = 4,
+        version = 5,
         exportSchema = false
 )
 public abstract class OwlDatabase extends RoomDatabase
