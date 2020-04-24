@@ -1,6 +1,7 @@
 package uk.co.dcurrey.owlapp.ui.functions;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -14,10 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import uk.co.dcurrey.owlapp.R;
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
+import uk.co.dcurrey.owlapp.ui.items.ItemsViewModel;
 
 public class FunctionsFragment extends Fragment
 {
+    private CharacterViewModel mCharViewModel;
 
     public static FunctionsFragment newInstance()
     {
@@ -28,15 +35,16 @@ public class FunctionsFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        FunctionsViewModel mViewModel = ViewModelProviders.of(this).get(FunctionsViewModel.class);
+        FunctionsViewModel mViewModel = new ViewModelProvider(this).get(FunctionsViewModel.class);
         View root = inflater.inflate(R.layout.functions_fragment, container, false);
-        final TextView textView = root.findViewById(R.id.txtFunction);
-        mViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
+
+        TextView mCharCountView = root.findViewById(R.id.charCount);
+        mViewModel.getCharCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
         {
             @Override
-            public void onChanged(String s)
+            public void onChanged(Integer integer)
             {
-                textView.setText(s);
+                mCharCountView.setText(""+integer);
             }
         });
 
