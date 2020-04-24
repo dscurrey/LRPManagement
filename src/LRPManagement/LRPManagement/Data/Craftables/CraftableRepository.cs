@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LRPManagement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement.Data.Craftables
 {
     public class CraftableRepository : ICraftableRepository
     {
+        private LrpDbContext _context;
+
+        public CraftableRepository(LrpDbContext context)
+        {
+            _context = context;
+        }
+
         public async Task<List<Craftable>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Craftables.ToListAsync();
         }
 
         public async Task<Craftable> GetCraftable(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Craftables.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Craftable> GetCraftableRef(int id)
@@ -25,7 +33,7 @@ namespace LRPManagement.Data.Craftables
 
         public void InsertCraftable(Craftable craftable)
         {
-            throw new NotImplementedException();
+            _context.Craftables.Add(craftable);
         }
 
         public async Task DeleteCraftable(int id)
@@ -40,7 +48,7 @@ namespace LRPManagement.Data.Craftables
 
         public async Task Save()
         {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
         }
     }
 }

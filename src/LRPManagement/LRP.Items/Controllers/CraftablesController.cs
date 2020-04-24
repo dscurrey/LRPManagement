@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LRP.Items.Data;
 using LRP.Items.Data.Craftables;
 using LRP.Items.Models;
+using DTO;
 
 namespace LRP.Items.Controllers
 {
@@ -31,16 +32,25 @@ namespace LRP.Items.Controllers
 
         // GET: api/Craftables/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Craftable>> GetCraftable(int id)
+        public async Task<ActionResult<CraftableDTO>> GetCraftable(int id)
         {
             var craftable = await _craftRepository.GetCraftable(id);
+            var dto = new CraftableDTO
+            {
+                Id = craftable.Id,
+                Effect = craftable.Effect,
+                Form = craftable.Form,
+                Materials = craftable.Materials,
+                Name = craftable.Name,
+                Requirement = craftable.Requirement
+            };
 
             if (craftable == null)
             {
                 return NotFound();
             }
 
-            return Ok(craftable);
+            return Ok(dto);
         }
 
         // PUT: api/Craftables/5

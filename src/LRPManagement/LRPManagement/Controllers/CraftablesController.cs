@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LRPManagement.Data;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Models;
+using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
@@ -25,7 +26,43 @@ namespace LRPManagement.Controllers
         // GET: Craftables
         public async Task<IActionResult> Index()
         {
-            return View(await _itemRepository.GetAll());
+            TempData["ItemInoperativeMsg"] = "";
+
+            try
+            {
+                var items = await _itemService.GetAll();
+                if (items != null)
+                {
+                    foreach (var item in items)
+                    {
+                        var newItem = new Craftable
+                        {
+                            Name = item.Name,
+                            Requirement = item.Requirement,
+                            Materials = item.Materials,
+                            Effect = item.Effect,
+                            Form = item.Form
+                        };
+                        _itemRepository.InsertCraftable(newItem);
+                        await _itemRepository.Save();
+                    }
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
+
+            try
+            {
+                return View(await _itemRepository.GetAll());
+            }
+            catch (BrokenCircuitException)
+            {
+                HandleBrokenCircuit();
+            }
+
+            return View();
         }
 
         // GET: Craftables/Details/5
@@ -150,6 +187,11 @@ namespace LRPManagement.Controllers
             await _itemRepository.Save();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private void HandleBrokenCircuit()
+        {
+            TempData["ItemInoperativeMsg"] = "Item Service Currently Unavailable.";
         }
 
         private async Task<bool> CraftableExists(int id)
