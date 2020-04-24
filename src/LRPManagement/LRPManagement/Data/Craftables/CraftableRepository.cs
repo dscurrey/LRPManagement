@@ -38,7 +38,8 @@ namespace LRPManagement.Data.Craftables
 
         public async Task DeleteCraftable(int id)
         {
-            throw new NotImplementedException();
+            var item = await _context.Craftables.FirstOrDefaultAsync(c => c.Id == id);
+            _context.Craftables.Remove(item);
         }
 
         public void UpdateCraftable(Craftable craftable)

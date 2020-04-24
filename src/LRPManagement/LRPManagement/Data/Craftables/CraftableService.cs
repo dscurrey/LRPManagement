@@ -55,9 +55,23 @@ namespace LRPManagement.Data.Craftables
             return null;
         }
 
-        public Task<CraftableDTO> GetCraftable(int id)
+        public async Task<CraftableDTO> GetCraftable(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var resp = await _httpClient.GetAsync("api/craftables/" + id);
+                if (resp.IsSuccessStatusCode)
+                {
+                    var items = await resp.Content.ReadAsAsync<CraftableDTO>();
+                    return items;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning("" + ex);
+            }
+
+            return null;
         }
 
         public Task<CraftableDTO> UpdateCraftable(CraftableDTO craftable)

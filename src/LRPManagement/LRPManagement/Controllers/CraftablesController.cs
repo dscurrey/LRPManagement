@@ -28,30 +28,7 @@ namespace LRPManagement.Controllers
         {
             TempData["ItemInoperativeMsg"] = "";
 
-            try
-            {
-                var items = await _itemService.GetAll();
-                if (items != null)
-                {
-                    foreach (var item in items)
-                    {
-                        var newItem = new Craftable
-                        {
-                            Name = item.Name,
-                            Requirement = item.Requirement,
-                            Materials = item.Materials,
-                            Effect = item.Effect,
-                            Form = item.Form
-                        };
-                        _itemRepository.InsertCraftable(newItem);
-                        await _itemRepository.Save();
-                    }
-                }
-            }
-            catch (BrokenCircuitException e)
-            {
-                Console.WriteLine(e);
-            }
+            await UpdateDb();
 
             try
             {
@@ -94,7 +71,8 @@ namespace LRPManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Form,Requirement,Effect,Materials")] Craftable craftable)
+        public async Task<IActionResult> Create([Bind("Id,Name,Form,Requirement,Effect,Materials")]
+            Craftable craftable)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +108,9 @@ namespace LRPManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Form,Requirement,Effect,Materials")] Craftable craftable)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("Id,Name,Form,Requirement,Effect,Materials")]
+            Craftable craftable)
         {
             if (id != craftable.Id)
             {
@@ -146,7 +126,7 @@ namespace LRPManagement.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (! await CraftableExists(craftable.Id))
+                    if (!await CraftableExists(craftable.Id))
                     {
                         return NotFound();
                     }
@@ -155,8 +135,10 @@ namespace LRPManagement.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(craftable);
         }
 
@@ -198,6 +180,39 @@ namespace LRPManagement.Controllers
         {
             var items = await _itemRepository.GetAll();
             return items.Any();
+        }
+
+        private async Task UpdateDb()
+        {
+            try
+            {
+                var items = await _itemService.GetAll();
+                if (items != null)
+                {
+                    foreach (var item in items)
+                    {
+                        if (await _itemRepository.GetCraftable(item.Id) != null)
+                        {
+                            continue;
+                        }
+
+                        var newItem = new Craftable
+                        {
+                            Name = item.Name,
+                            Requirement = item.Requirement,
+                            Materials = item.Materials,
+                            Effect = item.Effect,
+                            Form = item.Form
+                        };
+                        _itemRepository.InsertCraftable(newItem);
+                        await _itemRepository.Save();
+                    }
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }
