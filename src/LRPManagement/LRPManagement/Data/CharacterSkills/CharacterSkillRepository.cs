@@ -14,6 +14,7 @@ namespace LRPManagement.Data.CharacterSkills
         {
             _context = context;
         }
+
         public void AddSkillToCharacter(int skillId, int charId)
         {
             var charSkill = new CharacterSkill

@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace LRPManagement.Models
+namespace DTO
 {
-    public partial class Craftable
+    public class CraftableDTO
     {
-        public Craftable()
-        {
-            Bond = new HashSet<Bond>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Form { get; set; }
         public string Requirement { get; set; }
         public string Effect { get; set; }
         public string Materials { get; set; }
-
-        public virtual ICollection<Bond> Bond { get; set; }
     }
 }
