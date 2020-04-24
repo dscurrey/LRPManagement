@@ -6,23 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LRPManagement.Data;
+using LRPManagement.Data.Craftables;
 using LRPManagement.Models;
 
 namespace LRPManagement.Controllers
 {
     public class CraftablesController : Controller
     {
-        private readonly LrpDbContext _context;
+        private readonly ICraftableRepository _itemRepository;
+        private readonly ICraftableService _itemService;
 
-        public CraftablesController(LrpDbContext context)
+        public CraftablesController(ICraftableRepository repo, ICraftableService serv)
         {
-            _context = context;
+            _itemService = serv;
+            _itemRepository = repo;
         }
 
         // GET: Craftables
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Craftables.ToListAsync());
+            return View(await _itemRepository.GetAll());
         }
 
         // GET: Craftables/Details/5
@@ -33,8 +36,8 @@ namespace LRPManagement.Controllers
                 return NotFound();
             }
 
-            var craftable = await _context.Craftables
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var craftable = await _itemRepository.GetCraftable(id.Value);
+
             if (craftable == null)
             {
                 return NotFound();
@@ -58,10 +61,12 @@ namespace LRPManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(craftable);
-                await _context.SaveChangesAsync();
+                _itemRepository.InsertCraftable(craftable);
+                await _itemRepository.Save();
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(craftable);
         }
 
@@ -73,11 +78,13 @@ namespace LRPManagement.Controllers
                 return NotFound();
             }
 
-            var craftable = await _context.Craftables.FindAsync(id);
+            var craftable = await _itemRepository.GetCraftable(id.Value);
+
             if (craftable == null)
             {
                 return NotFound();
             }
+
             return View(craftable);
         }
 
@@ -97,12 +104,12 @@ namespace LRPManagement.Controllers
             {
                 try
                 {
-                    _context.Update(craftable);
-                    await _context.SaveChangesAsync();
+                    _itemRepository.UpdateCraftable(craftable);
+                    await _itemRepository.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CraftableExists(craftable.Id))
+                    if (! await CraftableExists(craftable.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +131,8 @@ namespace LRPManagement.Controllers
                 return NotFound();
             }
 
-            var craftable = await _context.Craftables
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var craftable = await _itemRepository.GetCraftable(id.Value);
+
             if (craftable == null)
             {
                 return NotFound();
@@ -139,15 +146,16 @@ namespace LRPManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var craftable = await _context.Craftables.FindAsync(id);
-            _context.Craftables.Remove(craftable);
-            await _context.SaveChangesAsync();
+            await _itemRepository.DeleteCraftable(id);
+            await _itemRepository.Save();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CraftableExists(int id)
+        private async Task<bool> CraftableExists(int id)
         {
-            return _context.Craftables.Any(e => e.Id == id);
+            var items = await _itemRepository.GetAll();
+            return items.Any();
         }
     }
 }
