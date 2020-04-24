@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using LRPManagement.Data.Characters;
 using Microsoft.Extensions.Configuration;
@@ -26,14 +27,26 @@ namespace LRPManagement.Data.Craftables
             _httpClient = GetHttpClient("StandardRequest");
         }
 
-        public Task<CraftableDTO> CreateCraftable(CraftableDTO craftable)
+        public async Task<CraftableDTO> CreateCraftable(CraftableDTO craftable)
         {
-            throw new NotImplementedException();
+            var resp = await _httpClient.PostAsync("api/craftables/", craftable, new JsonMediaTypeFormatter());
+            if (resp.IsSuccessStatusCode)
+            {
+                return craftable;
+            }
+
+            return null;
         }
 
-        public Task<int> DeleteCraftable(int id)
+        public async Task<int> DeleteCraftable(int id)
         {
-            throw new NotImplementedException();
+            var resp = await _httpClient.DeleteAsync("api/craftables/" + id);
+            if (resp.IsSuccessStatusCode)
+            {
+                return id;
+            }
+
+            return 0;
         }
 
         public async Task<List<CraftableDTO>> GetAll()
@@ -74,14 +87,31 @@ namespace LRPManagement.Data.Craftables
             return null;
         }
 
-        public Task<CraftableDTO> UpdateCraftable(CraftableDTO craftable)
+        public async Task<CraftableDTO> UpdateCraftable(CraftableDTO craftable)
         {
-            throw new NotImplementedException();
+            var resp = await _httpClient.PutAsync("api/craftables/" + craftable.Id, craftable, new JsonMediaTypeFormatter());
+
+            if (resp.IsSuccessStatusCode)
+            {
+                return craftable;
+            }
+
+            return null;
         }
 
-        public Task<CraftableDTO> UpdateCraftable(Craftable craftable)
+        public async Task<CraftableDTO> UpdateCraftable(Craftable craftable)
         {
-            throw new NotImplementedException();
+            var dto = new CraftableDTO
+            {
+                Effect = craftable.Effect,
+                Form = craftable.Form,
+                Id = craftable.Id,
+                Materials = craftable.Materials,
+                Name = craftable.Name,
+                Requirement = craftable.Requirement
+            };
+
+            return await UpdateCraftable(dto);
         }
 
         private HttpClient GetHttpClient(string s)

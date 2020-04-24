@@ -26,11 +26,6 @@ namespace LRPManagement.Data.Craftables
             return await _context.Craftables.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Craftable> GetCraftableRef(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void InsertCraftable(Craftable craftable)
         {
             _context.Craftables.Add(craftable);
@@ -44,7 +39,7 @@ namespace LRPManagement.Data.Craftables
 
         public void UpdateCraftable(Craftable craftable)
         {
-            throw new NotImplementedException();
+            _context.Craftables.Update(craftable);
         }
 
         public async Task Save()
