@@ -23,6 +23,7 @@ import uk.co.dcurrey.owlapp.api.HttpsTrustManager;
 import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemEntity;
 import uk.co.dcurrey.owlapp.database.item.ItemEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
@@ -199,6 +200,11 @@ public class Synchroniser
                     }
                 });
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void sendToAPI(Context context, CharacterItemEntity item)
+    {
+        // TODO - Implement
     }
 
     public void getFromAPI(Context context)
@@ -416,6 +422,18 @@ public class Synchroniser
             ItemEntity item = (ItemEntity) itemEntry.getValue();
             if (!item.IsSynced){
                 sendToAPI(mContext, item);
+            }
+        }
+
+        HashMap<Integer, CharacterItemEntity> charItems = Repository.getInstance().getBondRepository().get();
+
+        it = charItems.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry charItemEntry = (Map.Entry)it.next();
+            CharacterItemEntity charItem = (CharacterItemEntity) charItemEntry.getValue();
+            if (!charItem.IsSynced){
+                sendToAPI(mContext, charItem);
             }
         }
     }

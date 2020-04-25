@@ -48,6 +48,13 @@ public enum BondRepository
         return mBonds.get(id);
     }
 
+    public HashMap<Integer, CharacterItemEntity> get()
+    {
+        mBonds.clear();
+        loadFromDatabase();
+        return mBonds;
+    }
+
     private static class loadCharacterItemEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, CharacterItemEntity>>
     {
         private CharacterItemDao mBondDao;
