@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Reflection;
+using LRP.Skills.Data.CharacterSkills;
+using LRPManagement.Data.CharacterSkills;
 
 namespace LRP.Skills
 {
@@ -44,6 +46,7 @@ namespace LRP.Skills
 
             services.AddControllers();
             services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<ICharacterSkillRepository, CharacterSkillRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

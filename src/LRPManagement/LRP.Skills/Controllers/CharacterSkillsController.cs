@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LRP.Skills.Data;
+using LRP.Skills.Data.Skills;
 using LRP.Skills.Models;
+using LRPManagement.Data.CharacterSkills;
 
 namespace LRP.Skills.Controllers
 {
@@ -14,25 +16,25 @@ namespace LRP.Skills.Controllers
     [ApiController]
     public class CharacterSkillsController : ControllerBase
     {
-        private readonly SkillDbContext _context;
+        private readonly ICharacterSkillRepository _repository;
 
-        public CharacterSkillsController(SkillDbContext context)
+        public CharacterSkillsController(ICharacterSkillRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/CharacterSkills
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterSkill>>> GetCharacterSkills()
         {
-            return await _context.CharacterSkills.ToListAsync();
+            return await _repository.Get();
         }
 
         // GET: api/CharacterSkills/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterSkill>> GetCharacterSkill(int id)
         {
-            var characterSkill = await _context.CharacterSkills.FindAsync(id);
+            var characterSkill = await _repository.Get(id);
 
             if (characterSkill == null)
             {
@@ -48,8 +50,8 @@ namespace LRP.Skills.Controllers
         [HttpPost]
         public async Task<ActionResult<CharacterSkill>> PostCharacterSkill(CharacterSkill characterSkill)
         {
-            _context.CharacterSkills.Add(characterSkill);
-            await _context.SaveChangesAsync();
+            _repository.Insert(characterSkill);
+            await _repository.Save();
 
             return CreatedAtAction("GetCharacterSkill", new { id = characterSkill.Id }, characterSkill);
         }
@@ -58,21 +60,16 @@ namespace LRP.Skills.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CharacterSkill>> DeleteCharacterSkill(int id)
         {
-            var characterSkill = await _context.CharacterSkills.FindAsync(id);
+            var characterSkill = await _repository.Get(id);
             if (characterSkill == null)
             {
                 return NotFound();
             }
 
-            _context.CharacterSkills.Remove(characterSkill);
-            await _context.SaveChangesAsync();
+            await _repository.Delete(id);
+            await _repository.Save();
 
             return characterSkill;
-        }
-
-        private bool CharacterSkillExists(int id)
-        {
-            return _context.CharacterSkills.Any(e => e.Id == id);
         }
     }
 }

@@ -52,5 +52,10 @@ namespace LRP.Skills.Data.CharacterSkills
             var charSkill = await _context.CharacterSkills.FirstOrDefaultAsync(c => c.Id == id);
             _context.CharacterSkills.Remove(charSkill);
         }
+
+        public void Insert(CharacterSkill characterSkill)
+        {
+            _context.CharacterSkills.Add(characterSkill);
+        }
     }
 }

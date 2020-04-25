@@ -7,6 +7,7 @@ namespace LRPManagement.Data.CharacterSkills
     public interface ICharacterSkillRepository
     {
         void AddSkillToCharacter(int skillId, int charId);
+        void Insert(CharacterSkill characterSkill);
         Task Save();
         Task<CharacterSkill> Get(int id);
         Task<List<CharacterSkill>> Get();
