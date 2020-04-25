@@ -81,4 +81,17 @@
     <string name="menu_items">Items</string>
     <string name="pref_items_port">5011</string>
     <string name="item_search">Search for an Item...</string>
+    <string name="itemDetailsTitle">Item Details</string>
+    <string name="itemDetailsId">Item ID:</string>
+    <string name="itemDetailsName">Name:</string>
+    <string name="itemDetailsForm">Form:</string>
+    <string name="itemDetailsReqs">Requirements:</string>
+    <string name="itemMaterialsHint">Item Materials</string>
+    <string name="itemDetailsMaterials">Materials:</string>
+    <string name="itemEffectHint">Item Effect</string>
+    <string name="itemDetailsEffect">Effect:</string>
+    <string name="itemRequirementsHint">Item Requirements</string>
+    <string name="itemFormHint">Item Form</string>
+    <string name="itemNameHint">Item Name</string>
+    <string name="saveItem">Save Item</string>
 </resources>

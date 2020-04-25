@@ -19,20 +19,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     class ItemViewHolder extends RecyclerView.ViewHolder
     {
         private final TextView itemName;
-        private final TextView itemForm;
-        private final TextView itemReq;
-        private final TextView itemEffect;
-        private final TextView itemMats;
         private final ImageView itemSyncView;
 
         private ItemViewHolder(View itemView)
         {
             super(itemView);
             itemName = itemView.findViewById(R.id.itemName);
-            itemForm = itemView.findViewById(R.id.itemForm);
-            itemReq = itemView.findViewById(R.id.itemReq);
-            itemEffect = itemView.findViewById(R.id.itemEffect);
-            itemMats = itemView.findViewById(R.id.itemMats);
             itemSyncView = itemView.findViewById(R.id.itemSync);
         }
     }
@@ -64,10 +56,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         if (mItems != null)
         {
             ItemEntity cur = mItems.get(pos);
-            holder.itemMats.setText(cur.Materials);
-            holder.itemEffect.setText(cur.Effect);
-            holder.itemReq.setText(cur.Reqs);
-            holder.itemForm.setText(cur.Form);
             holder.itemName.setText(cur.Name);
 
             boolean sync = cur.IsSynced;

@@ -13,6 +13,8 @@ import java.util.concurrent.Executors;
 
 import uk.co.dcurrey.owlapp.database.character.CharacterDao;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
+import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemDao;
+import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemEntity;
 import uk.co.dcurrey.owlapp.database.item.ItemDao;
 import uk.co.dcurrey.owlapp.database.item.ItemEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerDao;
@@ -25,9 +27,10 @@ import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
                 CharacterEntity.class,
                 SkillEntity.class,
                 PlayerEntity.class,
-                ItemEntity.class
+                ItemEntity.class,
+                CharacterItemEntity.class
         },
-        version = 4,
+        version = 5,
         exportSchema = false
 )
 public abstract class OwlDatabase extends RoomDatabase
@@ -36,6 +39,7 @@ public abstract class OwlDatabase extends RoomDatabase
     public abstract SkillDao skillDao();
     public abstract PlayerDao playerDao();
     public abstract ItemDao itemDao();
+    public abstract CharacterItemDao charItemDao();
 
     private static volatile OwlDatabase INSTANCE;
     private static final int NUMBER_THREADS = 4;
