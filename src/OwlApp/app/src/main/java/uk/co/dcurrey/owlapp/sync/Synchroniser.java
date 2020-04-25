@@ -376,6 +376,15 @@ public class Synchroniser
 
     public void SyncDbToAPI(Context mContext)
     {
+        syncCharacters(mContext);
+        syncPlayers(mContext);
+        syncSkills(mContext);
+        syncItem(mContext);
+        syncCharItem(mContext);
+    }
+
+    private void syncCharacters(Context mContext)
+    {
         HashMap<Integer, CharacterEntity> characters = Repository.getInstance().getCharacterRepository().get();
 
         Iterator it = characters.entrySet().iterator();
@@ -388,34 +397,28 @@ public class Synchroniser
 
             }
         }
+    }
 
-        HashMap<Integer, PlayerEntity> players = Repository.getInstance().getPlayerRepository().get();
+    private void syncCharItem(Context mContext)
+    {
+        HashMap<Integer, CharacterItemEntity> charItems = Repository.getInstance().getBondRepository().get();
 
-        it = players.entrySet().iterator();
+        Iterator it = charItems.entrySet().iterator();
         while (it.hasNext())
         {
-            Map.Entry playEntry = (Map.Entry)it.next();
-            PlayerEntity player = (PlayerEntity) playEntry.getValue();
-            if (!player.IsSynced){
-                sendToAPI(mContext, player);
+            Map.Entry charItemEntry = (Map.Entry)it.next();
+            CharacterItemEntity charItem = (CharacterItemEntity) charItemEntry.getValue();
+            if (!charItem.IsSynced){
+                sendToAPI(mContext, charItem);
             }
         }
+    }
 
-        HashMap<Integer, SkillEntity> skills = Repository.getInstance().getSkillRepository().get();
-
-        it = skills.entrySet().iterator();
-        while (it.hasNext())
-        {
-            Map.Entry skillEntry = (Map.Entry)it.next();
-            SkillEntity skill = (SkillEntity) skillEntry.getValue();
-            if (!skill.IsSynced){
-                sendToAPI(mContext, skill);
-            }
-        }
-
+    private void syncItem(Context mContext)
+    {
         HashMap<Integer, ItemEntity> items = Repository.getInstance().getItemRepository().get();
 
-        it = items.entrySet().iterator();
+        Iterator it = items.entrySet().iterator();
         while (it.hasNext())
         {
             Map.Entry itemEntry = (Map.Entry)it.next();
@@ -424,16 +427,34 @@ public class Synchroniser
                 sendToAPI(mContext, item);
             }
         }
+    }
 
-        HashMap<Integer, CharacterItemEntity> charItems = Repository.getInstance().getBondRepository().get();
+    private void syncSkills(Context mContext)
+    {
+        HashMap<Integer, SkillEntity> skills = Repository.getInstance().getSkillRepository().get();
 
-        it = charItems.entrySet().iterator();
+        Iterator it = skills.entrySet().iterator();
         while (it.hasNext())
         {
-            Map.Entry charItemEntry = (Map.Entry)it.next();
-            CharacterItemEntity charItem = (CharacterItemEntity) charItemEntry.getValue();
-            if (!charItem.IsSynced){
-                sendToAPI(mContext, charItem);
+            Map.Entry skillEntry = (Map.Entry)it.next();
+            SkillEntity skill = (SkillEntity) skillEntry.getValue();
+            if (!skill.IsSynced){
+                sendToAPI(mContext, skill);
+            }
+        }
+    }
+
+    private void syncPlayers(Context mContext)
+    {
+        HashMap<Integer, PlayerEntity> players = Repository.getInstance().getPlayerRepository().get();
+
+        Iterator it = players.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry playEntry = (Map.Entry)it.next();
+            PlayerEntity player = (PlayerEntity) playEntry.getValue();
+            if (!player.IsSynced){
+                sendToAPI(mContext, player);
             }
         }
     }
