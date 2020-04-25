@@ -32,6 +32,7 @@ namespace LRPManagement.Controllers
         // GET: Bonds
         public async Task<IActionResult> Index()
         {
+            TempData["ItemInoperativeMsg"] = "";
             try
             {
                 var bonds = await _service.Get();
@@ -51,8 +52,7 @@ namespace LRPManagement.Controllers
             }
             catch (BrokenCircuitException e)
             {
-                Console.WriteLine(e);
-                // TODO - Handle BrokenCircuit
+                HandleBrokenCircuit();
             }
 
 
@@ -120,6 +120,7 @@ namespace LRPManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CharacterId,ItemId")] Bond bond)
         {
+            TempData["ItemInoperativeMsg"] = "";
             if (ModelState.IsValid)
             {
                 try
@@ -133,10 +134,9 @@ namespace LRPManagement.Controllers
 
                     return RedirectToAction(nameof(Index));
                 }
-                catch (BrokenCircuitException e)
+                catch (BrokenCircuitException)
                 {
-                    Console.WriteLine(e);
-                    // TODO Handle Broken Circuit
+                    HandleBrokenCircuit();
                 }
             }
 
@@ -216,6 +216,11 @@ namespace LRPManagement.Controllers
         {
             var bonds = await _repository.GetMatch(itemId, charId);
             return bonds != null;
+        }
+
+        private void HandleBrokenCircuit()
+        {
+            TempData["ItemInoperativeMsg"] = "Item Service Currently Unavailable.";
         }
     }
 }

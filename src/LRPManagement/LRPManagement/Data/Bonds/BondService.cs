@@ -51,24 +51,41 @@ namespace LRPManagement.Data.Bonds
 
         public async Task<Bond> Get(int id)
         {
-            var resp = await _client.GetAsync("api/bonds/" + id);
-            if (resp.IsSuccessStatusCode)
+            try
             {
-                var bond = await resp.Content.ReadAsAsync<Bond>();
-                return bond;
+                var resp = await _client.GetAsync("api/bonds/" + id);
+                if (resp.IsSuccessStatusCode)
+                {
+                    var bond = await resp.Content.ReadAsAsync<Bond>();
+                    return bond;
+                }
             }
+            catch (TaskCanceledException e)
+            {
+                _logger.LogWarning("TaskCancelledException:\n" + e);
+            }
+
 
             return null;
         }
 
         public async Task<List<Bond>> Get()
         {
-            var resp = await _client.GetAsync("api/bonds/");
-            if (resp.IsSuccessStatusCode)
+            try
             {
-                var bonds = await resp.Content.ReadAsAsync<List<Bond>>();
-                return bonds;
+                var resp = await _client.GetAsync("api/bonds/");
+                if (resp.IsSuccessStatusCode)
+                {
+                    var bonds = await resp.Content.ReadAsAsync<List<Bond>>();
+                    return bonds;
+                }
             }
+            catch (TaskCanceledException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
 
             return null;
         }

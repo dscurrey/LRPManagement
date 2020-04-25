@@ -72,7 +72,7 @@ namespace LRPManagement.Controllers
             }
             catch (BrokenCircuitException e)
             {
-                Console.WriteLine(e);
+                HandleBrokenCircuit();
             }
 
             try
