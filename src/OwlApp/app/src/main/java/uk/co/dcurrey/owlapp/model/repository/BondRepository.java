@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
+import uk.co.dcurrey.owlapp.database.character.CharacterDao;
+import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemDao;
 import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemEntity;
 import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemRepository;
@@ -103,6 +105,35 @@ public enum BondRepository
         protected Void doInBackground(Void... voids)
         {
             mDao.insert(characterItemEntity);
+            return null;
+        }
+    }
+
+    public void update(CharacterItemEntity charItemEntity)
+    {
+        try
+        {
+            new updateCharacterItemEntitiesAsyncTask(mCharItemDao, charItemEntity).execute().get();
+        } catch (ExecutionException | InterruptedException e)
+        {
+            Log.e(this.name(), "DB Error Occurred");
+        }
+    }
+
+    private static class updateCharacterItemEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
+    {
+        private CharacterItemDao mDao;
+        private CharacterItemEntity charItemEntity;
+
+        updateCharacterItemEntitiesAsyncTask(CharacterItemDao charItemDao, CharacterItemEntity charItem)
+        {
+            mDao = charItemDao;
+            charItemEntity = charItem;
+        }
+
+        protected Void doInBackground(final Void... voids)
+        {
+            mDao.update(charItemEntity);
             return null;
         }
     }
