@@ -55,7 +55,6 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
-
             return View(await _repository.GetAll());
         }
 

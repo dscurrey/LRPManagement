@@ -65,7 +65,6 @@ namespace LRPManagement.Data.Bonds
                 _logger.LogWarning("TaskCancelledException:\n" + e);
             }
 
-
             return null;
         }
 
@@ -86,7 +85,6 @@ namespace LRPManagement.Data.Bonds
                 throw;
             }
             
-
             return null;
         }
 
