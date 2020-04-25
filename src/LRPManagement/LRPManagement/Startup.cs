@@ -75,6 +75,7 @@ namespace LRPManagement
             services.AddScoped<ICraftableRepository, CraftableRepository>();
             services.AddScoped<IBondRepository, BondRepository>();
             services.AddScoped<IBondService, BondService>();
+            services.AddScoped<ICharacterSkillService, CharacterSkillService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
