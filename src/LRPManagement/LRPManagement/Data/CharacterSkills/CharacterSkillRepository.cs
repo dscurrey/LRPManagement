@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using LRPManagement.Models;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,12 @@ namespace LRPManagement.Data.CharacterSkills
         public async Task<List<CharacterSkill>> Get()
         {
             return await _context.CharacterSkills.Include(c => c.Character).Include(c => c.Skill).ToListAsync();
+        }
+
+        public async Task<CharacterSkill> GetMatch(int charId, int skillId)
+        {
+            return await _context.CharacterSkills.Where(cs => cs.SkillId == skillId).Where
+                (cs => cs.CharacterId == charId).FirstOrDefaultAsync();
         }
 
         public async Task Delete(int id)

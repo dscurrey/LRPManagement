@@ -49,7 +49,7 @@ namespace LRPManagement.Controllers
                     }
                 }
             }
-            catch (BrokenCircuitException e)
+            catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
             }
@@ -199,7 +199,7 @@ namespace LRPManagement.Controllers
 
         private async Task<bool> BondExists(int id)
         {
-            var bonds = _repository.Get(id);
+            var bonds = await _repository.Get(id);
             if (bonds != null)
             {
                 return true;

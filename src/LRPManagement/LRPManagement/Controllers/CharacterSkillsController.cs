@@ -10,6 +10,7 @@ using LRPManagement.Data.Characters;
 using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Skills;
 using LRPManagement.Models;
+using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
@@ -19,18 +20,38 @@ namespace LRPManagement.Controllers
         private readonly ICharacterRepository _characterRepository;
         private readonly ICharacterSkillRepository _characterSkillRepository;
         private readonly ICharacterService _characterService;
+        private readonly ICharacterSkillService _characterSkillService;
 
-        public CharacterSkillsController(ISkillRepository skillRepository, ICharacterRepository characterRepository, ICharacterSkillRepository characterSkillRepository, ICharacterService characterService)
+        public CharacterSkillsController(ISkillRepository skillRepository, ICharacterRepository characterRepository, ICharacterSkillRepository characterSkillRepository, ICharacterService characterService, ICharacterSkillService characterSkillService)
         {
             _characterRepository = characterRepository;
             _skillRepository = skillRepository;
             _characterSkillRepository = characterSkillRepository;
             _characterService = characterService;
+            _characterSkillService = characterSkillService;
         }
 
         // GET: CharacterSkills
         public async Task<IActionResult> Index()
         {
+        
+            var charSkills = await _characterSkillService.Get();
+            if (charSkills != null)
+            {
+                foreach (var charSkill in charSkills)
+                {
+                    // Ensure that charSKill is not already present and necessary items are stored
+                    if (await CharSkillExists(charSkill.SkillId, charSkill.CharacterId) || await _characterRepository.GetCharacterRef(charSkill.CharacterId) == null || await _skillRepository.GetSkill(charSkill.SkillId) == null)
+                    {
+                        continue;
+                    }
+
+                    _characterSkillRepository.AddSkillToCharacter(charSkill.SkillId, charSkill.CharacterId);
+                    await _characterSkillRepository.Save();
+                }
+            }
+            
+
             return View(await _characterSkillRepository.Get());
         }
 
@@ -182,6 +203,12 @@ namespace LRPManagement.Controllers
             await _characterSkillRepository.Delete(id);
             await _characterSkillRepository.Save();
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<bool> CharSkillExists(int skillId, int charId)
+        {
+            var charSkill = await _characterSkillRepository.GetMatch(charId, skillId);
+            return charSkill != null;
         }
     }
 }

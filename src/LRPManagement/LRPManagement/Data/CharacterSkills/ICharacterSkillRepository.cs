@@ -10,6 +10,7 @@ namespace LRPManagement.Data.CharacterSkills
         Task Save();
         Task<CharacterSkill> Get(int id);
         Task<List<CharacterSkill>> Get();
+        Task<CharacterSkill> GetMatch(int charId, int skillId);
         Task Delete(int id);
     }
 }
