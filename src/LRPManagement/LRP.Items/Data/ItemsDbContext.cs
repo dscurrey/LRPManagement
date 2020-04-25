@@ -12,6 +12,8 @@ namespace LRP.Items.Data
     public class ItemsDbContext : DbContext
     {
         public virtual DbSet<Craftable> Craftables { get; set; }
+        public virtual DbSet<Bond> Bonds { get; set; }
+
         private IWebHostEnvironment HostEnv { get; }
 
         public ItemsDbContext(DbContextOptions options, IWebHostEnvironment hostEnv) : base(options)
@@ -22,6 +24,10 @@ namespace LRP.Items.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Craftable>()
+                .HasMany(c => c.Bonds)
+                .WithOne(b => b.Item);
 
             if (HostEnv != null && HostEnv.IsDevelopment())
             {

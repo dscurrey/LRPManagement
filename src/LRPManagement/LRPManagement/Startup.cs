@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using LRPManagement.Data;
+using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
 using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
+using LRPManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -77,6 +79,8 @@ namespace LRPManagement
 
             services.AddScoped<ICraftableService, CraftableService>();
             services.AddScoped<ICraftableRepository, CraftableRepository>();
+            services.AddScoped<IBondRepository, BondRepository>();
+            services.AddScoped<IBondService, BondService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

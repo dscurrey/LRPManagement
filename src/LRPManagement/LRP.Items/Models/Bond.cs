@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace LRPManagement.Models
+namespace LRP.Items.Models
 {
-    public partial class Bond
+    public class Bond
     {
         public int Id { get; set; }
-        public int CharacterId { get; set; }
         public int ItemId { get; set; }
+        public int CharacterId { get; set; }
 
-        public virtual Character Character { get; set; }
         public virtual Craftable Item { get; set; }
     }
 }

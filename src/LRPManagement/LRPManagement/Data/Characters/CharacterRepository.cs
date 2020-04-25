@@ -29,7 +29,7 @@ namespace LRPManagement.Data.Characters
 
         public async Task<Character> GetCharacter(int id)
         {
-            return await _context.Characters.Include(c => c.CharacterSkills).ThenInclude(c => c.Skill).FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Characters.Include(c => c.Bond).ThenInclude(b => b.Item).Include(c => c.CharacterSkills).ThenInclude(c => c.Skill).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Character> GetCharacterRef(int id)

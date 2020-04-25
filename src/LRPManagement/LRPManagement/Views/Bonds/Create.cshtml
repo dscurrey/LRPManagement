@@ -1,0 +1,39 @@
+﻿@model LRPManagement.Models.Bond
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+@*@if ((string)ViewData["ItemInoperativeMsg"] != "")
+{
+    @ViewData["ItemInoperativeMsg"].ToString();
+}*@
+
+<h4>Bond</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CharacterId" class="control-label"></label>
+                @Html.DropDownList("CharacterId", (IEnumerable<SelectListItem>) ViewData["CharacterId"], "Select...")
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemId" class="control-label"></label>
+                @Html.DropDownList("ItemId", (IEnumerable<SelectListItem>) ViewData["ItemId"], "Select...")
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -13,5 +13,7 @@ namespace LRP.Items.Models
         public string Requirement { get; set; }
         public string Effect { get; set; }
         public string Materials { get; set; }
+
+        public virtual List<Bond> Bonds { get; set; }
     }
 }

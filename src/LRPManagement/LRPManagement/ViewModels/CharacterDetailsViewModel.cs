@@ -25,6 +25,8 @@ namespace LRPManagement.ViewModels
         [Display(Name = "Character Active?")]
         public bool IsActive { get; set; }
         [Display(Name = "Skills")]
+
+        public List<Bond> Items { get; set; }
         public List<Skill> Skills { get; set; }
     }
 }
