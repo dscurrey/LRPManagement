@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using LRPManagement.Models;
 
 namespace LRPManagement.Data.CharacterSkills
 {
@@ -6,5 +8,8 @@ namespace LRPManagement.Data.CharacterSkills
     {
         void AddSkillToCharacter(int skillId, int charId);
         Task Save();
+        Task<CharacterSkill> Get(int id);
+        Task<List<CharacterSkill>> Get();
+        Task Delete(int id);
     }
 }

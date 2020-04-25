@@ -1,5 +1,7 @@
-﻿using LRPManagement.Models;
+﻿using System.Collections.Generic;
+using LRPManagement.Models;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement.Data.CharacterSkills
 {
@@ -25,6 +27,22 @@ namespace LRPManagement.Data.CharacterSkills
         public async Task Save()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<CharacterSkill> Get(int id)
+        {
+            return await _context.CharacterSkills.Include(c => c.Character).Include(c => c.Skill).FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<List<CharacterSkill>> Get()
+        {
+            return await _context.CharacterSkills.Include(c => c.Character).Include(c => c.Skill).ToListAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var charSkill = await _context.CharacterSkills.FirstOrDefaultAsync(c => c.Id == id);
+            _context.CharacterSkills.Remove(charSkill);
         }
     }
 }
