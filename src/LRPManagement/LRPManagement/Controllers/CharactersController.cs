@@ -133,7 +133,8 @@ namespace LRPManagement.Controllers
                         Name = character.Name,
                         PlayerId = character.PlayerId,
                         Skills = skills,
-                        Xp = character.Xp
+                        Xp = character.Xp,
+                        Items = character.Bond.ToList()
                     };
 
                     return View(charView);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ namespace LRPManagement.Controllers
         // GET: Bonds
         public async Task<IActionResult> Index()
         {
-            TempData["ItemInoperativeMsg"] = "";
+            //TempData["ItemInoperativeMsg"] = "";
             try
             {
                 var bonds = await _service.Get();
@@ -220,7 +220,7 @@ namespace LRPManagement.Controllers
 
         private void HandleBrokenCircuit()
         {
-            TempData["ItemInoperativeMsg"] = "Item Service Currently Unavailable.";
+            //TempData["ItemInoperativeMsg"] = "Item Service Currently Unavailable.";
         }
     }
 }

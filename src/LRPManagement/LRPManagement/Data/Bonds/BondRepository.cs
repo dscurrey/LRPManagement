@@ -22,6 +22,7 @@ namespace LRPManagement.Data.Bonds
 
         public async Task<Bond> Get(int id)
         {
+            var debug = await _context.Bond.Include(b => b.Item).Include(b => b.Character).FirstOrDefaultAsync(b => b.Id == id);
             return await _context.Bond.Include(b => b.Item).Include(b => b.Character).FirstOrDefaultAsync(b => b.Id == id);
         }
 

@@ -7,10 +7,10 @@
 
 <h1>Index</h1>
 
-@if ((string)TempData["ItemInoperativeMsg"] != "")
+@*@if ((string)ViewData["ItemInoperativeMsg"] != "")
 {
-    @TempData["ItemInoperativeMsg"].ToString();
-}
+    @ViewData["ItemInoperativeMsg"].ToString();
+}*@
 
 @if (Model.Any())
 {
