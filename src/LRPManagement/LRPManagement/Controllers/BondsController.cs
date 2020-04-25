@@ -6,24 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LRPManagement.Data;
+using LRPManagement.Data.Bonds;
+using LRPManagement.Data.Characters;
+using LRPManagement.Data.Craftables;
 using LRPManagement.Models;
 
 namespace LRPManagement.Controllers
 {
     public class BondsController : Controller
     {
-        private readonly LrpDbContext _context;
+        private readonly IBondRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+        private readonly ICraftableRepository _itemRepository;
 
-        public BondsController(LrpDbContext context)
+        public BondsController(IBondRepository repository, ICharacterRepository charRepo, ICraftableRepository itemRepo)
         {
-            _context = context;
+            _repository = repository;
+            _characterRepository = charRepo;
+            _itemRepository = itemRepo;
         }
 
         // GET: Bonds
         public async Task<IActionResult> Index()
         {
-            var lrpDbContext = _context.Bond.Include(b => b.Character).Include(b => b.Item);
-            return View(await lrpDbContext.ToListAsync());
+            var debug = await _repository.GetAll();
+            return View(await _repository.GetAll());
         }
 
         // GET: Bonds/Details/5
@@ -34,10 +41,7 @@ namespace LRPManagement.Controllers
                 return NotFound();
             }
 
-            var bond = await _context.Bond
-                .Include(b => b.Character)
-                .Include(b => b.Item)
-                .FirstOrDefaultAsync(m => m.CharacterId == id);
+            var bond = await _repository.Get(id.Value);
 
             if (bond == null)
             {
@@ -48,10 +52,38 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Bonds/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CharacterId"] = new SelectList(_context.Characters, "Id", "Name");
-            ViewData["ItemId"] = new SelectList(_context.Craftables, "Id", "Id");
+            ViewData["CharacterId"] = "";
+            ViewData["ItemId"] = "";
+
+            var characters = await _characterRepository.GetAll();
+            var items = await _itemRepository.GetAll();
+            if (characters.Any())
+            {
+                var charList = characters.Select
+                (
+                    s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }
+                );
+                ViewData["CharacterId"] = charList;
+            }
+
+            if (items.Any())
+            {
+                var itemList = items.Select
+                (
+                    s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }
+                );
+                ViewData["ItemId"] = itemList;
+            }
             return View();
         }
 
@@ -64,67 +96,39 @@ namespace LRPManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(bond);
-                await _context.SaveChangesAsync();
+                _repository.Insert(bond);
+                await _repository.Save();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CharacterId"] = new SelectList(_context.Characters, "Id", "Name", bond.CharacterId);
-            ViewData["ItemId"] = new SelectList(_context.Craftables, "Id", "Id", bond.ItemId);
-            return View(bond);
-        }
 
-        // GET: Bonds/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            var characters = await _characterRepository.GetAll();
+            var items = await _itemRepository.GetAll();
+            if (characters.Any())
             {
-                return NotFound();
-            }
-
-            var bond = await _context.Bond.FindAsync(id);
-            if (bond == null)
-            {
-                return NotFound();
-            }
-            ViewData["CharacterId"] = new SelectList(_context.Characters, "Id", "Name", bond.CharacterId);
-            ViewData["ItemId"] = new SelectList(_context.Craftables, "Id", "Id", bond.ItemId);
-            return View(bond);
-        }
-
-        // POST: Bonds/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CharacterId,ItemId")] Bond bond)
-        {
-            if (id != bond.CharacterId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(bond);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BondExists(bond.CharacterId))
+                var charList = characters.Select
+                (
+                    s => new SelectListItem
                     {
-                        return NotFound();
+                        Value = s.Id.ToString(),
+                        Text = s.Name
                     }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                );
+                ViewData["CharacterId"] = charList;
             }
-            ViewData["CharacterId"] = new SelectList(_context.Characters, "Id", "Name", bond.CharacterId);
-            ViewData["ItemId"] = new SelectList(_context.Craftables, "Id", "Id", bond.ItemId);
+
+            if (items.Any())
+            {
+                var itemList = items.Select
+                (
+                    s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }
+                );
+                ViewData["ItemId"] = itemList;
+            }
+
             return View(bond);
         }
 
@@ -136,10 +140,7 @@ namespace LRPManagement.Controllers
                 return NotFound();
             }
 
-            var bond = await _context.Bond
-                .Include(b => b.Character)
-                .Include(b => b.Item)
-                .FirstOrDefaultAsync(m => m.CharacterId == id);
+            var bond = await _repository.Get(id.Value);
             if (bond == null)
             {
                 return NotFound();
@@ -153,15 +154,23 @@ namespace LRPManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var bond = await _context.Bond.FindAsync(id);
-            _context.Bond.Remove(bond);
-            await _context.SaveChangesAsync();
+            var bond = await _repository.Get(id);
+            await _repository.Delete(id);
+            await _repository.Save();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BondExists(int id)
+        private async Task<bool> BondExists(int id)
         {
-            return _context.Bond.Any(e => e.CharacterId == id);
+            var bonds = _repository.Get(id);
+            if (bonds != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
