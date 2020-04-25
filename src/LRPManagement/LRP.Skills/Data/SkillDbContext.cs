@@ -19,6 +19,10 @@ namespace LRP.Skills.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Skill>()
+                .HasMany(s => s.CharacterSkills)
+                .WithOne(cs => cs.Skill);
+
             if (HostEnv != null && HostEnv.IsDevelopment())
             {
                 // Seed Data (Dev)
