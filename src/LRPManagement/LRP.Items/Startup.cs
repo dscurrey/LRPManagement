@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using LRP.Characters.Data.Bonds;
 using LRP.Items.Data;
 using LRP.Items.Data.Craftables;
+using LRP.Items.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -50,6 +52,7 @@ namespace LRP.Items
             services.AddControllers();
 
             services.AddScoped<ICraftableRepository, CraftableRepository>();
+            services.AddScoped<IBondRepository, BondRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
