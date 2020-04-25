@@ -2,7 +2,6 @@ package uk.co.dcurrey.owlapp.ui.functions;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
 import uk.co.dcurrey.owlapp.R;
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
-import uk.co.dcurrey.owlapp.ui.character.BondItemActivity;
-import uk.co.dcurrey.owlapp.ui.items.ItemsViewModel;
 
 public class FunctionsFragment extends Fragment
 {

@@ -40,7 +40,8 @@ namespace LRPManagement.Controllers
                 {
                     foreach (var bond in bonds)
                     {
-                        if(await BondExists(bond.ItemId, bond.CharacterId))
+                        // Ensure that bond is not already present and necessary items are stored
+                        if(await BondExists(bond.ItemId, bond.CharacterId) || await _characterRepository.GetCharacterRef(bond.CharacterId) == null || await _itemRepository.GetCraftable(bond.ItemId) == null)
                         {
                             continue;
                         }
@@ -213,7 +214,7 @@ namespace LRPManagement.Controllers
 
         private async Task<bool> BondExists(int itemId, int charId)
         {
-            var bonds = await _repository.GetMatch(itemId, charId);
+            var bonds = await _repository.GetMatch(charId, itemId);
             return bonds != null;
         }
 
