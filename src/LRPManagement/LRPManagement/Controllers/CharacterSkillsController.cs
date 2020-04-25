@@ -120,28 +120,22 @@ namespace LRPManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                var skill = await _skillRepository.GetSkill(charSkill.SkillId);
-                var character = await _characterRepository.GetCharacter(charSkill.CharacterId);
-
-                if (skill != null && character != null)
+                try
                 {
-                    if (character.Xp - skill.XpCost >= 0)
+                    var resp = await _characterSkillService.Create(charSkill);
+                    if (resp == null)
                     {
-                        // Subtract cost from character, add and save to link table
-                        character.Xp -= skill.XpCost;
-                        _characterSkillRepository.AddSkillToCharacter(charSkill.SkillId, charSkill.CharacterId);
-                        await _characterSkillRepository.Save();
-
-                        // Update Local and API
-                        _characterRepository.UpdateCharacter(character);
-                        await _characterRepository.Save();
-                        await _characterService.UpdateCharacter(character);
-
-                        return RedirectToAction(nameof(Index));
+                        return View(charSkill);
                     }
+
+                    return RedirectToAction(nameof(Index));
                 }
-                return View();
+                catch (BrokenCircuitException e)
+                {
+                    //
+                }
             }
+
             ViewData["CharacterId"] = "";
             ViewData["SkillId"] = "";
 
