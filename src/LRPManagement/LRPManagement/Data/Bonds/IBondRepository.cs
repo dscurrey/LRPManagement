@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using LRP.Items.Models;
+using LRPManagement.Models;
 
-namespace LRP.Items.Data.Bonds
+namespace LRPManagement.Data.Bonds
 {
     public interface IBondRepository
     {
         Task<List<Bond>> GetAll();
         Task<Bond> Get(int id);
         Task<List<Bond>> GetForItem(int itemId);
-        Task<List<Bond>> GetForCharacter(int charId);
+        Task<List<Bond>> GetForPlayer(int playerId);
         void Insert(Bond bond);
         Task Delete(int id);
         Task Save();

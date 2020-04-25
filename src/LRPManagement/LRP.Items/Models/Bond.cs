@@ -9,7 +9,7 @@ namespace LRP.Items.Models
     {
         public int Id { get; set; }
         public int ItemId { get; set; }
-        public int PlayerId { get; set; }
+        public int CharacterId { get; set; }
 
         public virtual Craftable Item { get; set; }
     }

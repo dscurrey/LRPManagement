@@ -1,39 +1,39 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LRP.Items.Models;
+using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LRP.Items.Data.Bonds
+namespace LRPManagement.Data.Bonds
 {
     public class BondRepository : IBondRepository
     {
-        private readonly ItemsDbContext _context;
+        private readonly LrpDbContext _context;
 
-        public BondRepository(ItemsDbContext context)
+        public BondRepository(LrpDbContext context)
         {
             _context = context;
         }
 
         public async Task<List<Bond>> GetAll()
         {
-            return await _context.Bonds.ToListAsync();
+            return await _context.Bond.ToListAsync();
         }
 
         public async Task<Bond> Get(int id)
         {
-            return await _context.Bonds.FirstOrDefaultAsync(b => b.Id == id);
+            return await _context.Bond.FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public void Insert(Bond bond)
         {
-            _context.Bonds.Add(bond);
+            _context.Bond.Add(bond);
         }
 
         public async Task Delete(int id)
         {
-            var bond = await _context.Bonds.FirstOrDefaultAsync(b => b.Id == id);
-            _context.Bonds.Remove(bond);
+            var bond = await _context.Bond.FirstOrDefaultAsync(b => b.Id == id);
+            _context.Bond.Remove(bond);
         }
 
         public async Task Save()
@@ -43,12 +43,12 @@ namespace LRP.Items.Data.Bonds
 
         public async Task<List<Bond>> GetForItem(int itemId)
         {
-            return await _context.Bonds.Where(b => b.ItemId == itemId).ToListAsync();
+            return await _context.Bond.Where(b => b.ItemId == itemId).ToListAsync();
         }
 
-        public async Task<List<Bond>> GetForCharacter(int charId)
+        public async Task<List<Bond>> GetForPlayer(int playerId)
         {
-            return await _context.Bonds.Where(b => b.CharacterId == charId).ToListAsync();
+            return await _context.Bond.Where(b => b.CharacterId == playerId).ToListAsync();
         }
     }
 }
