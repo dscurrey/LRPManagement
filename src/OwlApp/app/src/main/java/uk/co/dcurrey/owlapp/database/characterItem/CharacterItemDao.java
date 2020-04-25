@@ -23,4 +23,7 @@ public interface CharacterItemDao
 
     @Update
     void update(CharacterItemEntity characterItemEntity);
+
+    @Query("DELETE FROM characteritem")
+    void deleteAll();
 }

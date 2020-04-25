@@ -39,6 +39,7 @@ public class Synchroniser
             OwlDatabase.getDb().skillDao().deleteAll();
             OwlDatabase.getDb().characterDao().deleteAll();
             OwlDatabase.getDb().playerDao().deleteAll();
+            OwlDatabase.getDb().charItemDao().deleteAll();
         });
 
         // Repopulate Db
