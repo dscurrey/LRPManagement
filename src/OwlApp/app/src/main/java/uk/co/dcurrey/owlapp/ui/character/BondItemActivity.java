@@ -39,6 +39,8 @@ public class BondItemActivity extends AppCompatActivity
                 charItem.IsSynced = false;
 
                 Repository.getInstance().getBondRepository().insert(charItem);
+
+                finish();
             }
         });
     }
