@@ -52,6 +52,7 @@ namespace LRPManagement.Controllers
             catch (BrokenCircuitException e)
             {
                 Console.WriteLine(e);
+                // TODO - Handle BrokenCircuit
             }
 
 
@@ -121,9 +122,22 @@ namespace LRPManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.Insert(bond);
-                await _repository.Save();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    var resp = await _service.Create(bond);
+                    if (resp == null)
+                    {
+                        // Unsuccessful
+                        return View(bond);
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (BrokenCircuitException e)
+                {
+                    Console.WriteLine(e);
+                    // TODO Handle Broken Circuit
+                }
             }
 
             var characters = await _characterRepository.GetAll();
