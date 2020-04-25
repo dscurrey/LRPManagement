@@ -2,6 +2,7 @@
 {
     public partial class CharacterSkill
     {
+        public int Id { get; set; }
         public int CharacterId { get; set; }
         public int SkillId { get; set; }
 
