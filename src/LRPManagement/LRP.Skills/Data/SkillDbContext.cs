@@ -8,6 +8,7 @@ namespace LRP.Skills.Data
     public class SkillDbContext : DbContext
     {
         public virtual DbSet<Skill> Skill { get; set; }
+        public virtual DbSet<CharacterSkill> CharacterSkills { get; set; }
         private IWebHostEnvironment HostEnv { get; set; }
 
         public SkillDbContext(DbContextOptions options, IWebHostEnvironment hostEnv) : base(options)

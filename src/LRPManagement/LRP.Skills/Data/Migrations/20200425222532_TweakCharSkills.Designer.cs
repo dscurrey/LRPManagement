@@ -3,14 +3,16 @@ using LRP.Skills.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LRP.Skills.Data.Migrations
 {
     [DbContext(typeof(SkillDbContext))]
-    partial class SkillDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200425222532_TweakCharSkills")]
+    partial class TweakCharSkills
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
