@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LRPManagement.Models;
-
-namespace LRPManagement.Models
+﻿namespace LRPManagement.Models
 {
     public partial class CharacterSkill
     {

@@ -39,6 +39,7 @@ public class Synchroniser
             OwlDatabase.getDb().skillDao().deleteAll();
             OwlDatabase.getDb().characterDao().deleteAll();
             OwlDatabase.getDb().playerDao().deleteAll();
+            OwlDatabase.getDb().charItemDao().deleteAll();
         });
 
         // Repopulate Db
@@ -204,7 +205,40 @@ public class Synchroniser
 
     public void sendToAPI(Context context, CharacterItemEntity item)
     {
-        // TODO - Implement
+        String url = APIPaths.getItemsURL(context)+"api/bonds";
+        HttpsTrustManager.allowAllSSL();
+
+        JSONObject parameters = new JSONObject();
+        try
+        {
+            parameters.put("id", item.Id);
+            parameters.put("characterId", item.CharacterId);
+            parameters.put("itemId", item.ItemId);
+        }
+        catch (JSONException e)
+        {
+            Log.e(this.toString(), "JSON Error", e);
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response)
+            {
+                Toast.makeText(context, "POST Success", Toast.LENGTH_SHORT).show();
+                item.IsSynced = true;
+                Repository.getInstance().getBondRepository().update(item);
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(context, "An Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     public void getFromAPI(Context context)

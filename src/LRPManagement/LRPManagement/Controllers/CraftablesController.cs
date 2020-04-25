@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LRPManagement.Data.Craftables;
+using LRPManagement.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Polly.CircuitBreaker;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using LRPManagement.Data;
-using LRPManagement.Data.Craftables;
-using LRPManagement.Models;
-using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {

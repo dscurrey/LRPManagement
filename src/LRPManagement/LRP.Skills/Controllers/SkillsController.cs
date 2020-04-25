@@ -1,15 +1,13 @@
-﻿using System;
+﻿using DTO;
+using LRP.Skills.Data.Skills;
+using LRP.Skills.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DTO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LRP.Skills.Data;
-using LRP.Skills.Data.Skills;
-using LRP.Skills.Models;
-using Microsoft.Extensions.Logging;
 
 namespace LRP.Skills.Controllers
 {
@@ -30,7 +28,7 @@ namespace LRP.Skills.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SkillDTO>>> GetSkill()
         {
-            var skills =  await _repository.GetAll();
+            var skills = await _repository.GetAll();
             return Ok(skills.Select
             (
                 s => new SkillDTO

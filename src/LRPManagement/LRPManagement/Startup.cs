@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using LRPManagement.Data;
 using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
@@ -10,12 +5,9 @@ using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
-using LRPManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Extensions.Http;
+using System;
+using System.Net.Http;
 
 namespace LRPManagement
 {

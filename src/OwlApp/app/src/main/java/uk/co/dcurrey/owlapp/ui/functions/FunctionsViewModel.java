@@ -3,14 +3,11 @@ package uk.co.dcurrey.owlapp.ui.functions;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import java.util.HashMap;
 
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.model.repository.Repository;
-import uk.co.dcurrey.owlapp.ui.items.ItemsViewModel;
 
 public class FunctionsViewModel extends ViewModel
 {

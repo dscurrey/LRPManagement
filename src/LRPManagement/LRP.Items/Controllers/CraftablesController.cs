@@ -1,14 +1,11 @@
-﻿using System;
+﻿using DTO;
+using LRP.Items.Data.Craftables;
+using LRP.Items.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LRP.Items.Data;
-using LRP.Items.Data.Craftables;
-using LRP.Items.Models;
-using DTO;
 
 namespace LRP.Items.Controllers
 {
@@ -72,7 +69,7 @@ namespace LRP.Items.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (! await CraftableExists(id))
+                if (!await CraftableExists(id))
                 {
                     return NotFound();
                 }

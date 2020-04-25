@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DTO;
+﻿using DTO;
 using LRP.Skills.Controllers;
 using LRP.Skills.Data.Skills;
 using LRP.Skills.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LRP.Skills.Tests.Controllers
 {
@@ -93,7 +92,7 @@ namespace LRP.Skills.Tests.Controllers
             // Arrange
             var repo = new FakeSkillRepository(TestData.Skills());
             var controller = new SkillsController(repo, null);
-            var skill = new SkillDTO {Id = 4, Name = "TestSkill"};
+            var skill = new SkillDTO { Id = 4, Name = "TestSkill" };
 
             // Act
             var result = await controller.PostSkill(skill);

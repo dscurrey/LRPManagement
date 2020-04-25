@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LRPManagement.Models
+﻿namespace LRPManagement.Models
 {
     public partial class Bond
     {

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using LRP.Characters.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using LRP.Characters.Models;
 
 namespace LRP.Characters.Data.Characters
 {

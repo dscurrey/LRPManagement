@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using DTO;
+﻿using DTO;
 using LRP.Characters.Controllers;
 using LRP.Characters.Data.Characters;
 using LRP.Characters.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LRP.Characters.Tests.Controllers
 {
     [TestClass]
     public class CharactersControllerTests
-    {        
+    {
         private static class TestData
         {
             public static List<Character> Characters() => new List<Character>

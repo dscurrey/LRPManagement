@@ -1,9 +1,6 @@
-﻿using System;
+﻿using LRPManagement.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using LRPManagement.Models;
-using DTO;
 
 namespace LRPManagement.Data.Craftables
 {

@@ -1,23 +1,20 @@
 ﻿using LRPManagement.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO.Pipelines;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using LRPManagement.Data.Characters;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace LRPManagement.Data.Bonds
 {
     public class BondService : IBondService
     {
-        private IHttpClientFactory _clientFactory;
-        private IConfiguration _config;
-        private ILogger<BondService> _logger;
-        private HttpClient _client;
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly IConfiguration _config;
+        private readonly ILogger<BondService> _logger;
+        private readonly HttpClient _client;
 
         public BondService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<BondService> logger)
         {
@@ -84,7 +81,7 @@ namespace LRPManagement.Data.Bonds
                 Console.WriteLine(e);
                 throw;
             }
-            
+
             return null;
         }
 

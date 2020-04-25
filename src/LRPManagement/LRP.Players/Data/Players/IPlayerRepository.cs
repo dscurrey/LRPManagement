@@ -1,8 +1,6 @@
-﻿using System;
+﻿using LRP.Players.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using LRP.Players.Models;
 
 namespace LRP.Players.Data.Players
 {

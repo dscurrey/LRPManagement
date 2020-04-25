@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using LRP.Items.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LRP.Items.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace LRP.Items.Data.Bonds
 {
@@ -27,7 +27,13 @@ namespace LRP.Items.Data.Bonds
 
         public void Insert(Bond bond)
         {
-            _context.Bonds.Add(bond);
+            var newBond = new Bond
+            {
+                CharacterId = bond.CharacterId,
+                ItemId = bond.ItemId
+            };
+
+            _context.Bonds.Add(newBond);
         }
 
         public async Task Delete(int id)

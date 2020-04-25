@@ -1,19 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using LRPManagement.Data;
 using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Polly.CircuitBreaker;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize(Policy = "StaffOnly")]
     public class BondsController : Controller
     {
         private readonly IBondRepository _repository;
@@ -40,7 +38,8 @@ namespace LRPManagement.Controllers
                 {
                     foreach (var bond in bonds)
                     {
-                        if(await BondExists(bond.ItemId, bond.CharacterId))
+                        // Ensure that bond is not already present and necessary items are stored
+                        if (await BondExists(bond.ItemId, bond.CharacterId) || await _characterRepository.GetCharacterRef(bond.CharacterId) == null || await _itemRepository.GetCraftable(bond.ItemId) == null)
                         {
                             continue;
                         }
@@ -213,7 +212,7 @@ namespace LRPManagement.Controllers
 
         private async Task<bool> BondExists(int itemId, int charId)
         {
-            var bonds = await _repository.GetMatch(itemId, charId);
+            var bonds = await _repository.GetMatch(charId, itemId);
             return bonds != null;
         }
 

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LRP.Items.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using LRP.Items.Models;
 
 namespace LRP.Items.Data.Bonds
 {
