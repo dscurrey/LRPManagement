@@ -10,6 +10,7 @@ using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Models;
+using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
@@ -18,18 +19,42 @@ namespace LRPManagement.Controllers
         private readonly IBondRepository _repository;
         private readonly ICharacterRepository _characterRepository;
         private readonly ICraftableRepository _itemRepository;
+        private readonly IBondService _service;
 
-        public BondsController(IBondRepository repository, ICharacterRepository charRepo, ICraftableRepository itemRepo)
+        public BondsController(IBondRepository repository, ICharacterRepository charRepo, ICraftableRepository itemRepo, IBondService service)
         {
             _repository = repository;
             _characterRepository = charRepo;
             _itemRepository = itemRepo;
+            _service = service;
         }
 
         // GET: Bonds
         public async Task<IActionResult> Index()
         {
-            var debug = await _repository.GetAll();
+            try
+            {
+                var bonds = await _service.Get();
+                if (bonds != null)
+                {
+                    foreach (var bond in bonds)
+                    {
+                        if(await BondExists(bond.ItemId, bond.CharacterId))
+                        {
+                            continue;
+                        }
+
+                        _repository.Insert(bond);
+                        await _repository.Save();
+                    }
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                Console.WriteLine(e);
+            }
+
+
             return View(await _repository.GetAll());
         }
 
@@ -171,6 +196,12 @@ namespace LRPManagement.Controllers
             {
                 return false;
             }
+        }
+
+        private async Task<bool> BondExists(int itemId, int charId)
+        {
+            var bonds = await _repository.GetMatch(itemId, charId);
+            return bonds != null;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace LRPManagement.Data.Bonds
         Task<Bond> Get(int id);
         Task<List<Bond>> GetForItem(int itemId);
         Task<List<Bond>> GetForPlayer(int playerId);
+        Task<Bond> GetMatch(int itemId, int charId);
         void Insert(Bond bond);
         Task Delete(int id);
         Task Save();

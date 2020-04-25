@@ -80,6 +80,7 @@ namespace LRPManagement
             services.AddScoped<ICraftableService, CraftableService>();
             services.AddScoped<ICraftableRepository, CraftableRepository>();
             services.AddScoped<IBondRepository, BondRepository>();
+            services.AddScoped<IBondService, BondService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

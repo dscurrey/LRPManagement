@@ -50,5 +50,11 @@ namespace LRPManagement.Data.Bonds
         {
             return await _context.Bond.Include(b => b.Item).Include(b => b.Character).Where(b => b.CharacterId == playerId).ToListAsync();
         }
+
+        public async Task<Bond> GetMatch(int charId, int itemId)
+        {
+            return await _context.Bond.Where(b => b.ItemId == itemId).Where
+                (b => b.CharacterId == charId).FirstOrDefaultAsync();
+        }
     }
 }
