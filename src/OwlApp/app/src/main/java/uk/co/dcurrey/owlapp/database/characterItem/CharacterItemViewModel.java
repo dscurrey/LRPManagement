@@ -7,9 +7,6 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import uk.co.dcurrey.owlapp.database.OwlDatabase;
-import uk.co.dcurrey.owlapp.database.character.CharacterViewModel;
-
 public class CharacterItemViewModel extends AndroidViewModel
 {
     private CharacterItemRepository mRepo;

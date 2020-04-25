@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DTO;
+﻿using DTO;
 using LRP.Items.Controllers;
 using LRP.Items.Data.Craftables;
 using LRP.Items.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRP.Items.Tests.Controllers
 {

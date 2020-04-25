@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LRPManagement.Data;
+﻿using LRPManagement.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
@@ -106,7 +103,8 @@ namespace LRPManagement.Controllers
                 r =>
                     new SelectListItem
                     {
-                        Value = r.Name, Text = r.Name
+                        Value = r.Name,
+                        Text = r.Name
                     }
             ).ToList();
 
@@ -130,7 +128,8 @@ namespace LRPManagement.Controllers
             (
                 r => new SelectListItem
                 {
-                    Value = r.Name, Text = r.Name
+                    Value = r.Name,
+                    Text = r.Name
                 }
             );
 

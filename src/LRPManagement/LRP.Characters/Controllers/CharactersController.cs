@@ -1,15 +1,13 @@
-﻿using System;
+﻿using DTO;
+using LRP.Characters.Data.Characters;
+using LRP.Characters.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LRP.Characters.Data;
-using LRP.Characters.Data.Characters;
-using LRP.Characters.Models;
-using Microsoft.Extensions.Logging;
-using DTO;
 
 namespace LRP.Characters.Controllers
 {
@@ -103,7 +101,7 @@ namespace LRP.Characters.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (! await CharacterExists(id))
+                if (!await CharacterExists(id))
                 {
                     return NotFound();
                 }

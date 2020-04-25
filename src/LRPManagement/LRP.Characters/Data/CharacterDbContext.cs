@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LRP.Characters.Models;
+﻿using LRP.Characters.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
 namespace LRP.Characters.Data
@@ -31,12 +27,20 @@ namespace LRP.Characters.Data
                 (
                     new Character
                     {
-                        Id = 1, Name = "Test user's 1st Character'", IsActive = true, IsRetired = false, PlayerId = 1,
+                        Id = 1,
+                        Name = "Test user's 1st Character'",
+                        IsActive = true,
+                        IsRetired = false,
+                        PlayerId = 1,
                         Xp = 8
                     },
                     new Character
                     {
-                        Id = 2, Name = "Test user 2's 1st Character'", IsActive = true, IsRetired = false, PlayerId = 2,
+                        Id = 2,
+                        Name = "Test user 2's 1st Character'",
+                        IsActive = true,
+                        IsRetired = false,
+                        PlayerId = 2,
                         Xp = 8
                     }
                 );

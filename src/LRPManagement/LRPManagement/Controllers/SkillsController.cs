@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DTO;
-using LRPManagement.Data;
+﻿using DTO;
 using LRPManagement.Data.Skills;
 using LRPManagement.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Polly.CircuitBreaker;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
@@ -143,7 +137,7 @@ namespace LRPManagement.Controllers
                 Name = skillDTO.Name,
                 XpCost = skillDTO.XpCost
             };
-            
+
             _skillRepository.InsertSkill(newSkill);
             await _skillRepository.Save();
 

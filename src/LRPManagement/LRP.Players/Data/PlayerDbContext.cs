@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LRP.Players.Models;
+﻿using LRP.Players.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace LRP.Players.Data
 {
@@ -29,7 +25,7 @@ namespace LRP.Players.Data
             {
                 // Seed Data
                 builder.Entity<Player>().HasData(
-                    new Player { Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now}
+                    new Player { Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now }
                 );
             }
         }

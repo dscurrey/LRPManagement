@@ -1,5 +1,3 @@
-using System;
-
 namespace LRPManagement.Models
 {
     public class ErrorViewModel

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DTO;
+﻿using DTO;
 using LRP.Players.Controllers;
 using LRP.Players.Data.Players;
 using LRP.Players.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LRP.Players.Tests.Controllers
 {
@@ -95,7 +95,7 @@ namespace LRP.Players.Tests.Controllers
             var repo = new FakePlayerRepository(TestData.Players());
             var controller = new PlayersController(repo, null);
             var player = new PlayerDTO
-                {Id = 3, LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now};
+            { Id = 3, LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now };
 
             // Act
             var result = await controller.PostPlayer(player);
@@ -116,7 +116,7 @@ namespace LRP.Players.Tests.Controllers
             var repo = new FakePlayerRepository(TestData.Players());
             var controller = new PlayersController(repo, null);
             var player = new PlayerDTO
-                { LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now };
+            { LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now };
 
             // Act
             var result = await controller.PostPlayer(player);
@@ -137,7 +137,7 @@ namespace LRP.Players.Tests.Controllers
             var repo = new FakePlayerRepository(TestData.Players());
             var controller = new PlayersController(repo, null);
             var player = new PlayerDTO
-                { LastName = "", DateJoined = DateTime.Now };
+            { LastName = "", DateJoined = DateTime.Now };
 
             // Act
             var result = await controller.PostPlayer(player);

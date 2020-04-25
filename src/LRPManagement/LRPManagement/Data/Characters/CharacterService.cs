@@ -1,15 +1,12 @@
 ﻿using DTO;
+using LRPManagement.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using LRPManagement.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace LRPManagement.Data.Characters
 {
@@ -42,7 +39,7 @@ namespace LRPManagement.Data.Characters
             }
             catch (TaskCanceledException ex)
             {
-                _logger.LogWarning("TaskCancelledException:\n"+ex);
+                _logger.LogWarning("TaskCancelledException:\n" + ex);
             }
 
             return null;
@@ -61,7 +58,7 @@ namespace LRPManagement.Data.Characters
             }
             catch (TaskCanceledException ex)
             {
-                _logger.LogWarning(""+ex);
+                _logger.LogWarning("" + ex);
             }
 
             return null;
@@ -93,7 +90,7 @@ namespace LRPManagement.Data.Characters
             }
             catch (TaskCanceledException ex)
             {
-                _logger.LogWarning(""+ex);
+                _logger.LogWarning("" + ex);
             }
 
             return null;

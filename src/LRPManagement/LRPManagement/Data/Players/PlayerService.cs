@@ -1,12 +1,11 @@
 ﻿using DTO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace LRPManagement.Data.Players
 {
@@ -39,7 +38,7 @@ namespace LRPManagement.Data.Players
             }
             catch (TaskCanceledException ex)
             {
-                _logger.LogWarning(""+ex);
+                _logger.LogWarning("" + ex);
             }
 
             return null;
@@ -58,7 +57,7 @@ namespace LRPManagement.Data.Players
             }
             catch (TaskCanceledException ex)
             {
-                _logger.LogWarning(""+ex);
+                _logger.LogWarning("" + ex);
             }
 
             return null;
@@ -76,7 +75,7 @@ namespace LRPManagement.Data.Players
             }
             catch (TaskCanceledException ex)
             {
-                _logger.LogWarning(""+ex);
+                _logger.LogWarning("" + ex);
             }
 
             return null;

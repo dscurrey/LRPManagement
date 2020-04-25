@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading.Tasks;
-using LRPManagement.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement.Data
 {

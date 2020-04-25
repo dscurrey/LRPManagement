@@ -7,11 +7,8 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
-import uk.co.dcurrey.owlapp.database.character.CharacterDao;
-import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemDao;
 import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemEntity;
-import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemRepository;
 
 public enum BondRepository
 {

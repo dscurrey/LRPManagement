@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using LRPManagement.Data;
 using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Polly.CircuitBreaker;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
@@ -41,7 +37,7 @@ namespace LRPManagement.Controllers
                     foreach (var bond in bonds)
                     {
                         // Ensure that bond is not already present and necessary items are stored
-                        if(await BondExists(bond.ItemId, bond.CharacterId) || await _characterRepository.GetCharacterRef(bond.CharacterId) == null || await _itemRepository.GetCraftable(bond.ItemId) == null)
+                        if (await BondExists(bond.ItemId, bond.CharacterId) || await _characterRepository.GetCharacterRef(bond.CharacterId) == null || await _itemRepository.GetCraftable(bond.ItemId) == null)
                         {
                             continue;
                         }
