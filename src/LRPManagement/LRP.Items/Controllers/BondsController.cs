@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LRP.Items.Data;
+using LRP.Items.Data.Bonds;
 using LRP.Items.Models;
 
 namespace LRP.Items.Controllers
@@ -14,25 +15,25 @@ namespace LRP.Items.Controllers
     [ApiController]
     public class BondsController : ControllerBase
     {
-        private readonly ItemsDbContext _context;
+        private readonly IBondRepository _repository;
 
-        public BondsController(ItemsDbContext context)
+        public BondsController(IBondRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Bonds
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bond>>> GetBonds()
         {
-            return await _context.Bonds.ToListAsync();
+            return await _repository.GetAll();
         }
 
         // GET: api/Bonds/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Bond>> GetBond(int id)
         {
-            var bond = await _context.Bonds.FindAsync(id);
+            var bond = await _repository.Get(id);
 
             if (bond == null)
             {
@@ -40,38 +41,6 @@ namespace LRP.Items.Controllers
             }
 
             return bond;
-        }
-
-        // PUT: api/Bonds/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBond(int id, Bond bond)
-        {
-            if (id != bond.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(bond).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BondExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Bonds
@@ -80,8 +49,8 @@ namespace LRP.Items.Controllers
         [HttpPost]
         public async Task<ActionResult<Bond>> PostBond(Bond bond)
         {
-            _context.Bonds.Add(bond);
-            await _context.SaveChangesAsync();
+            _repository.Insert(bond);
+            await _repository.Save();
 
             return CreatedAtAction("GetBond", new { id = bond.Id }, bond);
         }
@@ -90,21 +59,16 @@ namespace LRP.Items.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Bond>> DeleteBond(int id)
         {
-            var bond = await _context.Bonds.FindAsync(id);
+            var bond = await _repository.Get(id);
             if (bond == null)
             {
                 return NotFound();
             }
 
-            _context.Bonds.Remove(bond);
-            await _context.SaveChangesAsync();
+            await _repository.Delete(id);
+            await _repository.Save();
 
             return bond;
-        }
-
-        private bool BondExists(int id)
-        {
-            return _context.Bonds.Any(e => e.Id == id);
         }
     }
 }
