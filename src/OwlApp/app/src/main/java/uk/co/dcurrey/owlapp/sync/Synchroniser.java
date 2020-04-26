@@ -208,7 +208,7 @@ public class Synchroniser
 
     public void sendToAPI(Context context, CharacterSkillEntity charSkill)
     {
-        String url = APIPaths.getSkillURL(context)+"api/craftables";
+        String url = APIPaths.getSkillURL(context)+"api/characterskills";
         HttpsTrustManager.allowAllSSL();
 
         JSONObject parameters = new JSONObject();
@@ -549,5 +549,4 @@ public class Synchroniser
             }
         }
     }
-
 }
