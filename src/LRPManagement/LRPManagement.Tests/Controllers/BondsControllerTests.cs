@@ -1,15 +1,34 @@
 ﻿using System;
+using System.Net.Cache;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using LRPManagement.Controllers;
+using LRPManagement.Data.Bonds;
+using LRPManagement.Data.Characters;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
 
 namespace LRPManagement.Tests.Controllers
 {
     [TestClass]
     public class BondsControllerTests
     {
-        [TestMethod]
-        public void BondsControllerTest()
+
+        private Mock<HttpMessageHandler> CreateHttpMock(HttpResponseMessage expected)
         {
-            throw new NotImplementedException();
+            var mock = new Mock<HttpMessageHandler>();
+            mock.Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(expected)
+                .Verifiable();
+            return mock;
         }
 
         [TestMethod]
