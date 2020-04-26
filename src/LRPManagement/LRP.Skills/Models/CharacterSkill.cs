@@ -1,12 +1,16 @@
-﻿namespace LRPManagement.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace LRP.Skills.Models
 {
-    public partial class CharacterSkill
+    public class CharacterSkill
     {
         public int Id { get; set; }
         public int CharacterId { get; set; }
         public int SkillId { get; set; }
 
-        public virtual Character Character { get; set; }
         public virtual Skill Skill { get; set; }
     }
 }

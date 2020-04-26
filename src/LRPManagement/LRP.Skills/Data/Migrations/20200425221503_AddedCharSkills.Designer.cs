@@ -3,14 +3,16 @@ using LRP.Skills.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LRP.Skills.Data.Migrations
 {
     [DbContext(typeof(SkillDbContext))]
-    partial class SkillDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200425221503_AddedCharSkills")]
+    partial class AddedCharSkills
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace LRP.Skills.Data.Migrations
 
                     b.HasIndex("SkillId");
 
-                    b.ToTable("CharacterSkills");
+                    b.ToTable("CharacterSkill");
                 });
 
             modelBuilder.Entity("LRP.Skills.Models.Skill", b =>

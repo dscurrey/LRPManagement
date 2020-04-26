@@ -38,7 +38,7 @@
     <div class="col-sm-5 col-md-7">
         <h5>Skills</h5>
         <p></p>
-        <a asp-action="AddSkill" asp-route-id="@Model.Id">Add Skill</a>
+        <a asp-action="Create" asp-controller="CharacterSkills" asp-route-id="@Model.Id">Add Skill</a>
         @if (Model.Skills.Any())
         {
             <partial name="_CharacterSkills" model="Model.Skills" />

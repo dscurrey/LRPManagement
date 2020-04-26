@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LRPManagement.Models;
 using System.Threading.Tasks;
+using LRP.Skills.Models;
+using LRPManagement.Data.CharacterSkills;
 using Microsoft.EntityFrameworkCore;
 
-namespace LRPManagement.Data.CharacterSkills
+namespace LRP.Skills.Data.CharacterSkills
 {
     public class CharacterSkillRepository : ICharacterSkillRepository
     {
-        private readonly LrpDbContext _context;
+        private readonly SkillDbContext _context;
 
-        public CharacterSkillRepository(LrpDbContext context)
+        public CharacterSkillRepository(SkillDbContext context)
         {
             _context = context;
         }
@@ -32,12 +33,12 @@ namespace LRPManagement.Data.CharacterSkills
 
         public async Task<CharacterSkill> Get(int id)
         {
-            return await _context.CharacterSkills.Include(c => c.Character).Include(c => c.Skill).FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.CharacterSkills.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<List<CharacterSkill>> Get()
         {
-            return await _context.CharacterSkills.Include(c => c.Character).Include(c => c.Skill).ToListAsync();
+            return await _context.CharacterSkills.ToListAsync();
         }
 
         public async Task<CharacterSkill> GetMatch(int charId, int skillId)
@@ -50,6 +51,11 @@ namespace LRPManagement.Data.CharacterSkills
         {
             var charSkill = await _context.CharacterSkills.FirstOrDefaultAsync(c => c.Id == id);
             _context.CharacterSkills.Remove(charSkill);
+        }
+
+        public void Insert(CharacterSkill characterSkill)
+        {
+            _context.CharacterSkills.Add(characterSkill);
         }
     }
 }

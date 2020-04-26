@@ -48,7 +48,7 @@ namespace LRPManagement.Data
 
             modelBuilder.Entity<CharacterSkill>(entity =>
             {
-                entity.HasKey(e => new { e.CharacterId, e.SkillId });
+                entity.HasKey(e => e.Id);
 
                 entity.HasOne(d => d.Character)
                     .WithMany(p => p.CharacterSkills)

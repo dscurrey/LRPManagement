@@ -8,6 +8,7 @@ namespace LRP.Skills.Data
     public class SkillDbContext : DbContext
     {
         public virtual DbSet<Skill> Skill { get; set; }
+        public virtual DbSet<CharacterSkill> CharacterSkills { get; set; }
         private IWebHostEnvironment HostEnv { get; set; }
 
         public SkillDbContext(DbContextOptions options, IWebHostEnvironment hostEnv) : base(options)
@@ -18,6 +19,10 @@ namespace LRP.Skills.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Skill>()
+                .HasMany(s => s.CharacterSkills)
+                .WithOne(cs => cs.Skill);
 
             if (HostEnv != null && HostEnv.IsDevelopment())
             {

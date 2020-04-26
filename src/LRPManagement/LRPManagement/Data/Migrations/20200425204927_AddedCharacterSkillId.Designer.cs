@@ -3,14 +3,16 @@ using LRPManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LRPManagement.Data.Migrations
 {
     [DbContext(typeof(LrpDbContext))]
-    partial class LrpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200425204927_AddedCharacterSkillId")]
+    partial class AddedCharacterSkillId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,20 +75,16 @@ namespace LRPManagement.Data.Migrations
 
             modelBuilder.Entity("LRPManagement.Models.CharacterSkill", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
                     b.Property<int>("SkillId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CharacterId");
+                    b.HasKey("CharacterId", "SkillId");
 
                     b.HasIndex("SkillId");
 
