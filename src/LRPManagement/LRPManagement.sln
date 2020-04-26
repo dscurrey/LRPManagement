@@ -18,9 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRP.Skills.Tests", "LRP.Ski
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{48AF3313-95A4-431D-A293-8A50460E741C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRP.Items", "LRP.Items\LRP.Items.csproj", "{31E2A66D-62C2-491B-AC6A-1D87ED1B6133}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRP.Items", "LRP.Items\LRP.Items.csproj", "{31E2A66D-62C2-491B-AC6A-1D87ED1B6133}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRP.Items.Tests", "LRP.Items.Tests\LRP.Items.Tests.csproj", "{FAFC9165-9961-4454-B55C-DD256FDF4172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRP.Items.Tests", "LRP.Items.Tests\LRP.Items.Tests.csproj", "{FAFC9165-9961-4454-B55C-DD256FDF4172}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRPManagement.Tests", "LRPManagement.Tests\LRPManagement.Tests.csproj", "{F4F48942-4686-40AA-9B4D-769F6DFEEF9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{FAFC9165-9961-4454-B55C-DD256FDF4172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAFC9165-9961-4454-B55C-DD256FDF4172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAFC9165-9961-4454-B55C-DD256FDF4172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F48942-4686-40AA-9B4D-769F6DFEEF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F48942-4686-40AA-9B4D-769F6DFEEF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F48942-4686-40AA-9B4D-769F6DFEEF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F48942-4686-40AA-9B4D-769F6DFEEF9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
