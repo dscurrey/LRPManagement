@@ -13,5 +13,6 @@ public class SkillEntity
     @PrimaryKey(autoGenerate = true)
     public int Id;
     public String Name;
+    public int Xp;
     public boolean IsSynced;
 }

@@ -64,6 +64,17 @@ public class FunctionsFragment extends Fragment
                 startActivity(intent);
             }
         });
+
+        Button btnAddSkill = root.findViewById(R.id.btnCharSkill);
+        btnAddSkill.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), CharSkillActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

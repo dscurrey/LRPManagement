@@ -94,4 +94,12 @@
     <string name="itemFormHint">Item Form</string>
     <string name="itemNameHint">Item Name</string>
     <string name="saveItem">Save Item</string>
+    <string name="BondItem">Bond Item</string>
+    <string name="addcharskill">Add Skill To Character</string>
+    <string name="no_of_chars">Number of Characters:</string>
+    <string name="skillidhint">Skill ID</string>
+    <string name="hint_characterid">Character ID</string>
+    <string name="item_id_hint">Item ID</string>
+    <string name="skillXpHint">XP</string>
+    <string name="detailsXp">XP:</string>
 </resources>

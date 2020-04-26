@@ -8,7 +8,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity
 {
-
+    // TODO - Implement settings for different api paths/ports
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.functions.BondItemActivity">
+    tools:context=".ui.functions.CharSkillActivity">
 
     <EditText
-        android:id="@+id/bondChar"
+        android:id="@+id/charSkillChar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
@@ -21,21 +21,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/bondItem"
+        android:id="@+id/charSkillSkill"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="17dp"
         android:ems="10"
-        android:hint="@string/item_id_hint"
+        android:hint="@string/skillidhint"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bondChar" />
+        app:layout_constraintTop_toBottomOf="@+id/charSkillChar" />
 
     <Button
-        android:id="@+id/saveBond"
+        android:id="@+id/saveCharSkill"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -44,6 +44,6 @@
         android:text="@string/button_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bondItem" />
+        app:layout_constraintTop_toBottomOf="@+id/charSkillSkill" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

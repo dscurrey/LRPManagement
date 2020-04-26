@@ -33,4 +33,9 @@ public enum Repository
     {
         return BondRepository.INSTANCE;
     }
+
+    public synchronized CharacterSkillRepository getCharacterSkillRepository()
+    {
+        return CharacterSkillRepository.INSTANCE;
+    }
 }

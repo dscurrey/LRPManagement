@@ -24,9 +24,11 @@ import uk.co.dcurrey.owlapp.api.VolleySingleton;
 import uk.co.dcurrey.owlapp.database.OwlDatabase;
 import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 import uk.co.dcurrey.owlapp.database.characterItem.CharacterItemEntity;
+import uk.co.dcurrey.owlapp.database.characterSkill.CharacterSkillEntity;
 import uk.co.dcurrey.owlapp.database.item.ItemEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
+import uk.co.dcurrey.owlapp.model.repository.CharacterSkillRepository;
 import uk.co.dcurrey.owlapp.model.repository.Repository;
 
 public class Synchroniser
@@ -40,6 +42,7 @@ public class Synchroniser
             OwlDatabase.getDb().characterDao().deleteAll();
             OwlDatabase.getDb().playerDao().deleteAll();
             OwlDatabase.getDb().charItemDao().deleteAll();
+            OwlDatabase.getDb().charSkillDao().deleteAll();
         });
 
         // Repopulate Db
@@ -135,6 +138,7 @@ public class Synchroniser
         {
             parameters.put("Id", skill.Id);
             parameters.put("Name", skill.Name);
+            parameters.put("Xp", skill.Xp);
         }
         catch (JSONException e)
         {
@@ -164,18 +168,56 @@ public class Synchroniser
 
     public void sendToAPI(Context context, ItemEntity item)
     {
-        String url = APIPaths.getSkillURL(context)+"api/craftables";
+    String url = APIPaths.getSkillURL(context)+"api/craftables";
+    HttpsTrustManager.allowAllSSL();
+
+    JSONObject parameters = new JSONObject();
+    try
+    {
+        parameters.put("Id", item.Id);
+        parameters.put("Name", item.Name);
+        parameters.put("Form", item.Form);
+        parameters.put("Requirement", item.Reqs);
+        parameters.put("Effect", item.Effect);
+        parameters.put("Materials", item.Materials);
+    }
+    catch (JSONException e)
+    {
+        Log.e(this.toString(), "JSON ERROR", e);
+    }
+
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
+    {
+        @Override
+        public void onResponse(JSONObject response)
+        {
+            Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+            item.IsSynced = true;
+            Repository.getInstance().getItemRepository().update(item);
+        }
+    },
+            new Response.ErrorListener()
+            {
+                @Override
+                public void onErrorResponse(VolleyError error)
+                {
+                    Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
+                }
+            });
+    VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+}
+
+    public void sendToAPI(Context context, CharacterSkillEntity charSkill)
+    {
+        String url = APIPaths.getSkillURL(context)+"api/characterskills";
         HttpsTrustManager.allowAllSSL();
 
         JSONObject parameters = new JSONObject();
         try
         {
-            parameters.put("Id", item.Id);
-            parameters.put("Name", item.Name);
-            parameters.put("Form", item.Form);
-            parameters.put("Requirement", item.Reqs);
-            parameters.put("Effect", item.Effect);
-            parameters.put("Materials", item.Materials);
+            parameters.put("Id", charSkill.Id);
+            parameters.put("CharacterId", charSkill.CharacterId);
+            parameters.put("SkillId", charSkill.SkillId);
         }
         catch (JSONException e)
         {
@@ -188,8 +230,8 @@ public class Synchroniser
             public void onResponse(JSONObject response)
             {
                 Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
-                item.IsSynced = true;
-                Repository.getInstance().getItemRepository().update(item);
+                charSkill.IsSynced = true;
+                Repository.getInstance().getCharacterSkillRepository().update(charSkill);
             }
         },
                 new Response.ErrorListener()
@@ -348,6 +390,7 @@ public class Synchroniser
                     {
                         skill.Id = ((JSONObject) response.get(i)).getInt("id");
                         skill.Name = ((JSONObject) response.get(i)).getString("name");
+                        skill.Xp = ((JSONObject) response.get(i)).getInt("xpCost");
                     } catch (JSONException e)
                     {
                         Log.e(this.toString(), "JSON ERROR", e);
@@ -415,6 +458,7 @@ public class Synchroniser
         syncSkills(mContext);
         syncItem(mContext);
         syncCharItem(mContext);
+        syncCharSkill(mContext);
     }
 
     private void syncCharacters(Context mContext)
@@ -463,6 +507,21 @@ public class Synchroniser
         }
     }
 
+    private void syncCharSkill(Context mContext)
+    {
+        HashMap<Integer, CharacterSkillEntity> charSkills = Repository.getInstance().getCharacterSkillRepository().get();
+
+        Iterator it = charSkills.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry charSkillEntry = (Map.Entry)it.next();
+            CharacterSkillEntity charSkill = (CharacterSkillEntity) charSkillEntry.getValue();
+            if (!charSkill.IsSynced){
+                sendToAPI(mContext, charSkill);
+            }
+        }
+    }
+
     private void syncSkills(Context mContext)
     {
         HashMap<Integer, SkillEntity> skills = Repository.getInstance().getSkillRepository().get();
@@ -492,5 +551,4 @@ public class Synchroniser
             }
         }
     }
-
 }
