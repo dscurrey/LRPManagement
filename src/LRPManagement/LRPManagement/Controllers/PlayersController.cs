@@ -26,33 +26,20 @@ namespace LRPManagement.Controllers
         [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> Index()
         {
-            TempData["PlayInoperativeMsg"] = "";
+            var players = await _playerRepository.GetAll();
 
-            await UpdateDb();
+            var playerList = players.Select
+            (
+                p => new PlayerDTO
+                {
+                    AccountRef = p.AccountRef,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    Id = p.Id
+                }
+            );
 
-            try
-            {
-                var players = await _playerRepository.GetAll();
-
-                var playerList = players.Select
-                (
-                    p => new PlayerDTO
-                    {
-                        AccountRef = p.AccountRef,
-                        FirstName = p.FirstName,
-                        LastName = p.LastName,
-                        Id = p.Id
-                    }
-                );
-
-                return View(playerList);
-            }
-            catch (BrokenCircuitException)
-            {
-                HandleBrokenCircuit();
-            }
-
-            return View();
+            return View(playerList);
         }
 
         // GET: Players/Details/5

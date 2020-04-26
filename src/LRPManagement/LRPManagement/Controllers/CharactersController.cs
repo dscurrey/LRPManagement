@@ -42,37 +42,6 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var characters = await _characterService.GetAll();
-                if (characters != null)
-                {
-                    foreach (var character in characters)
-                    {
-                        if (await _characterRepository.GetCharacterRef(character.Id) != null || await _playerRepository.GetPlayer(character.PlayerId) == null)
-                        {
-                            continue;
-                        }
-
-                        var newChar = new Character
-                        {
-                            Name = character.Name,
-                            IsActive = character.IsActive,
-                            IsRetired = character.IsRetired,
-                            CharacterRef = character.Id,
-                            PlayerId = character.PlayerId,
-                            Xp = character.Xp
-                        };
-                        _characterRepository.InsertCharacter(newChar);
-                        await _characterRepository.Save();
-                    }
-                }
-            }
-            catch (BrokenCircuitException e)
-            {
-                HandleBrokenCircuit();
-            }
-
-            try
-            {
                 var characters = await _characterRepository.GetAll();
                 var charList = characters.Select
                 (

@@ -24,8 +24,6 @@ namespace LRPManagement.Controllers
         {
             TempData["ItemInoperativeMsg"] = "";
 
-            await UpdateDb();
-
             try
             {
                 return View(await _itemRepository.GetAll());

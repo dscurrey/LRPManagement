@@ -17,6 +17,7 @@ using Polly;
 using Polly.Extensions.Http;
 using System;
 using System.Net.Http;
+using LRPManagement.Services;
 
 namespace LRPManagement
 {
@@ -76,6 +77,10 @@ namespace LRPManagement
             services.AddScoped<IBondRepository, BondRepository>();
             services.AddScoped<IBondService, BondService>();
             services.AddScoped<ICharacterSkillService, CharacterSkillService>();
+
+            // API Services
+            services.AddHostedService<ApiUpdateHostedService>();
+            services.AddScoped<IApiScopedProcessingService, ApiUpdaterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
