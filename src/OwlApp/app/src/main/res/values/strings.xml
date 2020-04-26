@@ -100,4 +100,6 @@
     <string name="skillidhint">Skill ID</string>
     <string name="hint_characterid">Character ID</string>
     <string name="item_id_hint">Item ID</string>
+    <string name="skillXpHint">XP</string>
+    <string name="detailsXp">XP:</string>
 </resources>

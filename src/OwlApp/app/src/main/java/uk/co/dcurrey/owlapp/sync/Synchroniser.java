@@ -138,6 +138,7 @@ public class Synchroniser
         {
             parameters.put("Id", skill.Id);
             parameters.put("Name", skill.Name);
+            parameters.put("Xp", skill.Xp);
         }
         catch (JSONException e)
         {
@@ -389,6 +390,7 @@ public class Synchroniser
                     {
                         skill.Id = ((JSONObject) response.get(i)).getInt("id");
                         skill.Name = ((JSONObject) response.get(i)).getString("name");
+                        skill.Xp = ((JSONObject) response.get(i)).getInt("xpCost");
                     } catch (JSONException e)
                     {
                         Log.e(this.toString(), "JSON ERROR", e);
