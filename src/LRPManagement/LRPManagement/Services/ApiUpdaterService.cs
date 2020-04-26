@@ -142,7 +142,6 @@ namespace LRPManagement.Services
 
         private async Task GetSkills()
         {
-
             try
             {
                 var skills = await _skillService.GetAll();
