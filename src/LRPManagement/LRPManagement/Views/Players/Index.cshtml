@@ -6,11 +6,7 @@
 
 <h1>Index</h1>
 
-@if ((string)TempData["PlayInoperativeMsg"] != "")
-{
-    @TempData["PlayInoperativeMsg"].ToString();
-}
-else
+@if (Model.Any())
 {
     <p>
         <a asp-action="Create">Create New</a>
@@ -47,3 +43,9 @@ else
         </tbody>
     </table>
 }
+else
+{
+    <h2>No Players Found.</h2>
+    <h3>Service may be unavailable</h3>
+}
+
