@@ -31,28 +31,6 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> Index()
         {
             //TempData["ItemInoperativeMsg"] = "";
-            try
-            {
-                var bonds = await _service.Get();
-                if (bonds != null)
-                {
-                    foreach (var bond in bonds)
-                    {
-                        // Ensure that bond is not already present and necessary items are stored
-                        if (await BondExists(bond.ItemId, bond.CharacterId) || await _characterRepository.GetCharacterRef(bond.CharacterId) == null || await _itemRepository.GetCraftable(bond.ItemId) == null)
-                        {
-                            continue;
-                        }
-
-                        _repository.Insert(bond);
-                        await _repository.Save();
-                    }
-                }
-            }
-            catch (BrokenCircuitException)
-            {
-                HandleBrokenCircuit();
-            }
 
             return View(await _repository.GetAll());
         }

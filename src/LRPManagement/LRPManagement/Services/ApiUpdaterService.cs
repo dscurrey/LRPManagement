@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
+using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
@@ -14,7 +16,7 @@ namespace LRPManagement.Services
     {
         private int executionCount = 0;
         private readonly ILogger<ApiUpdaterService> _logger;
-        private int interval = 25000;
+        private int interval = 25000; // Secs * 1000
 
         private IPlayerRepository _playerRepository;
         private IPlayerService _playerService;
@@ -24,10 +26,15 @@ namespace LRPManagement.Services
         private ISkillService _skillService;
         private ICraftableRepository _itemRepository;
         private ICraftableService _itemService;
+        private IBondRepository _bondRepository;
+        private IBondService _bondService;
+        private ICharacterSkillService _charSkillService;
+        private ICharacterSkillRepository _charSkillRepository;
 
         public ApiUpdaterService(ILogger<ApiUpdaterService> logger, IPlayerService playerService, IPlayerRepository playerRepository,
             ICharacterRepository characterRepository, ICharacterService characterService, ISkillRepository skillRepository, ISkillService skillService,
-            ICraftableService craftableService, ICraftableRepository craftableRepository)
+            ICraftableService craftableService, ICraftableRepository craftableRepository,
+            IBondService bondService, IBondRepository bondRepository, ICharacterSkillService characterSkillService, ICharacterSkillRepository characterSkillRepository)
         {
             _logger = logger;
 
@@ -39,6 +46,10 @@ namespace LRPManagement.Services
             _skillRepository = skillRepository;
             _itemService = craftableService;
             _itemRepository = craftableRepository;
+            _bondRepository = bondRepository;
+            _bondService = bondService;
+            _charSkillService = characterSkillService;
+            _charSkillRepository = characterSkillRepository;
         }
 
         public async Task DoWork(CancellationToken stoppingToken)
@@ -54,6 +65,9 @@ namespace LRPManagement.Services
                 await GetCharacters();
                 await GetSkills();
                 await GetItems();
+
+                await GetBonds();
+                await GetCharSkills();
 
                 await Task.Delay(interval, stoppingToken);
             }
@@ -86,7 +100,7 @@ namespace LRPManagement.Services
                     await _playerRepository.Save();
                 }
             }
-            catch (BrokenCircuitException e)
+            catch (BrokenCircuitException)
             {
                 _logger.LogWarning("Broken Circuit");
             }
@@ -120,7 +134,7 @@ namespace LRPManagement.Services
                     }
                 }
             }
-            catch (BrokenCircuitException e)
+            catch (BrokenCircuitException)
             {
                 _logger.LogWarning("Broken Circuit");
             }
@@ -152,9 +166,9 @@ namespace LRPManagement.Services
                     await _skillRepository.Save();
                 }
             }
-            catch (BrokenCircuitException e)
+            catch (BrokenCircuitException)
             {
-                HandleBrokenCircuit();
+                _logger.LogWarning("Broken Circuit");
             }
         }
 
@@ -185,10 +199,76 @@ namespace LRPManagement.Services
                     }
                 }
             }
-            catch (BrokenCircuitException e)
+            catch (BrokenCircuitException)
             {
                 _logger.LogWarning("Broken Circuit");
             }
+        }
+
+        private async Task GetBonds()
+        {
+            try
+            {
+                var bonds = await _bondService.Get();
+                if (bonds != null)
+                {
+                    foreach (var bond in bonds)
+                    {
+                        // Ensure that bond is not already present and necessary items are stored
+                        if (await BondExists(bond.ItemId, bond.CharacterId) || await _characterRepository.GetCharacterRef(bond.CharacterId) == null || await _itemRepository.GetCraftable(bond.ItemId) == null)
+                        {
+                            continue;
+                        }
+
+                        _bondRepository.Insert(bond);
+                        await _bondRepository.Save();
+                    }
+                }
+            }
+            catch (BrokenCircuitException)
+            {
+                _logger.LogWarning("Broken Circuit");
+            }
+        }
+
+        private async Task GetCharSkills()
+        {
+            try
+            {
+                var charSkills = await _charSkillService.Get();
+                if (charSkills != null)
+                {
+                    foreach (var charSkill in charSkills)
+                    {
+                        // Ensure that charSKill is not already present and necessary items are stored
+                        if (await CharSkillExists(charSkill.SkillId, charSkill.CharacterId) ||
+                            await _characterRepository.GetCharacterRef(charSkill.CharacterId) == null ||
+                            await _skillRepository.GetSkill(charSkill.SkillId) == null)
+                        {
+                            continue;
+                        }
+
+                        _charSkillRepository.AddSkillToCharacter(charSkill.SkillId, charSkill.CharacterId);
+                        await _charSkillRepository.Save();
+                    }
+                }
+            }
+            catch (BrokenCircuitException)
+            {
+                _logger.LogWarning("Broken Circuit");
+            }
+        }
+
+        private async Task<bool> BondExists(int itemId, int charId)
+        {
+            var bonds = await _bondRepository.GetMatch(charId, itemId);
+            return bonds != null;
+        }
+
+        private async Task<bool> CharSkillExists(int skillId, int charId)
+        {
+            var charSkill = await _charSkillRepository.GetMatch(charId, skillId);
+            return charSkill != null;
         }
     }
 }

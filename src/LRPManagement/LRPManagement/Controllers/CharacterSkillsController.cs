@@ -34,22 +34,6 @@ namespace LRPManagement.Controllers
         // GET: CharacterSkills
         public async Task<IActionResult> Index()
         {
-            var charSkills = await _characterSkillService.Get();
-            if (charSkills != null)
-            {
-                foreach (var charSkill in charSkills)
-                {
-                    // Ensure that charSKill is not already present and necessary items are stored
-                    if (await CharSkillExists(charSkill.SkillId, charSkill.CharacterId) || await _characterRepository.GetCharacterRef(charSkill.CharacterId) == null || await _skillRepository.GetSkill(charSkill.SkillId) == null)
-                    {
-                        continue;
-                    }
-
-                    _characterSkillRepository.AddSkillToCharacter(charSkill.SkillId, charSkill.CharacterId);
-                    await _characterSkillRepository.Save();
-                }
-            }
-
             return View(await _characterSkillRepository.Get());
         }
 
