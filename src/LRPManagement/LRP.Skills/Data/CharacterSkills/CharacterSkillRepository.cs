@@ -38,7 +38,7 @@ namespace LRP.Skills.Data.CharacterSkills
 
         public async Task<List<CharacterSkill>> Get()
         {
-            return await _context.CharacterSkills.Include(c => c.Skill).ToListAsync();
+            return await _context.CharacterSkills.ToListAsync();
         }
 
         public async Task<CharacterSkill> GetMatch(int charId, int skillId)
