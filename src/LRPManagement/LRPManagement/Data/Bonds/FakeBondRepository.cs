@@ -10,7 +10,7 @@ namespace LRPManagement.Data.Bonds
     {
         private List<Bond> _bonds;
 
-        FakeBondRepository(List<Bond> bonds)
+        public FakeBondRepository(List<Bond> bonds)
         {
             _bonds = bonds;
         }
