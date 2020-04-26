@@ -7,11 +7,6 @@
 
 <h1>Index</h1>
 
-@*@if ((string)ViewData["ItemInoperativeMsg"] != "")
-{
-    @ViewData["ItemInoperativeMsg"].ToString();
-}*@
-
 @if (Model.Any())
 {
     <p>
@@ -19,32 +14,37 @@
     </p>
     <table class="table">
         <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Character)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Item)
-            </th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Character)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Item)
+                </th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Character.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Item.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new {id=item.Id}) |
-                    @Html.ActionLink("Delete", "Delete", new {id=item.Id})
-                </td>
-            </tr>
-        }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Character.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
+}
+else
+{
+    <h2>No Bonds Found.</h2>
+    <h3>Service may be unavailable</h3>
 }
