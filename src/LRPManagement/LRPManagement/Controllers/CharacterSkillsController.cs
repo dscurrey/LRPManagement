@@ -34,7 +34,6 @@ namespace LRPManagement.Controllers
         // GET: CharacterSkills
         public async Task<IActionResult> Index()
         {
-        
             var charSkills = await _characterSkillService.Get();
             if (charSkills != null)
             {
@@ -50,7 +49,6 @@ namespace LRPManagement.Controllers
                     await _characterSkillRepository.Save();
                 }
             }
-            
 
             return View(await _characterSkillRepository.Get());
         }
