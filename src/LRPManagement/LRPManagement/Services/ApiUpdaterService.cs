@@ -1,7 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using LRPManagement.Data.Characters;
+using LRPManagement.Data.Craftables;
 using LRPManagement.Data.Players;
+using LRPManagement.Data.Skills;
 using LRPManagement.Models;
 using Microsoft.Extensions.Logging;
 using Polly.CircuitBreaker;
@@ -18,8 +20,14 @@ namespace LRPManagement.Services
         private IPlayerService _playerService;
         private ICharacterRepository _characterRepository;
         private ICharacterService _characterService;
+        private ISkillRepository _skillRepository;
+        private ISkillService _skillService;
+        private ICraftableRepository _itemRepository;
+        private ICraftableService _itemService;
 
-        public ApiUpdaterService(ILogger<ApiUpdaterService> logger, IPlayerService playerService, IPlayerRepository playerRepository, ICharacterRepository characterRepository, ICharacterService characterService)
+        public ApiUpdaterService(ILogger<ApiUpdaterService> logger, IPlayerService playerService, IPlayerRepository playerRepository,
+            ICharacterRepository characterRepository, ICharacterService characterService, ISkillRepository skillRepository, ISkillService skillService,
+            ICraftableService craftableService, ICraftableRepository craftableRepository)
         {
             _logger = logger;
 
@@ -27,6 +35,10 @@ namespace LRPManagement.Services
             _playerRepository = playerRepository;
             _characterService = characterService;
             _characterRepository = characterRepository;
+            _skillService = skillService;
+            _skillRepository = skillRepository;
+            _itemService = craftableService;
+            _itemRepository = craftableRepository;
         }
 
         public async Task DoWork(CancellationToken stoppingToken)
@@ -40,6 +52,8 @@ namespace LRPManagement.Services
 
                 await GetPlayers();
                 await GetCharacters();
+                await GetSkills();
+                await GetItems();
 
                 await Task.Delay(interval, stoppingToken);
             }
@@ -103,6 +117,71 @@ namespace LRPManagement.Services
                         };
                         _characterRepository.InsertCharacter(newChar);
                         await _characterRepository.Save();
+                    }
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                _logger.LogWarning("Broken Circuit");
+            }
+        }
+
+        private async Task GetSkills()
+        {
+
+            try
+            {
+                var skills = await _skillService.GetAll();
+                if (skills != null)
+                {
+                    foreach (var skill in skills)
+                    {
+                        if (await _skillRepository.GetSkillRef(skill.Id) != null)
+                        {
+                            continue;
+                        }
+                        var newSkill = new Skill
+                        {
+                            SkillRef = skill.Id,
+                            Name = skill.Name,
+                            XpCost = skill.XpCost
+                        };
+                        _skillRepository.InsertSkill(newSkill);
+                    }
+
+                    await _skillRepository.Save();
+                }
+            }
+            catch (BrokenCircuitException e)
+            {
+                HandleBrokenCircuit();
+            }
+        }
+
+        private async Task GetItems()
+        {
+            try
+            {
+                var items = await _itemService.GetAll();
+                if (items != null)
+                {
+                    foreach (var item in items)
+                    {
+                        if (await _itemRepository.GetCraftable(item.Id) != null)
+                        {
+                            continue;
+                        }
+
+                        var newItem = new Craftable
+                        {
+                            Name = item.Name,
+                            Requirement = item.Requirement,
+                            Materials = item.Materials,
+                            Effect = item.Effect,
+                            Form = item.Form
+                        };
+                        _itemRepository.InsertCraftable(newItem);
+                        await _itemRepository.Save();
                     }
                 }
             }

@@ -28,34 +28,6 @@ namespace LRPManagement.Controllers
 
             try
             {
-                var skills = await _skillService.GetAll();
-                if (skills != null)
-                {
-                    foreach (var skill in skills)
-                    {
-                        if (await _skillRepository.GetSkillRef(skill.Id) != null)
-                        {
-                            continue;
-                        }
-                        var newSkill = new Skill
-                        {
-                            SkillRef = skill.Id,
-                            Name = skill.Name,
-                            XpCost = skill.XpCost
-                        };
-                        _skillRepository.InsertSkill(newSkill);
-                    }
-
-                    await _skillRepository.Save();
-                }
-            }
-            catch (BrokenCircuitException e)
-            {
-                HandleBrokenCircuit();
-            }
-
-            try
-            {
                 var skills = await _skillRepository.GetAll();
                 var skillList = skills.Select
                 (
