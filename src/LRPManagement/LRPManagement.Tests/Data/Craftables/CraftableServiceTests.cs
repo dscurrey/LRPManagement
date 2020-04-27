@@ -96,7 +96,6 @@ namespace LRPManagement.Tests.Data.Craftables
             Assert.AreEqual(newItem.Form, result.Form);
             Assert.AreEqual(newItem.Effect, result.Effect);
             Assert.AreEqual(newItem.Materials, result.Materials);
-
         }
 
         [TestMethod]

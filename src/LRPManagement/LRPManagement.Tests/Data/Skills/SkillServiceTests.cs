@@ -112,7 +112,6 @@ namespace LRPManagement.Tests.Data.Skills
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(skillId, result);
-
         }
 
         [TestMethod]
@@ -133,7 +132,6 @@ namespace LRPManagement.Tests.Data.Skills
             foreach (var skill in result)
             {
                 var testItem = TestData.Skills().FirstOrDefault(s => s.Id == skill.Id);
-
             }
         }
     }

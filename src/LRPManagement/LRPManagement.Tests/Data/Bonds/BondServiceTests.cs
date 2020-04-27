@@ -157,7 +157,6 @@ namespace LRPManagement.Tests.Data.Bonds
             Assert.AreEqual(testItem.Id, result.Id);
             Assert.AreEqual(testItem.ItemId, result.ItemId);
             Assert.AreEqual(testItem.CharacterId, result.CharacterId);
-
         }
     }
 }
