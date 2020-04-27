@@ -111,7 +111,7 @@ namespace LRPManagement.Tests.Data.CharacterSkills
             var client = SetupMock_CharacterSkill();
             var config = new Mock<IConfiguration>();
             client.BaseAddress = new Uri("https://localhost:1111");
-            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhos:1111/");
+            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new CharacterSkillService(null, config.Object, new NullLogger<CharacterSkillService>())
                 {Client = client};
 
