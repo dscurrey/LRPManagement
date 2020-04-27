@@ -17,12 +17,13 @@ namespace LRPManagement.Data.Characters
         private readonly IConfiguration _config;
         private readonly ILogger<CharacterService> _logger;
 
+        public HttpClient Client { get; set; }
+
         public CharacterService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<CharacterService> logger)
         {
             _clientFactory = clientFactory;
             _config = config;
             _logger = logger;
-            _httpClient = GetHttpClient("StandardRequest");
         }
 
         public async Task<List<CharacterDTO>> GetAll()
@@ -30,7 +31,8 @@ namespace LRPManagement.Data.Characters
             _logger.LogInformation("Sending API Request to Character Service (GetAll)");
             try
             {
-                var resp = await _httpClient.GetAsync("api/characters");
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/characters");
                 if (resp.IsSuccessStatusCode)
                 {
                     var characters = await resp.Content.ReadAsAsync<List<CharacterDTO>>();
@@ -49,7 +51,8 @@ namespace LRPManagement.Data.Characters
         {
             try
             {
-                var resp = await _httpClient.GetAsync("api/characters/" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/characters/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     var characters = await resp.Content.ReadAsAsync<CharacterDTO>();
@@ -82,7 +85,8 @@ namespace LRPManagement.Data.Characters
         {
             try
             {
-                var resp = await _httpClient.PutAsync("api/characters/" + character.Id, character, new JsonMediaTypeFormatter());
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.PutAsync("api/characters/" + character.Id, character, new JsonMediaTypeFormatter());
                 if (resp.IsSuccessStatusCode)
                 {
                     return character;
@@ -100,7 +104,8 @@ namespace LRPManagement.Data.Characters
         {
             try
             {
-                var resp = await _httpClient.PostAsync("api/characters/", character, new JsonMediaTypeFormatter());
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.PostAsync("api/characters/", character, new JsonMediaTypeFormatter());
                 if (resp.IsSuccessStatusCode)
                 {
                     return character;
@@ -118,7 +123,8 @@ namespace LRPManagement.Data.Characters
         {
             try
             {
-                var resp = await _httpClient.DeleteAsync("api/characters/" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.DeleteAsync("api/characters/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     return id;
@@ -134,8 +140,13 @@ namespace LRPManagement.Data.Characters
 
         private HttpClient GetHttpClient(string s)
         {
+            if (Client != null && _clientFactory == null)
+            {
+                return Client;
+            }
+
             var client = _clientFactory.CreateClient(s);
-            client.BaseAddress = new Uri(_config["CharactersURL"]);
+            client.BaseAddress = new Uri(_config["CharactersUrl"]);
             return client;
         }
     }
