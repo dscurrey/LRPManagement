@@ -68,15 +68,46 @@ namespace LRPManagement.Tests.Data.Bonds
         }
 
         [TestMethod]
-        public void CreateTest()
+        public async Task CreateTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var client = SetupMock_Bond();
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
+            var bondRepo = new FakeBondRepository(TestData.Bonds());
+            var service = new BondService(null, config.Object, new NullLogger<BondService>())
+                { Client = client };
+
+            // Act
+            var newBond = new Bond {Id = 5, ItemId = 7, CharacterId = 2};
+            var result = await service.Create(newBond);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(newBond.CharacterId, result.CharacterId);
+            Assert.AreEqual(newBond.ItemId, result.ItemId);
         }
 
         [TestMethod]
-        public void DeleteTest()
+        public async Task DeleteTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var bondId = 1;
+            var client = SetupMock_Bond(bondId);
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
+            var bondRepo = new FakeBondRepository(TestData.Bonds());
+            var service = new BondService(null, config.Object, new NullLogger<BondService>())
+                { Client = client };
+
+            // Act
+            var result = await service.Delete(bondId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -105,9 +136,28 @@ namespace LRPManagement.Tests.Data.Bonds
         }
 
         [TestMethod]
-        public void GetTest()
+        public async Task GetTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var bondId = 2;
+            var client = SetupMock_Bond(bondId);
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
+            var bondRepo = new FakeBondRepository(TestData.Bonds());
+            var service = new BondService(null, config.Object, new NullLogger<BondService>())
+                { Client = client };
+
+            // Act
+            var result = await service.Get(bondId);
+
+            // Arrange
+            Assert.IsNotNull(result);
+            var testItem = TestData.Bonds().FirstOrDefault(b => b.Id == bondId);
+            Assert.AreEqual(testItem.Id, result.Id);
+            Assert.AreEqual(testItem.ItemId, result.ItemId);
+            Assert.AreEqual(testItem.CharacterId, result.CharacterId);
+
         }
     }
 }
