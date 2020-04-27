@@ -71,7 +71,7 @@ namespace LRPManagement.Tests.Data.Craftables
         }
 
         [TestMethod]
-        public void CreateCraftableTest()
+        public async Task CreateCraftableTest()
         {
             // Arrange
             var client = SetupMock_Craftable();
@@ -80,6 +80,23 @@ namespace LRPManagement.Tests.Data.Craftables
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var service = new CraftableService(null, config.Object, new NullLogger<CraftableService>())
                 {Client = client};
+
+            // Act
+            var newItem = new CraftableDTO
+            {
+                Id = 12, Name = "NEW", Requirement = "NEW", Materials = "NEW", Effect = "NEW", Form = "NEW"
+            };
+            var result = await service.CreateCraftable(newItem);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(newItem.Id, result.Id);
+            Assert.AreEqual(newItem.Name, result.Name);
+            Assert.AreEqual(newItem.Requirement, result.Requirement);
+            Assert.AreEqual(newItem.Form, result.Form);
+            Assert.AreEqual(newItem.Effect, result.Effect);
+            Assert.AreEqual(newItem.Materials, result.Materials);
+
         }
 
         [TestMethod]
