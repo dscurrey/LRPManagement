@@ -13,9 +13,10 @@ namespace LRPManagement.Data.CharacterSkills
     public class CharacterSkillService : ICharacterSkillService
     {
         private readonly IHttpClientFactory _clientFactory;
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
         private readonly ILogger<CharacterSkillService> _logger;
-        private readonly HttpClient _client;
+        
+        public HttpClient Client { get; set; }
 
         public CharacterSkillService(IHttpClientFactory clientFactory,
             IConfiguration config,
@@ -24,12 +25,12 @@ namespace LRPManagement.Data.CharacterSkills
             _clientFactory = clientFactory;
             _config = config;
             _logger = logger;
-            _client = GetHttpClient("StandardRequest");
         }
 
         public async Task<CharacterSkill> Create(CharacterSkill charSkill)
         {
-            var resp = await _client.PostAsync("api/characterskills/", charSkill, new JsonMediaTypeFormatter());
+            var client = GetHttpClient("StandardRequest");
+            var resp = await client.PostAsync("api/characterskills/", charSkill, new JsonMediaTypeFormatter());
             if (resp.IsSuccessStatusCode)
             {
                 return charSkill;
@@ -40,7 +41,8 @@ namespace LRPManagement.Data.CharacterSkills
 
         public async Task<bool> Delete(int id)
         {
-            var resp = await _client.DeleteAsync("api/characterskills/" + id);
+            var client = GetHttpClient("StandardRequest");
+            var resp = await client.DeleteAsync("api/characterskills/" + id);
             if (resp.IsSuccessStatusCode)
             {
                 return true;
@@ -53,7 +55,8 @@ namespace LRPManagement.Data.CharacterSkills
         {
             try
             {
-                var resp = await _client.GetAsync("api/characterskills/");
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/characterskills/");
                 if (resp.IsSuccessStatusCode)
                 {
                     var charSkills = await resp.Content.ReadAsAsync<List<CharacterSkill>>();
@@ -72,7 +75,8 @@ namespace LRPManagement.Data.CharacterSkills
         {
             try
             {
-                var resp = await _client.GetAsync("api/characterskills/" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/characterskills/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     var charSkill = await resp.Content.ReadAsAsync<CharacterSkill>();
@@ -89,6 +93,11 @@ namespace LRPManagement.Data.CharacterSkills
 
         private HttpClient GetHttpClient(string s)
         {
+            if (Client != null && _clientFactory == null)
+            {
+                return Client;
+            }
+
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["SkillsURL"]);
             return client;

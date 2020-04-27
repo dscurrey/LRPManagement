@@ -11,25 +11,25 @@ namespace LRPManagement.Data.Players
 {
     public class PlayerService : IPlayerService
     {
-        private readonly HttpClient _httpClient;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _config;
         private readonly ILogger<PlayerService> _logger;
+
+        public HttpClient Client { get; set; }
 
         public PlayerService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<PlayerService> logger)
         {
             _clientFactory = clientFactory;
             _config = config;
             _logger = logger;
-
-            _httpClient = GetHttpClient("StandardRequest");
         }
 
         public async Task<List<PlayerDTO>> GetAll()
         {
             try
             {
-                var resp = await _httpClient.GetAsync("api/players");
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/players");
                 if (resp.IsSuccessStatusCode)
                 {
                     var players = await resp.Content.ReadAsAsync<List<PlayerDTO>>();
@@ -48,7 +48,8 @@ namespace LRPManagement.Data.Players
         {
             try
             {
-                var resp = await _httpClient.GetAsync("api/players/" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/players/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     var characters = await resp.Content.ReadAsAsync<PlayerDTO>();
@@ -67,7 +68,8 @@ namespace LRPManagement.Data.Players
         {
             try
             {
-                var resp = await _httpClient.PutAsync("api/players/" + player.Id, player, new JsonMediaTypeFormatter());
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.PutAsync("api/players/" + player.Id, player, new JsonMediaTypeFormatter());
                 if (resp.IsSuccessStatusCode)
                 {
                     return player;
@@ -85,7 +87,8 @@ namespace LRPManagement.Data.Players
         {
             try
             {
-                var resp = await _httpClient.PostAsync("api/players/", player, new JsonMediaTypeFormatter());
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.PostAsync("api/players/", player, new JsonMediaTypeFormatter());
                 if (resp.IsSuccessStatusCode)
                 {
                     return player;
@@ -103,7 +106,8 @@ namespace LRPManagement.Data.Players
         {
             try
             {
-                var resp = await _httpClient.DeleteAsync("api/players/" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.DeleteAsync("api/players/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     return id;
@@ -119,6 +123,11 @@ namespace LRPManagement.Data.Players
 
         private HttpClient GetHttpClient(string s)
         {
+            if (Client != null && _clientFactory == null)
+            {
+                return Client;
+            }
+
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["PlayersURL"]);
             return client;

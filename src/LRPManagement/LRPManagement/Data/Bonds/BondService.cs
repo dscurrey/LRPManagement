@@ -14,19 +14,19 @@ namespace LRPManagement.Data.Bonds
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _config;
         private readonly ILogger<BondService> _logger;
-        private readonly HttpClient _client;
+        public HttpClient Client { get; set; }
 
         public BondService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<BondService> logger)
         {
             _clientFactory = clientFactory;
             _config = config;
             _logger = logger;
-            _client = GetHttpClient("StandardRequest");
         }
 
         public async Task<Bond> Create(Bond bond)
         {
-            var resp = await _client.PostAsync("api/bonds/", bond, new JsonMediaTypeFormatter());
+            var client = GetHttpClient("StandardRequest");
+            var resp = await client.PostAsync("api/bonds/", bond, new JsonMediaTypeFormatter());
             if (resp.IsSuccessStatusCode)
             {
                 return bond;
@@ -37,7 +37,8 @@ namespace LRPManagement.Data.Bonds
 
         public async Task<bool> Delete(int id)
         {
-            var resp = await _client.DeleteAsync("api/bonds/" + id);
+            var client = GetHttpClient("StandardRequest");
+            var resp = await client.DeleteAsync("api/bonds/" + id);
             if (resp.IsSuccessStatusCode)
             {
                 return true;
@@ -50,7 +51,8 @@ namespace LRPManagement.Data.Bonds
         {
             try
             {
-                var resp = await _client.GetAsync("api/bonds/" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/bonds/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     var bond = await resp.Content.ReadAsAsync<Bond>();
@@ -69,7 +71,8 @@ namespace LRPManagement.Data.Bonds
         {
             try
             {
-                var resp = await _client.GetAsync("api/bonds/");
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/bonds/");
                 if (resp.IsSuccessStatusCode)
                 {
                     var bonds = await resp.Content.ReadAsAsync<List<Bond>>();
@@ -87,6 +90,10 @@ namespace LRPManagement.Data.Bonds
 
         private HttpClient GetHttpClient(string s)
         {
+            if (Client != null && _clientFactory == null)
+            {
+                return Client;
+            }
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["ItemsURL"]);
             return client;
