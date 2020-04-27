@@ -13,7 +13,6 @@ namespace LRPManagement.Data.Characters
     public class CharacterService : ICharacterService
     {
         private readonly IHttpClientFactory _clientFactory;
-        private readonly HttpClient _httpClient;
         private readonly IConfiguration _config;
         private readonly ILogger<CharacterService> _logger;
 
