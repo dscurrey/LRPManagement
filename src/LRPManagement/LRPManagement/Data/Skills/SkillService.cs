@@ -12,24 +12,24 @@ namespace LRPManagement.Data.Skills
     public class SkillService : ISkillService
     {
         private readonly IHttpClientFactory _clientFactory;
-        private readonly HttpClient _httpClient;
         private readonly ILogger<SkillService> _logger;
         private readonly IConfiguration _config;
+
+        public HttpClient Client { get; set; }
 
         public SkillService(IHttpClientFactory clientFactory, ILogger<SkillService> logger, IConfiguration config)
         {
             _clientFactory = clientFactory;
             _logger = logger;
             _config = config;
-
-            _httpClient = GetHttpClient("StandardRequest");
         }
 
         public async Task<SkillDTO> CreateSkill(SkillDTO skill)
         {
             try
             {
-                var resp = await _httpClient.PostAsync("api/skills/", skill, new JsonMediaTypeFormatter());
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.PostAsync("api/skills/", skill, new JsonMediaTypeFormatter());
                 if (resp.IsSuccessStatusCode)
                 {
                     return skill;
@@ -47,7 +47,8 @@ namespace LRPManagement.Data.Skills
         {
             try
             {
-                var resp = await _httpClient.DeleteAsync("api/skills" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.DeleteAsync("api/skills" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     return id;
@@ -65,7 +66,8 @@ namespace LRPManagement.Data.Skills
         {
             try
             {
-                var resp = await _httpClient.GetAsync("api/skills");
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/skills");
                 if (resp.IsSuccessStatusCode)
                 {
                     var skills = await resp.Content.ReadAsAsync<List<SkillDTO>>();
@@ -84,7 +86,8 @@ namespace LRPManagement.Data.Skills
         {
             try
             {
-                var resp = await _httpClient.GetAsync("api/skills/" + id);
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.GetAsync("api/skills/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
                     var skills = await resp.Content.ReadAsAsync<SkillDTO>();
@@ -102,7 +105,8 @@ namespace LRPManagement.Data.Skills
         {
             try
             {
-                var resp = await _httpClient.PutAsync("api/skills" + skill.Id, skill, new JsonMediaTypeFormatter());
+                var client = GetHttpClient("StandardRequest");
+                var resp = await client.PutAsync("api/skills" + skill.Id, skill, new JsonMediaTypeFormatter());
             }
             catch (TaskCanceledException ex)
             {
@@ -114,6 +118,11 @@ namespace LRPManagement.Data.Skills
 
         private HttpClient GetHttpClient(string s)
         {
+            if (Client != null && _clientFactory == null)
+            {
+                return Client;
+            }
+
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["SkillsURL"]);
             return client;

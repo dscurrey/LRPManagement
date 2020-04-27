@@ -1,48 +1,140 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LRPManagement.Data.Skills;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using DTO;
+using LRPManagement.Data.Skills;
+using LRPManagement.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
+using Newtonsoft.Json;
 
-namespace LRPManagement.Data.Skills.Tests
+namespace LRPManagement.Tests.Data.Skills
 {
     [TestClass]
     public class SkillServiceTests
     {
-        [TestMethod]
-        public void SkillServiceTest()
+        private static class TestData
         {
-            throw new NotImplementedException();
+            public static List<Skill> Skills() => new List<Skill>
+            {
+                new Skill { Id = 1, Name = "Skill 1", SkillRef = 1, XpCost = 2},
+                new Skill { Id = 2, Name = "Skill 2", SkillRef = 2, XpCost = 2},
+                new Skill { Id = 3, Name = "Skill 3", SkillRef = 3, XpCost = 8}
+            };
+        }
+
+        private Mock<HttpMessageHandler> CreateHttpMock(HttpResponseMessage expected)
+        {
+            var mock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+            mock.Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(expected)
+                .Verifiable();
+            return mock;
+        }
+
+        private HttpClient SetupMock_Skill(int id)
+        {
+            var expectedHttpResp = TestData.Skills().FirstOrDefault(b => b.Id == id);
+            var expectedJson = JsonConvert.SerializeObject(expectedHttpResp);
+            var expResult = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(expectedJson, Encoding.UTF8, "application/json")
+            };
+            return new HttpClient(CreateHttpMock(expResult).Object);
+        }
+
+        private HttpClient SetupMock_Skill()
+        {
+            var expectedHttpResp = TestData.Skills();
+            var expectedJson = JsonConvert.SerializeObject(expectedHttpResp);
+            var expResult = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(expectedJson, Encoding.UTF8, "application/json")
+            };
+            return new HttpClient(CreateHttpMock(expResult).Object);
         }
 
         [TestMethod]
-        public void CreateSkillTest()
+        public async Task CreateSkillTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var client = SetupMock_Skill();
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
+            var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
+                {Client = client};
+
+            // Act
+            var newSkill = new SkillDTO
+            {
+                Id = 9, XpCost = 5, Name = "NEWSKILL"
+            };
+            var result = await service.CreateSkill(newSkill);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(newSkill.Id, result.Id);
+            Assert.AreEqual(newSkill.Name, result.Name);
+            Assert.AreEqual(newSkill.XpCost, result.XpCost);
         }
 
         [TestMethod]
-        public void DeleteSkillTest()
+        public async Task DeleteSkillTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var skillId = 3;
+            var client = SetupMock_Skill();
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
+            var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
+                { Client = client };
+
+            // Act
+            var result = await service.DeleteSkill(skillId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(skillId, result);
+
         }
 
         [TestMethod]
-        public void GetAllTest()
+        public async Task GetAllTest()
         {
-            throw new NotImplementedException();
-        }
+            // Arrange
+            var client = SetupMock_Skill();
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
+            var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
+                { Client = client };
 
-        [TestMethod]
-        public void GetSkillTest()
-        {
-            throw new NotImplementedException();
-        }
+            // Act
+            var result = await service.GetAll();
 
-        [TestMethod]
-        public void UpdateSkillTest()
-        {
-            throw new NotImplementedException();
+            // Assert
+            foreach (var skill in result)
+            {
+                var testItem = TestData.Skills().FirstOrDefault(s => s.Id == skill.Id);
+
+            }
         }
     }
 }
