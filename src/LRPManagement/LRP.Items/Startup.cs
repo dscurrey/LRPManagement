@@ -1,6 +1,7 @@
 using LRP.Items.Data;
 using LRP.Items.Data.Bonds;
 using LRP.Items.Data.Craftables;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Reflection;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LRP.Items
 {
@@ -41,6 +44,28 @@ namespace LRP.Items
                     );
                 }
             );
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = true;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("placeholder-key-that-is-long-enough-for-sha256")),
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateLifetime = false,
+                        RequireExpirationTime = false,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidateIssuerSigningKey = true
+                    };
+                });
 
             services.AddControllers();
 

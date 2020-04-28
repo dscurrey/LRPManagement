@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using LRPManagement.Services;
 
 namespace LRPManagement.Data.Craftables
 {
@@ -15,14 +17,16 @@ namespace LRPManagement.Data.Craftables
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _config;
         private readonly ILogger<CraftableService> _logger;
+        private readonly ITokenBuilder _tokenBuilder;
 
         public HttpClient Client { get; set; }
 
-        public CraftableService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<CraftableService> logger)
+        public CraftableService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<CraftableService> logger, ITokenBuilder tokenBuilder)
         {
             _clientFactory = clientFactory;
             _config = config;
             _logger = logger;
+            _tokenBuilder = tokenBuilder;
         }
 
         public async Task<CraftableDTO> CreateCraftable(CraftableDTO craftable)

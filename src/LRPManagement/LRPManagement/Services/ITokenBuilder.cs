@@ -8,5 +8,6 @@ namespace LRPManagement.Services
     public interface ITokenBuilder
     {
         string BuildToken(string username);
+        string BuildToken(string username, string role);
     }
 }

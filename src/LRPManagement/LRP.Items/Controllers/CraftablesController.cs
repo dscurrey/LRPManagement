@@ -1,4 +1,4 @@
-﻿using DTO;
+using DTO;
 using LRP.Items.Data.Craftables;
 using LRP.Items.Models;
 using Microsoft.AspNetCore.Mvc;

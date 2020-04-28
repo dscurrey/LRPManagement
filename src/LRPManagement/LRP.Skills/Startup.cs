@@ -47,6 +47,28 @@ namespace LRP.Skills
                 }
             );
 
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = true;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("placeholder-key-that-is-long-enough-for-sha256")),
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateLifetime = false,
+                        RequireExpirationTime = false,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidateIssuerSigningKey = true
+                    };
+                });
+
             services.AddControllers();
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ICharacterSkillRepository, CharacterSkillRepository>();

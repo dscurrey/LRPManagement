@@ -30,22 +30,27 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> Login([FromBody] UserDto userDto)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userDto.Username);
+            
             if (user == null)
             {
                 return NotFound();
             }
+
+            var roles = await _userManager.GetRolesAsync(user);
 
             if (!await UserIsValid(userDto))
             {
                 return BadRequest();
             }
 
-            var token = _tokenBuilder.BuildToken(userDto.Username);
+            var role = roles.FirstOrDefault().ToString();
+            var token = _tokenBuilder.BuildToken(userDto.Username, role);
 
             return Ok(token);
         }
 
         [HttpGet("verify")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> VerifyToken()
         {
             var username = User.Claims.SingleOrDefault();
