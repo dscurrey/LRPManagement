@@ -63,11 +63,11 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
             if (sync)
             {
                 //SYNC OK
-                holder.skillSyncView.setImageResource(R.drawable.ok);
+                holder.skillSyncView.setImageResource(R.drawable.ic_tick);
             }
             else
             {
-                holder.skillSyncView.setImageResource(R.drawable.fail);
+                holder.skillSyncView.setImageResource(R.drawable.ic_sync);
             }
             holder.skillSyncView.setVisibility(View.VISIBLE);
 

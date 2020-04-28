@@ -20,11 +20,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     {
         private final TextView itemName;
         private final ImageView itemSyncView;
+        private final TextView itemForm;
 
         private ItemViewHolder(View itemView)
         {
             super(itemView);
             itemName = itemView.findViewById(R.id.itemName);
+            itemForm = itemView.findViewById(R.id.itemForm);
             itemSyncView = itemView.findViewById(R.id.itemSync);
         }
     }
@@ -57,15 +59,16 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         {
             ItemEntity cur = mItems.get(pos);
             holder.itemName.setText(cur.Name);
+            holder.itemForm.setText(cur.Form);
 
             boolean sync = cur.IsSynced;
             if (sync)
             {
-                holder.itemSyncView.setImageResource(R.drawable.ok);
+                holder.itemSyncView.setImageResource(R.drawable.ic_tick);
             }
             else
             {
-                holder.itemSyncView.setImageResource(R.drawable.fail);
+                holder.itemSyncView.setImageResource(R.drawable.ic_sync);
             }
             holder.itemSyncView.setVisibility(View.VISIBLE);
 

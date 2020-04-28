@@ -62,18 +62,25 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         {
             CharacterEntity current = mChars.get(pos);
             holder.charNameView.setText(current.Name);
-            holder.charRetireView.setText(""+current.IsRetired);
-            holder.charPlayerView.setText(""+current.PlayerId);
+            if (current.IsRetired)
+            {
+                holder.charRetireView.setText("Character IS retired");
+            }
+            else
+            {
+                holder.charRetireView.setText("Character is NOT retired");
+            }
+            holder.charPlayerView.setText("Player ID: "+current.PlayerId);
 
             boolean sync = current.IsSynced;
             if (sync)
             {
                 //SYNC OK
-                holder.charSyncView.setImageResource(R.drawable.ok);
+                holder.charSyncView.setImageResource(R.drawable.ic_tick);
             }
             else
             {
-                holder.charSyncView.setImageResource(R.drawable.fail);
+                holder.charSyncView.setImageResource(R.drawable.ic_sync);
             }
             holder.charSyncView.setVisibility(View.VISIBLE);
 
