@@ -3,14 +3,16 @@ using LRP.Characters.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LRP.Characters.Data.Migrations
 {
     [DbContext(typeof(CharacterDbContext))]
-    partial class CharacterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200428101316_TweakedSeedData")]
+    partial class TweakedSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
