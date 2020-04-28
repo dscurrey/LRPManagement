@@ -20,16 +20,16 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 {
     class PlayerViewHolder extends RecyclerView.ViewHolder
     {
-        private final TextView playerFName;
-        private final TextView playerLName;
+        private final TextView playerName;
+        private final TextView playerId;
         private final ImageView playerSyncView;
 
         private PlayerViewHolder(View itemView)
         {
             super(itemView);
-            playerFName = itemView.findViewById(R.id.playFName);
-            playerLName = itemView.findViewById(R.id.playLName);
-            playerSyncView = itemView.findViewById(R.id.playSync);
+            playerName = itemView.findViewById(R.id.playerName);
+            playerId = itemView.findViewById(R.id.playerId);
+            playerSyncView = itemView.findViewById(R.id.playerSync);
         }
     }
 
@@ -59,18 +59,18 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         if (mPlayers != null)
         {
             PlayerEntity current = mPlayers.get(pos);
-            holder.playerFName.setText(current.FirstName);
-            holder.playerLName.setText(current.LastName);
+            holder.playerName.setText(current.FirstName+" " +current.LastName);
+            holder.playerId.setText("ID: "+current.Id);
 
             boolean sync = current.IsSynced;
             if (sync)
             {
                 //SYNC OK
-                holder.playerSyncView.setImageResource(R.drawable.ok);
+                holder.playerSyncView.setImageResource(R.drawable.ic_tick);
             }
             else
             {
-                holder.playerSyncView.setImageResource(R.drawable.fail);
+                holder.playerSyncView.setImageResource(R.drawable.ic_sync);
             }
             holder.playerSyncView.setVisibility(View.VISIBLE);
 
@@ -82,7 +82,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         else
         {
             // Data not ready
-            holder.playerFName.setText("No Players Loaded");
+            holder.playerName.setText("No Players Loaded");
             holder.playerSyncView.setVisibility(View.INVISIBLE);
         }
     }
