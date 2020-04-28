@@ -76,11 +76,11 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             if (sync)
             {
                 //SYNC OK
-                holder.charSyncView.setImageResource(R.drawable.ok);
+                holder.charSyncView.setImageResource(R.drawable.ic_tick);
             }
             else
             {
-                holder.charSyncView.setImageResource(R.drawable.fail);
+                holder.charSyncView.setImageResource(R.drawable.ic_sync);
             }
             holder.charSyncView.setVisibility(View.VISIBLE);
 
