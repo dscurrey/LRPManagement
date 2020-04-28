@@ -18,12 +18,13 @@
                 android:id="@+id/imageView2"
                 android:layout_width="58dp"
                 android:layout_height="64dp"
+                android:layout_marginStart="1dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/charName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/placeholder" />
+                app:srcCompat="@drawable/ic_placeholder" />
 
             <TextView
                 android:id="@+id/charName"

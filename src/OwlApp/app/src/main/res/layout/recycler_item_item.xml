@@ -14,10 +14,11 @@
             android:id="@+id/imageView3"
             android:layout_width="58dp"
             android:layout_height="64dp"
+            android:layout_marginStart="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/placeholder" />
+            app:srcCompat="@drawable/ic_placeholder" />
 
         <ImageView
             android:id="@+id/itemSync"
