@@ -17,7 +17,10 @@ using Polly;
 using Polly.Extensions.Http;
 using System;
 using System.Net.Http;
+using System.Text;
 using LRPManagement.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LRPManagement
 {
@@ -62,6 +65,30 @@ namespace LRPManagement
                     options.AddPolicy("StaffOnly", policy =>
                         policy.RequireRole("Admin", "Referee"));
                 });
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = true;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("placeholder-key-that-is-long-enough-for-sha256")),
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateLifetime = false,
+                        RequireExpirationTime = false,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidateIssuerSigningKey = true
+                    };
+                });
+
+            services.AddScoped<ITokenBuilder, TokenBuilder>();
 
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<ISkillService, SkillService>();

@@ -9,8 +9,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Reflection;
+using System.Text;
 using LRP.Skills.Data.CharacterSkills;
 using LRPManagement.Data.CharacterSkills;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LRP.Skills
 {
