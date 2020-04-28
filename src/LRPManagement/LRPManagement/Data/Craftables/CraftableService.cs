@@ -8,7 +8,9 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using LRPManagement.Controllers;
 using LRPManagement.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace LRPManagement.Data.Craftables
 {
@@ -31,7 +33,7 @@ namespace LRPManagement.Data.Craftables
 
         public async Task<CraftableDTO> CreateCraftable(CraftableDTO craftable)
         {
-            var client = GetHttpClient("StandardRequest");
+            var client = await GetHttpClient("StandardRequest");
             var resp = await client.PostAsync("api/craftables/", craftable, new JsonMediaTypeFormatter());
             if (resp.IsSuccessStatusCode)
             {
@@ -43,7 +45,7 @@ namespace LRPManagement.Data.Craftables
 
         public async Task<int> DeleteCraftable(int id)
         {
-            var client = GetHttpClient("StandardRequest");
+            var client = await GetHttpClient("StandardRequest");
             var resp = await client.DeleteAsync("api/craftables/" + id);
             if (resp.IsSuccessStatusCode)
             {
@@ -57,7 +59,7 @@ namespace LRPManagement.Data.Craftables
         {
             try
             {
-                var client = GetHttpClient("StandardRequest");
+                var client = await GetHttpClient("StandardRequest");
                 var resp = await client.GetAsync("api/craftables");
                 if (resp.IsSuccessStatusCode)
                 {
@@ -77,7 +79,7 @@ namespace LRPManagement.Data.Craftables
         {
             try
             {
-                var client = GetHttpClient("StandardRequest");
+                var client = await GetHttpClient("StandardRequest");
                 var resp = await client.GetAsync("api/craftables/" + id);
                 if (resp.IsSuccessStatusCode)
                 {
@@ -95,7 +97,7 @@ namespace LRPManagement.Data.Craftables
 
         public async Task<CraftableDTO> UpdateCraftable(CraftableDTO craftable)
         {
-            var client = GetHttpClient("StandardRequest");
+            var client = await GetHttpClient("StandardRequest");
             var resp = await client.PutAsync("api/craftables/" + craftable.Id, craftable, new JsonMediaTypeFormatter());
 
             if (resp.IsSuccessStatusCode)
@@ -121,7 +123,7 @@ namespace LRPManagement.Data.Craftables
             return await UpdateCraftable(dto);
         }
 
-        private HttpClient GetHttpClient(string s)
+        private async Task<HttpClient> GetHttpClient(string s)
         {
             if (Client != null && _clientFactory == null)
             {
@@ -130,6 +132,10 @@ namespace LRPManagement.Data.Craftables
 
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["ItemsURL"]);
+
+            var token = await _tokenBuilder.BuildToken();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             return client;
         }
     }

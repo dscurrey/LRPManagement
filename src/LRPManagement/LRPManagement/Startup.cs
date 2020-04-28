@@ -67,11 +67,7 @@ namespace LRPManagement
                 });
 
             services
-                .AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+                .AddAuthentication()
                 .AddJwtBearer(cfg =>
                 {
                     cfg.RequireHttpsMetadata = true;
@@ -104,6 +100,8 @@ namespace LRPManagement
             services.AddScoped<IBondRepository, BondRepository>();
             services.AddScoped<IBondService, BondService>();
             services.AddScoped<ICharacterSkillService, CharacterSkillService>();
+            services.AddScoped<ITokenBuilder, TokenBuilder>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // API Services
             services.AddHostedService<ApiUpdateHostedService>();

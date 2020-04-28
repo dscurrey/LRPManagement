@@ -10,10 +10,12 @@ using LRPManagement.Data.Characters;
 using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Skills;
 using LRPManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Polly.CircuitBreaker;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize]
     public class CharacterSkillsController : Controller
     {
         private readonly ISkillRepository _skillRepository;

@@ -43,8 +43,7 @@ namespace LRPManagement.Controllers
                 return BadRequest();
             }
 
-            var role = roles.FirstOrDefault().ToString();
-            var token = _tokenBuilder.BuildToken(userDto.Username, role);
+            var token = await _tokenBuilder.BuildToken(userDto.Username);
 
             return Ok(token);
         }

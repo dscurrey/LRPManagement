@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Polly.CircuitBreaker;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LRPManagement.Controllers
 {
+    [Authorize]
     public class CraftablesController : Controller
     {
         private readonly ICraftableRepository _itemRepository;
