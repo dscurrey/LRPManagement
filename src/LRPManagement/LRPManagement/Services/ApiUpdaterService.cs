@@ -76,7 +76,6 @@ namespace LRPManagement.Services
                     _logger.LogWarning(e, "API Service Error Occurred.");
                 }
 
-
                 await Task.Delay(interval, stoppingToken);
             }
         }
