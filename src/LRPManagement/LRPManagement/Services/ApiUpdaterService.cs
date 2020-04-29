@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
@@ -16,7 +17,7 @@ namespace LRPManagement.Services
     {
         private int executionCount = 0;
         private readonly ILogger<ApiUpdaterService> _logger;
-        private int interval = 10000; // Secs * 1000
+        private int interval = 20000; // Secs * 1000
 
         private IPlayerRepository _playerRepository;
         private IPlayerService _playerService;
@@ -61,13 +62,20 @@ namespace LRPManagement.Services
                 _logger.LogInformation(
                     "API Updater Service is working. Count: {Count}", executionCount);
 
-                await GetPlayers();
-                await GetCharacters();
-                await GetSkills();
-                await GetItems();
+                try
+                {
+                    await GetPlayers();
+                    await GetCharacters();
+                    await GetSkills();
+                    await GetItems();
+                    await GetBonds();
+                    await GetCharSkills();
+                }
+                catch (Exception e)
+                {
+                    _logger.LogWarning(e, "API Service Error Occurred.");
+                }
 
-                await GetBonds();
-                await GetCharSkills();
 
                 await Task.Delay(interval, stoppingToken);
             }
