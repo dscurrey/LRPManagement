@@ -334,6 +334,45 @@ namespace LRPManagement.Controllers
             return View();
         }
 
+        public async Task<IActionResult> SetRetire(int id)
+        {
+            var character = await _characterRepository.GetCharacter(id);
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            if (!character.IsRetired)
+            {
+                character.IsActive = false;
+                character.IsRetired = true;
+                _characterRepository.UpdateCharacter(character);
+                await _characterRepository.Save();
+                await _characterService.UpdateCharacter(character);
+            }
+
+            return RedirectToAction(nameof(Details), "Players", new { id = character.PlayerId });
+        }
+
+        public async Task<IActionResult> SetActive(int id)
+        {
+            var character = await _characterRepository.GetCharacter(id);
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            if (!character.IsRetired && !character.IsActive)
+            {
+                character.IsActive = true;
+                _characterRepository.UpdateCharacter(character);
+                await _characterRepository.Save();
+                await _characterService.UpdateCharacter(character);
+            }
+
+            return RedirectToAction(nameof(Details), "Players", new { id = character.PlayerId });
+        }
+
         private void HandleBrokenCircuit()
         {
             TempData["CharInoperativeMsg"] = "Character Service Currently Unavailable.";
