@@ -45,9 +45,14 @@
             <td>
                 <a asp-action="Edit" asp-controller="Characters" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-controller="Characters" asp-route-id="@item.Id">Details</a> |
-                @*<a asp-action="Delete" asp-controller="Characters" asp-route-id="@item.Id">Delete</a> |*@
-                <a asp-action="SetRetire" asp-controller="Characters" asp-route-id="@item.Id">Retire</a> |
-                <a asp-action="SetActive" asp-controller="Characters" asp-route-id="@item.Id">Set As Active</a>
+                @if (!item.IsActive && !item.IsRetired)
+                {
+                    <a asp-action="SetActive" asp-controller="Characters" asp-route-id="@item.Id">Set As Active</a>
+                }
+                @if (!item.IsRetired)
+                {
+                    <a asp-action="SetRetire" asp-controller="Characters" asp-route-id="@item.Id">Retire</a>
+                }
             </td>
         </tr>
 }
