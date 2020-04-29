@@ -37,12 +37,43 @@ public class FunctionsFragment extends Fragment
         root = inflater.inflate(R.layout.functions_fragment, container, false);
 
         TextView mCharCountView = root.findViewById(R.id.charCount);
+        TextView mItemCountView = root.findViewById(R.id.itemCount);
+        TextView mSkillCountView = root.findViewById(R.id.skillCount);
+        TextView mPlayerCountView = root.findViewById(R.id.playerCount);
+
         mViewModel.getCharCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
         {
             @Override
             public void onChanged(Integer integer)
             {
                 mCharCountView.setText(""+integer);
+            }
+        });
+
+        mViewModel.getItemCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
+        {
+            @Override
+            public void onChanged(Integer integer)
+            {
+                mItemCountView.setText(""+integer);
+            }
+        });
+
+        mViewModel.getSkillCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
+        {
+            @Override
+            public void onChanged(Integer integer)
+            {
+                mSkillCountView.setText(""+integer);
+            }
+        });
+
+        mViewModel.getPlayerCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
+        {
+            @Override
+            public void onChanged(Integer integer)
+            {
+                mPlayerCountView.setText(""+integer);
             }
         });
 
