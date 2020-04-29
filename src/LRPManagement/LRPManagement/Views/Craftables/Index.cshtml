@@ -1,17 +1,18 @@
 ﻿@model IEnumerable<LRPManagement.Models.Craftable>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Item List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Item Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 
 @if (Model.Any())
 {
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
     <table class="table">
         <thead>
             <tr>

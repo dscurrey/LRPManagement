@@ -1,16 +1,17 @@
 ﻿@model IEnumerable<DTO.CharacterDTO>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Character Index";
 }
 
-<h1>Index</h1>
+<h1>Character Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 
 @if (Model.Any())
 {
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
     <table class="table">
         <thead>
             <tr>

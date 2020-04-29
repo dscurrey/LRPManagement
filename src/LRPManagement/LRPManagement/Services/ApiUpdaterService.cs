@@ -16,7 +16,7 @@ namespace LRPManagement.Services
     {
         private int executionCount = 0;
         private readonly ILogger<ApiUpdaterService> _logger;
-        private int interval = 25000; // Secs * 1000
+        private int interval = 10000; // Secs * 1000
 
         private IPlayerRepository _playerRepository;
         private IPlayerService _playerService;
