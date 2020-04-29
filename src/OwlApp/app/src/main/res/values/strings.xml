@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OwlApp</string>
+    <string name="app_name">OwlApp (LRP Referee)</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">OwlApp</string>
@@ -105,4 +105,13 @@
     <string name="no_of_players">Number of Players:</string>
     <string name="no_of_items">Number of Items:</string>
     <string name="no_of_skills">Number of Skills:</string>
+    <string name="api_header">API Settings</string>
+    <string name="itemport_title">Items API port</string>
+    <string name="itemurl_title">Items API URL</string>
+    <string name="charurl_title">Characters API URL</string>
+    <string name="charport_title">Characters API Port</string>
+    <string name="skillurl_title">Skills API URL</string>
+    <string name="skillport_title">Skills API Port</string>
+    <string name="playerurl_title">Players API URL</string>
+    <string name="playerport_title">Players API Port</string>
 </resources>

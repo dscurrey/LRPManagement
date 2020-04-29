@@ -105,6 +105,7 @@ public class SkillFragment extends Fragment
         adapter.setSkills(filteredSkills);
     }
 
+    @Override
     public void onActivityResult(int reqCode, int resCode, Intent data)
     {
         super.onActivityResult(reqCode, resCode, data);
