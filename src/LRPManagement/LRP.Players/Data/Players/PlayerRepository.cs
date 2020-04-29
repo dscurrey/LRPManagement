@@ -33,6 +33,9 @@ namespace LRP.Players.Data.Players
         {
             var player = await _context.Player.FirstOrDefaultAsync(p => p.Id == id);
             player.IsActive = false;
+            player.FirstName = "ANONYMOUS";
+            player.LastName = "ANONYMOUS";
+            player.AccountRef = "ANONYMOUS";
             _context.Player.Update(player);
         }
 
