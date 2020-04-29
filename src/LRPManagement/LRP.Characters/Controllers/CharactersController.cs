@@ -131,7 +131,8 @@ namespace LRP.Characters.Controllers
                 PlayerId = character.PlayerId,
                 IsActive = character.IsActive,
                 IsRetired = character.IsRetired,
-                Name = character.Name
+                Name = character.Name,
+                Xp = character.Xp
             };
 
             _repository.InsertCharacter(newCharacter);

@@ -140,6 +140,7 @@ namespace LRPManagement.Controllers
                 }
 
                 characterDto.PlayerId = player.Id;
+                characterDto.Xp = 8;
                 var resp = await _characterService.CreateCharacter(characterDto);
                 if (resp == null)
                 {
@@ -364,7 +365,7 @@ namespace LRPManagement.Controllers
                 return NotFound();
             }
 
-            if (!character.IsRetired && !character.IsActive)
+            if ((!character.IsRetired) && (!character.IsActive))
             {
                 character.IsActive = true;
                 _characterRepository.UpdateCharacter(character);
