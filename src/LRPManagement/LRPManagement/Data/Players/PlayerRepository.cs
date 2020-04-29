@@ -32,7 +32,10 @@ namespace LRPManagement.Data.Players
         public async Task DeletePlayer(int id)
         {
             var player = await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
-            _context.Players.Remove(player);
+            player.FirstName = "ANONYMOUS";
+            player.LastName = "ANONYMOUS";
+            player.AccountRef = "ANONYMOUS";
+            _context.Players.Update(player);
         }
 
         public void UpdatePlayer(Player player)

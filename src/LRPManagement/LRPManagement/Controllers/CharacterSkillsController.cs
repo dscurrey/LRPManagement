@@ -112,10 +112,12 @@ namespace LRPManagement.Controllers
 
                     return RedirectToAction(nameof(Index));
                 }
-                catch (BrokenCircuitException e)
+                catch (BrokenCircuitException)
                 {
                     //
                 }
+
+                //await UpdateDb();
             }
 
             ViewData["CharacterId"] = "";

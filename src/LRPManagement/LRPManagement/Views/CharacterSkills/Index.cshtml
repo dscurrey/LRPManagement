@@ -5,14 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Character Skill Index</h1>
 
 @if (Model.Any())
 {
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
     <table class="table">
         <thead>
             <tr>

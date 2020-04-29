@@ -1,16 +1,17 @@
 ﻿@model IEnumerable<DTO.SkillDTO>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Skills";
 }
 
-<h1>Index</h1>
+<h1>Skill Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 
 @if (Model.Any())
 {
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
     <table class="table">
         <thead>
             <tr>
