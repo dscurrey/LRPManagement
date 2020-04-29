@@ -33,6 +33,8 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
+            //await UpdateDb();
+
             return View();
         }
 
@@ -203,7 +205,7 @@ namespace LRPManagement.Controllers
                     }
                 }
             }
-            catch (BrokenCircuitException e)
+            catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
             }

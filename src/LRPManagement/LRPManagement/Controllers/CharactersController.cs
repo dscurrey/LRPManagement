@@ -152,6 +152,8 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
+            //await UpdateDb();
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -114,6 +114,8 @@ namespace LRPManagement.Controllers
                 {
                     HandleBrokenCircuit();
                 }
+
+                //await UpdateDb();
             }
 
             var characters = await _characterRepository.GetAll();

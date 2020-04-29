@@ -44,6 +44,8 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
+            //await UpdateDb();
+
             return View();
         }
 

@@ -136,6 +136,8 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
+            //await UpdateDb();
+
             return NotFound();
         }
 
@@ -260,7 +262,7 @@ namespace LRPManagement.Controllers
                     await _playerRepository.Save();
                 }
             }
-            catch (BrokenCircuitException e)
+            catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
             }
