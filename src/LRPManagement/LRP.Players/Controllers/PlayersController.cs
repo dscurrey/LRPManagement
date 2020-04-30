@@ -78,18 +78,20 @@ namespace LRP.Players.Controllers
                 return BadRequest();
             }
 
-            var updPlayer = new Player
-            {
-                DateJoined = player.DateJoined,
-                FirstName = player.FirstName,
-                LastName = player.LastName,
-                IsActive = true
-            };
+            var exPlayer = await _repository.GetPlayer(id);
 
             if (!await PlayerExists(id))
             {
                 return NotFound();
             }
+
+            var updPlayer = new Player
+            {
+                DateJoined = player.DateJoined,
+                FirstName = player.FirstName,
+                LastName = player.LastName,
+                AccountRef = exPlayer.AccountRef
+            };
 
             _repository.UpdatePlayer(updPlayer);
 
@@ -107,7 +109,7 @@ namespace LRP.Players.Controllers
                 else
                 {
                     _logger.LogError("Error occured when saving updated player.");
-                    throw;
+                    return BadRequest();
                 }
             }
 
@@ -123,6 +125,15 @@ namespace LRP.Players.Controllers
             if (String.IsNullOrEmpty(player.FirstName) || String.IsNullOrEmpty(player.LastName))
             {
                 return BadRequest("Requires First and Last Names");
+            }
+
+            var dbPlayer = await _repository.GetPlayer(player.Id);
+            if (dbPlayer != null)
+            {
+                player.AccountRef = dbPlayer.AccountRef;
+                _repository.UpdatePlayer(player);
+                await _repository.Save();
+                return Ok(player);
             }
 
             var newPlayer = new Player
@@ -152,7 +163,7 @@ namespace LRP.Players.Controllers
 
             var player = await _repository.GetPlayer(id);
 
-            _repository.DeletePlayer(id);
+            await _repository.DeletePlayer(id);
             await _repository.Save();
 
             return player;

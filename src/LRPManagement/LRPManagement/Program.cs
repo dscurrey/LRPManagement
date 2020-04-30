@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement
 {
@@ -18,8 +19,16 @@ namespace LRPManagement
                 var services = scope.ServiceProvider;
                 try
                 {
+                    var env = services.GetRequiredService<IWebHostEnvironment>();
                     var context = services.GetRequiredService<LrpDbContext>();
+                    if (env.IsDevelopment())
+                    {
+                        context.Database.EnsureDeleted();
+                    }
+
+                    context.Database.EnsureCreated();
                     DbInitialiser.Initialise(context);
+
                     var authContext = services.GetRequiredService<AccountsContext>();
                     authContext.Database.EnsureCreated();
                 }

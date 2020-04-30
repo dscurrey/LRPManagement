@@ -62,6 +62,7 @@ public class Synchroniser
             parameters.put("PlayerId", character.PlayerId);
             parameters.put("Name", character.Name);
             parameters.put("IsRetired", character.IsRetired);
+            parameters.put("IsActive", character.IsActive);
             parameters.put("xp", character.Xp);
         }
         catch (JSONException e)
@@ -317,6 +318,7 @@ public class Synchroniser
                         character.PlayerId = ((JSONObject) response.get(i)).getInt("playerId");
                         character.Id = ((JSONObject) response.get(i)).getInt("id");
                         character.Xp = ((JSONObject) response.get(i)).getInt("xp");
+                        character.IsActive = ((JSONObject) response.get(i)).getBoolean("isActive");
                     } catch (JSONException e)
                     {
                         Log.e(this.toString(), "JSON ERROR", e);

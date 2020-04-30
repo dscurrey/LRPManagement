@@ -1,6 +1,7 @@
 ﻿using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Craftables
@@ -24,6 +25,11 @@ namespace LRPManagement.Data.Craftables
             return await _context.Craftables.FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        public async Task<Craftable> GetCraftableRef(int id)
+        {
+            return await _context.Craftables.FirstOrDefaultAsync(c => c.ItemRef == id);
+        }
+
         public void InsertCraftable(Craftable craftable)
         {
             _context.Craftables.Add(craftable);
@@ -37,7 +43,8 @@ namespace LRPManagement.Data.Craftables
 
         public void UpdateCraftable(Craftable craftable)
         {
-            _context.Craftables.Update(craftable);
+            var dbItem = _context.Craftables.First(c => c.Id == craftable.Id);
+            _context.Entry(dbItem).CurrentValues.SetValues(craftable);
         }
 
         public async Task Save()

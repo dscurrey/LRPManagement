@@ -255,7 +255,7 @@ namespace LRPManagement.Controllers
             {
                 await _characterService.DeleteCharacter(id);
 
-                _characterRepository.DeleteCharacter(id);
+                await _characterRepository.DeleteCharacter(id);
                 await _characterRepository.Save();
             }
             catch (BrokenCircuitException)
@@ -379,6 +379,7 @@ namespace LRPManagement.Controllers
         private void HandleBrokenCircuit()
         {
             TempData["CharInoperativeMsg"] = "Character Service Currently Unavailable.";
+            ViewBag.CharactersError = "Character Service is Currently Unavailable";
         }
     }
 }

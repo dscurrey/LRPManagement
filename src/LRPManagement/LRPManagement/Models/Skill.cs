@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LRPManagement.Models
 {
@@ -8,7 +9,6 @@ namespace LRPManagement.Models
         {
             CharacterSkills = new HashSet<CharacterSkill>();
         }
-
         public int Id { get; set; }
         public int SkillRef { get; set; }
         public string Name { get; set; }

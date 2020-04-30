@@ -1,6 +1,7 @@
 ﻿using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Skills
@@ -47,7 +48,8 @@ namespace LRPManagement.Data.Skills
 
         public void UpdateSkill(Skill skill)
         {
-            _context.Skills.Update(skill);
+            var dbSkill = _context.Skills.First(s => s.Id == skill.Id);
+            _context.Entry(dbSkill).CurrentValues.SetValues(skill);
         }
     }
 }

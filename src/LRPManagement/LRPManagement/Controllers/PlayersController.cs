@@ -108,9 +108,8 @@ namespace LRPManagement.Controllers
             catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
+                return View();
             }
-
-            await UpdateDb();
 
             return RedirectToAction(nameof(Index));
         }
@@ -134,9 +133,8 @@ namespace LRPManagement.Controllers
             catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
+                return View();
             }
-
-            //await UpdateDb();
 
             return NotFound();
         }
@@ -198,6 +196,7 @@ namespace LRPManagement.Controllers
             catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
+                return View();
             }
 
             return NotFound();
@@ -213,12 +212,13 @@ namespace LRPManagement.Controllers
             {
                 await _playerService.DeletePlayer(id);
 
-                await _playerRepository.DeletePlayer(id);
+                await _playerRepository.AnonPlayer(id);
                 await _playerRepository.Save();
             }
             catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
+                return View();
             }
 
             return RedirectToAction(nameof(Index));
@@ -232,7 +232,7 @@ namespace LRPManagement.Controllers
 
         private void HandleBrokenCircuit()
         {
-            TempData["PlayInoperativeMsg"] = "Player Service Currently Unavailable";
+            ViewBag.PlayersError = "Players service is Currently Unavailable";
         }
 
         private async Task UpdateDb()

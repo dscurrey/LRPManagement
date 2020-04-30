@@ -23,7 +23,7 @@ namespace LRP.Skills.Data.CharacterSkills
                 CharacterId = charId,
                 SkillId = skillId
             };
-            _context.CharacterSkills.AddAsync(charSkill);
+            _context.CharacterSkills.Add(charSkill);
         }
 
         public async Task Save()

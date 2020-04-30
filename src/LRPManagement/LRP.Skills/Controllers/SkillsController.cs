@@ -117,6 +117,19 @@ namespace LRP.Skills.Controllers
                 return BadRequest("Name cannot be empty");
             }
 
+            if (await _repository.GetSkill(skill.Id) != null)
+            {
+                var updSkill = new Skill
+                {
+                    Id = skill.Id,
+                    Name = skill.Name,
+                    XpCost = skill.XpCost
+                };
+
+                _repository.UpdateSkill(updSkill); 
+                await _repository.Save();
+            }
+
             var newSkill = new Skill
             {
                 Id = skill.Id,

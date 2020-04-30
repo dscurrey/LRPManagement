@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface CharacterDao
 {
-    @Query("SELECT * FROM character")
+    @Query("SELECT * FROM character WHERE isActive = 1")
     LiveData<List<CharacterEntity>> getAll();
 
     @Query("SELECT * FROM character WHERE id IN (:charIds)")

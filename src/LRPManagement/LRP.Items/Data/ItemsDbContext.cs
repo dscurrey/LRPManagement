@@ -258,10 +258,10 @@ namespace LRP.Items.Data
                     new Craftable
                     {
                         Id = 26,
-                        Name = "Wyvernsting Spaulders",
-                        Form = "Armour, Mage",
-                        Requirement = "Magician, Battle Mage",
-                        Effect = "Twice per day when you cast the venom spell, you may do so without spending any mana. You must be able to cast the venom spell to use this power. ",
+                        Name = "Fireglass",
+                        Form = "Talisaman, Ceremonial Regalia",
+                        Requirement = "Dedication",
+                        Effect = "Three times per day when you use the anointing skill you may restore a spent hero point to your target rather than creating a personal aura.",
                         Materials = "3 Beggar's Lye, 3 Iridescent Gloaming, 3 Weltsilver, 1 Month"
                     },
                     new Craftable
@@ -271,7 +271,7 @@ namespace LRP.Items.Data
                         Form = "Magical Standard",
                         Requirement = "N/A",
                         Effect = "While wielding this standard you gain five additional personal mana",
-                        Materials = "7 Orichalcum, 7 Weltsilver, 13 Dragonbone, 11 Beggar's Lye, 12 Iridescent Gloaming, 1 Month"
+                        Materials = "9 Tempest Jade, 7 Orichalcum, 5 Green Iron, 10 Dragonbone, 1 Month"
                     },
                     new Craftable
                     {

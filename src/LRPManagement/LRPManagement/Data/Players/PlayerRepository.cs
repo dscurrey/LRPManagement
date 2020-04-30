@@ -1,6 +1,7 @@
 ﻿using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Players
@@ -26,10 +27,16 @@ namespace LRPManagement.Data.Players
 
         public void InsertPlayer(Player player)
         {
-            _context.Players.AddAsync(player);
+            _context.Players.Add(player);
         }
 
         public async Task DeletePlayer(int id)
+        {
+            var player = await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
+            _context.Remove(player);
+        }
+
+        public async Task AnonPlayer(int id)
         {
             var player = await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
             player.FirstName = "ANONYMOUS";
@@ -40,7 +47,8 @@ namespace LRPManagement.Data.Players
 
         public void UpdatePlayer(Player player)
         {
-            _context.Players.Update(player);
+            var dbPlayer = _context.Players.First(p => p.Id == player.Id);
+            _context.Entry(dbPlayer).CurrentValues.SetValues(player);
         }
 
         public async Task Save()
@@ -56,6 +64,12 @@ namespace LRPManagement.Data.Players
         public async Task<Player> GetPlayerAccountRef(string id)
         {
             return await _context.Players.FirstOrDefaultAsync(p => p.AccountRef == id);
+        }
+
+        public async Task DeletePlayerRef(int id)
+        {
+            var player = await _context.Players.FirstOrDefaultAsync(p => p.PlayerRef == id);
+            _context.Players.Remove(player);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using LRP.Items.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRP.Items.Data.Craftables
@@ -42,7 +43,8 @@ namespace LRP.Items.Data.Craftables
 
         public void UpdateCraftable(Craftable craftable)
         {
-            _context.Craftables.Update(craftable);
+            var dbItem = _context.Craftables.First(c => c.Id == craftable.Id);
+            _context.Entry(dbItem).CurrentValues.SetValues(craftable);
         }
     }
 }

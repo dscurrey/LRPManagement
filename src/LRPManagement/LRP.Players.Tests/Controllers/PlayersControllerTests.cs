@@ -102,7 +102,7 @@ namespace LRP.Players.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            var objResult = result.Result as CreatedAtActionResult;
+            var objResult = result.Result as OkObjectResult;
             Assert.IsNotNull(objResult);
             var retResult = objResult.Value as PlayerDTO;
             Assert.IsNotNull(retResult);

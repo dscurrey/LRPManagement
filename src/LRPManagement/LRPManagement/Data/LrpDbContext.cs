@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -80,10 +81,9 @@ namespace LRPManagement.Data
                     .HasConstraintName("FK_Characters_Players");
             });
 
-            modelBuilder.Entity<Craftable>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            });
+            modelBuilder.Entity<Craftable>()
+                .Property(c => c.Id)
+                .ValueGeneratedNever();
 
             modelBuilder.Entity<Player>(entity =>
             {
@@ -92,9 +92,9 @@ namespace LRPManagement.Data
 
             modelBuilder.Entity<Skill>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
-
+            
             OnModelCreatingPartial(modelBuilder);
         }
 

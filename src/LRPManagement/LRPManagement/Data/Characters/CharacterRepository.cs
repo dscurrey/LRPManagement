@@ -1,6 +1,7 @@
 ﻿using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Characters
@@ -35,9 +36,9 @@ namespace LRPManagement.Data.Characters
             return await _context.Characters.FirstOrDefaultAsync(c => c.CharacterRef == id);
         }
 
-        public async void InsertCharacter(Character character)
+        public void InsertCharacter(Character character)
         {
-            await _context.Characters.AddAsync(character);
+            _context.Characters.Add(character);
         }
 
         public async Task Save()
@@ -47,7 +48,15 @@ namespace LRPManagement.Data.Characters
 
         public void UpdateCharacter(Character character)
         {
-            _context.Characters.Update(character);
+            var dbChar = _context.Characters.First(c => c.Id == character.Id);
+            if (dbChar != null)
+            {
+                _context.Entry(dbChar).CurrentValues.SetValues(character);
+            }
+            else
+            {
+                _context.Characters.Update(character);
+            }
         }
     }
 }
