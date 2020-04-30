@@ -30,8 +30,6 @@ namespace LRPManagement.Controllers
         // GET: Bonds
         public async Task<IActionResult> Index()
         {
-            //TempData["ItemInoperativeMsg"] = "";
-
             return View(await _repository.GetAll());
         }
 
@@ -113,9 +111,8 @@ namespace LRPManagement.Controllers
                 catch (BrokenCircuitException)
                 {
                     HandleBrokenCircuit();
+                    return View();
                 }
-
-                //await UpdateDb();
             }
 
             var characters = await _characterRepository.GetAll();
@@ -198,7 +195,7 @@ namespace LRPManagement.Controllers
 
         private void HandleBrokenCircuit()
         {
-            //TempData["ItemInoperativeMsg"] = "Item Service Currently Unavailable.";
+            ViewBag.BondsError = "Items Service Unavailable";
         }
     }
 }

@@ -6,6 +6,11 @@
 }
 
 <h1>Add Skill</h1>
+
+<p class="alert-danger">
+    @ViewBag.CharactersError
+</p>
+
 @if (ViewBag.Skills != "")
 {
 <form asp-action="AddSkill">

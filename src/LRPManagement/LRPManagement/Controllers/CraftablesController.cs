@@ -33,8 +33,6 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
-            //await UpdateDb();
-
             return View();
         }
 
@@ -170,6 +168,7 @@ namespace LRPManagement.Controllers
         private void HandleBrokenCircuit()
         {
             TempData["ItemInoperativeMsg"] = "Item Service Currently Unavailable.";
+            ViewBag.CraftablesError = "Items Service is Currently Unavailable";
         }
 
         private async Task<bool> CraftableExists(int id)

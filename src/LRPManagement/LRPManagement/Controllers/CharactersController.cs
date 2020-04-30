@@ -379,6 +379,7 @@ namespace LRPManagement.Controllers
         private void HandleBrokenCircuit()
         {
             TempData["CharInoperativeMsg"] = "Character Service Currently Unavailable.";
+            ViewBag.CharactersError = "Character Service is Currently Unavailable";
         }
     }
 }

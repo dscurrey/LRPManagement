@@ -44,8 +44,6 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
-            //await UpdateDb();
-
             return View();
         }
 
@@ -98,6 +96,7 @@ namespace LRPManagement.Controllers
                 if (resp == null)
                 {
                     // Unsuccessful/Error
+                    ViewBag.SkillError = "An Error Occurred";
                     return View(skillDTO);
                 }
             }
@@ -106,16 +105,7 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
-            var newSkill = new Skill
-            {
-                Name = skillDTO.Name,
-                XpCost = skillDTO.XpCost
-            };
-
-            _skillRepository.InsertSkill(newSkill);
-            await _skillRepository.Save();
-
-            return RedirectToAction(nameof(Index));
+            return View(skillDTO);
         }
 
         // GET: Skills/Edit/5
@@ -138,6 +128,7 @@ namespace LRPManagement.Controllers
             catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
+                return View();
             }
 
             return NotFound();
@@ -176,6 +167,7 @@ namespace LRPManagement.Controllers
             catch (BrokenCircuitException)
             {
                 HandleBrokenCircuit();
+                return View();
             }
 
             return View(skillDTO);
@@ -237,6 +229,7 @@ namespace LRPManagement.Controllers
         private void HandleBrokenCircuit()
         {
             TempData["SkillInoperativeMsg"] = "Skill Service Currently Unavailable.";
+            ViewBag.SkillError = "Skill Service is Currently Unavailable";
         }
     }
 }

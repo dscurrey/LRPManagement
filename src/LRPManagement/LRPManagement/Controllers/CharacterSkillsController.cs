@@ -114,10 +114,9 @@ namespace LRPManagement.Controllers
                 }
                 catch (BrokenCircuitException)
                 {
-                    //
+                    HandleBrokenCircuit();
+                    return View();
                 }
-
-                //await UpdateDb();
             }
 
             ViewData["CharacterId"] = "";
@@ -187,6 +186,11 @@ namespace LRPManagement.Controllers
         {
             var charSkill = await _characterSkillRepository.GetMatch(charId, skillId);
             return charSkill != null;
+        }
+
+        private void HandleBrokenCircuit()
+        {
+            ViewBag.CharacterSkillsError = "Character Service is Currently Unavailable";
         }
     }
 }
