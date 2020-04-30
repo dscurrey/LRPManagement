@@ -80,6 +80,11 @@ namespace LRP.Players.Controllers
 
             var exPlayer = await _repository.GetPlayer(id);
 
+            if (!await PlayerExists(id))
+            {
+                return NotFound();
+            }
+
             var updPlayer = new Player
             {
                 DateJoined = player.DateJoined,
@@ -87,11 +92,6 @@ namespace LRP.Players.Controllers
                 LastName = player.LastName,
                 AccountRef = exPlayer.AccountRef
             };
-
-            if (!await PlayerExists(id))
-            {
-                return NotFound();
-            }
 
             _repository.UpdatePlayer(updPlayer);
 
@@ -109,7 +109,7 @@ namespace LRP.Players.Controllers
                 else
                 {
                     _logger.LogError("Error occured when saving updated player.");
-                    throw;
+                    return BadRequest();
                 }
             }
 

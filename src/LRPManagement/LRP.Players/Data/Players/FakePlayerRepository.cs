@@ -38,7 +38,15 @@ namespace LRP.Players.Data.Players
 
         public void UpdatePlayer(PlayerDTO player)
         {
-            throw new System.NotImplementedException();
+            var updPlayer = new Player
+            {
+                AccountRef = player.AccountRef,
+                FirstName = player.FirstName,
+                Id = player.Id,
+                IsActive = player.IsActive,
+                LastName = player.LastName
+            };
+            UpdatePlayer(updPlayer);
         }
 
         public Task Save()
