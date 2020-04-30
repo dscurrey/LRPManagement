@@ -8,6 +8,7 @@ namespace LRPManagement.Data.Craftables
     {
         Task<List<Craftable>> GetAll();
         Task<Craftable> GetCraftable(int id);
+        Task<Craftable> GetCraftableRef(int id);
         void InsertCraftable(Craftable craftable);
         Task DeleteCraftable(int id);
         void UpdateCraftable(Craftable craftable);

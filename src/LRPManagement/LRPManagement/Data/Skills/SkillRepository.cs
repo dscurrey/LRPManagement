@@ -43,7 +43,9 @@ namespace LRPManagement.Data.Skills
 
         public async Task Save()
         {
+            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Skills ON");
             await _context.SaveChangesAsync();
+            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Skills OFF");
         }
 
         public void UpdateSkill(Skill skill)

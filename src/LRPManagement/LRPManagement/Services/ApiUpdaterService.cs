@@ -93,27 +93,35 @@ namespace LRPManagement.Services
                         if (existPlayer != null)
                         {
                             if (existPlayer.FirstName.Equals
-                                    (player.FirstName, StringComparison.CurrentCultureIgnoreCase) ||
+                                    (player.FirstName, StringComparison.CurrentCultureIgnoreCase) &&
                                 existPlayer.LastName.Equals(player.LastName, StringComparison.CurrentCultureIgnoreCase))
                             {
                                 continue;
                             }
                             else
                             {
-                                // TODO - Continue
-                                await _playerRepository.DeletePlayerRef(player.Id);
-                                await _playerRepository.Save();
+                                var updPlayer = new Player
+                                {
+                                    AccountRef = player.AccountRef,
+                                    FirstName = player.FirstName,
+                                    //Id = existPlayer.Id,
+                                    LastName = player.LastName,
+                                    PlayerRef = player.Id
+                                };
+                                _playerRepository.UpdatePlayer(updPlayer);
                             }
                         }
-
-                        var newPlayer = new Player
+                        else
                         {
-                            PlayerRef = player.Id,
-                            FirstName = player.FirstName,
-                            LastName = player.LastName,
-                            AccountRef = player.AccountRef
-                        };
-                        _playerRepository.InsertPlayer(newPlayer);
+                            var newPlayer = new Player
+                            {
+                                PlayerRef = player.Id,
+                                FirstName = player.FirstName,
+                                LastName = player.LastName,
+                                AccountRef = player.AccountRef
+                            };
+                            _playerRepository.InsertPlayer(newPlayer);
+                        }
                     }
 
                     await _playerRepository.Save();
@@ -134,22 +142,48 @@ namespace LRPManagement.Services
                 {
                     foreach (var character in characters)
                     {
-                        if (await _characterRepository.GetCharacterRef(character.Id) != null || await _playerRepository.GetPlayer(character.PlayerId) == null)
+                        if (await _playerRepository.GetPlayer(character.PlayerId) != null)
                         {
-                            continue;
-                        }
+                            var existChar = await _characterRepository.GetCharacterRef(character.Id);
+                            if (existChar != null)
+                            {
+                                if (character.IsRetired == existChar.IsRetired &&
+                                    character.IsActive == existChar.IsActive && character.Name.Equals
+                                        (existChar.Name) && character.Xp == existChar.Xp)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    var updChar = new Character
+                                    {
+                                        CharacterRef = character.Id,
+                                        IsActive = character.IsActive,
+                                        Name = character.Name,
+                                        IsRetired = character.IsRetired,
+                                        PlayerId = character.PlayerId,
+                                        Xp = character.Xp,
+                                        Id = existChar.Id
+                                    };
+                                    _characterRepository.UpdateCharacter(updChar);
 
-                        var newChar = new Character
-                        {
-                            Name = character.Name,
-                            IsActive = character.IsActive,
-                            IsRetired = character.IsRetired,
-                            CharacterRef = character.Id,
-                            PlayerId = character.PlayerId,
-                            Xp = character.Xp
-                        };
-                        _characterRepository.InsertCharacter(newChar);
-                        await _characterRepository.Save();
+                                }
+                            }
+                            else
+                            {
+                                var newChar = new Character
+                                {
+                                    Name = character.Name,
+                                    IsActive = character.IsActive,
+                                    IsRetired = character.IsRetired,
+                                    CharacterRef = character.Id,
+                                    PlayerId = character.PlayerId,
+                                    Xp = character.Xp
+                                };
+                                _characterRepository.InsertCharacter(newChar);
+                                await _characterRepository.Save();
+                            }
+                        }
                     }
                 }
             }
@@ -168,19 +202,37 @@ namespace LRPManagement.Services
                 {
                     foreach (var skill in skills)
                     {
-                        if (await _skillRepository.GetSkillRef(skill.Id) != null)
+                        var existSkill = await _skillRepository.GetSkillRef(skill.Id);
+                        if (existSkill != null)
                         {
-                            continue;
+                            if (skill.Name == existSkill.Name && skill.XpCost == existSkill.XpCost)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var updSkill = new Skill
+                                {
+                                    Name = skill.Name,
+                                    XpCost = skill.XpCost,
+                                    SkillRef = skill.Id,
+                                    //Id = existSkill.Id
+                                };
+                                _skillRepository.UpdateSkill(updSkill);
+                            }
                         }
-                        var newSkill = new Skill
+                        else
                         {
-                            SkillRef = skill.Id,
-                            Name = skill.Name,
-                            XpCost = skill.XpCost
-                        };
-                        _skillRepository.InsertSkill(newSkill);
+                            var newSkill = new Skill
+                            {
+                                SkillRef = skill.Id,
+                                Name = skill.Name,
+                                XpCost = skill.XpCost,
+                                Id = skill.Id
+                            };
+                            _skillRepository.InsertSkill(newSkill);
+                        }
                     }
-
                     await _skillRepository.Save();
                 }
             }
@@ -199,22 +251,42 @@ namespace LRPManagement.Services
                 {
                     foreach (var item in items)
                     {
-                        if (await _itemRepository.GetCraftable(item.Id) != null)
+                        var existItem = await _itemRepository.GetCraftableRef(item.Id);
+                        if (existItem != null)
                         {
-                            continue;
+                            if (item.Name.Equals(existItem.Name) && item.Requirement.Equals(existItem.Requirement) && item.Materials.Equals(existItem.Materials) && item.Effect.Equals(existItem.Effect) && item.Form.Equals(existItem.Form))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var updItem = new Craftable
+                                {
+                                    Effect = item.Effect,
+                                    Form = item.Form,
+                                    //Id = existItem.Id,
+                                    Materials = item.Materials,
+                                    Name = item.Name,
+                                    Requirement = item.Requirement
+                                };
+                                _itemRepository.UpdateCraftable(updItem);
+                            }
                         }
-
-                        var newItem = new Craftable
+                        else
                         {
-                            Name = item.Name,
-                            Requirement = item.Requirement,
-                            Materials = item.Materials,
-                            Effect = item.Effect,
-                            Form = item.Form
-                        };
-                        _itemRepository.InsertCraftable(newItem);
-                        await _itemRepository.Save();
+                            var newItem = new Craftable
+                            {
+                                Name = item.Name,
+                                Requirement = item.Requirement,
+                                Materials = item.Materials,
+                                Effect = item.Effect,
+                                Form = item.Form,
+                                ItemRef = item.Id
+                            };
+                            _itemRepository.InsertCraftable(newItem);
+                        }
                     }
+                    await _itemRepository.Save();
                 }
             }
             catch (BrokenCircuitException)

@@ -127,8 +127,10 @@ namespace LRP.Players.Controllers
                 return BadRequest("Requires First and Last Names");
             }
 
-            if (await _repository.GetPlayer(player.Id) != null)
+            var dbPlayer = await _repository.GetPlayer(player.Id);
+            if (dbPlayer != null)
             {
+                player.AccountRef = dbPlayer.AccountRef;
                 _repository.UpdatePlayer(player);
                 await _repository.Save();
                 return Ok(player);

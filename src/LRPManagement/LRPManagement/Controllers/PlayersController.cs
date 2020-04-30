@@ -213,7 +213,7 @@ namespace LRPManagement.Controllers
             {
                 await _playerService.DeletePlayer(id);
 
-                await _playerRepository.DeletePlayer(id);
+                await _playerRepository.AnonPlayer(id);
                 await _playerRepository.Save();
             }
             catch (BrokenCircuitException)

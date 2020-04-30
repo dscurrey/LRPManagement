@@ -49,7 +49,15 @@ namespace LRPManagement.Data.Characters
         public void UpdateCharacter(Character character)
         {
             var dbChar = _context.Characters.First(c => c.Id == character.Id);
-            _context.Entry(dbChar).CurrentValues.SetValues(character);
+            if (dbChar != null)
+            {
+                _context.Entry(dbChar).CurrentValues.SetValues(character);
+            }
+            else
+            {
+                _context.Characters.Update(character);
+            }
+
         }
     }
 }
