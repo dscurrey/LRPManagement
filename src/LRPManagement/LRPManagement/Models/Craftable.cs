@@ -10,6 +10,7 @@ namespace LRPManagement.Models
         }
 
         public int Id { get; set; }
+        public int ItemRef { get; set; }
         public string Name { get; set; }
         public string Form { get; set; }
         public string Requirement { get; set; }
