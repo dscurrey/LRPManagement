@@ -1,6 +1,7 @@
 ﻿using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Characters
@@ -47,7 +48,8 @@ namespace LRPManagement.Data.Characters
 
         public void UpdateCharacter(Character character)
         {
-            _context.Characters.Update(character);
+            var dbChar = _context.Characters.First(c => c.Id == character.Id);
+            _context.Entry(dbChar).CurrentValues.SetValues(character);
         }
     }
 }

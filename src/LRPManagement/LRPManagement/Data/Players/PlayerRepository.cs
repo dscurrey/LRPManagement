@@ -1,6 +1,7 @@
 ﻿using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Players
@@ -40,7 +41,8 @@ namespace LRPManagement.Data.Players
 
         public void UpdatePlayer(Player player)
         {
-            _context.Players.Update(player);
+            var dbPlayer = _context.Players.First(p => p.Id == player.Id);
+            _context.Entry(dbPlayer).CurrentValues.SetValues(player);
         }
 
         public async Task Save()
