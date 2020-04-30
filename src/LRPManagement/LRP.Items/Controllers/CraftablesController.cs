@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using System;
+using DTO;
 using LRP.Items.Data.Craftables;
 using LRP.Items.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -88,6 +89,19 @@ namespace LRP.Items.Controllers
         [HttpPost]
         public async Task<ActionResult<Craftable>> PostCraftable(Craftable craftable)
         {
+            if (String.IsNullOrEmpty(craftable.Name) || String.IsNullOrEmpty
+                (craftable.Requirement) || String.IsNullOrEmpty(craftable.Materials) || String.IsNullOrEmpty
+                (craftable.Form) || String.IsNullOrEmpty(craftable.Effect))
+            {
+                return BadRequest();
+            }
+
+            if (await _craftRepository.GetCraftable(craftable.Id) != null)
+            {
+                _craftRepository.UpdateCraftable(craftable);
+                await _craftRepository.Save();
+            }
+
             _craftRepository.InsertCraftable(craftable);
             await _craftRepository.Save();
 

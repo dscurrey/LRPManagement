@@ -126,6 +126,23 @@ namespace LRP.Characters.Controllers
                 return BadRequest("Name cannot be empty.");
             }
 
+            if (await _repository.GetCharacter(character.Id) != null)
+            {
+                var updCharacter = new Character
+                {
+                    Id = character.Id,
+                    IsActive = character.IsActive,
+                    IsRetired = character.IsRetired,
+                    Name = character.Name,
+                    PlayerId = character.PlayerId,
+                    Xp = character.Xp
+                };
+
+                await _repository.UpdateCharacter(updCharacter);
+                await _repository.Save();
+                return Ok(character);
+            }
+
             var newCharacter = new Character
             {
                 PlayerId = character.PlayerId,
