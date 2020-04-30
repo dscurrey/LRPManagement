@@ -166,7 +166,6 @@ namespace LRPManagement.Services
                                         Id = existChar.Id
                                     };
                                     _characterRepository.UpdateCharacter(updChar);
-
                                 }
                             }
                             else

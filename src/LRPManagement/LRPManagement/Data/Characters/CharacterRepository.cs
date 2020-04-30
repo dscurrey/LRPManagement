@@ -57,7 +57,6 @@ namespace LRPManagement.Data.Characters
             {
                 _context.Characters.Update(character);
             }
-
         }
     }
 }
