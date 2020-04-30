@@ -255,7 +255,7 @@ namespace LRPManagement.Controllers
             {
                 await _characterService.DeleteCharacter(id);
 
-                _characterRepository.DeleteCharacter(id);
+                await _characterRepository.DeleteCharacter(id);
                 await _characterRepository.Save();
             }
             catch (BrokenCircuitException)

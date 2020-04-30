@@ -1,6 +1,8 @@
-﻿using LRP.Players.Models;
+﻿using DTO;
+using LRP.Players.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRP.Players.Data.Players
@@ -26,10 +28,11 @@ namespace LRP.Players.Data.Players
 
         public void InsertPlayer(Player player)
         {
+            _context.Entry(player).State = EntityState.Added;
             _context.Player.Add(player);
         }
 
-        public async void DeletePlayer(int id)
+        public async Task DeletePlayer(int id)
         {
             var player = await _context.Player.FirstOrDefaultAsync(p => p.Id == id);
             player.IsActive = false;
@@ -41,12 +44,26 @@ namespace LRP.Players.Data.Players
 
         public void UpdatePlayer(Player player)
         {
-            _context.Entry(player).State = EntityState.Modified;
+            var dbPlayer = _context.Player.First(p => p.Id == player.Id);
+            _context.Entry(dbPlayer).CurrentValues.SetValues(player);
         }
 
         public async Task Save()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public void UpdatePlayer(PlayerDTO player)
+        {
+            var updPlayer = new Player
+            {
+                AccountRef = player.AccountRef,
+                FirstName = player.FirstName,
+                IsActive = player.IsActive,
+                Id = player.Id,
+                LastName = player.LastName
+            };
+            UpdatePlayer(updPlayer);
         }
     }
 }

@@ -89,9 +89,21 @@ namespace LRPManagement.Services
                 {
                     foreach (var player in players)
                     {
-                        if (await _playerRepository.GetPlayerRef(player.Id) != null)
+                        var existPlayer = await _playerRepository.GetPlayerRef(player.Id);
+                        if (existPlayer != null)
                         {
-                            continue;
+                            if (existPlayer.FirstName.Equals
+                                    (player.FirstName, StringComparison.CurrentCultureIgnoreCase) ||
+                                existPlayer.LastName.Equals(player.LastName, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                // TODO - Continue
+                                await _playerRepository.DeletePlayerRef(player.Id);
+                                await _playerRepository.Save();
+                            }
                         }
 
                         var newPlayer = new Player

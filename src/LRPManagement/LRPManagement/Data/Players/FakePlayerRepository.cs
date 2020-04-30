@@ -46,6 +46,11 @@ namespace LRPManagement.Data.Players
             _list.Remove(player);
         }
 
+        public async Task DeletePlayerRef(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdatePlayer(Player player)
         {
             var tgtPlayer = _list.FirstOrDefault(p => p.Id == player.Id);

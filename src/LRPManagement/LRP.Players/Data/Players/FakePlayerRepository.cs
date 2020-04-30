@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DTO;
 
 namespace LRP.Players.Data.Players
 {
@@ -14,10 +15,10 @@ namespace LRP.Players.Data.Players
             _players = players;
         }
 
-        public void DeletePlayer(int id)
+        public Task DeletePlayer(int id)
         {
             var player = _players.Find(p => p.Id == id);
-            _players.Remove(player);
+            return Task.FromResult( _players.Remove(player));
         }
 
         public Task<List<Player>> GetAll()
@@ -33,6 +34,11 @@ namespace LRP.Players.Data.Players
         public void InsertPlayer(Player player)
         {
             _players.Add(player);
+        }
+
+        public void UpdatePlayer(PlayerDTO player)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task Save()

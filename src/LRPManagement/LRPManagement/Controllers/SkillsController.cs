@@ -217,7 +217,7 @@ namespace LRPManagement.Controllers
             {
                 await _skillService.DeleteSkill(id);
 
-                _skillRepository.DeleteSkill(id);
+                await _skillRepository.DeleteSkill(id);
                 await _skillRepository.Save();
             }
             catch (BrokenCircuitException)

@@ -1,6 +1,7 @@
 ﻿using LRP.Players.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DTO;
 
 namespace LRP.Players.Data.Players
 {
@@ -9,8 +10,9 @@ namespace LRP.Players.Data.Players
         Task<List<Player>> GetAll();
         Task<Player> GetPlayer(int id);
         void InsertPlayer(Player player);
-        void DeletePlayer(int id);
+        Task DeletePlayer(int id);
         void UpdatePlayer(Player player);
+        void UpdatePlayer(PlayerDTO player);
         Task Save();
     }
 }
