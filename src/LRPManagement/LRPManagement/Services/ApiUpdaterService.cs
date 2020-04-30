@@ -216,7 +216,7 @@ namespace LRPManagement.Services
                                     Name = skill.Name,
                                     XpCost = skill.XpCost,
                                     SkillRef = skill.Id,
-                                    //Id = existSkill.Id
+                                    Id = existSkill.Id
                                 };
                                 _skillRepository.UpdateSkill(updSkill);
                             }
@@ -264,7 +264,7 @@ namespace LRPManagement.Services
                                 {
                                     Effect = item.Effect,
                                     Form = item.Form,
-                                    //Id = existItem.Id,
+                                    Id = existItem.Id,
                                     Materials = item.Materials,
                                     Name = item.Name,
                                     Requirement = item.Requirement
@@ -281,7 +281,8 @@ namespace LRPManagement.Services
                                 Materials = item.Materials,
                                 Effect = item.Effect,
                                 Form = item.Form,
-                                ItemRef = item.Id
+                                ItemRef = item.Id,
+                                Id = item.Id
                             };
                             _itemRepository.InsertCraftable(newItem);
                         }

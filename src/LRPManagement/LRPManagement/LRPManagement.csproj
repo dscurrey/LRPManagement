@@ -13,6 +13,10 @@
     <Compile Remove="Data\Migrations\20200413210436_ImproveCharacters.Designer.cs" />
     <Compile Remove="Data\Migrations\20200430154525_UpdatedIdentityGeneration.cs" />
     <Compile Remove="Data\Migrations\20200430154525_UpdatedIdentityGeneration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200430165357_UpdatedIdentityGeneration.cs" />
+    <Compile Remove="Data\Migrations\20200430165357_UpdatedIdentityGeneration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200430170013_UpdatedIdentityGeneration.cs" />
+    <Compile Remove="Data\Migrations\20200430170013_UpdatedIdentityGeneration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

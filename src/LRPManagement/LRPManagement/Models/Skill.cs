@@ -9,8 +9,6 @@ namespace LRPManagement.Models
         {
             CharacterSkills = new HashSet<CharacterSkill>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public int SkillRef { get; set; }
         public string Name { get; set; }
