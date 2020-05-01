@@ -6,6 +6,10 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>I:\GitHub\LRPManagement\src\LRPManagement\LRPManagement\LRPManagement.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Data\Migrations\20200413210210_ImproveCharacters.cs" />
     <Compile Remove="Data\Migrations\20200413210210_ImproveCharacters.Designer.cs" />
