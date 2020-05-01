@@ -488,3 +488,6 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+
+.cache
+/**/_site/

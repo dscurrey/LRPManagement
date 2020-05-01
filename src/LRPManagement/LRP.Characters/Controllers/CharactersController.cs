@@ -27,6 +27,10 @@ namespace LRP.Characters.Controllers
         }
 
         // GET: api/Characters
+        /// <summary>
+        /// Action to get all characters
+        /// </summary>
+        /// <returns>List of all characters, in DTO format</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacter()
         {
@@ -46,6 +50,11 @@ namespace LRP.Characters.Controllers
         }
 
         // GET: api/Characters/5
+        /// <summary>
+        /// Gets a single character with a unique id
+        /// </summary>
+        /// <param name="id">The character's unique ID</param>
+        /// <returns>Character matching the ID</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterDTO>> GetCharacter(int id)
         {
@@ -71,6 +80,12 @@ namespace LRP.Characters.Controllers
         // PUT: api/Characters/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// PUT Updates a given character
+        /// </summary>
+        /// <param name="id">The id of the character</param>
+        /// <param name="character">The updated character entry</param>
+        /// <returns>NoContent if successful</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, CharacterDTO character)
         {
@@ -118,6 +133,11 @@ namespace LRP.Characters.Controllers
         // POST: api/Characters
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Creates a new character in the database/repository
+        /// </summary>
+        /// <param name="character">The character to be inserted</param>
+        /// <returns>The inserted character</returns>
         [HttpPost]
         public async Task<ActionResult<Character>> PostCharacter([FromBody] CharacterDTO character)
         {
@@ -159,6 +179,11 @@ namespace LRP.Characters.Controllers
         }
 
         // DELETE: api/Characters/5
+        /// <summary>
+        /// Deletes a character
+        /// </summary>
+        /// <param name="id">The unique ID of the chosen character</param>
+        /// <returns>The deleted character</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Character>> DeleteCharacter(int id)
         {
@@ -175,6 +200,11 @@ namespace LRP.Characters.Controllers
             return character;
         }
 
+        /// <summary>
+        /// Checks if a character exists
+        /// </summary>
+        /// <param name="id">ID of the target character</param>
+        /// <returns>True, if character exists</returns>
         private async Task<bool> CharacterExists(int id)
         {
             var all = await _repository.GetAll();

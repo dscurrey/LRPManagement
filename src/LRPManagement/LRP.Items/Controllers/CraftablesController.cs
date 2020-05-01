@@ -22,6 +22,10 @@ namespace LRP.Items.Controllers
         }
 
         // GET: api/Craftables
+        /// <summary>
+        /// Action to get all items/craftables
+        /// </summary>
+        /// <returns>List of all craftables</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Craftable>>> GetCraftables()
         {
@@ -29,6 +33,11 @@ namespace LRP.Items.Controllers
         }
 
         // GET: api/Craftables/5
+        /// <summary>
+        /// Gets a single craftable with a unique ID
+        /// </summary>
+        /// <param name="id">Character ID</param>
+        /// <returns>Character with chosen ID</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<CraftableDTO>> GetCraftable(int id)
         {
@@ -54,6 +63,12 @@ namespace LRP.Items.Controllers
         // PUT: api/Craftables/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Updates a craftable
+        /// </summary>
+        /// <param name="id">Id of the craftable</param>
+        /// <param name="craftable">The craftable to be updated</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCraftable(int id, Craftable craftable)
         {
