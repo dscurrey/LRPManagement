@@ -489,5 +489,12 @@ output.json
 obj/
 .externalNativeBuild
 
-.cache
-/**/_site/
+src/LRPManagement/Documentation/_site/
+src/LRPManagement/Documentation/api/*.yml
+src/LRPManagement/Documentation/api/.manifest
+src/LRPManagement/Documentation/**/DROP/
+src/LRPManagement/Documentation/**/TEML/
+src/LRPManagement/Documentation/**/packages/
+src/LRPManagement/Documentation/**/bin/
+src/LRPManagement/Documentation/**/obj/
+src/LRPManagement/Documentation/reference
