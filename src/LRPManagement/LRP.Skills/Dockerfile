@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["LRP.Skills/LRP.Skills.csproj", "LRP.Skills/"]
+COPY ["DTO/DTO.csproj", "DTO/"]
 RUN dotnet restore "LRP.Skills/LRP.Skills.csproj"
 COPY . .
 WORKDIR "/src/LRP.Skills"

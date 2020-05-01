@@ -7,17 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["LRPManagement/LRPManagement.csproj", "LRPManagement/"]
+COPY ["LRP.Items/LRP.Items.csproj", "LRP.Items/"]
 COPY ["DTO/DTO.csproj", "DTO/"]
-RUN dotnet restore "LRPManagement/LRPManagement.csproj"
+RUN dotnet restore "LRP.Items/LRP.Items.csproj"
 COPY . .
-WORKDIR "/src/LRPManagement"
-RUN dotnet build "LRPManagement.csproj" -c Release -o /app/build
+WORKDIR "/src/LRP.Items"
+RUN dotnet build "LRP.Items.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "LRPManagement.csproj" -c Release -o /app/publish
+RUN dotnet publish "LRP.Items.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "LRPManagement.dll"]
+ENTRYPOINT ["dotnet", "LRP.Items.dll"]
