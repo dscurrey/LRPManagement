@@ -68,7 +68,7 @@ namespace LRP.Items.Controllers
         /// </summary>
         /// <param name="id">Id of the craftable</param>
         /// <param name="craftable">The craftable to be updated</param>
-        /// <returns></returns>
+        /// <returns>NoContent if successful</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCraftable(int id, Craftable craftable)
         {
@@ -101,6 +101,11 @@ namespace LRP.Items.Controllers
         // POST: api/Craftables
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Creates a new craftable in the database/repository
+        /// </summary>
+        /// <param name="craftable">The craftable to be inserted</param>
+        /// <returns>The inserted craftable</returns>
         [HttpPost]
         public async Task<ActionResult<Craftable>> PostCraftable(Craftable craftable)
         {
@@ -124,6 +129,11 @@ namespace LRP.Items.Controllers
         }
 
         // DELETE: api/Craftables/5
+        /// <summary>
+        /// Deletes a craftable
+        /// </summary>
+        /// <param name="id">The unique ID of the chosen craftable</param>
+        /// <returns>The deleted craftable</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Craftable>> DeleteCraftable(int id)
         {
