@@ -120,7 +120,6 @@ namespace LRP.Items.Tests.Controllers
             };
 
             // Act
-            //var prev = await controller.GetCraftable(itemId);
             var result = await controller.PutCraftable(itemId, item);
 
             // Assert

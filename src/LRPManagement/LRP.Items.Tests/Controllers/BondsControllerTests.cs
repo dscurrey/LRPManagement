@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LRP.Items.Controllers;
 using LRP.Items.Data.Bonds;
 using LRP.Items.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -75,15 +76,28 @@ namespace LRP.Items.Tests.Controllers
         }
 
         [TestMethod]
-        public void PostBondTest()
+        public async Task PostBondTest()
         {
-            throw new NotImplementedException();
-        }
+            // Arrange
+            var mockRepo = new Mock<IBondRepository>();
+            var newBond = new Bond
+            {
+                Id = 6, ItemId = 1, CharacterId = 7
+            };
+            mockRepo.Setup(repo => repo.Insert(newBond));
+            var controller = new BondsController(mockRepo.Object);
 
-        [TestMethod]
-        public void DeleteBondTest()
-        {
-            throw new NotImplementedException();
+            // Act
+            var result = await controller.PostBond(newBond);
+
+            Assert.IsNotNull(result);
+            var retResult = result.Result as CreatedAtActionResult;
+            Assert.IsNotNull(retResult);
+            var objResult = retResult.Value as Bond;
+            Assert.IsNotNull(objResult);
+            Assert.AreEqual(newBond.Id, objResult.Id);
+            Assert.AreEqual(newBond.CharacterId, objResult.CharacterId);
+            Assert.AreEqual(newBond.ItemId, objResult.ItemId);
         }
     }
 }

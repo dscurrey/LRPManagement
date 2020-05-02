@@ -135,10 +135,34 @@ namespace LRPManagement.Tests.Data.Skills
             var result = await service.GetAll();
 
             // Assert
+            Assert.IsNotNull(result);
             foreach (var skill in result)
             {
                 var testItem = TestData.Skills().FirstOrDefault(s => s.Id == skill.Id);
+                Assert.AreEqual(testItem.Name, skill.Name);
+                Assert.AreEqual(testItem.XpCost, skill.XpCost);
             }
+        }
+
+        [TestMethod]
+        public async Task GetTest()
+        {
+            // Arrange
+            var skillId = 2;
+            var client = SetupMock_Skill(skillId);
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
+            var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
+                { Client = client };
+
+            // Act
+            var result = await service.GetSkill(skillId);
+
+            // Assert
+            var testItem = TestData.Skills().FirstOrDefault(s => s.Id == result.Id);
+            Assert.AreEqual(testItem.Name, result.Name);
+            Assert.AreEqual(testItem.XpCost, result.XpCost);
         }
     }
 }
