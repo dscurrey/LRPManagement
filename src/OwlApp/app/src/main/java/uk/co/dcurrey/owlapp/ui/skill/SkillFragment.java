@@ -41,7 +41,7 @@ public class SkillFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        SkillUIViewModel skillUIViewModel = ViewModelProviders.of(this).get(SkillUIViewModel.class);
+        SkillUIViewModel skillUIViewModel = new ViewModelProvider(this).get(SkillUIViewModel.class);
         View root = inflater.inflate(R.layout.fragment_skill, container, false);
 
         EditText searchTerm = root.findViewById(R.id.skillSearch);

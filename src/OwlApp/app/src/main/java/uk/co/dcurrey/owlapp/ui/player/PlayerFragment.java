@@ -42,7 +42,7 @@ public class PlayerFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        PlayerUIViewModel slideshowViewModel = ViewModelProviders.of(this).get(PlayerUIViewModel.class);
+        PlayerUIViewModel slideshowViewModel = new ViewModelProvider(this).get(PlayerUIViewModel.class);
         View root = inflater.inflate(R.layout.fragment_player, container, false);
 
         EditText searchTerm = root.findViewById(R.id.playerSearch);
