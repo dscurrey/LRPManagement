@@ -63,12 +63,12 @@
                 android:text="TextView"
                 android:textAlignment="viewStart"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/charRetired"
+                app:layout_constraintEnd_toStartOf="@+id/charActive"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/charName" />
 
             <TextView
-                android:id="@+id/charRetired"
+                android:id="@+id/charActive"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"

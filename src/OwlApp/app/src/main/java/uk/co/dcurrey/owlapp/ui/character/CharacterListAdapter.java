@@ -18,11 +18,11 @@ import uk.co.dcurrey.owlapp.database.character.CharacterEntity;
 
 public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>
 {
-    class CharacterViewHolder extends RecyclerView.ViewHolder
+    static class CharacterViewHolder extends RecyclerView.ViewHolder
     {
         private final TextView charNameView;
         private final TextView charPlayerView;
-        private final TextView charRetireView;
+        private final TextView charActiveView;
         private final ImageView charSyncView;
 
         private CharacterViewHolder(View itemView)
@@ -30,7 +30,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             super(itemView);
             charNameView = itemView.findViewById(R.id.charName);
             charPlayerView = itemView.findViewById(R.id.charPlayer);
-            charRetireView = itemView.findViewById(R.id.charRetired);
+            charActiveView = itemView.findViewById(R.id.charActive);
             charSyncView = itemView.findViewById(R.id.charSync);
         }
     }
@@ -64,11 +64,11 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             holder.charNameView.setText(current.Name);
             if (current.IsRetired)
             {
-                holder.charRetireView.setText("Character IS retired");
+                holder.charActiveView.setText("Character IS active");
             }
             else
             {
-                holder.charRetireView.setText("Character is NOT retired");
+                holder.charActiveView.setText("Character is NOT active");
             }
             holder.charPlayerView.setText("Player ID: "+current.PlayerId);
 
