@@ -18,28 +18,33 @@ namespace LRP.Items
                 var services = scope.ServiceProvider;
                 var env = services.GetRequiredService<IWebHostEnvironment>();
                 var context = services.GetRequiredService<ItemsDbContext>();
-                if (env.IsDevelopment())
-                {
-                    context.Database.EnsureDeleted();
-                }
+                if (env.IsDevelopment()) context.Database.EnsureDeleted();
                 context.Database.Migrate();
             }
+
             host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureLogging
+                (
                     logging =>
                     {
                         logging.ClearProviders();
                         logging.AddConsole();
                         logging.AddDebug();
-                    })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("https://127.0.0.1:5011");
-                });
+                    }
+                )
+                .ConfigureWebHostDefaults
+                (
+                    webBuilder =>
+                    {
+                        webBuilder.UseStartup<Startup>();
+                        webBuilder.UseUrls("https://127.0.0.1:5011");
+                    }
+                );
+        }
     }
 }

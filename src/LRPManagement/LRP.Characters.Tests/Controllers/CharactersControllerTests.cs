@@ -15,12 +15,15 @@ namespace LRP.Characters.Tests.Controllers
     {
         private static class TestData
         {
-            public static List<Character> Characters() => new List<Character>
+            public static List<Character> Characters()
             {
-                new Character { Id = 1, IsActive = true, IsRetired = false, Name = "Test Character 1", PlayerId = 1},
-                new Character { Id = 2, IsActive = true, IsRetired = false, Name = "Test Character 2", PlayerId = 2},
-                new Character { Id = 3, IsActive = false, IsRetired = true, Name = "Test Character 3", PlayerId = 1}
-            };
+                return new List<Character>
+                {
+                    new Character {Id = 1, IsActive = true, IsRetired = false, Name = "Test Character 1", PlayerId = 1},
+                    new Character {Id = 2, IsActive = true, IsRetired = false, Name = "Test Character 2", PlayerId = 2},
+                    new Character {Id = 3, IsActive = false, IsRetired = true, Name = "Test Character 3", PlayerId = 1}
+                };
+            }
         }
 
         [TestMethod]
@@ -97,7 +100,8 @@ namespace LRP.Characters.Tests.Controllers
             // Arrange
             var repo = new FakeCharacterRepository(TestData.Characters());
             var controller = new CharactersController(repo, null);
-            var character = new CharacterDTO { Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = "Created Character" };
+            var character = new CharacterDTO
+                {Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = "Created Character"};
 
             // Act
             var result = await controller.PostCharacter(character);
@@ -117,7 +121,8 @@ namespace LRP.Characters.Tests.Controllers
             // Arrange
             var repo = new FakeCharacterRepository(TestData.Characters());
             var controller = new CharactersController(repo, null);
-            var character = new CharacterDTO { Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = "Created Character" };
+            var character = new CharacterDTO
+                {Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = "Created Character"};
 
             // Act
             var result = await controller.PostCharacter(character);
@@ -137,7 +142,7 @@ namespace LRP.Characters.Tests.Controllers
             // Arrange
             var repo = new FakeCharacterRepository(TestData.Characters());
             var controller = new CharactersController(repo, null);
-            var character = new CharacterDTO { Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = "" };
+            var character = new CharacterDTO {Id = 5, IsActive = true, IsRetired = false, PlayerId = 2, Name = ""};
 
             // Act
             var result = await controller.PostCharacter(character);

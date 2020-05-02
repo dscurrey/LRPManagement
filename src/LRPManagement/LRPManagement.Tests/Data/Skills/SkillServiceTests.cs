@@ -23,22 +23,27 @@ namespace LRPManagement.Tests.Data.Skills
     {
         private static class TestData
         {
-            public static List<Skill> Skills() => new List<Skill>
+            public static List<Skill> Skills()
             {
-                new Skill { Id = 1, Name = "Skill 1", SkillRef = 1, XpCost = 2},
-                new Skill { Id = 2, Name = "Skill 2", SkillRef = 2, XpCost = 2},
-                new Skill { Id = 3, Name = "Skill 3", SkillRef = 3, XpCost = 8}
-            };
+                return new List<Skill>
+                {
+                    new Skill {Id = 1, Name = "Skill 1", SkillRef = 1, XpCost = 2},
+                    new Skill {Id = 2, Name = "Skill 2", SkillRef = 2, XpCost = 2},
+                    new Skill {Id = 3, Name = "Skill 3", SkillRef = 3, XpCost = 8}
+                };
+            }
         }
 
         private Mock<HttpMessageHandler> CreateHttpMock(HttpResponseMessage expected)
         {
             var mock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
             mock.Protected()
-                .Setup<Task<HttpResponseMessage>>(
+                .Setup<Task<HttpResponseMessage>>
+                (
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
-                    ItExpr.IsAny<CancellationToken>())
+                    ItExpr.IsAny<CancellationToken>()
+                )
                 .ReturnsAsync(expected)
                 .Verifiable();
             return mock;
@@ -77,7 +82,7 @@ namespace LRPManagement.Tests.Data.Skills
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
-            { Client = client };
+                {Client = client};
 
             // Act
             var newSkill = new SkillDTO
@@ -105,7 +110,7 @@ namespace LRPManagement.Tests.Data.Skills
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.DeleteSkill(skillId);
@@ -124,7 +129,7 @@ namespace LRPManagement.Tests.Data.Skills
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.GetAll();

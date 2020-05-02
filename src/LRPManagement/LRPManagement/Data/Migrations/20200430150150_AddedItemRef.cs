@@ -6,18 +6,22 @@ namespace LRPManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "ItemRef",
-                table: "Craftables",
+            migrationBuilder.AddColumn<int>
+            (
+                "ItemRef",
+                "Craftables",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ItemRef",
-                table: "Craftables");
+            migrationBuilder.DropColumn
+            (
+                "ItemRef",
+                "Craftables"
+            );
         }
     }
 }

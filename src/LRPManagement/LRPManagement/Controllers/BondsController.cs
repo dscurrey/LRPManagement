@@ -19,7 +19,10 @@ namespace LRPManagement.Controllers
         private readonly ICraftableRepository _itemRepository;
         private readonly IBondService _service;
 
-        public BondsController(IBondRepository repository, ICharacterRepository charRepo, ICraftableRepository itemRepo, IBondService service)
+        public BondsController(IBondRepository repository,
+            ICharacterRepository charRepo,
+            ICraftableRepository itemRepo,
+            IBondService service)
         {
             _repository = repository;
             _characterRepository = charRepo;
@@ -36,17 +39,11 @@ namespace LRPManagement.Controllers
         // GET: Bonds/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var bond = await _repository.Get(id.Value);
 
-            if (bond == null)
-            {
-                return NotFound();
-            }
+            if (bond == null) return NotFound();
 
             return View(bond);
         }
@@ -84,6 +81,7 @@ namespace LRPManagement.Controllers
                 );
                 ViewData["ItemId"] = itemList;
             }
+
             return View();
         }
 
@@ -96,15 +94,12 @@ namespace LRPManagement.Controllers
         {
             TempData["ItemInoperativeMsg"] = "";
             if (ModelState.IsValid)
-            {
                 try
                 {
                     var resp = await _service.Create(bond);
                     if (resp == null)
-                    {
                         // Unsuccessful
                         return View(bond);
-                    }
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -113,7 +108,6 @@ namespace LRPManagement.Controllers
                     HandleBrokenCircuit();
                     return View();
                 }
-            }
 
             var characters = await _characterRepository.GetAll();
             var items = await _itemRepository.GetAll();
@@ -149,22 +143,17 @@ namespace LRPManagement.Controllers
         // GET: Bonds/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var bond = await _repository.Get(id.Value);
-            if (bond == null)
-            {
-                return NotFound();
-            }
+            if (bond == null) return NotFound();
 
             return View(bond);
         }
 
         // POST: Bonds/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -178,13 +167,9 @@ namespace LRPManagement.Controllers
         {
             var bonds = await _repository.Get(id);
             if (bonds != null)
-            {
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
 
         private async Task<bool> BondExists(int itemId, int charId)

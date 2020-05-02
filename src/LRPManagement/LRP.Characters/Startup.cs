@@ -31,12 +31,12 @@ namespace LRP.Characters
                     options.UseSqlServer
                     (
                         Configuration.GetConnectionString("CharacterDb"),
-                        sqlServerOptionsAction: sqlOptions =>
+                        sqlOptions =>
                         {
                             sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
                             // Resiliency
                             sqlOptions.EnableRetryOnFailure
-                                (maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                                (5, TimeSpan.FromSeconds(30), null);
                         }
                     );
                 }
@@ -49,10 +49,7 @@ namespace LRP.Characters
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
 
@@ -60,10 +57,7 @@ namespace LRP.Characters
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

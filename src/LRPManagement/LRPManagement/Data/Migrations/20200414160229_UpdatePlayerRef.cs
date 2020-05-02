@@ -6,9 +6,10 @@ namespace LRPManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
-                name: "CharacterRef",
-                table: "Characters",
+            migrationBuilder.AlterColumn<int>
+            (
+                "CharacterRef",
+                "Characters",
                 fixedLength: true,
                 maxLength: 10,
                 nullable: false,
@@ -16,21 +17,24 @@ namespace LRPManagement.Data.Migrations
                 oldType: "nchar(10)",
                 oldFixedLength: true,
                 oldMaxLength: 10,
-                oldNullable: true);
+                oldNullable: true
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "CharacterRef",
-                table: "Characters",
-                type: "nchar(10)",
+            migrationBuilder.AlterColumn<string>
+            (
+                "CharacterRef",
+                "Characters",
+                "nchar(10)",
                 fixedLength: true,
                 maxLength: 10,
                 nullable: true,
                 oldClrType: typeof(int),
                 oldFixedLength: true,
-                oldMaxLength: 10);
+                oldMaxLength: 10
+            );
         }
     }
 }

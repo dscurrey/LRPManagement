@@ -29,70 +29,73 @@ namespace LRPManagement.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Bond>(entity =>
-            {
-                entity.HasKey(e => new { e.CharacterId, e.ItemId });
+            modelBuilder.Entity<Bond>
+            (
+                entity =>
+                {
+                    entity.HasKey(e => new {e.CharacterId, e.ItemId});
 
-                entity.HasOne(d => d.Character)
-                    .WithMany(p => p.Bond)
-                    .HasForeignKey(d => d.CharacterId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Bond_Characters");
+                    entity.HasOne(d => d.Character)
+                        .WithMany(p => p.Bond)
+                        .HasForeignKey(d => d.CharacterId)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_Bond_Characters");
 
-                entity.HasOne(d => d.Item)
-                    .WithMany(p => p.Bond)
-                    .HasForeignKey(d => d.ItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Bond_Craftables");
-            });
+                    entity.HasOne(d => d.Item)
+                        .WithMany(p => p.Bond)
+                        .HasForeignKey(d => d.ItemId)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_Bond_Craftables");
+                }
+            );
 
-            modelBuilder.Entity<CharacterSkill>(entity =>
-            {
-                entity.HasKey(e => e.Id);
+            modelBuilder.Entity<CharacterSkill>
+            (
+                entity =>
+                {
+                    entity.HasKey(e => e.Id);
 
-                entity.HasOne(d => d.Character)
-                    .WithMany(p => p.CharacterSkills)
-                    .HasForeignKey(d => d.CharacterId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CharacterSkills_Characters");
+                    entity.HasOne(d => d.Character)
+                        .WithMany(p => p.CharacterSkills)
+                        .HasForeignKey(d => d.CharacterId)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_CharacterSkills_Characters");
 
-                entity.HasOne(d => d.Skill)
-                    .WithMany(p => p.CharacterSkills)
-                    .HasForeignKey(d => d.SkillId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CharacterSkills_Skills");
-            });
+                    entity.HasOne(d => d.Skill)
+                        .WithMany(p => p.CharacterSkills)
+                        .HasForeignKey(d => d.SkillId)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_CharacterSkills_Skills");
+                }
+            );
 
-            modelBuilder.Entity<Character>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Character>
+            (
+                entity =>
+                {
+                    entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.CharacterRef)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    entity.Property(e => e.CharacterRef)
+                        .HasMaxLength(10)
+                        .IsFixedLength();
 
-                entity.Property(e => e.Name).IsRequired();
+                    entity.Property(e => e.Name).IsRequired();
 
-                entity.HasOne(d => d.Player)
-                    .WithMany(p => p.Characters)
-                    .HasForeignKey(d => d.PlayerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Characters_Players");
-            });
+                    entity.HasOne(d => d.Player)
+                        .WithMany(p => p.Characters)
+                        .HasForeignKey(d => d.PlayerId)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_Characters_Players");
+                }
+            );
 
             modelBuilder.Entity<Craftable>()
                 .Property(c => c.Id)
                 .ValueGeneratedNever();
 
-            modelBuilder.Entity<Player>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            });
+            modelBuilder.Entity<Player>(entity => { entity.Property(e => e.Id).ValueGeneratedOnAdd(); });
 
-            modelBuilder.Entity<Skill>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
+            modelBuilder.Entity<Skill>(entity => { entity.Property(e => e.Id).ValueGeneratedNever(); });
 
             OnModelCreatingPartial(modelBuilder);
         }

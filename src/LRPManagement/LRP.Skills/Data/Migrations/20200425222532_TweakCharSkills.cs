@@ -6,68 +6,92 @@ namespace LRP.Skills.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CharacterSkill_Skill_SkillId",
-                table: "CharacterSkill");
+            migrationBuilder.DropForeignKey
+            (
+                "FK_CharacterSkill_Skill_SkillId",
+                "CharacterSkill"
+            );
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_CharacterSkill",
-                table: "CharacterSkill");
+            migrationBuilder.DropPrimaryKey
+            (
+                "PK_CharacterSkill",
+                "CharacterSkill"
+            );
 
-            migrationBuilder.RenameTable(
-                name: "CharacterSkill",
-                newName: "CharacterSkills");
+            migrationBuilder.RenameTable
+            (
+                "CharacterSkill",
+                newName: "CharacterSkills"
+            );
 
-            migrationBuilder.RenameIndex(
-                name: "IX_CharacterSkill_SkillId",
+            migrationBuilder.RenameIndex
+            (
+                "IX_CharacterSkill_SkillId",
                 table: "CharacterSkills",
-                newName: "IX_CharacterSkills_SkillId");
+                newName: "IX_CharacterSkills_SkillId"
+            );
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_CharacterSkills",
-                table: "CharacterSkills",
-                column: "Id");
+            migrationBuilder.AddPrimaryKey
+            (
+                "PK_CharacterSkills",
+                "CharacterSkills",
+                "Id"
+            );
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_CharacterSkills_Skill_SkillId",
-                table: "CharacterSkills",
-                column: "SkillId",
-                principalTable: "Skill",
+            migrationBuilder.AddForeignKey
+            (
+                "FK_CharacterSkills_Skill_SkillId",
+                "CharacterSkills",
+                "SkillId",
+                "Skill",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CharacterSkills_Skill_SkillId",
-                table: "CharacterSkills");
+            migrationBuilder.DropForeignKey
+            (
+                "FK_CharacterSkills_Skill_SkillId",
+                "CharacterSkills"
+            );
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_CharacterSkills",
-                table: "CharacterSkills");
+            migrationBuilder.DropPrimaryKey
+            (
+                "PK_CharacterSkills",
+                "CharacterSkills"
+            );
 
-            migrationBuilder.RenameTable(
-                name: "CharacterSkills",
-                newName: "CharacterSkill");
+            migrationBuilder.RenameTable
+            (
+                "CharacterSkills",
+                newName: "CharacterSkill"
+            );
 
-            migrationBuilder.RenameIndex(
-                name: "IX_CharacterSkills_SkillId",
+            migrationBuilder.RenameIndex
+            (
+                "IX_CharacterSkills_SkillId",
                 table: "CharacterSkill",
-                newName: "IX_CharacterSkill_SkillId");
+                newName: "IX_CharacterSkill_SkillId"
+            );
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_CharacterSkill",
-                table: "CharacterSkill",
-                column: "Id");
+            migrationBuilder.AddPrimaryKey
+            (
+                "PK_CharacterSkill",
+                "CharacterSkill",
+                "Id"
+            );
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_CharacterSkill_Skill_SkillId",
-                table: "CharacterSkill",
-                column: "SkillId",
-                principalTable: "Skill",
+            migrationBuilder.AddForeignKey
+            (
+                "FK_CharacterSkill_Skill_SkillId",
+                "CharacterSkill",
+                "SkillId",
+                "Skill",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
     }
 }

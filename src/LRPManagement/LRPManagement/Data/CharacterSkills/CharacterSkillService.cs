@@ -30,10 +30,7 @@ namespace LRPManagement.Data.CharacterSkills
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.PostAsync("api/characterskills/", charSkill, new JsonMediaTypeFormatter());
-            if (resp.IsSuccessStatusCode)
-            {
-                return charSkill;
-            }
+            if (resp.IsSuccessStatusCode) return charSkill;
 
             return null;
         }
@@ -42,10 +39,7 @@ namespace LRPManagement.Data.CharacterSkills
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.DeleteAsync("api/characterskills/" + id);
-            if (resp.IsSuccessStatusCode)
-            {
-                return true;
-            }
+            if (resp.IsSuccessStatusCode) return true;
 
             return false;
         }
@@ -64,7 +58,7 @@ namespace LRPManagement.Data.CharacterSkills
             }
             catch (TaskCanceledException e)
             {
-                _logger.LogError(this.ToString(), "Task Cancelled Error", e);
+                _logger.LogError(ToString(), "Task Cancelled Error", e);
             }
 
             return null;
@@ -84,7 +78,7 @@ namespace LRPManagement.Data.CharacterSkills
             }
             catch (TaskCanceledException e)
             {
-                _logger.LogError(this.ToString(), "Task Cancelled Error", e);
+                _logger.LogError(ToString(), "Task Cancelled Error", e);
             }
 
             return null;
@@ -92,10 +86,7 @@ namespace LRPManagement.Data.CharacterSkills
 
         private HttpClient GetHttpClient(string s)
         {
-            if (Client != null && _clientFactory == null)
-            {
-                return Client;
-            }
+            if (Client != null && _clientFactory == null) return Client;
 
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["SkillsURL"]);

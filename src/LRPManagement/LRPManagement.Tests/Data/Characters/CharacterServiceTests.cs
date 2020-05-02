@@ -23,22 +23,39 @@ namespace LRPManagement.Tests.Data.Characters
     {
         private static class TestData
         {
-            public static List<Character> Characters() => new List<Character>
+            public static List<Character> Characters()
             {
-                new Character {Id = 1, Name = "Character 1", IsActive = true, IsRetired = false, CharacterRef = 2, PlayerId = 1, Xp = 8},
-                new Character {Id = 2, IsActive = true, IsRetired = false, Xp = 8, CharacterRef = 1, Name = "Character 2", PlayerId = 2},
-                new Character {Id = 3, IsActive = true, IsRetired = false, Xp = 8, CharacterRef = 3, Name = "Character 3", PlayerId = 2}
-            };
+                return new List<Character>
+                {
+                    new Character
+                    {
+                        Id = 1, Name = "Character 1", IsActive = true, IsRetired = false, CharacterRef = 2,
+                        PlayerId = 1, Xp = 8
+                    },
+                    new Character
+                    {
+                        Id = 2, IsActive = true, IsRetired = false, Xp = 8, CharacterRef = 1, Name = "Character 2",
+                        PlayerId = 2
+                    },
+                    new Character
+                    {
+                        Id = 3, IsActive = true, IsRetired = false, Xp = 8, CharacterRef = 3, Name = "Character 3",
+                        PlayerId = 2
+                    }
+                };
+            }
         }
 
         private Mock<HttpMessageHandler> CreateHttpMock(HttpResponseMessage expected)
         {
             var mock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
             mock.Protected()
-                .Setup<Task<HttpResponseMessage>>(
+                .Setup<Task<HttpResponseMessage>>
+                (
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
-                    ItExpr.IsAny<CancellationToken>())
+                    ItExpr.IsAny<CancellationToken>()
+                )
                 .ReturnsAsync(expected)
                 .Verifiable();
             return mock;
@@ -88,7 +105,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.GetAll();
@@ -116,7 +133,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.GetCharacter(charId);
@@ -141,7 +158,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var updChar = new CharacterDTO
@@ -174,7 +191,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var updChar = new Character
@@ -207,7 +224,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var newChar = new CharacterDTO
@@ -241,7 +258,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.DeleteCharacter(charId);

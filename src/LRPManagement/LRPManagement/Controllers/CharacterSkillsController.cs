@@ -18,7 +18,11 @@ namespace LRPManagement.Controllers
         private readonly ICharacterService _characterService;
         private readonly ICharacterSkillService _characterSkillService;
 
-        public CharacterSkillsController(ISkillRepository skillRepository, ICharacterRepository characterRepository, ICharacterSkillRepository characterSkillRepository, ICharacterService characterService, ICharacterSkillService characterSkillService)
+        public CharacterSkillsController(ISkillRepository skillRepository,
+            ICharacterRepository characterRepository,
+            ICharacterSkillRepository characterSkillRepository,
+            ICharacterService characterService,
+            ICharacterSkillService characterSkillService)
         {
             _characterRepository = characterRepository;
             _skillRepository = skillRepository;
@@ -36,17 +40,11 @@ namespace LRPManagement.Controllers
         // GET: CharacterSkills/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var characterSkill = await _characterSkillRepository.Get(id.Value);
 
-            if (characterSkill == null)
-            {
-                return NotFound();
-            }
+            if (characterSkill == null) return NotFound();
 
             return View(characterSkill);
         }
@@ -97,14 +95,10 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> Create([Bind("CharacterId,SkillId")] CharacterSkill charSkill)
         {
             if (ModelState.IsValid)
-            {
                 try
                 {
                     var resp = await _characterSkillService.Create(charSkill);
-                    if (resp == null)
-                    {
-                        return View(charSkill);
-                    }
+                    if (resp == null) return View(charSkill);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -113,7 +107,6 @@ namespace LRPManagement.Controllers
                     HandleBrokenCircuit();
                     return View();
                 }
-            }
 
             ViewData["CharacterId"] = "";
             ViewData["SkillId"] = "";
@@ -146,29 +139,25 @@ namespace LRPManagement.Controllers
                 );
                 ViewData["SkillId"] = skillList;
             }
+
             return View(charSkill);
         }
 
         // GET: CharacterSkills/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var characterSkill = await _characterSkillRepository.Get(id.Value);
 
-            if (characterSkill == null)
-            {
-                return NotFound();
-            }
+            if (characterSkill == null) return NotFound();
 
             return View(characterSkill);
         }
 
         // POST: CharacterSkills/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

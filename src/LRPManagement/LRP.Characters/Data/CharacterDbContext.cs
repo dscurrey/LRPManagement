@@ -21,7 +21,6 @@ namespace LRP.Characters.Data
             base.OnModelCreating(builder);
 
             if (HostEnv != null && HostEnv.IsDevelopment())
-            {
                 // Seed Data (Dev)
                 builder.Entity<Character>().HasData
                 (
@@ -53,7 +52,6 @@ namespace LRP.Characters.Data
                         Xp = 8
                     }
                 );
-            }
         }
     }
 }

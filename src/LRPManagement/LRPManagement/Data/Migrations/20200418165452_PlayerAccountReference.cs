@@ -6,17 +6,21 @@ namespace LRPManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "AccountRef",
-                table: "Players",
-                nullable: true);
+            migrationBuilder.AddColumn<string>
+            (
+                "AccountRef",
+                "Players",
+                nullable: true
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "AccountRef",
-                table: "Players");
+            migrationBuilder.DropColumn
+            (
+                "AccountRef",
+                "Players"
+            );
         }
     }
 }

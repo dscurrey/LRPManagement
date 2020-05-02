@@ -32,10 +32,19 @@ namespace LRPManagement.Services
         private readonly ICharacterSkillService _charSkillService;
         private readonly ICharacterSkillRepository _charSkillRepository;
 
-        public ApiUpdaterService(ILogger<ApiUpdaterService> logger, IPlayerService playerService, IPlayerRepository playerRepository,
-            ICharacterRepository characterRepository, ICharacterService characterService, ISkillRepository skillRepository, ISkillService skillService,
-            ICraftableService craftableService, ICraftableRepository craftableRepository,
-            IBondService bondService, IBondRepository bondRepository, ICharacterSkillService characterSkillService, ICharacterSkillRepository characterSkillRepository)
+        public ApiUpdaterService(ILogger<ApiUpdaterService> logger,
+            IPlayerService playerService,
+            IPlayerRepository playerRepository,
+            ICharacterRepository characterRepository,
+            ICharacterService characterService,
+            ISkillRepository skillRepository,
+            ISkillService skillService,
+            ICraftableService craftableService,
+            ICraftableRepository craftableRepository,
+            IBondService bondService,
+            IBondRepository bondRepository,
+            ICharacterSkillService characterSkillService,
+            ICharacterSkillRepository characterSkillRepository)
         {
             _logger = logger;
 
@@ -59,8 +68,10 @@ namespace LRPManagement.Services
             {
                 executionCount++;
 
-                _logger.LogInformation(
-                    "API Updater Service is working. Count: {Count}", executionCount);
+                _logger.LogInformation
+                (
+                    "API Updater Service is working. Count: {Count}", executionCount
+                );
 
                 try
                 {
@@ -134,9 +145,7 @@ namespace LRPManagement.Services
             {
                 var characters = await _characterService.GetAll();
                 if (characters != null)
-                {
                     foreach (var character in characters)
-                    {
                         if (await _playerRepository.GetPlayer(character.PlayerId) != null)
                         {
                             var existChar = await _characterRepository.GetCharacterRef(character.Id);
@@ -178,8 +187,6 @@ namespace LRPManagement.Services
                                 await _characterRepository.Save();
                             }
                         }
-                    }
-                }
             }
             catch (BrokenCircuitException)
             {
@@ -227,6 +234,7 @@ namespace LRPManagement.Services
                             _skillRepository.InsertSkill(newSkill);
                         }
                     }
+
                     await _skillRepository.Save();
                 }
             }
@@ -248,7 +256,10 @@ namespace LRPManagement.Services
                         var existItem = await _itemRepository.GetCraftableRef(item.Id);
                         if (existItem != null)
                         {
-                            if (item.Name.Equals(existItem.Name) && item.Requirement.Equals(existItem.Requirement) && item.Materials.Equals(existItem.Materials) && item.Effect.Equals(existItem.Effect) && item.Form.Equals(existItem.Form))
+                            if (item.Name.Equals(existItem.Name) && item.Requirement.Equals
+                                (existItem.Requirement) && item.Materials.Equals
+                                (existItem.Materials) && item.Effect.Equals(existItem.Effect) && item.Form.Equals
+                                (existItem.Form))
                             {
                                 continue;
                             }
@@ -281,6 +292,7 @@ namespace LRPManagement.Services
                             _itemRepository.InsertCraftable(newItem);
                         }
                     }
+
                     await _itemRepository.Save();
                 }
             }
@@ -296,19 +308,16 @@ namespace LRPManagement.Services
             {
                 var bonds = await _bondService.Get();
                 if (bonds != null)
-                {
                     foreach (var bond in bonds)
                     {
                         // Ensure that bond is not already present and necessary items are stored
-                        if (await BondExists(bond.ItemId, bond.CharacterId) || await _characterRepository.GetCharacterRef(bond.CharacterId) == null || await _itemRepository.GetCraftable(bond.ItemId) == null)
-                        {
-                            continue;
-                        }
+                        if (await BondExists(bond.ItemId, bond.CharacterId) ||
+                            await _characterRepository.GetCharacterRef(bond.CharacterId) == null ||
+                            await _itemRepository.GetCraftable(bond.ItemId) == null) continue;
 
                         _bondRepository.Insert(bond);
                         await _bondRepository.Save();
                     }
-                }
             }
             catch (BrokenCircuitException)
             {
@@ -322,21 +331,17 @@ namespace LRPManagement.Services
             {
                 var charSkills = await _charSkillService.Get();
                 if (charSkills != null)
-                {
                     foreach (var charSkill in charSkills)
                     {
                         // Ensure that charSKill is not already present and necessary items are stored
                         if (await CharSkillExists(charSkill.SkillId, charSkill.CharacterId) ||
                             await _characterRepository.GetCharacterRef(charSkill.CharacterId) == null ||
                             await _skillRepository.GetSkill(charSkill.SkillId) == null)
-                        {
                             continue;
-                        }
 
                         _charSkillRepository.AddSkillToCharacter(charSkill.SkillId, charSkill.CharacterId);
                         await _charSkillRepository.Save();
                     }
-                }
             }
             catch (BrokenCircuitException)
             {

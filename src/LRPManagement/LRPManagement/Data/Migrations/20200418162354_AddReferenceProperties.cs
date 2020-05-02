@@ -6,28 +6,36 @@ namespace LRPManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "SkillRef",
-                table: "Skills",
+            migrationBuilder.AddColumn<int>
+            (
+                "SkillRef",
+                "Skills",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
 
-            migrationBuilder.AddColumn<int>(
-                name: "CharRef",
-                table: "Players",
+            migrationBuilder.AddColumn<int>
+            (
+                "CharRef",
+                "Players",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "SkillRef",
-                table: "Skills");
+            migrationBuilder.DropColumn
+            (
+                "SkillRef",
+                "Skills"
+            );
 
-            migrationBuilder.DropColumn(
-                name: "CharRef",
-                table: "Players");
+            migrationBuilder.DropColumn
+            (
+                "CharRef",
+                "Players"
+            );
         }
     }
 }

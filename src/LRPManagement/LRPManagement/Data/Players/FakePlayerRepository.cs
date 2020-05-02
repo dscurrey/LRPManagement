@@ -32,7 +32,8 @@ namespace LRPManagement.Data.Players
 
         public async Task<Player> GetPlayerAccountRef(string id)
         {
-            return await Task.FromResult(_list.FirstOrDefault(p => p.PlayerRef.ToString().ToLower().Equals(id.ToLower())));
+            return await Task.FromResult
+                (_list.FirstOrDefault(p => p.PlayerRef.ToString().ToLower().Equals(id.ToLower())));
         }
 
         public void InsertPlayer(Player player)

@@ -27,10 +27,7 @@ namespace LRPManagement.Data.Bonds
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.PostAsync("api/bonds/", bond, new JsonMediaTypeFormatter());
-            if (resp.IsSuccessStatusCode)
-            {
-                return bond;
-            }
+            if (resp.IsSuccessStatusCode) return bond;
 
             return null;
         }
@@ -39,10 +36,7 @@ namespace LRPManagement.Data.Bonds
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.DeleteAsync("api/bonds/" + id);
-            if (resp.IsSuccessStatusCode)
-            {
-                return true;
-            }
+            if (resp.IsSuccessStatusCode) return true;
 
             return false;
         }
@@ -90,10 +84,7 @@ namespace LRPManagement.Data.Bonds
 
         private HttpClient GetHttpClient(string s)
         {
-            if (Client != null && _clientFactory == null)
-            {
-                return Client;
-            }
+            if (Client != null && _clientFactory == null) return Client;
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["ItemsURL"]);
             return client;

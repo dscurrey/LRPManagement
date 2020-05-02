@@ -30,10 +30,7 @@ namespace LRP.Items.Controllers
         {
             var bond = await _repository.Get(id);
 
-            if (bond == null)
-            {
-                return NotFound();
-            }
+            if (bond == null) return NotFound();
 
             return bond;
         }
@@ -47,7 +44,7 @@ namespace LRP.Items.Controllers
             _repository.Insert(bond);
             await _repository.Save();
 
-            return CreatedAtAction("GetBond", new { id = bond.Id }, bond);
+            return CreatedAtAction("GetBond", new {id = bond.Id}, bond);
         }
 
         // DELETE: api/Bonds/5
@@ -55,10 +52,7 @@ namespace LRP.Items.Controllers
         public async Task<ActionResult<Bond>> DeleteBond(int id)
         {
             var bond = await _repository.Get(id);
-            if (bond == null)
-            {
-                return NotFound();
-            }
+            if (bond == null) return NotFound();
 
             await _repository.Delete(id);
             await _repository.Save();

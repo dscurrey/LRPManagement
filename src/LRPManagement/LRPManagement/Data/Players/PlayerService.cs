@@ -70,10 +70,7 @@ namespace LRPManagement.Data.Players
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.PutAsync("api/players/" + player.Id, player, new JsonMediaTypeFormatter());
-                if (resp.IsSuccessStatusCode)
-                {
-                    return player;
-                }
+                if (resp.IsSuccessStatusCode) return player;
             }
             catch (TaskCanceledException ex)
             {
@@ -89,10 +86,7 @@ namespace LRPManagement.Data.Players
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.PostAsync("api/players/", player, new JsonMediaTypeFormatter());
-                if (resp.IsSuccessStatusCode)
-                {
-                    return player;
-                }
+                if (resp.IsSuccessStatusCode) return player;
             }
             catch (TaskCanceledException ex)
             {
@@ -108,10 +102,7 @@ namespace LRPManagement.Data.Players
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.DeleteAsync("api/players/" + id);
-                if (resp.IsSuccessStatusCode)
-                {
-                    return id;
-                }
+                if (resp.IsSuccessStatusCode) return id;
             }
             catch (TaskCanceledException ex)
             {
@@ -123,10 +114,7 @@ namespace LRPManagement.Data.Players
 
         private HttpClient GetHttpClient(string s)
         {
-            if (Client != null && _clientFactory == null)
-            {
-                return Client;
-            }
+            if (Client != null && _clientFactory == null) return Client;
 
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["PlayersURL"]);

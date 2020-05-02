@@ -6,29 +6,37 @@ namespace LRP.Items.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "PlayerId",
-                table: "Bonds");
+            migrationBuilder.DropColumn
+            (
+                "PlayerId",
+                "Bonds"
+            );
 
-            migrationBuilder.AddColumn<int>(
-                name: "CharacterId",
-                table: "Bonds",
+            migrationBuilder.AddColumn<int>
+            (
+                "CharacterId",
+                "Bonds",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "CharacterId",
-                table: "Bonds");
+            migrationBuilder.DropColumn
+            (
+                "CharacterId",
+                "Bonds"
+            );
 
-            migrationBuilder.AddColumn<int>(
-                name: "PlayerId",
-                table: "Bonds",
-                type: "int",
+            migrationBuilder.AddColumn<int>
+            (
+                "PlayerId",
+                "Bonds",
+                "int",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
     }
 }

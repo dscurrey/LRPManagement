@@ -6,9 +6,10 @@ namespace LRP.Skills.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "CharacterSkill",
-                columns: table => new
+            migrationBuilder.CreateTable
+            (
+                "CharacterSkill",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -18,24 +19,31 @@ namespace LRP.Skills.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CharacterSkill", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CharacterSkill_Skill_SkillId",
-                        column: x => x.SkillId,
-                        principalTable: "Skill",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                    table.ForeignKey
+                    (
+                        "FK_CharacterSkill_Skill_SkillId",
+                        x => x.SkillId,
+                        "Skill",
+                        "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterSkill_SkillId",
-                table: "CharacterSkill",
-                column: "SkillId");
+            migrationBuilder.CreateIndex
+            (
+                "IX_CharacterSkill_SkillId",
+                "CharacterSkill",
+                "SkillId"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "CharacterSkill");
+            migrationBuilder.DropTable
+            (
+                "CharacterSkill"
+            );
         }
     }
 }

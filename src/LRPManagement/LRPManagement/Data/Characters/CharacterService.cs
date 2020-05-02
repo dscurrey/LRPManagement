@@ -18,7 +18,9 @@ namespace LRPManagement.Data.Characters
 
         public HttpClient Client { get; set; }
 
-        public CharacterService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<CharacterService> logger)
+        public CharacterService(IHttpClientFactory clientFactory,
+            IConfiguration config,
+            ILogger<CharacterService> logger)
         {
             _clientFactory = clientFactory;
             _config = config;
@@ -85,11 +87,9 @@ namespace LRPManagement.Data.Characters
             try
             {
                 var client = GetHttpClient("StandardRequest");
-                var resp = await client.PutAsync("api/characters/" + character.Id, character, new JsonMediaTypeFormatter());
-                if (resp.IsSuccessStatusCode)
-                {
-                    return character;
-                }
+                var resp = await client.PutAsync
+                    ("api/characters/" + character.Id, character, new JsonMediaTypeFormatter());
+                if (resp.IsSuccessStatusCode) return character;
             }
             catch (TaskCanceledException ex)
             {
@@ -105,10 +105,7 @@ namespace LRPManagement.Data.Characters
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.PostAsync("api/characters/", character, new JsonMediaTypeFormatter());
-                if (resp.IsSuccessStatusCode)
-                {
-                    return character;
-                }
+                if (resp.IsSuccessStatusCode) return character;
             }
             catch (TaskCanceledException ex)
             {
@@ -124,10 +121,7 @@ namespace LRPManagement.Data.Characters
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.DeleteAsync("api/characters/" + id);
-                if (resp.IsSuccessStatusCode)
-                {
-                    return id;
-                }
+                if (resp.IsSuccessStatusCode) return id;
             }
             catch (TaskCanceledException ex)
             {
@@ -139,10 +133,7 @@ namespace LRPManagement.Data.Characters
 
         private HttpClient GetHttpClient(string s)
         {
-            if (Client != null && _clientFactory == null)
-            {
-                return Client;
-            }
+            if (Client != null && _clientFactory == null) return Client;
 
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["CharactersUrl"]);

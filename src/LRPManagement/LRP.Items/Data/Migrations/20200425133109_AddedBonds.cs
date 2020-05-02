@@ -6,9 +6,10 @@ namespace LRP.Items.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Bonds",
-                columns: table => new
+            migrationBuilder.CreateTable
+            (
+                "Bonds",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -18,24 +19,31 @@ namespace LRP.Items.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bonds", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bonds_Craftables_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "Craftables",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                    table.ForeignKey
+                    (
+                        "FK_Bonds_Craftables_ItemId",
+                        x => x.ItemId,
+                        "Craftables",
+                        "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Bonds_ItemId",
-                table: "Bonds",
-                column: "ItemId");
+            migrationBuilder.CreateIndex
+            (
+                "IX_Bonds_ItemId",
+                "Bonds",
+                "ItemId"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Bonds");
+            migrationBuilder.DropTable
+            (
+                "Bonds"
+            );
         }
     }
 }

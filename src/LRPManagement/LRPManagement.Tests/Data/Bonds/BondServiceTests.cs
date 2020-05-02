@@ -22,22 +22,27 @@ namespace LRPManagement.Tests.Data.Bonds
     {
         private static class TestData
         {
-            public static List<Bond> Bonds() => new List<Bond>
+            public static List<Bond> Bonds()
             {
-                new Bond {Id = 1, CharacterId = 1, ItemId = 1},
-                new Bond { Id = 2, CharacterId = 1, ItemId = 22},
-                new Bond { Id = 3, CharacterId = 2, ItemId = 4}
-            };
+                return new List<Bond>
+                {
+                    new Bond {Id = 1, CharacterId = 1, ItemId = 1},
+                    new Bond {Id = 2, CharacterId = 1, ItemId = 22},
+                    new Bond {Id = 3, CharacterId = 2, ItemId = 4}
+                };
+            }
         }
 
         private Mock<HttpMessageHandler> CreateHttpMock(HttpResponseMessage expected)
         {
             var mock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
             mock.Protected()
-                .Setup<Task<HttpResponseMessage>>(
+                .Setup<Task<HttpResponseMessage>>
+                (
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
-                    ItExpr.IsAny<CancellationToken>())
+                    ItExpr.IsAny<CancellationToken>()
+                )
                 .ReturnsAsync(expected)
                 .Verifiable();
             return mock;
@@ -77,10 +82,10 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-            { Client = client };
+                {Client = client};
 
             // Act
-            var newBond = new Bond { Id = 5, ItemId = 7, CharacterId = 2 };
+            var newBond = new Bond {Id = 5, ItemId = 7, CharacterId = 2};
             var result = await service.Create(newBond);
 
             // Assert
@@ -100,7 +105,7 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.Delete(bondId);
@@ -120,7 +125,7 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.Get();
@@ -146,7 +151,7 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-            { Client = client };
+                {Client = client};
 
             // Act
             var result = await service.Get(bondId);

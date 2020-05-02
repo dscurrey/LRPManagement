@@ -15,14 +15,37 @@ namespace LRP.Items.Tests.Controllers
     {
         private static class TestData
         {
-            public static List<Craftable> Items() => new List<Craftable>
+            public static List<Craftable> Items()
             {
-                new Craftable { Id = 1, Name = "Item 1", Requirement = "Requirement 1", Materials = "Material 1", Effect = "Effect 1", Form = "Form 1"},
-                new Craftable { Id = 2, Name = "Item 2", Requirement = "Requirement 2", Materials = "Material 2", Effect = "Effect 2", Form = "Form 2"},
-                new Craftable { Id = 3, Name = "Item 3", Requirement = "Requirement 3", Materials = "Material 3", Effect = "Effect 3", Form = "Form 3"},
-                new Craftable { Id = 4, Name = "Item 4", Requirement = "Requirement 4", Materials = "Material 4", Effect = "Effect 4", Form = "Form 4"},
-                new Craftable { Id = 5, Name = "Item 5", Requirement = "Requirement 5", Materials = "Material 5", Effect = "Effect 5", Form = "Form 5"}
-            };
+                return new List<Craftable>
+                {
+                    new Craftable
+                    {
+                        Id = 1, Name = "Item 1", Requirement = "Requirement 1", Materials = "Material 1",
+                        Effect = "Effect 1", Form = "Form 1"
+                    },
+                    new Craftable
+                    {
+                        Id = 2, Name = "Item 2", Requirement = "Requirement 2", Materials = "Material 2",
+                        Effect = "Effect 2", Form = "Form 2"
+                    },
+                    new Craftable
+                    {
+                        Id = 3, Name = "Item 3", Requirement = "Requirement 3", Materials = "Material 3",
+                        Effect = "Effect 3", Form = "Form 3"
+                    },
+                    new Craftable
+                    {
+                        Id = 4, Name = "Item 4", Requirement = "Requirement 4", Materials = "Material 4",
+                        Effect = "Effect 4", Form = "Form 4"
+                    },
+                    new Craftable
+                    {
+                        Id = 5, Name = "Item 5", Requirement = "Requirement 5", Materials = "Material 5",
+                        Effect = "Effect 5", Form = "Form 5"
+                    }
+                };
+            }
         }
 
         [TestMethod]

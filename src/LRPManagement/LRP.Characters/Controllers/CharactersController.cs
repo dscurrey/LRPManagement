@@ -35,18 +35,21 @@ namespace LRP.Characters.Controllers
         public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacter()
         {
             var chars = await _repository.GetAll();
-            return Ok(chars.Select
+            return Ok
             (
-                c => new CharacterDTO
-                {
-                    Id = c.Id,
-                    IsActive = c.IsActive,
-                    IsRetired = c.IsRetired,
-                    Name = c.Name,
-                    PlayerId = c.PlayerId,
-                    Xp = c.Xp
-                }
-            ).ToList());
+                chars.Select
+                (
+                    c => new CharacterDTO
+                    {
+                        Id = c.Id,
+                        IsActive = c.IsActive,
+                        IsRetired = c.IsRetired,
+                        Name = c.Name,
+                        PlayerId = c.PlayerId,
+                        Xp = c.Xp
+                    }
+                ).ToList()
+            );
         }
 
         // GET: api/Characters/5
@@ -60,12 +63,9 @@ namespace LRP.Characters.Controllers
         {
             var character = await _repository.GetCharacter(id);
 
-            if (character == null)
-            {
-                return NotFound();
-            }
+            if (character == null) return NotFound();
 
-            CharacterDTO charDto = new CharacterDTO
+            var charDto = new CharacterDTO
             {
                 Id = character.Id,
                 IsActive = character.IsActive,
@@ -89,10 +89,7 @@ namespace LRP.Characters.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, CharacterDTO character)
         {
-            if (id != character.Id)
-            {
-                return BadRequest();
-            }
+            if (id != character.Id) return BadRequest();
 
             var updChar = new Character
             {
@@ -103,10 +100,7 @@ namespace LRP.Characters.Controllers
                 Xp = character.Xp
             };
 
-            if (!await CharacterExists(id))
-            {
-                return NotFound();
-            }
+            if (!await CharacterExists(id)) return NotFound();
 
             _repository.UpdateCharacter(updChar);
 
@@ -141,10 +135,7 @@ namespace LRP.Characters.Controllers
         [HttpPost]
         public async Task<ActionResult<Character>> PostCharacter([FromBody] CharacterDTO character)
         {
-            if (String.IsNullOrEmpty(character.Name))
-            {
-                return BadRequest("Name cannot be empty.");
-            }
+            if (string.IsNullOrEmpty(character.Name)) return BadRequest("Name cannot be empty.");
 
             if (await _repository.GetCharacter(character.Id) != null)
             {
@@ -175,7 +166,7 @@ namespace LRP.Characters.Controllers
             _repository.InsertCharacter(newCharacter);
             await _repository.Save();
 
-            return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
+            return CreatedAtAction("GetCharacter", new {id = character.Id}, character);
         }
 
         // DELETE: api/Characters/5
@@ -187,10 +178,7 @@ namespace LRP.Characters.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Character>> DeleteCharacter(int id)
         {
-            if (!await CharacterExists(id))
-            {
-                return NotFound();
-            }
+            if (!await CharacterExists(id)) return NotFound();
 
             var character = await _repository.GetCharacter(id);
 
