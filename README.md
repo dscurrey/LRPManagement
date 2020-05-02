@@ -6,7 +6,7 @@
 
 ## Overview
 This repository contains two main projects:
-- an ASP .NET Core solution, which contains the main web app, as well as all the attached services, backend, and dockerfiles.
+- An ASP .NET Core solution, which contains the main web app, as well as all the attached services, backend, and dockerfiles.
 - An Android application - the refereeing app.
 
 ## Testing
