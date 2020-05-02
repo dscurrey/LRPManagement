@@ -5,16 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 import uk.co.dcurrey.owlapp.model.repository.Repository;
-import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
-import uk.co.dcurrey.owlapp.sync.Synchroniser;
 
 public class SkillDetailsActivity extends AppCompatActivity
 {
@@ -37,20 +33,15 @@ public class SkillDetailsActivity extends AppCompatActivity
         skillName.setText(skill.Name);
         skillXp.setText(""+skill.Xp);
 
-        saveChanges.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        saveChanges.setOnClickListener(v -> {
+            if (skill.Name != skillName.getText().toString() || skill.Xp != Integer.parseInt(skillXp.getText().toString()))
             {
-                if (skill.Name != skillName.getText().toString() || skill.Xp != Integer.parseInt(skillXp.getText().toString()))
-                {
-                    skill.Name = skillName.getText().toString();
-                    skill.Xp = Integer.parseInt(skillXp.getText().toString());
-                    skill.IsSynced = false;
-                    Repository.getInstance().getSkillRepository().update(skill);
-                }
-                finish();
+                skill.Name = skillName.getText().toString();
+                skill.Xp = Integer.parseInt(skillXp.getText().toString());
+                skill.IsSynced = false;
+                Repository.getInstance().getSkillRepository().update(skill);
             }
+            finish();
         });
     }
 

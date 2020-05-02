@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -37,35 +36,30 @@ public class NewItemActivity extends AppCompatActivity
         mItemReq = findViewById(R.id.newItemReq);
         final Button btn = findViewById(R.id.item_save);
 
-        btn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        btn.setOnClickListener(v -> {
+            // Save
+            Intent replyIntent = new Intent();
+            if (TextUtils.isEmpty(mItemName.getText()) || TextUtils.isEmpty(mItemForm.getText()))
             {
-                // Save
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mItemName.getText()) || TextUtils.isEmpty(mItemForm.getText()))
-                {
-                    setResult(RESULT_CANCELED, replyIntent);
-                }
-                else
-                {
-                    String itemName = mItemName.getText().toString();
-                    String itemForm = mItemForm.getText().toString();
-                    String itemReq = mItemReq.getText().toString();
-                    String itemEffects = mItemEffects.getText().toString();
-                    String itemMats = mItemMats.getText().toString();
-
-                    replyIntent.putExtra(EXTRA_REPLY_ITEMNAME, itemName);
-                    replyIntent.putExtra(EXTRA_REPLY_ITEMFORM, itemForm);
-                    replyIntent.putExtra(EXTRA_REPLY_ITEMREQ, itemReq);
-                    replyIntent.putExtra(EXTRA_REPLY_ITEMEFFECTS, itemEffects);
-                    replyIntent.putExtra(EXTRA_REPLY_ITEMMATS, itemMats);
-
-                    setResult(RESULT_OK, replyIntent);
-                }
-                finish();
+                setResult(RESULT_CANCELED, replyIntent);
             }
+            else
+            {
+                String itemName = mItemName.getText().toString();
+                String itemForm = mItemForm.getText().toString();
+                String itemReq = mItemReq.getText().toString();
+                String itemEffects = mItemEffects.getText().toString();
+                String itemMats = mItemMats.getText().toString();
+
+                replyIntent.putExtra(EXTRA_REPLY_ITEMNAME, itemName);
+                replyIntent.putExtra(EXTRA_REPLY_ITEMFORM, itemForm);
+                replyIntent.putExtra(EXTRA_REPLY_ITEMREQ, itemReq);
+                replyIntent.putExtra(EXTRA_REPLY_ITEMEFFECTS, itemEffects);
+                replyIntent.putExtra(EXTRA_REPLY_ITEMMATS, itemMats);
+
+                setResult(RESULT_OK, replyIntent);
+            }
+            finish();
         });
     }
 }

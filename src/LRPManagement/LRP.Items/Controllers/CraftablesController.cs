@@ -1,9 +1,9 @@
-﻿using System;
-using DTO;
+﻿using DTO;
 using LRP.Items.Data.Craftables;
 using LRP.Items.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,10 +52,7 @@ namespace LRP.Items.Controllers
                 Requirement = craftable.Requirement
             };
 
-            if (craftable == null)
-            {
-                return NotFound();
-            }
+            if (craftable == null) return NotFound();
 
             return Ok(dto);
         }
@@ -72,10 +69,7 @@ namespace LRP.Items.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCraftable(int id, Craftable craftable)
         {
-            if (id != craftable.Id)
-            {
-                return BadRequest();
-            }
+            if (id != craftable.Id) return BadRequest();
 
             _craftRepository.UpdateCraftable(craftable);
 
@@ -86,13 +80,9 @@ namespace LRP.Items.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!await CraftableExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
@@ -109,12 +99,10 @@ namespace LRP.Items.Controllers
         [HttpPost]
         public async Task<ActionResult<Craftable>> PostCraftable(Craftable craftable)
         {
-            if (String.IsNullOrEmpty(craftable.Name) || String.IsNullOrEmpty
-                (craftable.Requirement) || String.IsNullOrEmpty(craftable.Materials) || String.IsNullOrEmpty
-                (craftable.Form) || String.IsNullOrEmpty(craftable.Effect))
-            {
+            if (string.IsNullOrEmpty(craftable.Name) || string.IsNullOrEmpty
+                (craftable.Requirement) || string.IsNullOrEmpty(craftable.Materials) || string.IsNullOrEmpty
+                (craftable.Form) || string.IsNullOrEmpty(craftable.Effect))
                 return BadRequest();
-            }
 
             if (await _craftRepository.GetCraftable(craftable.Id) != null)
             {
@@ -125,7 +113,7 @@ namespace LRP.Items.Controllers
             _craftRepository.InsertCraftable(craftable);
             await _craftRepository.Save();
 
-            return CreatedAtAction("GetCraftable", new { id = craftable.Id }, craftable);
+            return CreatedAtAction("GetCraftable", new {id = craftable.Id}, craftable);
         }
 
         // DELETE: api/Craftables/5
@@ -138,10 +126,7 @@ namespace LRP.Items.Controllers
         public async Task<ActionResult<Craftable>> DeleteCraftable(int id)
         {
             var craftable = await _craftRepository.GetCraftable(id);
-            if (craftable == null)
-            {
-                return NotFound();
-            }
+            if (craftable == null) return NotFound();
 
             await _craftRepository.DeleteCraftable(id);
             await _craftRepository.Save();

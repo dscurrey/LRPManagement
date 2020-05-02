@@ -3,7 +3,6 @@ package uk.co.dcurrey.owlapp.ui.functions;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,20 +28,15 @@ public class BondItemActivity extends AppCompatActivity
         itemId = findViewById(R.id.bondItem);
         btnSave = findViewById(R.id.saveBond);
 
-        btnSave.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                CharacterItemEntity charItem = new CharacterItemEntity();
-                charItem.CharacterId = Integer.parseInt(charId.getText().toString());
-                charItem.ItemId = Integer.parseInt(itemId.getText().toString());
-                charItem.IsSynced = false;
+        btnSave.setOnClickListener(v -> {
+            CharacterItemEntity charItem = new CharacterItemEntity();
+            charItem.CharacterId = Integer.parseInt(charId.getText().toString());
+            charItem.ItemId = Integer.parseInt(itemId.getText().toString());
+            charItem.IsSynced = false;
 
-                saveBond(charItem);
+            saveBond(charItem);
 
-                finish();
-            }
+            finish();
         });
     }
 

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LRP.Skills.Data;
-using LRP.Skills.Data.Skills;
-using LRP.Skills.Models;
+﻿using LRP.Skills.Models;
 using LRPManagement.Data.CharacterSkills;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LRP.Skills.Controllers
 {
@@ -36,10 +30,7 @@ namespace LRP.Skills.Controllers
         {
             var characterSkill = await _repository.Get(id);
 
-            if (characterSkill == null)
-            {
-                return NotFound();
-            }
+            if (characterSkill == null) return NotFound();
 
             return characterSkill;
         }
@@ -53,7 +44,7 @@ namespace LRP.Skills.Controllers
             _repository.Insert(characterSkill);
             await _repository.Save();
 
-            return CreatedAtAction("GetCharacterSkill", new { id = characterSkill.Id }, characterSkill);
+            return CreatedAtAction("GetCharacterSkill", new {id = characterSkill.Id}, characterSkill);
         }
 
         // DELETE: api/CharacterSkills/5
@@ -61,10 +52,7 @@ namespace LRP.Skills.Controllers
         public async Task<ActionResult<CharacterSkill>> DeleteCharacterSkill(int id)
         {
             var characterSkill = await _repository.Get(id);
-            if (characterSkill == null)
-            {
-                return NotFound();
-            }
+            if (characterSkill == null) return NotFound();
 
             await _repository.Delete(id);
             await _repository.Save();

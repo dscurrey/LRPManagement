@@ -18,7 +18,7 @@ import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder>
 {
-    class PlayerViewHolder extends RecyclerView.ViewHolder
+    static class PlayerViewHolder extends RecyclerView.ViewHolder
     {
         private final TextView playerName;
         private final TextView playerId;
@@ -51,7 +51,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     public PlayerListAdapter.PlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View itemView = mInflater.inflate(R.layout.recycler_item_player, parent, false);
-        return new PlayerListAdapter.PlayerViewHolder(itemView);
+        return new PlayerViewHolder(itemView);
     }
 
     public void onBindViewHolder(PlayerListAdapter.PlayerViewHolder holder, int pos)
@@ -75,9 +75,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             holder.playerSyncView.setVisibility(View.VISIBLE);
 
             // OnClick
-            holder.itemView.setOnClickListener((v) -> {
-                openPlayer(current.Id);
-            });
+            holder.itemView.setOnClickListener((v) -> openPlayer(current.Id));
         }
         else
         {

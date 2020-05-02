@@ -17,7 +17,9 @@ namespace LRPManagement.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public RolesController(AccountsContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public RolesController(AccountsContext context,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
@@ -167,7 +169,7 @@ namespace LRPManagement.Controllers
             var user = await _context.Users.FirstOrDefaultAsync
                 (u => u.UserName.ToUpper().Equals(username.ToUpper()));
 
-            if ((await _userManager.IsInRoleAsync(user, rolename)) || user != null)
+            if (await _userManager.IsInRoleAsync(user, rolename) || user != null)
             {
                 await _userManager.RemoveFromRoleAsync(user, rolename);
                 ViewBag.ResultMessage = "Removed from role.";

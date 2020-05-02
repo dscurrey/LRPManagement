@@ -24,8 +24,11 @@ namespace LRPManagement.Controllers
         private readonly ISkillRepository _skillRepository;
         private readonly ICharacterSkillRepository _charSkillRepository;
 
-        public CharactersController(ICharacterService characterService, ICharacterRepository characterRepository, IPlayerRepository playerRepository,
-            ISkillRepository skillRepository, ICharacterSkillRepository charSkillRepository)
+        public CharactersController(ICharacterService characterService,
+            ICharacterRepository characterRepository,
+            IPlayerRepository playerRepository,
+            ISkillRepository skillRepository,
+            ICharacterSkillRepository charSkillRepository)
         {
             _characterService = characterService;
             _characterRepository = characterRepository;
@@ -69,27 +72,18 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             TempData["CharInoperativeMsg"] = "";
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var character = await _characterRepository.GetCharacter(id.Value);
-                if (character == null)
-                {
-                    return NotFound();
-                }
+                if (character == null) return NotFound();
 
                 var player = await _playerRepository.GetPlayerAccountRef(User.Identity.Name);
                 if (User.IsInRole("Admin") || User.IsInRole("Referee") || character.PlayerId == player.Id)
                 {
                     var skills = new List<Skill>();
-                    foreach (var charSkill in character.CharacterSkills)
-                    {
-                        skills.Add(charSkill.Skill);
-                    }
+                    foreach (var charSkill in character.CharacterSkills) skills.Add(charSkill.Skill);
 
                     var charView = new CharacterDetailsViewModel
                     {
@@ -113,6 +107,7 @@ namespace LRPManagement.Controllers
             {
                 HandleBrokenCircuit();
             }
+
             return View();
         }
 
@@ -127,26 +122,22 @@ namespace LRPManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PlayerId,Name,IsActive,IsRetired")] CharacterDTO characterDto)
+        public async Task<IActionResult> Create([Bind("Id,PlayerId,Name,IsActive,IsRetired")]
+            CharacterDTO characterDto)
         {
             TempData["CharInoperativeMsg"] = "";
 
             try
             {
                 var player = await _playerRepository.GetPlayerAccountRef(User.Identity.Name);
-                if (player == null)
-                {
-                    return View();
-                }
+                if (player == null) return View();
 
                 characterDto.PlayerId = player.Id;
                 characterDto.Xp = 8;
                 var resp = await _characterService.CreateCharacter(characterDto);
                 if (resp == null)
-                {
                     // Unsuccessful/Error
                     return View(characterDto);
-                }
             }
             catch (BrokenCircuitException)
             {
@@ -161,18 +152,12 @@ namespace LRPManagement.Controllers
         // GET: Characters/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var character = await _characterService.GetCharacter(id.Value);
-                if (character != null)
-                {
-                    return View(character);
-                }
+                if (character != null) return View(character);
             }
             catch (BrokenCircuitException)
             {
@@ -187,20 +172,16 @@ namespace LRPManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PlayerId,Name,IsActive,IsRetired")] CharacterDTO characterDTO)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("Id,PlayerId,Name,IsActive,IsRetired")]
+            CharacterDTO characterDTO)
         {
-            if (id != characterDTO.Id)
-            {
-                return NotFound();
-            }
+            if (id != characterDTO.Id) return NotFound();
 
             try
             {
                 var resp = await _characterService.UpdateCharacter(characterDTO);
-                if (resp != null)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
+                if (resp != null) return RedirectToAction(nameof(Index));
 
                 var updChar = new Character
                 {
@@ -224,18 +205,12 @@ namespace LRPManagement.Controllers
         // GET: Characters/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var character = await _characterService.GetCharacter(id.Value);
-                if (character != null)
-                {
-                    return View(character);
-                }
+                if (character != null) return View(character);
             }
             catch (BrokenCircuitException)
             {
@@ -246,7 +221,8 @@ namespace LRPManagement.Controllers
         }
 
         // POST: Characters/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -268,10 +244,7 @@ namespace LRPManagement.Controllers
 
         public async Task<IActionResult> AddSkill(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
@@ -317,7 +290,6 @@ namespace LRPManagement.Controllers
             var character = await _characterRepository.GetCharacter(charSkill.CharId);
 
             if (skill != null && character != null)
-            {
                 if (character.Xp - skill.XpCost >= 0)
                 {
                     // Subtract cost from character, add and save to link table
@@ -330,9 +302,8 @@ namespace LRPManagement.Controllers
                     await _characterRepository.Save();
                     await _characterService.UpdateCharacter(character);
 
-                    return RedirectToAction(nameof(Details), new { id });
+                    return RedirectToAction(nameof(Details), new {id});
                 }
-            }
 
             return View();
         }
@@ -340,10 +311,7 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> SetRetire(int id)
         {
             var character = await _characterRepository.GetCharacter(id);
-            if (character == null)
-            {
-                return NotFound();
-            }
+            if (character == null) return NotFound();
 
             if (!character.IsRetired)
             {
@@ -354,18 +322,15 @@ namespace LRPManagement.Controllers
                 await _characterService.UpdateCharacter(character);
             }
 
-            return RedirectToAction(nameof(Details), "Players", new { id = character.PlayerId });
+            return RedirectToAction(nameof(Details), "Players", new {id = character.PlayerId});
         }
 
         public async Task<IActionResult> SetActive(int id)
         {
             var character = await _characterRepository.GetCharacter(id);
-            if (character == null)
-            {
-                return NotFound();
-            }
+            if (character == null) return NotFound();
 
-            if ((!character.IsRetired) && (!character.IsActive))
+            if (!character.IsRetired && !character.IsActive)
             {
                 character.IsActive = true;
                 _characterRepository.UpdateCharacter(character);
@@ -373,7 +338,7 @@ namespace LRPManagement.Controllers
                 await _characterService.UpdateCharacter(character);
             }
 
-            return RedirectToAction(nameof(Details), "Players", new { id = character.PlayerId });
+            return RedirectToAction(nameof(Details), "Players", new {id = character.PlayerId});
         }
 
         private void HandleBrokenCircuit()

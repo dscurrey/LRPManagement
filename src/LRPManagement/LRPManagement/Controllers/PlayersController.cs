@@ -46,27 +46,17 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             TempData["PlayInoperativeMsg"] = "";
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var player = await _playerRepository.GetPlayer(id.Value);
-                if (player == null)
-                {
-                    return NotFound();
-                }
+                if (player == null) return NotFound();
 
                 if (player.AccountRef == User.Identity.Name || User.IsInRole("Admin") || User.IsInRole("Referee"))
-                {
                     return View(player);
-                }
                 else
-                {
                     return View(nameof(Index));
-                }
             }
             catch
             {
@@ -89,7 +79,8 @@ namespace LRPManagement.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateJoined")] PlayerDTO playerDTO)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateJoined")]
+            PlayerDTO playerDTO)
         {
             TempData["PlayInoperativeMsg"] = "";
             try
@@ -100,10 +91,8 @@ namespace LRPManagement.Controllers
 
                 var resp = await _playerService.CreatePlayer(playerDTO);
                 if (resp == null)
-                {
                     // Unsuccessful/Error
                     return View(playerDTO);
-                }
             }
             catch (BrokenCircuitException)
             {
@@ -117,18 +106,12 @@ namespace LRPManagement.Controllers
         // GET: Players/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var player = await _playerService.GetPlayer(id.Value);
-                if (player != null)
-                {
-                    return View(player);
-                }
+                if (player != null) return View(player);
             }
             catch (BrokenCircuitException)
             {
@@ -144,20 +127,16 @@ namespace LRPManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DateJoined")] PlayerDTO playerDTO)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("Id,FirstName,LastName,DateJoined")]
+            PlayerDTO playerDTO)
         {
-            if (id != playerDTO.Id)
-            {
-                return NotFound();
-            }
+            if (id != playerDTO.Id) return NotFound();
 
             try
             {
                 var resp = await _playerService.UpdatePlayer(playerDTO);
-                if (resp != null)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
+                if (resp != null) return RedirectToAction(nameof(Index));
 
                 var updPlayer = new Player
                 {
@@ -180,18 +159,12 @@ namespace LRPManagement.Controllers
         // GET: Players/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var player = await _playerService.GetPlayer(id.Value);
-                if (player != null)
-                {
-                    return View(player);
-                }
+                if (player != null) return View(player);
             }
             catch (BrokenCircuitException)
             {
@@ -203,7 +176,8 @@ namespace LRPManagement.Controllers
         }
 
         // POST: Players/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -244,10 +218,7 @@ namespace LRPManagement.Controllers
                 {
                     foreach (var player in players)
                     {
-                        if (await _playerRepository.GetPlayerRef(player.Id) != null)
-                        {
-                            continue;
-                        }
+                        if (await _playerRepository.GetPlayerRef(player.Id) != null) continue;
 
                         var newPlayer = new Player
                         {

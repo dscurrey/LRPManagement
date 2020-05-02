@@ -31,17 +31,20 @@ namespace LRP.Players.Controllers
         public async Task<ActionResult<IEnumerable<PlayerDTO>>> GetPlayer()
         {
             var players = await _repository.GetAll();
-            return Ok(players.Select
+            return Ok
             (
-                p => new PlayerDTO
-                {
-                    Id = p.Id,
-                    DateJoined = p.DateJoined,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    AccountRef = p.AccountRef
-                }
-            ).ToList());
+                players.Select
+                (
+                    p => new PlayerDTO
+                    {
+                        Id = p.Id,
+                        DateJoined = p.DateJoined,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName,
+                        AccountRef = p.AccountRef
+                    }
+                ).ToList()
+            );
         }
 
         // GET: api/Players/5
@@ -50,12 +53,9 @@ namespace LRP.Players.Controllers
         {
             var player = await _repository.GetPlayer(id);
 
-            if (player == null)
-            {
-                return NotFound();
-            }
+            if (player == null) return NotFound();
 
-            PlayerDTO playDto = new PlayerDTO
+            var playDto = new PlayerDTO
             {
                 DateJoined = player.DateJoined,
                 FirstName = player.FirstName,
@@ -73,17 +73,11 @@ namespace LRP.Players.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlayer(int id, PlayerDTO player)
         {
-            if (id != player.Id)
-            {
-                return BadRequest();
-            }
+            if (id != player.Id) return BadRequest();
 
             var exPlayer = await _repository.GetPlayer(id);
 
-            if (!await PlayerExists(id))
-            {
-                return NotFound();
-            }
+            if (!await PlayerExists(id)) return NotFound();
 
             var updPlayer = new Player
             {
@@ -122,10 +116,8 @@ namespace LRP.Players.Controllers
         [HttpPost]
         public async Task<ActionResult<Player>> PostPlayer([FromBody] PlayerDTO player)
         {
-            if (String.IsNullOrEmpty(player.FirstName) || String.IsNullOrEmpty(player.LastName))
-            {
+            if (string.IsNullOrEmpty(player.FirstName) || string.IsNullOrEmpty(player.LastName))
                 return BadRequest("Requires First and Last Names");
-            }
 
             var dbPlayer = await _repository.GetPlayer(player.Id);
             if (dbPlayer != null)
@@ -149,17 +141,14 @@ namespace LRP.Players.Controllers
             _repository.InsertPlayer(newPlayer);
             await _repository.Save();
 
-            return CreatedAtAction("GetPlayer", new { id = player.Id }, player);
+            return CreatedAtAction("GetPlayer", new {id = player.Id}, player);
         }
 
         // DELETE: api/Players/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Player>> DeletePlayer(int id)
         {
-            if (!await PlayerExists(id))
-            {
-                return NotFound();
-            }
+            if (!await PlayerExists(id)) return NotFound();
 
             var player = await _repository.GetPlayer(id);
 

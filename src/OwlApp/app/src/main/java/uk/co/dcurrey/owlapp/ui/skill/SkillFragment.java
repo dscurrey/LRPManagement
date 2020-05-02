@@ -12,9 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +39,7 @@ public class SkillFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        SkillUIViewModel skillUIViewModel = ViewModelProviders.of(this).get(SkillUIViewModel.class);
+        SkillUIViewModel skillUIViewModel = new ViewModelProvider(this).get(SkillUIViewModel.class);
         View root = inflater.inflate(R.layout.fragment_skill, container, false);
 
         EditText searchTerm = root.findViewById(R.id.skillSearch);
@@ -54,14 +52,9 @@ public class SkillFragment extends Fragment
 
         // Viewmodel
         mSkillViewModel = new ViewModelProvider(this).get(SkillViewModel.class);
-        mSkillViewModel.getAllSkills().observe(getViewLifecycleOwner(), new Observer<List<SkillEntity>>()
-        {
-            @Override
-            public void onChanged(List<SkillEntity> skillEntities)
-            {
-                skills = skillEntities;
-                adapter.setSkills(skills);
-            }
+        mSkillViewModel.getAllSkills().observe(getViewLifecycleOwner(), skillEntities -> {
+            skills = skillEntities;
+            adapter.setSkills(skills);
         });
 
         // FAB

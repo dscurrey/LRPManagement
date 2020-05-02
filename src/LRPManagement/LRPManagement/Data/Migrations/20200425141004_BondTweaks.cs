@@ -6,18 +6,22 @@ namespace LRPManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Id",
-                table: "Bond",
+            migrationBuilder.AddColumn<int>
+            (
+                "Id",
+                "Bond",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Id",
-                table: "Bond");
+            migrationBuilder.DropColumn
+            (
+                "Id",
+                "Bond"
+            );
         }
     }
 }

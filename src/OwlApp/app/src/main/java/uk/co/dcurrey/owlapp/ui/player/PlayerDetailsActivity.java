@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,21 +33,16 @@ public class PlayerDetailsActivity extends AppCompatActivity
         playerFname.setText(player.FirstName);
         playerLname.setText(player.LastName);
 
-        saveChanges.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        saveChanges.setOnClickListener(v -> {
+            Toast.makeText(PlayerDetailsActivity.this, "DEBUG: Player Updated", Toast.LENGTH_SHORT).show();
+            if (player.FirstName != playerFname.getText().toString() || player.LastName != playerLname.getText().toString())
             {
-                Toast.makeText(PlayerDetailsActivity.this, "DEBUG: Player Updated", Toast.LENGTH_SHORT).show();
-                if (player.FirstName != playerFname.getText().toString() || player.LastName != playerLname.getText().toString())
-                {
-                    player.FirstName = playerFname.getText().toString();
-                    player.LastName = playerLname.getText().toString();
-                    player.IsSynced = false;
-                    Repository.getInstance().getPlayerRepository().update(player);
-                }
-                finish();
+                player.FirstName = playerFname.getText().toString();
+                player.LastName = playerLname.getText().toString();
+                player.IsSynced = false;
+                Repository.getInstance().getPlayerRepository().update(player);
             }
+            finish();
         });
 
     }

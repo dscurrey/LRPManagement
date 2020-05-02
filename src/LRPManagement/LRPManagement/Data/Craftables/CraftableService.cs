@@ -18,7 +18,9 @@ namespace LRPManagement.Data.Craftables
 
         public HttpClient Client { get; set; }
 
-        public CraftableService(IHttpClientFactory clientFactory, IConfiguration config, ILogger<CraftableService> logger)
+        public CraftableService(IHttpClientFactory clientFactory,
+            IConfiguration config,
+            ILogger<CraftableService> logger)
         {
             _clientFactory = clientFactory;
             _config = config;
@@ -29,10 +31,7 @@ namespace LRPManagement.Data.Craftables
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.PostAsync("api/craftables/", craftable, new JsonMediaTypeFormatter());
-            if (resp.IsSuccessStatusCode)
-            {
-                return craftable;
-            }
+            if (resp.IsSuccessStatusCode) return craftable;
 
             return null;
         }
@@ -41,10 +40,7 @@ namespace LRPManagement.Data.Craftables
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.DeleteAsync("api/craftables/" + id);
-            if (resp.IsSuccessStatusCode)
-            {
-                return id;
-            }
+            if (resp.IsSuccessStatusCode) return id;
 
             return 0;
         }
@@ -94,10 +90,7 @@ namespace LRPManagement.Data.Craftables
             var client = GetHttpClient("StandardRequest");
             var resp = await client.PutAsync("api/craftables/" + craftable.Id, craftable, new JsonMediaTypeFormatter());
 
-            if (resp.IsSuccessStatusCode)
-            {
-                return craftable;
-            }
+            if (resp.IsSuccessStatusCode) return craftable;
 
             return null;
         }
@@ -119,10 +112,7 @@ namespace LRPManagement.Data.Craftables
 
         private HttpClient GetHttpClient(string s)
         {
-            if (Client != null && _clientFactory == null)
-            {
-                return Client;
-            }
+            if (Client != null && _clientFactory == null) return Client;
 
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["ItemsURL"]);

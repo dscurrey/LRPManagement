@@ -1,6 +1,5 @@
 package uk.co.dcurrey.owlapp.ui.functions;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -41,41 +40,13 @@ public class FunctionsFragment extends Fragment
         TextView mSkillCountView = root.findViewById(R.id.skillCount);
         TextView mPlayerCountView = root.findViewById(R.id.playerCount);
 
-        mViewModel.getCharCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
-        {
-            @Override
-            public void onChanged(Integer integer)
-            {
-                mCharCountView.setText(""+integer);
-            }
-        });
+        mViewModel.getCharCount().observe(getViewLifecycleOwner(), integer -> mCharCountView.setText(""+integer));
 
-        mViewModel.getItemCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
-        {
-            @Override
-            public void onChanged(Integer integer)
-            {
-                mItemCountView.setText(""+integer);
-            }
-        });
+        mViewModel.getItemCount().observe(getViewLifecycleOwner(), integer -> mItemCountView.setText(""+integer));
 
-        mViewModel.getSkillCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
-        {
-            @Override
-            public void onChanged(Integer integer)
-            {
-                mSkillCountView.setText(""+integer);
-            }
-        });
+        mViewModel.getSkillCount().observe(getViewLifecycleOwner(), integer -> mSkillCountView.setText(""+integer));
 
-        mViewModel.getPlayerCount().observe(getViewLifecycleOwner(), new Observer<Integer>()
-        {
-            @Override
-            public void onChanged(Integer integer)
-            {
-                mPlayerCountView.setText(""+integer);
-            }
-        });
+        mViewModel.getPlayerCount().observe(getViewLifecycleOwner(), integer -> mPlayerCountView.setText(""+integer));
 
         return root;
     }
@@ -86,25 +57,15 @@ public class FunctionsFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         Button btnBond = root.findViewById(R.id.btnBond);
-        btnBond.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getContext(), BondItemActivity.class);
-                startActivity(intent);
-            }
+        btnBond.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), BondItemActivity.class);
+            startActivity(intent);
         });
 
         Button btnAddSkill = root.findViewById(R.id.btnCharSkill);
-        btnAddSkill.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getContext(), CharSkillActivity.class);
-                startActivity(intent);
-            }
+        btnAddSkill.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CharSkillActivity.class);
+            startActivity(intent);
         });
     }
 

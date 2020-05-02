@@ -1,7 +1,6 @@
 package uk.co.dcurrey.owlapp;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -123,20 +122,8 @@ public class MainActivity extends AppCompatActivity
 
         dialogBuilder.setTitle(R.string.prompt_title);
 
-        dialogBuilder.setPositiveButton(R.string.prompt_pos, new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                Synchroniser.resetDb(getApplicationContext());
-            }
-        })
-        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            }
+        dialogBuilder.setPositiveButton(R.string.prompt_pos, (dialog, which) -> Synchroniser.resetDb(getApplicationContext()))
+        .setNegativeButton(R.string.cancel, (dialog, which) -> {
         });
 
         AlertDialog dialog = dialogBuilder.create();

@@ -30,10 +30,7 @@ namespace LRPManagement.Data.Skills
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.PostAsync("api/skills/", skill, new JsonMediaTypeFormatter());
-                if (resp.IsSuccessStatusCode)
-                {
-                    return skill;
-                }
+                if (resp.IsSuccessStatusCode) return skill;
             }
             catch (TaskCanceledException ex)
             {
@@ -49,10 +46,7 @@ namespace LRPManagement.Data.Skills
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.DeleteAsync("api/skills" + id);
-                if (resp.IsSuccessStatusCode)
-                {
-                    return id;
-                }
+                if (resp.IsSuccessStatusCode) return id;
             }
             catch (TaskCanceledException ex)
             {
@@ -98,6 +92,7 @@ namespace LRPManagement.Data.Skills
             {
                 _logger.LogWarning("" + ex);
             }
+
             return null;
         }
 
@@ -118,10 +113,7 @@ namespace LRPManagement.Data.Skills
 
         private HttpClient GetHttpClient(string s)
         {
-            if (Client != null && _clientFactory == null)
-            {
-                return Client;
-            }
+            if (Client != null && _clientFactory == null) return Client;
 
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["SkillsURL"]);

@@ -1,5 +1,7 @@
 using LRP.Skills.Data;
+using LRP.Skills.Data.CharacterSkills;
 using LRP.Skills.Data.Skills;
+using LRPManagement.Data.CharacterSkills;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +11,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Reflection;
-using LRP.Skills.Data.CharacterSkills;
-using LRPManagement.Data.CharacterSkills;
 
 namespace LRP.Skills
 {
@@ -33,12 +33,12 @@ namespace LRP.Skills
                     options.UseSqlServer
                     (
                         Configuration.GetConnectionString("SkillDb"),
-                        sqlServerOptionsAction: sqlOptions =>
+                        sqlOptions =>
                         {
                             sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
                             // Resiliency
                             sqlOptions.EnableRetryOnFailure
-                                (maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                                (5, TimeSpan.FromSeconds(30), null);
                         }
                     );
                 }
@@ -64,10 +64,7 @@ namespace LRP.Skills
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

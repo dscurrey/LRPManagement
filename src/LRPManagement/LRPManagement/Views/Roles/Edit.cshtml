@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Edit Roles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,7 +8,7 @@
 <h1>Edit Role</h1>
 
 @Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
-<hr />
+<hr/>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -21,6 +20,5 @@
     <p>
         @Html.TextBoxFor(model => model.Name)
     </p>
-    <input type="submit" value="Save" />
+    <input type="submit" value="Save"/>
 }
-

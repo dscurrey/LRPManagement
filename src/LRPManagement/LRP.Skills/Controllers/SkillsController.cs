@@ -29,15 +29,18 @@ namespace LRP.Skills.Controllers
         public async Task<ActionResult<IEnumerable<SkillDTO>>> GetSkill()
         {
             var skills = await _repository.GetAll();
-            return Ok(skills.Select
+            return Ok
             (
-                s => new SkillDTO
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    XpCost = s.XpCost
-                }
-            ).ToList());
+                skills.Select
+                (
+                    s => new SkillDTO
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        XpCost = s.XpCost
+                    }
+                ).ToList()
+            );
         }
 
         // GET: api/Skills/5
@@ -46,10 +49,7 @@ namespace LRP.Skills.Controllers
         {
             var skill = await _repository.GetSkill(id);
 
-            if (skill == null)
-            {
-                return NotFound();
-            }
+            if (skill == null) return NotFound();
 
             var skillDto = new SkillDTO
             {
@@ -67,10 +67,7 @@ namespace LRP.Skills.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSkill(int id, SkillDTO skill)
         {
-            if (id != skill.Id)
-            {
-                return BadRequest();
-            }
+            if (id != skill.Id) return BadRequest();
 
             var updSkill = new Skill
             {
@@ -78,10 +75,7 @@ namespace LRP.Skills.Controllers
                 XpCost = skill.XpCost
             };
 
-            if (!await SkillExists(id))
-            {
-                return NotFound();
-            }
+            if (!await SkillExists(id)) return NotFound();
 
             _repository.UpdateSkill(updSkill);
 
@@ -112,10 +106,7 @@ namespace LRP.Skills.Controllers
         [HttpPost]
         public async Task<ActionResult<Skill>> PostSkill(SkillDTO skill)
         {
-            if (String.IsNullOrEmpty(skill.Name))
-            {
-                return BadRequest("Name cannot be empty");
-            }
+            if (string.IsNullOrEmpty(skill.Name)) return BadRequest("Name cannot be empty");
 
             if (await _repository.GetSkill(skill.Id) != null)
             {
@@ -126,7 +117,7 @@ namespace LRP.Skills.Controllers
                     XpCost = skill.XpCost
                 };
 
-                _repository.UpdateSkill(updSkill); 
+                _repository.UpdateSkill(updSkill);
                 await _repository.Save();
             }
 
@@ -140,17 +131,14 @@ namespace LRP.Skills.Controllers
             _repository.InsertSkill(newSkill);
             await _repository.Save();
 
-            return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);
+            return CreatedAtAction("GetSkill", new {id = skill.Id}, skill);
         }
 
         // DELETE: api/Skills/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Skill>> DeleteSkill(int id)
         {
-            if (!await SkillExists(id))
-            {
-                return NotFound();
-            }
+            if (!await SkillExists(id)) return NotFound();
 
             var player = await _repository.GetSkill(id);
 

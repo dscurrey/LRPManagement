@@ -27,8 +27,6 @@ public class CharacterItemRepository
 
     void insert(CharacterItemEntity charItem)
     {
-        OwlDatabase.databaseWriteExecutor.execute(() -> {
-            mDao.insert(charItem);
-        });
+        OwlDatabase.databaseWriteExecutor.execute(() -> mDao.insert(charItem));
     }
 }

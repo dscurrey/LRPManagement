@@ -6,9 +6,10 @@ namespace LRP.Characters.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Character",
-                columns: table => new
+            migrationBuilder.CreateTable
+            (
+                "Character",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -17,21 +18,23 @@ namespace LRP.Characters.Data.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     IsRetired = table.Column<bool>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Character", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Character", x => x.Id); }
+            );
 
-            migrationBuilder.InsertData(
-                table: "Character",
-                columns: new[] { "Id", "IsActive", "IsRetired", "Name", "PlayerId" },
-                values: new object[] { 1, true, false, "Test user's 1st Character'", 1 });
+            migrationBuilder.InsertData
+            (
+                "Character",
+                new[] {"Id", "IsActive", "IsRetired", "Name", "PlayerId"},
+                new object[] {1, true, false, "Test user's 1st Character'", 1}
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Character");
+            migrationBuilder.DropTable
+            (
+                "Character"
+            );
         }
     }
 }

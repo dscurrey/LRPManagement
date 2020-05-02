@@ -6,18 +6,22 @@ namespace LRPManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.InsertData(
-                table: "Players",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Test Character" });
+            migrationBuilder.InsertData
+            (
+                "Players",
+                new[] {"Id", "Name"},
+                new object[] {1, "Test Character"}
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Players",
-                keyColumn: "Id",
-                keyValue: 1);
+            migrationBuilder.DeleteData
+            (
+                "Players",
+                "Id",
+                1
+            );
         }
     }
 }

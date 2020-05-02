@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using LRPManagement.Models;
-using System.Threading.Tasks;
+﻿using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Data.CharacterSkills
 {
@@ -32,7 +32,8 @@ namespace LRPManagement.Data.CharacterSkills
 
         public async Task<CharacterSkill> Get(int id)
         {
-            return await _context.CharacterSkills.Include(c => c.Character).Include(c => c.Skill).FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.CharacterSkills.Include(c => c.Character).Include(c => c.Skill).FirstOrDefaultAsync
+                (c => c.Id == id);
         }
 
         public async Task<List<CharacterSkill>> Get()

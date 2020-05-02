@@ -16,12 +16,24 @@ namespace LRP.Players.Tests.Controllers
     {
         private static class TestData
         {
-            public static List<Player> Players() => new List<Player>
+            public static List<Player> Players()
             {
-                new Player { Id = 1, IsActive = true, LastName = "Doe", FirstName = "John", DateJoined = DateTime.Now},
-                new Player { Id = 2, IsActive = true, LastName = "Smith", FirstName = "John", DateJoined = DateTime.Now},
-                new Player { Id = 3, IsActive = true, LastName = "Johnson", FirstName = "John", DateJoined = DateTime.Now}
-            };
+                return new List<Player>
+                {
+                    new Player
+                    {
+                        Id = 1, IsActive = true, LastName = "Doe", FirstName = "John", DateJoined = DateTime.Now
+                    },
+                    new Player
+                    {
+                        Id = 2, IsActive = true, LastName = "Smith", FirstName = "John", DateJoined = DateTime.Now
+                    },
+                    new Player
+                    {
+                        Id = 3, IsActive = true, LastName = "Johnson", FirstName = "John", DateJoined = DateTime.Now
+                    }
+                };
+            }
         }
 
         [TestMethod]
@@ -95,7 +107,7 @@ namespace LRP.Players.Tests.Controllers
             var repo = new FakePlayerRepository(TestData.Players());
             var controller = new PlayersController(repo, null);
             var player = new PlayerDTO
-            { Id = 3, LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now };
+                {Id = 3, LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now};
 
             // Act
             var result = await controller.PostPlayer(player);
@@ -116,7 +128,7 @@ namespace LRP.Players.Tests.Controllers
             var repo = new FakePlayerRepository(TestData.Players());
             var controller = new PlayersController(repo, null);
             var player = new PlayerDTO
-            { LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now };
+                {LastName = "Doe", FirstName = "Jane", DateJoined = DateTime.Now};
 
             // Act
             var result = await controller.PostPlayer(player);
@@ -137,7 +149,7 @@ namespace LRP.Players.Tests.Controllers
             var repo = new FakePlayerRepository(TestData.Players());
             var controller = new PlayersController(repo, null);
             var player = new PlayerDTO
-            { LastName = "", DateJoined = DateTime.Now };
+                {LastName = "", DateJoined = DateTime.Now};
 
             // Act
             var result = await controller.PostPlayer(player);

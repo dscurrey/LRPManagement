@@ -6,22 +6,26 @@ namespace LRP.Items.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.UpdateData(
-                table: "Craftables",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Name",
-                value: "Apprentice's Blade");
+            migrationBuilder.UpdateData
+            (
+                "Craftables",
+                "Id",
+                1,
+                "Name",
+                "Apprentice's Blade"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.UpdateData(
-                table: "Craftables",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Name",
-                value: null);
+            migrationBuilder.UpdateData
+            (
+                "Craftables",
+                "Id",
+                1,
+                "Name",
+                null
+            );
         }
     }
 }

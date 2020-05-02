@@ -10,10 +10,7 @@ namespace LRPManagement.Data
             context.Database.EnsureCreated();
             context.Database.Migrate();
 
-            if (context.Skills.Any())
-            {
-                return; // DB Contains skills (is seeded)
-            }
+            if (context.Skills.Any()) return; // DB Contains skills (is seeded)
         }
     }
 }

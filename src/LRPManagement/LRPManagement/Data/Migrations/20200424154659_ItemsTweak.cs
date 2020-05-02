@@ -6,54 +6,74 @@ namespace LRPManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Type",
-                table: "Craftables");
+            migrationBuilder.DropColumn
+            (
+                "Type",
+                "Craftables"
+            );
 
-            migrationBuilder.AddColumn<string>(
-                name: "Effect",
-                table: "Craftables",
-                nullable: true);
+            migrationBuilder.AddColumn<string>
+            (
+                "Effect",
+                "Craftables",
+                nullable: true
+            );
 
-            migrationBuilder.AddColumn<string>(
-                name: "Form",
-                table: "Craftables",
-                nullable: true);
+            migrationBuilder.AddColumn<string>
+            (
+                "Form",
+                "Craftables",
+                nullable: true
+            );
 
-            migrationBuilder.AddColumn<string>(
-                name: "Materials",
-                table: "Craftables",
-                nullable: true);
+            migrationBuilder.AddColumn<string>
+            (
+                "Materials",
+                "Craftables",
+                nullable: true
+            );
 
-            migrationBuilder.AddColumn<string>(
-                name: "Requirement",
-                table: "Craftables",
-                nullable: true);
+            migrationBuilder.AddColumn<string>
+            (
+                "Requirement",
+                "Craftables",
+                nullable: true
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Effect",
-                table: "Craftables");
+            migrationBuilder.DropColumn
+            (
+                "Effect",
+                "Craftables"
+            );
 
-            migrationBuilder.DropColumn(
-                name: "Form",
-                table: "Craftables");
+            migrationBuilder.DropColumn
+            (
+                "Form",
+                "Craftables"
+            );
 
-            migrationBuilder.DropColumn(
-                name: "Materials",
-                table: "Craftables");
+            migrationBuilder.DropColumn
+            (
+                "Materials",
+                "Craftables"
+            );
 
-            migrationBuilder.DropColumn(
-                name: "Requirement",
-                table: "Craftables");
+            migrationBuilder.DropColumn
+            (
+                "Requirement",
+                "Craftables"
+            );
 
-            migrationBuilder.AddColumn<string>(
-                name: "Type",
-                table: "Craftables",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>
+            (
+                "Type",
+                "Craftables",
+                "nvarchar(max)",
+                nullable: true
+            );
         }
     }
 }

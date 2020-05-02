@@ -12,7 +12,7 @@
 
 <div>
     <h4>Character</h4>
-    <hr />
+    <hr/>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FullId)
@@ -45,7 +45,7 @@
         <a asp-action="Create" asp-controller="CharacterSkills" asp-route-id="@Model.Id">Add Skill</a>
         @if (Model.Skills.Any())
         {
-            <partial name="_CharacterSkills" model="Model.Skills" />
+            <partial name="_CharacterSkills" model="Model.Skills"/>
         }
         else
         {
@@ -60,7 +60,7 @@
         <a asp-action="Create" asp-controller="Bonds" asp-route-id="@Model.Id">Add Bonded Item</a>
         @if (Model.Items.Any())
         {
-            <partial name="_CharacterItems" model="Model.Items" />
+            <partial name="_CharacterItems" model="Model.Items"/>
         }
         else
         {

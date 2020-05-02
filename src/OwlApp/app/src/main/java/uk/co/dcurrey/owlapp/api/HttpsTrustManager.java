@@ -5,10 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -21,14 +19,14 @@ public class HttpsTrustManager implements X509TrustManager
     @Override
     public void checkClientTrusted(
             java.security.cert.X509Certificate[] x509Certificates, String s)
-            throws java.security.cert.CertificateException {
+    {
 
     }
 
     @Override
     public void checkServerTrusted(
             java.security.cert.X509Certificate[] x509Certificates, String s)
-            throws java.security.cert.CertificateException {
+    {
 
     }
 
@@ -46,14 +44,7 @@ public class HttpsTrustManager implements X509TrustManager
     }
 
     public static void allowAllSSL() {
-        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
-
-            @Override
-            public boolean verify(String arg0, SSLSession arg1) {
-                return true;
-            }
-
-        });
+        HttpsURLConnection.setDefaultHostnameVerifier((arg0, arg1) -> true);
 
         SSLContext context = null;
         if (trustManagers == null) {

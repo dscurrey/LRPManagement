@@ -28,12 +28,14 @@ namespace LRP.Players.Data
             base.OnModelCreating(builder);
 
             if (HostEnv != null && HostEnv.IsDevelopment())
-            {
                 // Seed Data
-                builder.Entity<Player>().HasData(
-                    new Player { Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now }
+                builder.Entity<Player>().HasData
+                (
+                    new Player
+                    {
+                        Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now
+                    }
                 );
-            }
         }
     }
 }

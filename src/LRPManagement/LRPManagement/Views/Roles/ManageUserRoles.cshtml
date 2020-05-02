@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "ManageUserRoles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,7 +6,7 @@
 <h1>Manage User Roles</h1>
 
 @Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
-<hr />
+<hr/>
 
 <h2>Role Add to User</h2>
 
@@ -18,26 +17,26 @@
 
     <p>
         Username : @Html.TextBox("UserName")
-        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
+        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>) ViewBag.Roles, "Select ...")
 
     </p>
 
-    <input type="submit" value="Save" />
+    <input type="submit" value="Save"/>
 }
-<hr />
+<hr/>
 <h3>Get Roles for a User</h3>
 @using (Html.BeginForm("GetRoles", "Roles"))
 {
     @Html.AntiForgeryToken()
     <p>
         Username : @Html.TextBox("UserName")
-        <input type="submit" value="Get Roles for this User" />
+        <input type="submit" value="Get Roles for this User"/>
     </p>
 }
 
 @if (ViewBag.UserRoles != null)
 {
-    <div style="background-color:yellow;">
+    <div style="background-color: yellow;">
         <h3>Roles for this user </h3>
         <ol>
             @foreach (string s in ViewBag.UserRoles)
@@ -48,7 +47,7 @@
     </div>
 }
 
-<hr />
+<hr/>
 <h3>Delete A User from a Role</h3>
 
 @using (Html.BeginForm("RemoveUserFromRole", "Roles"))
@@ -58,10 +57,9 @@
 
     <p>
         Username : @Html.TextBox("UserName")
-        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
+        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>) ViewBag.Roles, "Select ...")
 
     </p>
 
-    <input type="submit" value="Delete this user from Role" />
+    <input type="submit" value="Delete this user from Role"/>
 }
-

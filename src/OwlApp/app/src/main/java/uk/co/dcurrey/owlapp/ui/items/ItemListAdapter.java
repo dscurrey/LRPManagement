@@ -16,7 +16,7 @@ import uk.co.dcurrey.owlapp.database.item.ItemEntity;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemViewHolder>
 {
-    class ItemViewHolder extends RecyclerView.ViewHolder
+    static class ItemViewHolder extends RecyclerView.ViewHolder
     {
         private final TextView itemName;
         private final ImageView itemSyncView;
@@ -72,9 +72,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             }
             holder.itemSyncView.setVisibility(View.VISIBLE);
 
-            holder.itemView.setOnClickListener((v) -> {
-                openItem(cur.Id);
-            });
+            holder.itemView.setOnClickListener((v) -> openItem(cur.Id));
         }
         else
         {

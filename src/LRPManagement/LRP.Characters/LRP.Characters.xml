@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LRP.Characters</name>
+    </assembly>
+    <members>
+        <member name="M:LRP.Characters.Controllers.CharactersController.GetCharacter">
+            <summary>
+            Action to get all characters
+            </summary>
+            <returns>List of all characters, in DTO format</returns>
+        </member>
+        <member name="M:LRP.Characters.Controllers.CharactersController.GetCharacter(System.Int32)">
+            <summary>
+            Gets a single character with a unique id
+            </summary>
+            <param name="id">The character's unique ID</param>
+            <returns>Character matching the ID</returns>
+        </member>
+        <member name="M:LRP.Characters.Controllers.CharactersController.PutCharacter(System.Int32,DTO.CharacterDTO)">
+            <summary>
+            PUT Updates a given character
+            </summary>
+            <param name="id">The id of the character</param>
+            <param name="character">The updated character entry</param>
+            <returns>NoContent if successful</returns>
+        </member>
+        <member name="M:LRP.Characters.Controllers.CharactersController.PostCharacter(DTO.CharacterDTO)">
+            <summary>
+            Creates a new character in the database/repository
+            </summary>
+            <param name="character">The character to be inserted</param>
+            <returns>The inserted character</returns>
+        </member>
+        <member name="M:LRP.Characters.Controllers.CharactersController.DeleteCharacter(System.Int32)">
+            <summary>
+            Deletes a character
+            </summary>
+            <param name="id">The unique ID of the chosen character</param>
+            <returns>The deleted character</returns>
+        </member>
+        <member name="M:LRP.Characters.Controllers.CharactersController.CharacterExists(System.Int32)">
+            <summary>
+            Checks if a character exists
+            </summary>
+            <param name="id">ID of the target character</param>
+            <returns>True, if character exists</returns>
+        </member>
+        <member name="M:LRP.Characters.Data.Characters.ICharacterRepository.GetAll">
+            <summary>
+            Gets all character entities in database
+            </summary>
+            <returns>A list of Characters</returns>
+        </member>
+        <member name="M:LRP.Characters.Data.Characters.ICharacterRepository.GetCharacter(System.Int32)">
+             <summary>
+            Gets the character associated with a specific ID
+             </summary>
+             <param name="id">The unique ID of the character</param>
+             <returns>The character with matching ID</returns>
+        </member>
+        <member name="M:LRP.Characters.Data.Characters.ICharacterRepository.InsertCharacter(LRP.Characters.Models.Character)">
+            <summary>
+            Inserts a character into the database
+            </summary>
+            <param name="character">The character to be inserted</param>
+        </member>
+        <member name="M:LRP.Characters.Data.Characters.ICharacterRepository.DeleteCharacter(System.Int32)">
+            <summary>
+            Deletes a character from the database
+            </summary>
+            <param name="id">ID for the character to be deleted</param>
+        </member>
+        <member name="M:LRP.Characters.Data.Characters.ICharacterRepository.UpdateCharacter(LRP.Characters.Models.Character)">
+            <summary>
+            Updates a character in the database
+            </summary>
+            <param name="character">The updated character</param>
+            <returns>Task</returns>
+        </member>
+        <member name="M:LRP.Characters.Data.Characters.ICharacterRepository.Save">
+            <summary>
+            Saves changes to the DB context
+            </summary>
+            <returns>Task</returns>
+        </member>
+    </members>
+</doc>

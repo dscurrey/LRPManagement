@@ -39,17 +39,11 @@ namespace LRPManagement.Controllers
         // GET: Craftables/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var craftable = await _itemRepository.GetCraftable(id.Value);
 
-            if (craftable == null)
-            {
-                return NotFound();
-            }
+            if (craftable == null) return NotFound();
 
             return View(craftable);
         }
@@ -82,17 +76,11 @@ namespace LRPManagement.Controllers
         // GET: Craftables/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var craftable = await _itemRepository.GetCraftable(id.Value);
 
-            if (craftable == null)
-            {
-                return NotFound();
-            }
+            if (craftable == null) return NotFound();
 
             return View(craftable);
         }
@@ -106,10 +94,7 @@ namespace LRPManagement.Controllers
             [Bind("Id,Name,Form,Requirement,Effect,Materials")]
             Craftable craftable)
         {
-            if (id != craftable.Id)
-            {
-                return NotFound();
-            }
+            if (id != craftable.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -121,13 +106,9 @@ namespace LRPManagement.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!await CraftableExists(craftable.Id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -139,23 +120,18 @@ namespace LRPManagement.Controllers
         // GET: Craftables/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var craftable = await _itemRepository.GetCraftable(id.Value);
 
-            if (craftable == null)
-            {
-                return NotFound();
-            }
+            if (craftable == null) return NotFound();
 
             return View(craftable);
         }
 
         // POST: Craftables/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -183,13 +159,9 @@ namespace LRPManagement.Controllers
             {
                 var items = await _itemService.GetAll();
                 if (items != null)
-                {
                     foreach (var item in items)
                     {
-                        if (await _itemRepository.GetCraftable(item.Id) != null)
-                        {
-                            continue;
-                        }
+                        if (await _itemRepository.GetCraftable(item.Id) != null) continue;
 
                         var newItem = new Craftable
                         {
@@ -202,7 +174,6 @@ namespace LRPManagement.Controllers
                         _itemRepository.InsertCraftable(newItem);
                         await _itemRepository.Save();
                     }
-                }
             }
             catch (BrokenCircuitException)
             {

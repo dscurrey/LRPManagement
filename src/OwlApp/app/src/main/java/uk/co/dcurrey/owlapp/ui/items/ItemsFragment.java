@@ -1,6 +1,5 @@
 package uk.co.dcurrey.owlapp.ui.items;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -75,14 +74,9 @@ public class ItemsFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-        mViewModel.getAllItems().observe(getViewLifecycleOwner(), new Observer<List<ItemEntity>>()
-        {
-            @Override
-            public void onChanged(List<ItemEntity> itemEntities)
-            {
-                items = itemEntities;
-                adapter.setItems(items);
-            }
+        mViewModel.getAllItems().observe(getViewLifecycleOwner(), itemEntities -> {
+            items = itemEntities;
+            adapter.setItems(items);
         });
 
         searchTerm.addTextChangedListener(new TextWatcher()

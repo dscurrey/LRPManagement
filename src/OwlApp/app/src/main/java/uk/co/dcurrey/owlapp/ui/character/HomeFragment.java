@@ -12,9 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +40,7 @@ public class HomeFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Recycler
@@ -54,28 +52,18 @@ public class HomeFragment extends Fragment
 
         // ViewModel
         mCharacterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
-        mCharacterViewModel.getAllChars().observe(getViewLifecycleOwner(), new Observer<List<CharacterEntity>>()
-        {
-            @Override
-            public void onChanged(List<CharacterEntity> characterEntities)
-            {
-                // Update char cache in adapter
-                characters = characterEntities;
-                adapter.setChars(characters);
-            }
+        mCharacterViewModel.getAllChars().observe(getViewLifecycleOwner(), characterEntities -> {
+            // Update char cache in adapter
+            characters = characterEntities;
+            adapter.setChars(characters);
         });
 
         // FAB
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), NewCharacterActivity.class);
-                startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), NewCharacterActivity.class);
+            startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE);
         });
 
         searchTerm.addTextChangedListener(new TextWatcher()

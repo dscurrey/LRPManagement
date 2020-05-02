@@ -12,13 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +38,7 @@ public class PlayerFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        PlayerUIViewModel slideshowViewModel = ViewModelProviders.of(this).get(PlayerUIViewModel.class);
+        PlayerUIViewModel slideshowViewModel = new ViewModelProvider(this).get(PlayerUIViewModel.class);
         View root = inflater.inflate(R.layout.fragment_player, container, false);
 
         EditText searchTerm = root.findViewById(R.id.playerSearch);
@@ -55,27 +51,9 @@ public class PlayerFragment extends Fragment
 
         // ViewModel
         mPlayerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        mPlayerViewModel.getAllPlayers().observe(getViewLifecycleOwner(), new Observer<List<PlayerEntity>>()
-        {
-            @Override
-            public void onChanged(List<PlayerEntity> playerEntities)
-            {
-                players = playerEntities;
-                adapter.setPlayers(players);
-            }
-        });
-
-        // FAB
-        FloatingActionButton fab = root.findViewById(R.id.fab_player);
-        fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), NewPlayerActivity.class);
-                startActivityForResult(intent, NEW_PLAYER_ACTIVITY_REQUEST_CODE);
-            }
+        mPlayerViewModel.getAllPlayers().observe(getViewLifecycleOwner(), playerEntities -> {
+            players = playerEntities;
+            adapter.setPlayers(players);
         });
 
         searchTerm.addTextChangedListener(new TextWatcher()

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -35,22 +34,17 @@ public class CharacterDetailsActivity extends AppCompatActivity
         charName.setText(character.Name);
         isRetired.setChecked(character.IsRetired);
 
-        saveChanges.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Toast.makeText(CharacterDetailsActivity.this, "DEBUG: Character Updated", Toast.LENGTH_SHORT).show();
+        saveChanges.setOnClickListener(v -> {
+            Toast.makeText(CharacterDetailsActivity.this, "DEBUG: Character Updated", Toast.LENGTH_SHORT).show();
 
-                if (character.Name != charName.getText().toString() || character.IsRetired != isRetired.isChecked())
-                {
-                    character.Name = charName.getText().toString();
-                    character.IsRetired = isRetired.isChecked();
-                    character.IsSynced = false;
-                    Repository.getInstance().getCharacterRepository().update(character);
-                }
-                finish();
+            if (character.Name != charName.getText().toString() || character.IsRetired != isRetired.isChecked())
+            {
+                character.Name = charName.getText().toString();
+                character.IsRetired = isRetired.isChecked();
+                character.IsSynced = false;
+                Repository.getInstance().getCharacterRepository().update(character);
             }
+            finish();
         });
     }
 

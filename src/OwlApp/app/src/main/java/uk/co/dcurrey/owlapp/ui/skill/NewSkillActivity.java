@@ -3,7 +3,6 @@ package uk.co.dcurrey.owlapp.ui.skill;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -26,24 +25,19 @@ public class NewSkillActivity extends AppCompatActivity
         mEditSkillView = findViewById(R.id.edit_skill);
 
         final Button btn = findViewById(R.id.btn_skill);
-        btn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        btn.setOnClickListener(v -> {
+            Intent replyIntent = new Intent();
+            if (TextUtils.isEmpty(mEditSkillView.getText()))
             {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mEditSkillView.getText()))
-                {
-                    setResult(RESULT_CANCELED, replyIntent);
-                }
-                else
-                {
-                    String skill = mEditSkillView.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY, skill);
-                    setResult(RESULT_OK, replyIntent);
-                }
-                finish();
+                setResult(RESULT_CANCELED, replyIntent);
             }
+            else
+            {
+                String skill = mEditSkillView.getText().toString();
+                replyIntent.putExtra(EXTRA_REPLY, skill);
+                setResult(RESULT_OK, replyIntent);
+            }
+            finish();
         });
     }
 }

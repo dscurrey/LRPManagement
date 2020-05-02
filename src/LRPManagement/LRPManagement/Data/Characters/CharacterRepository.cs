@@ -28,7 +28,8 @@ namespace LRPManagement.Data.Characters
 
         public async Task<Character> GetCharacter(int id)
         {
-            return await _context.Characters.Include(c => c.Bond).ThenInclude(b => b.Item).Include(c => c.CharacterSkills).ThenInclude(c => c.Skill).FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Characters.Include(c => c.Bond).ThenInclude(b => b.Item).Include
+                (c => c.CharacterSkills).ThenInclude(c => c.Skill).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Character> GetCharacterRef(int id)
@@ -50,13 +51,9 @@ namespace LRPManagement.Data.Characters
         {
             var dbChar = _context.Characters.First(c => c.Id == character.Id);
             if (dbChar != null)
-            {
                 _context.Entry(dbChar).CurrentValues.SetValues(character);
-            }
             else
-            {
                 _context.Characters.Update(character);
-            }
         }
     }
 }

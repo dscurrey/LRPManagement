@@ -6,9 +6,10 @@ namespace LRP.Items.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Craftables",
-                columns: table => new
+            migrationBuilder.CreateTable
+            (
+                "Craftables",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -18,21 +19,23 @@ namespace LRP.Items.Migrations
                     Effect = table.Column<string>(nullable: true),
                     Materials = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Craftables", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Craftables", x => x.Id); }
+            );
 
-            migrationBuilder.InsertData(
-                table: "Craftables",
-                columns: new[] { "Id", "Effect", "Form", "Materials", "Name", "Requirement" },
-                values: new object[] { 1, "Spend one hero point to call CLEAVE", "Weapon, One Handed", "N/A", null, "N/A" });
+            migrationBuilder.InsertData
+            (
+                "Craftables",
+                new[] {"Id", "Effect", "Form", "Materials", "Name", "Requirement"},
+                new object[] {1, "Spend one hero point to call CLEAVE", "Weapon, One Handed", "N/A", null, "N/A"}
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Craftables");
+            migrationBuilder.DropTable
+            (
+                "Craftables"
+            );
         }
     }
 }

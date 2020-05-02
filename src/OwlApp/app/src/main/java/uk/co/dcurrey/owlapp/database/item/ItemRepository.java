@@ -27,16 +27,12 @@ public class ItemRepository
 
     public void insert(ItemEntity item)
     {
-        OwlDatabase.databaseWriteExecutor.execute(() -> {
-            mItemDao.insertAll(item);
-        });
+        OwlDatabase.databaseWriteExecutor.execute(() -> mItemDao.insertAll(item));
     }
 
     void update(ItemEntity itemEntity)
     {
         OwlDatabase.databaseWriteExecutor.execute(() ->
-        {
-            mItemDao.update(itemEntity);
-        });
+                mItemDao.update(itemEntity));
     }
 }

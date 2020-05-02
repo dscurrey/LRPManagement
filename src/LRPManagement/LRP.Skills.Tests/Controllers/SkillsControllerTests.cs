@@ -15,12 +15,15 @@ namespace LRP.Skills.Tests.Controllers
     {
         private static class TestData
         {
-            public static List<Skill> Skills() => new List<Skill>
+            public static List<Skill> Skills()
             {
-                new Skill { Id = 1, Name = "Test Skill 1"},
-                new Skill { Id = 2, Name = "Test Skill 2"},
-                new Skill { Id = 3, Name = "Test Skill 3"}
-            };
+                return new List<Skill>
+                {
+                    new Skill {Id = 1, Name = "Test Skill 1"},
+                    new Skill {Id = 2, Name = "Test Skill 2"},
+                    new Skill {Id = 3, Name = "Test Skill 3"}
+                };
+            }
         }
 
         [TestMethod]
@@ -92,7 +95,7 @@ namespace LRP.Skills.Tests.Controllers
             // Arrange
             var repo = new FakeSkillRepository(TestData.Skills());
             var controller = new SkillsController(repo, null);
-            var skill = new SkillDTO { Id = 4, Name = "TestSkill" };
+            var skill = new SkillDTO {Id = 4, Name = "TestSkill"};
 
             // Act
             var result = await controller.PostSkill(skill);
@@ -112,7 +115,7 @@ namespace LRP.Skills.Tests.Controllers
             // Arrange
             var repo = new FakeSkillRepository(TestData.Skills());
             var controller = new SkillsController(repo, null);
-            var skill = new SkillDTO { Name = "TestSkill" };
+            var skill = new SkillDTO {Name = "TestSkill"};
 
             // Act
             var result = await controller.PostSkill(skill);
@@ -132,7 +135,7 @@ namespace LRP.Skills.Tests.Controllers
             // Arrange
             var repo = new FakeSkillRepository(TestData.Skills());
             var controller = new SkillsController(repo, null);
-            var skill = new SkillDTO { Id = 4, Name = "" };
+            var skill = new SkillDTO {Id = 4, Name = ""};
 
             // Act
             var result = await controller.PostSkill(skill);

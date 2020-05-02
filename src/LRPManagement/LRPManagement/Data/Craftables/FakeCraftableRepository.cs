@@ -1,14 +1,14 @@
-﻿using System;
+﻿using LRPManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LRPManagement.Models;
 
 namespace LRPManagement.Data.Craftables
 {
     public class FakeCraftableRepository : ICraftableRepository
     {
-        private List<Craftable> _list;
+        private readonly List<Craftable> _list;
 
         public FakeCraftableRepository(List<Craftable> list)
         {

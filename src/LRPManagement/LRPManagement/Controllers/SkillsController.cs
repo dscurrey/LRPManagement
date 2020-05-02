@@ -51,18 +51,12 @@ namespace LRPManagement.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             TempData["SkillInoperativeMsg"] = "";
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var skill = await _skillService.GetSkill(id.Value);
-                if (skill == null)
-                {
-                    return NotFound();
-                }
+                if (skill == null) return NotFound();
 
                 return View(skill);
             }
@@ -112,18 +106,12 @@ namespace LRPManagement.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var skill = await _skillService.GetSkill(id.Value);
-                if (skill != null)
-                {
-                    return View(skill);
-                }
+                if (skill != null) return View(skill);
             }
             catch (BrokenCircuitException)
             {
@@ -142,18 +130,12 @@ namespace LRPManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] SkillDTO skillDTO)
         {
-            if (id != skillDTO.Id)
-            {
-                return NotFound();
-            }
+            if (id != skillDTO.Id) return NotFound();
 
             try
             {
                 var resp = await _skillService.UpdateSkill(skillDTO);
-                if (resp != null)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
+                if (resp != null) return RedirectToAction(nameof(Index));
 
                 var updSkill = new Skill
                 {
@@ -177,18 +159,12 @@ namespace LRPManagement.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             try
             {
                 var skill = await _skillService.GetSkill(id.Value);
-                if (skill != null)
-                {
-                    return View(skill);
-                }
+                if (skill != null) return View(skill);
             }
             catch (BrokenCircuitException)
             {
@@ -200,7 +176,8 @@ namespace LRPManagement.Controllers
 
         // POST: Skills/Delete/5
         [Authorize(Roles = "Admin")]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

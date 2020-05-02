@@ -1,12 +1,11 @@
 ﻿using LRPManagement.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
 namespace LRPManagement.Data.CharacterSkills
 {
@@ -15,7 +14,7 @@ namespace LRPManagement.Data.CharacterSkills
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _config;
         private readonly ILogger<CharacterSkillService> _logger;
-        
+
         public HttpClient Client { get; set; }
 
         public CharacterSkillService(IHttpClientFactory clientFactory,
@@ -31,10 +30,7 @@ namespace LRPManagement.Data.CharacterSkills
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.PostAsync("api/characterskills/", charSkill, new JsonMediaTypeFormatter());
-            if (resp.IsSuccessStatusCode)
-            {
-                return charSkill;
-            }
+            if (resp.IsSuccessStatusCode) return charSkill;
 
             return null;
         }
@@ -43,10 +39,7 @@ namespace LRPManagement.Data.CharacterSkills
         {
             var client = GetHttpClient("StandardRequest");
             var resp = await client.DeleteAsync("api/characterskills/" + id);
-            if (resp.IsSuccessStatusCode)
-            {
-                return true;
-            }
+            if (resp.IsSuccessStatusCode) return true;
 
             return false;
         }
@@ -65,7 +58,7 @@ namespace LRPManagement.Data.CharacterSkills
             }
             catch (TaskCanceledException e)
             {
-                _logger.LogError(this.ToString(), "Task Cancelled Error", e);
+                _logger.LogError(ToString(), "Task Cancelled Error", e);
             }
 
             return null;
@@ -85,7 +78,7 @@ namespace LRPManagement.Data.CharacterSkills
             }
             catch (TaskCanceledException e)
             {
-                _logger.LogError(this.ToString(), "Task Cancelled Error", e);
+                _logger.LogError(ToString(), "Task Cancelled Error", e);
             }
 
             return null;
@@ -93,10 +86,7 @@ namespace LRPManagement.Data.CharacterSkills
 
         private HttpClient GetHttpClient(string s)
         {
-            if (Client != null && _clientFactory == null)
-            {
-                return Client;
-            }
+            if (Client != null && _clientFactory == null) return Client;
 
             var client = _clientFactory.CreateClient(s);
             client.BaseAddress = new Uri(_config["SkillsURL"]);

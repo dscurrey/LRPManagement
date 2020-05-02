@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LRP.Skills.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using LRP.Skills.Models;
 
 namespace LRPManagement.Data.CharacterSkills
 {

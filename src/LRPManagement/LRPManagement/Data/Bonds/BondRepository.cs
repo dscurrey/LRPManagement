@@ -22,8 +22,10 @@ namespace LRPManagement.Data.Bonds
 
         public async Task<Bond> Get(int id)
         {
-            var debug = await _context.Bond.Include(b => b.Item).Include(b => b.Character).FirstOrDefaultAsync(b => b.Id == id);
-            return await _context.Bond.Include(b => b.Item).Include(b => b.Character).FirstOrDefaultAsync(b => b.Id == id);
+            var debug = await _context.Bond.Include(b => b.Item).Include(b => b.Character).FirstOrDefaultAsync
+                (b => b.Id == id);
+            return await _context.Bond.Include(b => b.Item).Include(b => b.Character).FirstOrDefaultAsync
+                (b => b.Id == id);
         }
 
         public void Insert(Bond bond)
@@ -44,12 +46,14 @@ namespace LRPManagement.Data.Bonds
 
         public async Task<List<Bond>> GetForItem(int itemId)
         {
-            return await _context.Bond.Include(b => b.Item).Include(b => b.Character).Where(b => b.ItemId == itemId).ToListAsync();
+            return await _context.Bond.Include(b => b.Item).Include(b => b.Character).Where
+                (b => b.ItemId == itemId).ToListAsync();
         }
 
         public async Task<List<Bond>> GetForPlayer(int playerId)
         {
-            return await _context.Bond.Include(b => b.Item).Include(b => b.Character).Where(b => b.CharacterId == playerId).ToListAsync();
+            return await _context.Bond.Include(b => b.Item).Include(b => b.Character).Where
+                (b => b.CharacterId == playerId).ToListAsync();
         }
 
         public async Task<Bond> GetMatch(int charId, int itemId)
