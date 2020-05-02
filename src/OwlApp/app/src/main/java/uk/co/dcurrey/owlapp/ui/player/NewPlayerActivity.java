@@ -29,27 +29,22 @@ public class NewPlayerActivity extends AppCompatActivity
         lnameView = findViewById(R.id.newPlayLName);
 
         final Button btn = findViewById(R.id.btn_player);
-        btn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        btn.setOnClickListener(v -> {
+            Intent replyIntent = new Intent();
+            if (TextUtils.isEmpty(fnameView.getText()) || TextUtils.isEmpty(lnameView.getText()))
             {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(fnameView.getText()) || TextUtils.isEmpty(lnameView.getText()))
-                {
-                    setResult(RESULT_CANCELED, replyIntent);
-                }
-                else
-                {
-                    String fname = fnameView.getText().toString();
-                    String lname = lnameView.getText().toString();
-
-                    replyIntent.putExtra(EXTRA_REPLY_FNAME, fname);
-                    replyIntent.putExtra(EXTRA_REPLY_LNAME, lname);
-                    setResult(RESULT_OK, replyIntent);
-                }
-                finish();
+                setResult(RESULT_CANCELED, replyIntent);
             }
+            else
+            {
+                String fname = fnameView.getText().toString();
+                String lname = lnameView.getText().toString();
+
+                replyIntent.putExtra(EXTRA_REPLY_FNAME, fname);
+                replyIntent.putExtra(EXTRA_REPLY_LNAME, lname);
+                setResult(RESULT_OK, replyIntent);
+            }
+            finish();
         });
     }
 }

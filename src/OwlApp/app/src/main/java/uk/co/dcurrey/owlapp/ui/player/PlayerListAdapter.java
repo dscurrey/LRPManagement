@@ -75,9 +75,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             holder.playerSyncView.setVisibility(View.VISIBLE);
 
             // OnClick
-            holder.itemView.setOnClickListener((v) -> {
-                openPlayer(current.Id);
-            });
+            holder.itemView.setOnClickListener((v) -> openPlayer(current.Id));
         }
         else
         {

@@ -26,24 +26,19 @@ public class NewSkillActivity extends AppCompatActivity
         mEditSkillView = findViewById(R.id.edit_skill);
 
         final Button btn = findViewById(R.id.btn_skill);
-        btn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        btn.setOnClickListener(v -> {
+            Intent replyIntent = new Intent();
+            if (TextUtils.isEmpty(mEditSkillView.getText()))
             {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mEditSkillView.getText()))
-                {
-                    setResult(RESULT_CANCELED, replyIntent);
-                }
-                else
-                {
-                    String skill = mEditSkillView.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY, skill);
-                    setResult(RESULT_OK, replyIntent);
-                }
-                finish();
+                setResult(RESULT_CANCELED, replyIntent);
             }
+            else
+            {
+                String skill = mEditSkillView.getText().toString();
+                replyIntent.putExtra(EXTRA_REPLY, skill);
+                setResult(RESULT_OK, replyIntent);
+            }
+            finish();
         });
     }
 }

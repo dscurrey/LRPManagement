@@ -72,9 +72,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             }
             holder.itemSyncView.setVisibility(View.VISIBLE);
 
-            holder.itemView.setOnClickListener((v) -> {
-                openItem(cur.Id);
-            });
+            holder.itemView.setOnClickListener((v) -> openItem(cur.Id));
         }
         else
         {

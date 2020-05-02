@@ -54,28 +54,18 @@ public class HomeFragment extends Fragment
 
         // ViewModel
         mCharacterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
-        mCharacterViewModel.getAllChars().observe(getViewLifecycleOwner(), new Observer<List<CharacterEntity>>()
-        {
-            @Override
-            public void onChanged(List<CharacterEntity> characterEntities)
-            {
-                // Update char cache in adapter
-                characters = characterEntities;
-                adapter.setChars(characters);
-            }
+        mCharacterViewModel.getAllChars().observe(getViewLifecycleOwner(), characterEntities -> {
+            // Update char cache in adapter
+            characters = characterEntities;
+            adapter.setChars(characters);
         });
 
         // FAB
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), NewCharacterActivity.class);
-                startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), NewCharacterActivity.class);
+            startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE);
         });
 
         searchTerm.addTextChangedListener(new TextWatcher()

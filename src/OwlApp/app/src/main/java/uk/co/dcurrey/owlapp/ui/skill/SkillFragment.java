@@ -54,14 +54,9 @@ public class SkillFragment extends Fragment
 
         // Viewmodel
         mSkillViewModel = new ViewModelProvider(this).get(SkillViewModel.class);
-        mSkillViewModel.getAllSkills().observe(getViewLifecycleOwner(), new Observer<List<SkillEntity>>()
-        {
-            @Override
-            public void onChanged(List<SkillEntity> skillEntities)
-            {
-                skills = skillEntities;
-                adapter.setSkills(skills);
-            }
+        mSkillViewModel.getAllSkills().observe(getViewLifecycleOwner(), skillEntities -> {
+            skills = skillEntities;
+            adapter.setSkills(skills);
         });
 
         // FAB

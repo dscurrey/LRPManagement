@@ -34,20 +34,15 @@ public class SkillDetailsActivity extends AppCompatActivity
         skillName.setText(skill.Name);
         skillXp.setText(""+skill.Xp);
 
-        saveChanges.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        saveChanges.setOnClickListener(v -> {
+            if (skill.Name != skillName.getText().toString() || skill.Xp != Integer.parseInt(skillXp.getText().toString()))
             {
-                if (skill.Name != skillName.getText().toString() || skill.Xp != Integer.parseInt(skillXp.getText().toString()))
-                {
-                    skill.Name = skillName.getText().toString();
-                    skill.Xp = Integer.parseInt(skillXp.getText().toString());
-                    skill.IsSynced = false;
-                    Repository.getInstance().getSkillRepository().update(skill);
-                }
-                finish();
+                skill.Name = skillName.getText().toString();
+                skill.Xp = Integer.parseInt(skillXp.getText().toString());
+                skill.IsSynced = false;
+                Repository.getInstance().getSkillRepository().update(skill);
             }
+            finish();
         });
     }
 

@@ -28,9 +28,7 @@ public class PlayerRepository
     void insert(PlayerEntity player)
     {
         OwlDatabase.databaseWriteExecutor.execute(() ->
-        {
-            mDao.insertAll(player);
-        });
+                mDao.insertAll(player));
     }
 
     void update(PlayerEntity player)

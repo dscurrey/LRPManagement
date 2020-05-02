@@ -69,24 +69,12 @@ public class Synchroniser
             Log.e(this.toString(), "JSON ERROR", e);
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
-                character.IsSynced = true;
-                Repository.getInstance().getCharacterRepository().update(character);
-            }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+            character.IsSynced = true;
+            Repository.getInstance().getCharacterRepository().update(character);
         },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                error -> Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show());
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
@@ -107,24 +95,12 @@ public class Synchroniser
             Log.e(this.toString(), "JSON ERROR", e);
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
-                player.IsSynced = true;
-                Repository.getInstance().getPlayerRepository().update(player);
-            }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+            player.IsSynced = true;
+            Repository.getInstance().getPlayerRepository().update(player);
         },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                error -> Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show());
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
@@ -145,24 +121,12 @@ public class Synchroniser
             Log.e(this.toString(), "JSON ERROR", e);
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
-                skill.IsSynced = true;
-                Repository.getInstance().getSkillRepository().update(skill);
-            }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+            skill.IsSynced = true;
+            Repository.getInstance().getSkillRepository().update(skill);
         },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                error -> Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show());
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
@@ -186,24 +150,12 @@ public class Synchroniser
         Log.e(this.toString(), "JSON ERROR", e);
     }
 
-    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
-    {
-        @Override
-        public void onResponse(JSONObject response)
-        {
-            Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
-            item.IsSynced = true;
-            Repository.getInstance().getItemRepository().update(item);
-        }
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+        Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+        item.IsSynced = true;
+        Repository.getInstance().getItemRepository().update(item);
     },
-            new Response.ErrorListener()
-            {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
-                }
-            });
+            error -> Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show());
     VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
 }
 
@@ -224,24 +176,12 @@ public class Synchroniser
             Log.e(this.toString(), "JSON ERROR", e);
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
-                charSkill.IsSynced = true;
-                Repository.getInstance().getCharacterSkillRepository().update(charSkill);
-            }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            Toast.makeText(context, "POST SUCCESS", Toast.LENGTH_SHORT).show();
+            charSkill.IsSynced = true;
+            Repository.getInstance().getCharacterSkillRepository().update(charSkill);
         },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                error -> Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show());
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
@@ -262,24 +202,12 @@ public class Synchroniser
             Log.e(this.toString(), "JSON Error", e);
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                Toast.makeText(context, "POST Success", Toast.LENGTH_SHORT).show();
-                item.IsSynced = true;
-                Repository.getInstance().getBondRepository().update(item);
-            }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            Toast.makeText(context, "POST Success", Toast.LENGTH_SHORT).show();
+            item.IsSynced = true;
+            Repository.getInstance().getBondRepository().update(item);
         },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(context, "An Error Occurred", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                error -> Toast.makeText(context, "An Error Occurred", Toast.LENGTH_SHORT).show());
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
@@ -326,14 +254,7 @@ public class Synchroniser
                     Repository.getInstance().getCharacterRepository().insert(character);
                 }
             }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }, error -> Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show());
 
         VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
@@ -363,14 +284,7 @@ public class Synchroniser
                     Repository.getInstance().getPlayerRepository().insert(player);
                 }
             }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }, error -> Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show());
 
         VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
@@ -400,14 +314,7 @@ public class Synchroniser
                     Repository.getInstance().getSkillRepository().insert(skill);
                 }
             }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }, error -> Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show());
 
         VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
@@ -440,14 +347,7 @@ public class Synchroniser
                     Repository.getInstance().getItemRepository().insert(item);
                 }
             }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }, error -> Toast.makeText(context, "GET ERROR OCCURRED", Toast.LENGTH_SHORT).show());
 
         VolleySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }

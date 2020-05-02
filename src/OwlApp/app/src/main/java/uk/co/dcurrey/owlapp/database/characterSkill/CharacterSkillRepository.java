@@ -27,8 +27,6 @@ public class CharacterSkillRepository
 
     void insert(CharacterSkillEntity charSkill)
     {
-        OwlDatabase.databaseWriteExecutor.execute(() -> {
-            mDao.insert(charSkill);
-        });
+        OwlDatabase.databaseWriteExecutor.execute(() -> mDao.insert(charSkill));
     }
 }

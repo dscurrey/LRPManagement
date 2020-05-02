@@ -29,17 +29,13 @@ public class SkillRepository
     void insert(SkillEntity skill)
     {
         OwlDatabase.databaseWriteExecutor.execute(() ->
-        {
-            mSkillDao.insertAll(skill);
-        });
+                mSkillDao.insertAll(skill));
     }
 
     // Unlikely to be used by users, or at all
     void update (SkillEntity skill)
     {
         OwlDatabase.databaseWriteExecutor.execute(() ->
-        {
-            mSkillDao.update(skill);
-        });
+                mSkillDao.update(skill));
     }
 }

@@ -55,27 +55,9 @@ public class PlayerFragment extends Fragment
 
         // ViewModel
         mPlayerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        mPlayerViewModel.getAllPlayers().observe(getViewLifecycleOwner(), new Observer<List<PlayerEntity>>()
-        {
-            @Override
-            public void onChanged(List<PlayerEntity> playerEntities)
-            {
-                players = playerEntities;
-                adapter.setPlayers(players);
-            }
-        });
-
-        // FAB
-        FloatingActionButton fab = root.findViewById(R.id.fab_player);
-        fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), NewPlayerActivity.class);
-                startActivityForResult(intent, NEW_PLAYER_ACTIVITY_REQUEST_CODE);
-            }
+        mPlayerViewModel.getAllPlayers().observe(getViewLifecycleOwner(), playerEntities -> {
+            players = playerEntities;
+            adapter.setPlayers(players);
         });
 
         searchTerm.addTextChangedListener(new TextWatcher()

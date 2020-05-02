@@ -32,28 +32,23 @@ public class CharSkillActivity extends AppCompatActivity
         skillId = findViewById(R.id.charSkillSkill);
         btnSave = findViewById(R.id.saveCharSkill);
 
-        btnSave.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        btnSave.setOnClickListener(v -> {
+            CharacterSkillEntity charSkill = new CharacterSkillEntity();
+            charSkill.CharacterId = Integer.parseInt(charId.getText().toString());
+            charSkill.SkillId = Integer.parseInt(skillId.getText().toString());
+            charSkill.IsSynced = false;
+
+            // Check XP
+            CharacterEntity character = Repository.getInstance().getCharacterRepository().get(charSkill.CharacterId);
+            SkillEntity skill = Repository.getInstance().getSkillRepository().get(charSkill.SkillId);
+            if ((character.Xp - skill.Xp) <= 0)
             {
-                CharacterSkillEntity charSkill = new CharacterSkillEntity();
-                charSkill.CharacterId = Integer.parseInt(charId.getText().toString());
-                charSkill.SkillId = Integer.parseInt(skillId.getText().toString());
-                charSkill.IsSynced = false;
-
-                // Check XP
-                CharacterEntity character = Repository.getInstance().getCharacterRepository().get(charSkill.CharacterId);
-                SkillEntity skill = Repository.getInstance().getSkillRepository().get(charSkill.SkillId);
-                if ((character.Xp - skill.Xp) <= 0)
-                {
-                    Toast.makeText(CharSkillActivity.this, "Character has Insufficient XP", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-
-                saveCharSkill(charSkill);
+                Toast.makeText(CharSkillActivity.this, "Character has Insufficient XP", Toast.LENGTH_SHORT).show();
                 finish();
             }
+
+            saveCharSkill(charSkill);
+            finish();
         });
     }
 

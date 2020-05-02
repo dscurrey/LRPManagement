@@ -32,28 +32,24 @@ public class NewCharacterActivity extends AppCompatActivity
         mCharRetired = findViewById(R.id.newCharRetired);
 
         final Button btn = findViewById(R.id.char_save);
-        btn.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View view)
+        btn.setOnClickListener(view -> {
+            Intent replyIntent = new Intent();
+            if (TextUtils.isEmpty(mCharName.getText()) || TextUtils.isEmpty(mCharPlayerId.getText()))
             {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mCharName.getText()) || TextUtils.isEmpty(mCharPlayerId.getText()))
-                {
-                    setResult(RESULT_CANCELED, replyIntent);
-                }
-                else
-                {
-                    String charName = mCharName.getText().toString();
-                    String charPlayerId = mCharPlayerId.getText().toString();
-                    boolean isRetired = mCharRetired.isChecked();
-
-                    replyIntent.putExtra(EXTRA_REPLY_CHARNAME, charName);
-                    replyIntent.putExtra(EXTRA_REPLY_CHARPLAYER, charPlayerId);
-                    replyIntent.putExtra(EXTRA_REPLY_CHARERETIRED, isRetired);
-                    setResult(RESULT_OK, replyIntent);
-                }
-                finish();
+                setResult(RESULT_CANCELED, replyIntent);
             }
+            else
+            {
+                String charName = mCharName.getText().toString();
+                String charPlayerId = mCharPlayerId.getText().toString();
+                boolean isRetired = mCharRetired.isChecked();
+
+                replyIntent.putExtra(EXTRA_REPLY_CHARNAME, charName);
+                replyIntent.putExtra(EXTRA_REPLY_CHARPLAYER, charPlayerId);
+                replyIntent.putExtra(EXTRA_REPLY_CHARERETIRED, isRetired);
+                setResult(RESULT_OK, replyIntent);
+            }
+            finish();
         });
     }
 }

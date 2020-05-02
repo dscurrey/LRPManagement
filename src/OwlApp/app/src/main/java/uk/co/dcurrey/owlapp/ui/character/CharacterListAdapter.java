@@ -85,9 +85,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             holder.charSyncView.setVisibility(View.VISIBLE);
 
             // OnClick
-            holder.itemView.setOnClickListener((v) -> {
-                openCharacter(current.Id);
-            });
+            holder.itemView.setOnClickListener((v) -> openCharacter(current.Id));
         }
         else
         {

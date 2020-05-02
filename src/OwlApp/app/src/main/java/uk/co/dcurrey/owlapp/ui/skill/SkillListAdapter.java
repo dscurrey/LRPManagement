@@ -72,9 +72,7 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
             holder.skillSyncView.setVisibility(View.VISIBLE);
 
             // OnClick
-            holder.itemView.setOnClickListener((v) -> {
-                openSkill(current.Id);
-            });
+            holder.itemView.setOnClickListener((v) -> openSkill(current.Id));
         }
         else
         {

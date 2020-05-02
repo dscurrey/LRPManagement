@@ -34,16 +34,12 @@ public class CharacterRepository
 
     void insert(CharacterEntity character)
     {
-        OwlDatabase.databaseWriteExecutor.execute(() -> {
-            mCharacterDao.insertAll(character);
-        });
+        OwlDatabase.databaseWriteExecutor.execute(() -> mCharacterDao.insertAll(character));
     }
 
     void update(CharacterEntity character)
     {
         OwlDatabase.databaseWriteExecutor.execute(() ->
-        {
-            mCharacterDao.update(character);
-        });
+                mCharacterDao.update(character));
     }
 }
