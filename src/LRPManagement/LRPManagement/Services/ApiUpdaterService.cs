@@ -100,14 +100,9 @@ namespace LRPManagement.Services
                             }
                             else
                             {
-                                var updPlayer = new Player
-                                {
-                                    AccountRef = player.AccountRef,
-                                    FirstName = player.FirstName,
-                                    //Id = existPlayer.Id,
-                                    LastName = player.LastName,
-                                    PlayerRef = player.Id
-                                };
+                                var updPlayer = existPlayer;
+                                updPlayer.FirstName = player.FirstName;
+                                updPlayer.LastName = player.LastName;
                                 _playerRepository.UpdatePlayer(updPlayer);
                             }
                         }
