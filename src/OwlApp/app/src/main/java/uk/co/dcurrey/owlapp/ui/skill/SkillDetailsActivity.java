@@ -8,13 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import uk.co.dcurrey.owlapp.R;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 import uk.co.dcurrey.owlapp.model.repository.Repository;
-import uk.co.dcurrey.owlapp.sync.NetworkMonitor;
-import uk.co.dcurrey.owlapp.sync.Synchroniser;
 
 public class SkillDetailsActivity extends AppCompatActivity
 {

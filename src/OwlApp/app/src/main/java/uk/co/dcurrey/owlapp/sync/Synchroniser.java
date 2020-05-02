@@ -28,7 +28,6 @@ import uk.co.dcurrey.owlapp.database.characterSkill.CharacterSkillEntity;
 import uk.co.dcurrey.owlapp.database.item.ItemEntity;
 import uk.co.dcurrey.owlapp.database.player.PlayerEntity;
 import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
-import uk.co.dcurrey.owlapp.model.repository.CharacterSkillRepository;
 import uk.co.dcurrey.owlapp.model.repository.Repository;
 
 public class Synchroniser
