@@ -18,7 +18,7 @@ import uk.co.dcurrey.owlapp.database.skill.SkillEntity;
 
 public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.SkillViewHolder>
 {
-    class SkillViewHolder extends RecyclerView.ViewHolder
+    static class SkillViewHolder extends RecyclerView.ViewHolder
     {
         private final TextView skillNameView;
         private final ImageView skillSyncView;
@@ -49,7 +49,7 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
     public SkillListAdapter.SkillViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View itemView = mInflater.inflate(R.layout.recycler_item_skill, parent, false);
-        return new SkillListAdapter.SkillViewHolder(itemView);
+        return new SkillViewHolder(itemView);
     }
 
     public void onBindViewHolder(SkillListAdapter.SkillViewHolder holder, int pos)

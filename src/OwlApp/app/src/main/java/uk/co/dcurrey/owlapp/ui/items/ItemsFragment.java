@@ -1,6 +1,5 @@
 package uk.co.dcurrey.owlapp.ui.items;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
