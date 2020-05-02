@@ -47,12 +47,12 @@ namespace LRPManagement.Data.Players
             _list.Remove(player);
         }
 
-        public async Task AnonPlayer(int id)
+        public Task AnonPlayer(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeletePlayerRef(int id)
+        public Task DeletePlayerRef(int id)
         {
             throw new NotImplementedException();
         }
