@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
+    /// <summary>
+    /// Bonds controller used for interactions involving Character/Item relationship.
+    /// Staff Only (referees/admin)
+    /// </summary>
     [Authorize(Policy = "StaffOnly")]
     public class BondsController : Controller
     {
@@ -19,6 +23,13 @@ namespace LRPManagement.Controllers
         private readonly ICraftableRepository _itemRepository;
         private readonly IBondService _service;
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="BondsController"/> class
+        /// </summary>
+        /// <param name="repository">Repository containing bonds and access methods</param>
+        /// <param name="charRepo">Repository containing characters and access methods</param>
+        /// <param name="itemRepo">Repository containing items and access methods</param>
+        /// <param name="service">Class containing methods to call the items API</param>
         public BondsController(IBondRepository repository,
             ICharacterRepository charRepo,
             ICraftableRepository itemRepo,
@@ -31,12 +42,21 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Bonds
+        /// <summary>
+        /// For displaying an index of all bonds
+        /// </summary>
+        /// <returns>Index view containing bonds in repository</returns>
         public async Task<IActionResult> Index()
         {
             return View(await _repository.GetAll());
         }
 
         // GET: Bonds/Details/5
+        /// <summary>
+        /// Displays details of a bond
+        /// </summary>
+        /// <param name="id">ID of the chosen bond</param>
+        /// <returns>View, containing details of a bond</returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -49,6 +69,10 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Bonds/Create
+        /// <summary>
+        /// Create populates information in the create form
+        /// </summary>
+        /// <returns>View containing data required to populate form</returns>
         public async Task<IActionResult> Create()
         {
             ViewData["CharacterId"] = "";
@@ -88,6 +112,11 @@ namespace LRPManagement.Controllers
         // POST: Bonds/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Takes the POST from create form
+        /// </summary>
+        /// <param name="bond">The bond to be created</param>
+        /// <returns>Redirects to index</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CharacterId,ItemId")] Bond bond)
@@ -141,6 +170,11 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Bonds/Delete/5
+        /// <summary>
+        /// Populates confirm delete view with chosen bond
+        /// </summary>
+        /// <param name="id">ID of delete target</param>
+        /// <returns>Confirm deletion page</returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -152,6 +186,11 @@ namespace LRPManagement.Controllers
         }
 
         // POST: Bonds/Delete/5
+        /// <summary>
+        /// Deletes a chosen bond
+        /// </summary>
+        /// <param name="id">Id for the chosen bond</param>
+        /// <returns>Redirect to index</returns>
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
