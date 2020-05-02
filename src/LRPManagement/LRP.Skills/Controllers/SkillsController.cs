@@ -126,7 +126,7 @@ namespace LRP.Skills.Controllers
                     XpCost = skill.XpCost
                 };
 
-                _repository.UpdateSkill(updSkill); 
+                _repository.UpdateSkill(updSkill);
                 await _repository.Save();
             }
 

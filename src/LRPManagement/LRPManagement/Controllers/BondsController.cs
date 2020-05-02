@@ -2,12 +2,12 @@ using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Polly.CircuitBreaker;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace LRPManagement.Controllers
 {

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using LRPManagement.Data.Bonds;
+﻿using LRPManagement.Data.Bonds;
 using LRPManagement.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -14,6 +6,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Tests.Data.Bonds
 {
@@ -77,10 +77,10 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-                { Client = client };
+            { Client = client };
 
             // Act
-            var newBond = new Bond {Id = 5, ItemId = 7, CharacterId = 2};
+            var newBond = new Bond { Id = 5, ItemId = 7, CharacterId = 2 };
             var result = await service.Create(newBond);
 
             // Assert
@@ -100,7 +100,7 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.Delete(bondId);
@@ -120,7 +120,7 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-                {Client = client};
+            { Client = client };
 
             // Act
             var result = await service.Get();
@@ -146,7 +146,7 @@ namespace LRPManagement.Tests.Data.Bonds
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var bondRepo = new FakeBondRepository(TestData.Bonds());
             var service = new BondService(null, config.Object, new NullLogger<BondService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.Get(bondId);

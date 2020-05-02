@@ -1,14 +1,14 @@
-﻿using System;
+﻿using LRPManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LRPManagement.Models;
 
 namespace LRPManagement.Data.Players
 {
     public class FakePlayerRepository : IPlayerRepository
     {
-        private List<Player> _list;
+        private readonly List<Player> _list;
 
         public FakePlayerRepository(List<Player> list)
         {

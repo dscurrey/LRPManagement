@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using LRPManagement.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -94,7 +93,7 @@ namespace LRPManagement.Data
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
-            
+
             OnModelCreatingPartial(modelBuilder);
         }
 

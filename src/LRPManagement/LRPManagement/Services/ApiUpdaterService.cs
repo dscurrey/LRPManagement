@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using LRPManagement.Data.Bonds;
+﻿using LRPManagement.Data.Bonds;
 using LRPManagement.Data.Characters;
 using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Craftables;
@@ -10,6 +7,9 @@ using LRPManagement.Data.Skills;
 using LRPManagement.Models;
 using Microsoft.Extensions.Logging;
 using Polly.CircuitBreaker;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Services
 {
@@ -17,20 +17,20 @@ namespace LRPManagement.Services
     {
         private int executionCount = 0;
         private readonly ILogger<ApiUpdaterService> _logger;
-        private int interval = 20000; // Secs * 1000
+        private readonly int interval = 20000; // Secs * 1000
 
-        private IPlayerRepository _playerRepository;
-        private IPlayerService _playerService;
-        private ICharacterRepository _characterRepository;
-        private ICharacterService _characterService;
-        private ISkillRepository _skillRepository;
-        private ISkillService _skillService;
-        private ICraftableRepository _itemRepository;
-        private ICraftableService _itemService;
-        private IBondRepository _bondRepository;
-        private IBondService _bondService;
-        private ICharacterSkillService _charSkillService;
-        private ICharacterSkillRepository _charSkillRepository;
+        private readonly IPlayerRepository _playerRepository;
+        private readonly IPlayerService _playerService;
+        private readonly ICharacterRepository _characterRepository;
+        private readonly ICharacterService _characterService;
+        private readonly ISkillRepository _skillRepository;
+        private readonly ISkillService _skillService;
+        private readonly ICraftableRepository _itemRepository;
+        private readonly ICraftableService _itemService;
+        private readonly IBondRepository _bondRepository;
+        private readonly IBondService _bondService;
+        private readonly ICharacterSkillService _charSkillService;
+        private readonly ICharacterSkillRepository _charSkillRepository;
 
         public ApiUpdaterService(ILogger<ApiUpdaterService> logger, IPlayerService playerService, IPlayerRepository playerRepository,
             ICharacterRepository characterRepository, ICharacterService characterService, ISkillRepository skillRepository, ISkillService skillService,

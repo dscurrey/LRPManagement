@@ -30,7 +30,7 @@ namespace LRP.Characters.Data.Characters
         /// </summary>
         /// <param name="id">ID for the character to be deleted</param>
         void DeleteCharacter(int id);
-        
+
         /// <summary>
         /// Updates a character in the database
         /// </summary>

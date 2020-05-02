@@ -1,4 +1,11 @@
 ﻿using LRPManagement.Data.CharacterSkills;
+using LRPManagement.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +14,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using LRPManagement.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Moq.Protected;
-using Newtonsoft.Json;
 
 namespace LRPManagement.Tests.Data.CharacterSkills
 {
@@ -85,7 +85,7 @@ namespace LRPManagement.Tests.Data.CharacterSkills
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111");
             var service = new CharacterSkillService(null, config.Object, new NullLogger<CharacterSkillService>())
-                {Client = client};
+            { Client = client };
 
             // Act
             var newCharSkill = new CharacterSkill
@@ -113,7 +113,7 @@ namespace LRPManagement.Tests.Data.CharacterSkills
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new CharacterSkillService(null, config.Object, new NullLogger<CharacterSkillService>())
-                {Client = client};
+            { Client = client };
 
             // Act
             var result = await service.Delete(charSkill);
@@ -133,7 +133,7 @@ namespace LRPManagement.Tests.Data.CharacterSkills
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhos:1111/");
             var service = new CharacterSkillService(null, config.Object, new NullLogger<CharacterSkillService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.Get(charSkill);
@@ -155,7 +155,7 @@ namespace LRPManagement.Tests.Data.CharacterSkills
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhos:1111/");
             var service = new CharacterSkillService(null, config.Object, new NullLogger<CharacterSkillService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.Get();

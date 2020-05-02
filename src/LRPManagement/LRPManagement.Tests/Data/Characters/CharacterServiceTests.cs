@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using DTO;
+﻿using DTO;
 using LRPManagement.Data.Characters;
 using LRPManagement.Models;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +7,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Tests.Data.Characters
 {
@@ -88,7 +88,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-                {Client = client};
+            { Client = client };
 
             // Act
             var result = await service.GetAll();
@@ -116,7 +116,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.GetCharacter(charId);
@@ -141,12 +141,17 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var updChar = new CharacterDTO
             {
-                Id = 1, Name = "Character 1", IsActive = true, IsRetired = false, PlayerId = 1, Xp = 8
+                Id = 1,
+                Name = "Character 1",
+                IsActive = true,
+                IsRetired = false,
+                PlayerId = 1,
+                Xp = 8
             };
             var result = await service.UpdateCharacter(updChar);
 
@@ -169,7 +174,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var updChar = new Character
@@ -202,7 +207,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-                {Client = client};
+            { Client = client };
 
             // Act
             var newChar = new CharacterDTO
@@ -236,7 +241,7 @@ namespace LRPManagement.Tests.Data.Characters
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["CharactersURL"]).Returns("https://localhost:1111/");
             var service = new CharacterService(null, config.Object, new NullLogger<CharacterService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.DeleteCharacter(charId);

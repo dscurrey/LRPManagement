@@ -1,14 +1,13 @@
-﻿using System;
+﻿using LRPManagement.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LRPManagement.Models;
 
 namespace LRPManagement.Data.Characters
 {
     public class FakeCharacterRepository : ICharacterRepository
     {
-        private List<Character> _characters;
+        private readonly List<Character> _characters;
 
         public FakeCharacterRepository(List<Character> characters)
         {

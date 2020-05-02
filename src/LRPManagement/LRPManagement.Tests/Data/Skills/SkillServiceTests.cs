@@ -1,4 +1,13 @@
-﻿using System;
+﻿using DTO;
+using LRPManagement.Data.Skills;
+using LRPManagement.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,16 +15,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DTO;
-using LRPManagement.Data.Skills;
-using LRPManagement.Models;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Moq.Protected;
-using Newtonsoft.Json;
 
 namespace LRPManagement.Tests.Data.Skills
 {
@@ -78,12 +77,14 @@ namespace LRPManagement.Tests.Data.Skills
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
-                {Client = client};
+            { Client = client };
 
             // Act
             var newSkill = new SkillDTO
             {
-                Id = 9, XpCost = 5, Name = "NEWSKILL"
+                Id = 9,
+                XpCost = 5,
+                Name = "NEWSKILL"
             };
             var result = await service.CreateSkill(newSkill);
 
@@ -104,7 +105,7 @@ namespace LRPManagement.Tests.Data.Skills
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.DeleteSkill(skillId);
@@ -123,7 +124,7 @@ namespace LRPManagement.Tests.Data.Skills
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
             var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.GetAll();

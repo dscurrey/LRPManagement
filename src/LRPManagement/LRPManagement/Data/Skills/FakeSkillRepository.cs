@@ -1,15 +1,13 @@
-﻿using System;
+﻿using LRPManagement.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LRPManagement.Models;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace LRPManagement.Data.Skills
 {
     public class FakeSkillRepository : ISkillRepository
     {
-        private List<Skill> _list;
+        private readonly List<Skill> _list;
 
         public FakeSkillRepository(List<Skill> skills)
         {

@@ -1,5 +1,4 @@
 ﻿using LRPManagement.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ namespace LRPManagement.Data.CharacterSkills
 {
     public class FakeCharacterSkillRepository : ICharacterSkillRepository
     {
-        private List<CharacterSkill> _list;
+        private readonly List<CharacterSkill> _list;
 
         public FakeCharacterSkillRepository(List<CharacterSkill> list)
         {

@@ -1,12 +1,11 @@
 ﻿using LRPManagement.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
 namespace LRPManagement.Data.CharacterSkills
 {
@@ -15,7 +14,7 @@ namespace LRPManagement.Data.CharacterSkills
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _config;
         private readonly ILogger<CharacterSkillService> _logger;
-        
+
         public HttpClient Client { get; set; }
 
         public CharacterSkillService(IHttpClientFactory clientFactory,

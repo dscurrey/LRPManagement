@@ -1,8 +1,8 @@
-﻿using LRP.Players.Models;
+﻿using DTO;
+using LRP.Players.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DTO;
 
 namespace LRP.Players.Data.Players
 {
@@ -18,7 +18,7 @@ namespace LRP.Players.Data.Players
         public Task DeletePlayer(int id)
         {
             var player = _players.Find(p => p.Id == id);
-            return Task.FromResult( _players.Remove(player));
+            return Task.FromResult(_players.Remove(player));
         }
 
         public Task<List<Player>> GetAll()

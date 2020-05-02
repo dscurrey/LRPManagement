@@ -5,6 +5,7 @@ using LRPManagement.Data.CharacterSkills;
 using LRPManagement.Data.Craftables;
 using LRPManagement.Data.Players;
 using LRPManagement.Data.Skills;
+using LRPManagement.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,6 @@ using Polly;
 using Polly.Extensions.Http;
 using System;
 using System.Net.Http;
-using LRPManagement.Services;
 
 namespace LRPManagement
 {

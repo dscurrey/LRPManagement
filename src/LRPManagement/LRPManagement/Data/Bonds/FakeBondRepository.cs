@@ -1,14 +1,14 @@
-﻿using System;
+﻿using LRPManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LRPManagement.Models;
 
 namespace LRPManagement.Data.Bonds
 {
     public class FakeBondRepository : IBondRepository
     {
-        private List<Bond> _bonds;
+        private readonly List<Bond> _bonds;
 
         public FakeBondRepository(List<Bond> bonds)
         {

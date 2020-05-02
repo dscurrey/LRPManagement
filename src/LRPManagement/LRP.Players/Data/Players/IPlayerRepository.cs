@@ -1,7 +1,7 @@
-﻿using LRP.Players.Models;
+﻿using DTO;
+using LRP.Players.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DTO;
 
 namespace LRP.Players.Data.Players
 {

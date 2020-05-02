@@ -1,16 +1,16 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LRPManagement.Services
 {
     public class ApiUpdateHostedService : BackgroundService
     {
         private readonly ILogger<ApiUpdateHostedService> _logger;
-        
+
         public IServiceProvider Services { get; }
 
         public ApiUpdateHostedService(IServiceProvider services,

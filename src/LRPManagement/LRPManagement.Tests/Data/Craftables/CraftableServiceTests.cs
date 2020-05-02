@@ -1,4 +1,13 @@
-﻿using System;
+﻿using DTO;
+using LRPManagement.Data.Craftables;
+using LRPManagement.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,16 +15,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DTO;
-using LRPManagement.Data.Craftables;
-using LRPManagement.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Moq.Protected;
-using Newtonsoft.Json;
 
 namespace LRPManagement.Tests.Data.Craftables
 {
@@ -79,12 +78,17 @@ namespace LRPManagement.Tests.Data.Craftables
             client.BaseAddress = new Uri("https://localhost:1111/");
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var service = new CraftableService(null, config.Object, new NullLogger<CraftableService>())
-                {Client = client};
+            { Client = client };
 
             // Act
             var newItem = new CraftableDTO
             {
-                Id = 12, Name = "NEW", Requirement = "NEW", Materials = "NEW", Effect = "NEW", Form = "NEW"
+                Id = 12,
+                Name = "NEW",
+                Requirement = "NEW",
+                Materials = "NEW",
+                Effect = "NEW",
+                Form = "NEW"
             };
             var result = await service.CreateCraftable(newItem);
 
@@ -108,7 +112,7 @@ namespace LRPManagement.Tests.Data.Craftables
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var service = new CraftableService(null, config.Object, new NullLogger<CraftableService>())
-                {Client = client};
+            { Client = client };
 
             // Act
             var result = await service.DeleteCraftable(item);
@@ -127,7 +131,7 @@ namespace LRPManagement.Tests.Data.Craftables
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var service = new CraftableService(null, config.Object, new NullLogger<CraftableService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.GetAll();
@@ -156,7 +160,7 @@ namespace LRPManagement.Tests.Data.Craftables
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var service = new CraftableService(null, config.Object, new NullLogger<CraftableService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var result = await service.GetCraftable(itemId);
@@ -181,12 +185,17 @@ namespace LRPManagement.Tests.Data.Craftables
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var service = new CraftableService(null, config.Object, new NullLogger<CraftableService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var updItem = new Craftable
             {
-                Id = 2, Name = "Updated Name", Requirement = "Updated", Materials = "Updated", Effect = "Updated", Form = "Updated"
+                Id = 2,
+                Name = "Updated Name",
+                Requirement = "Updated",
+                Materials = "Updated",
+                Effect = "Updated",
+                Form = "Updated"
             };
             var result = await service.UpdateCraftable(updItem);
 
@@ -209,7 +218,7 @@ namespace LRPManagement.Tests.Data.Craftables
             client.BaseAddress = new Uri("https://localhost:1111");
             config.SetupGet(s => s["ItemsURL"]).Returns("https://localhost:1111/");
             var service = new CraftableService(null, config.Object, new NullLogger<CraftableService>())
-                { Client = client };
+            { Client = client };
 
             // Act
             var updItem = new CraftableDTO
