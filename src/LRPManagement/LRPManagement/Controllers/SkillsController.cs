@@ -24,8 +24,6 @@ namespace LRPManagement.Controllers
         // GET: Skills
         public async Task<IActionResult> Index()
         {
-            TempData["SkillInoperativeMsg"] = "";
-
             try
             {
                 var skills = await _skillRepository.GetAll();
@@ -50,12 +48,11 @@ namespace LRPManagement.Controllers
         // GET: Skills/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            TempData["SkillInoperativeMsg"] = "";
             if (id == null) return NotFound();
 
             try
             {
-                var skill = await _skillService.GetSkill(id.Value);
+                var skill = await _skillRepository.GetSkill(id.Value);
                 if (skill == null) return NotFound();
 
                 return View(skill);

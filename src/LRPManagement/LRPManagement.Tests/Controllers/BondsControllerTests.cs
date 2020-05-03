@@ -121,7 +121,7 @@ namespace LRPManagement.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
         }
     }
 }
