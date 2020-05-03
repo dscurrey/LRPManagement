@@ -52,33 +52,76 @@ namespace LRPManagement.Tests.Controllers
         }
 
         [TestMethod]
-        public void DetailsTest()
+        public async Task DetailsTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var mockBondRepo = new Mock<IBondRepository>();
+            var mockBondServ = new Mock<IBondService>();
+
+            var charId = 2;
+
+            mockBondRepo.Setup(repo => repo.Get(charId)).ReturnsAsync(TestData.Bonds().FirstOrDefault(b => b.Id == charId));
+
+            var controller = new BondsController(mockBondRepo.Object, null, null, mockBondServ.Object);
+
+            // Act
+            var result = await controller.Details(charId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            var viewResult = result as ViewResult;
+            var model = viewResult.ViewData.Model;
+            Assert.IsNotNull(model);
+            
+            var bond = model as Bond;
+            var testBond = TestData.Bonds().FirstOrDefault(b => b.Id == charId);
+            Assert.AreEqual(testBond.Id, bond.Id);
+            Assert.AreEqual(testBond.ItemId, bond.ItemId);
+            Assert.AreEqual(testBond.CharacterId, bond.CharacterId);
         }
 
         [TestMethod]
-        public void CreateTest()
+        public async Task DeleteTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var mockBondRepo = new Mock<IBondRepository>();
+            var mockBondServ = new Mock<IBondService>();
+            var charId = 1;
+            mockBondRepo.Setup(repo => repo.Get(charId)).ReturnsAsync(TestData.Bonds().FirstOrDefault(b => b.Id == charId));
+            var controller = new BondsController(mockBondRepo.Object, null, null, mockBondServ.Object);
+
+            // Act
+            var result = await controller.Delete(charId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            var viewResult = result as ViewResult;
+            Assert.IsNotNull(viewResult);
+            var model = viewResult.ViewData.Model;
+            Assert.IsNotNull(model);
+            var bond = model as Bond;
+            Assert.IsNotNull(bond);
+            Assert.AreEqual(charId, bond.Id);
         }
 
         [TestMethod]
-        public void CreateTest1()
+        public async Task DeleteConfirmedTest()
         {
-            throw new NotImplementedException();
-        }
+            // Arrange
+            var mockBondRepo = new Mock<IBondRepository>();
+            var mockBondServ = new Mock<IBondService>();
+            var charId = 1;
+            mockBondRepo.Setup(repo => repo.Get(charId)).ReturnsAsync(TestData.Bonds().FirstOrDefault(b => b.Id == charId));
+            var controller = new BondsController(mockBondRepo.Object, null, null, mockBondServ.Object);
 
-        [TestMethod]
-        public void DeleteTest()
-        {
-            throw new NotImplementedException();
-        }
+            // Act
+            var result = await controller.DeleteConfirmed(charId);
 
-        [TestMethod]
-        public void DeleteConfirmedTest()
-        {
-            throw new NotImplementedException();
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
     }
 }
