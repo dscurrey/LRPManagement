@@ -20,7 +20,6 @@ namespace LRP.Players.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -33,7 +32,7 @@ namespace LRP.Players.Data
                 (
                     new Player
                     {
-                        Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now
+                        Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now, AccountRef = "test@dcurrey.co.uk"
                     }
                 );
         }

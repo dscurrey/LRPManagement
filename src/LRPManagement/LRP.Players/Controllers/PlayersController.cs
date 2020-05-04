@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace LRP.Players.Controllers
 {
-    // TODO - Authorisation
-
+    /// <summary>
+    /// Bonds controller used for interactions involving Players.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PlayersController : ControllerBase
@@ -20,6 +21,11 @@ namespace LRP.Players.Controllers
         private readonly IPlayerRepository _repository;
         private readonly ILogger<PlayersController> _logger;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="playerRepository"></param>
+        /// <param name="logger"></param>
         public PlayersController(IPlayerRepository playerRepository, ILogger<PlayersController> logger)
         {
             _repository = playerRepository;
@@ -27,6 +33,10 @@ namespace LRP.Players.Controllers
         }
 
         // GET: api/Players
+        /// <summary>
+        /// Gets all players
+        /// </summary>
+        /// <returns>A list of all players</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PlayerDTO>>> GetPlayer()
         {
@@ -48,6 +58,11 @@ namespace LRP.Players.Controllers
         }
 
         // GET: api/Players/5
+        /// <summary>
+        /// Gets a specified player
+        /// </summary>
+        /// <param name="id">Id for the chosen player</param>
+        /// <returns>Chosen player</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<PlayerDTO>> GetPlayer(int id)
         {
@@ -70,6 +85,12 @@ namespace LRP.Players.Controllers
         // PUT: api/Players/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Updates a specified player
+        /// </summary>
+        /// <param name="id">Id for the specified player</param>
+        /// <param name="player">Updated player</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlayer(int id, PlayerDTO player)
         {
@@ -113,6 +134,11 @@ namespace LRP.Players.Controllers
         // POST: api/Players
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Creates a new player
+        /// </summary>
+        /// <param name="player">New player</param>
+        /// <returns>Created <see cref="Player"/> object</returns>
         [HttpPost]
         public async Task<ActionResult<Player>> PostPlayer([FromBody] PlayerDTO player)
         {
@@ -145,6 +171,11 @@ namespace LRP.Players.Controllers
         }
 
         // DELETE: api/Players/5
+        /// <summary>
+        /// Deletes a specified player
+        /// </summary>
+        /// <param name="id">Id of the player to be deleted</param>
+        /// <returns>Deleted player</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Player>> DeletePlayer(int id)
         {

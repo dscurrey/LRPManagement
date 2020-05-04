@@ -4,5 +4,159 @@
         <name>LRPManagement</name>
     </assembly>
     <members>
+        <member name="T:LRPManagement.Controllers.BondsController">
+            <summary>
+            Bonds controller used for interactions involving Character/Item relationship.
+            Staff Only (referees/admin)
+            </summary>
+        </member>
+        <member name="M:LRPManagement.Controllers.BondsController.#ctor(LRPManagement.Data.Bonds.IBondRepository,LRPManagement.Data.Characters.ICharacterRepository,LRPManagement.Data.Craftables.ICraftableRepository,LRPManagement.Data.Bonds.IBondService)">
+            <summary>
+            Creates a new instance of the <see cref="T:LRPManagement.Controllers.BondsController"/> class
+            </summary>
+            <param name="repository">Repository containing bonds and access methods</param>
+            <param name="charRepo">Repository containing characters and access methods</param>
+            <param name="itemRepo">Repository containing items and access methods</param>
+            <param name="service">Class containing methods to call the items API</param>
+        </member>
+        <member name="M:LRPManagement.Controllers.BondsController.Index">
+            <summary>
+            For displaying an index of all bonds
+            </summary>
+            <returns>Index view containing bonds in repository</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.BondsController.Details(System.Nullable{System.Int32})">
+            <summary>
+            Displays details of a bond
+            </summary>
+            <param name="id">ID of the chosen bond</param>
+            <returns>View, containing details of a bond</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.BondsController.Create">
+            <summary>
+            Create populates information in the create form
+            </summary>
+            <returns>View containing data required to populate form</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.BondsController.Create(LRPManagement.Models.Bond)">
+            <summary>
+            Takes the POST from create form
+            </summary>
+            <param name="bond">The bond to be created</param>
+            <returns>Redirects to index</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.BondsController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Populates confirm delete view with chosen bond
+            </summary>
+            <param name="id">ID of delete target</param>
+            <returns>Confirm deletion page</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.BondsController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Deletes a chosen bond
+            </summary>
+            <param name="id">Id for the chosen bond</param>
+            <returns>Redirect to index</returns>
+        </member>
+        <member name="T:LRPManagement.Controllers.CharactersController">
+            <summary>
+            Character controller used for interactions involving Characters.
+            Requires login
+            </summary>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.#ctor(LRPManagement.Data.Characters.ICharacterService,LRPManagement.Data.Characters.ICharacterRepository,LRPManagement.Data.Players.IPlayerRepository,LRPManagement.Data.Skills.ISkillRepository,LRPManagement.Data.CharacterSkills.ICharacterSkillRepository)">
+            <summary>
+            Creates an instance of CharactersController
+            </summary>
+            <param name="characterService">A class to allow communication with the Characters API</param>
+            <param name="characterRepository">Repository containing characters</param>
+            <param name="playerRepository">Repository to store players</param>
+            <param name="skillRepository">Repository to store skills</param>
+            <param name="charSkillRepository">Repository to store char skill relationship</param>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.Index">
+            <summary>
+            Displays a list of all characters
+            </summary>
+            <returns>View containing a list of all characters</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.Details(System.Nullable{System.Int32})">
+            <summary>
+            Displays a character's details
+            </summary>
+            <param name="id">Id of the specified character</param>
+            <returns>View containing character details</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.Create">
+            <summary>
+            Create populates information in the create form
+            </summary>
+            <returns>View containing data required to populate form</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.Create(DTO.CharacterDTO)">
+            <summary>
+            Takes the POST from create form
+            </summary>
+            <param name="characterDto">The character to be created</param>
+            <returns>Redirects to index</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Populates information in the edit form
+            </summary>
+            <returns>View containing data required to populate form</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.Edit(System.Int32,DTO.CharacterDTO)">
+            <summary>
+            Edits a specified character in the database
+            </summary>
+            <param name="id">Id of the character to be edited</param>
+            <param name="characterDTO">The edited character</param>
+            <returns>View</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Populates the delete view
+            </summary>
+            <param name="id">Id for the character to be deleted</param>
+            <returns>Delete Confirmation containing delete target</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Deletes a specified character
+            </summary>
+            <param name="id">The id for the chosen character</param>
+            <returns>View</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.AddSkill(System.Nullable{System.Int32})">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.AddSkill(System.Int32,LRPManagement.ViewModels.CharacterSkillViewModel)">
+            <summary>
+            Creates a characterskill
+            </summary>
+            <param name="id"></param>
+            <param name="charSkill">The character skill to be created</param>
+            <returns>View</returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.SetRetire(System.Int32)">
+            <summary>
+            Sets a specified character's IsRetired to TRUE
+            </summary>
+            <param name="id">Id of specified character</param>
+            <returns></returns>
+        </member>
+        <member name="M:LRPManagement.Controllers.CharactersController.SetActive(System.Int32)">
+            <summary>
+            Sets a specified character as active
+            </summary>
+            <param name="id">ID for the specified character</param>
+            <returns>Redirects to details</returns>
+        </member>
     </members>
 </doc>

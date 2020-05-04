@@ -30,7 +30,7 @@ namespace LRPManagement.Data.Bonds
             return await Task.FromResult(_bonds.Where(b => b.ItemId == itemId).ToList());
         }
 
-        public async Task<List<Bond>> GetForPlayer(int playerId)
+        public Task<List<Bond>> GetForPlayer(int playerId)
         {
             throw new NotImplementedException();
         }

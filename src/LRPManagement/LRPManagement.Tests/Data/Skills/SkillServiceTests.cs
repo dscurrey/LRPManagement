@@ -101,6 +101,26 @@ namespace LRPManagement.Tests.Data.Skills
         }
 
         [TestMethod]
+        public async Task CreateSkillExceptionTest()
+        {
+            // Arrange
+            var service = new Mock<ISkillService>();
+            service.Setup(s => s.CreateSkill(null)).Throws<TaskCanceledException>();
+
+            // Act
+            var newSkill = new SkillDTO
+            {
+                Id = 9,
+                XpCost = 5,
+                Name = "NEWSKILL"
+            };
+            var result = await service.Object.CreateSkill(newSkill);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
         public async Task DeleteSkillTest()
         {
             // Arrange
@@ -121,6 +141,19 @@ namespace LRPManagement.Tests.Data.Skills
         }
 
         [TestMethod]
+        public async Task DeleteSkillExceptionTest()
+        {
+            // Arrange
+            var service = new Mock<ISkillService>();
+            var skillId = 1;
+            service.Setup(s => s.DeleteSkill(skillId)).Throws<TaskCanceledException>();
+
+            // Act
+            await Assert.ThrowsExceptionAsync<TaskCanceledException>(
+                async () => { await service.Object.DeleteSkill(skillId); });
+        }
+
+        [TestMethod]
         public async Task GetAllTest()
         {
             // Arrange
@@ -135,10 +168,95 @@ namespace LRPManagement.Tests.Data.Skills
             var result = await service.GetAll();
 
             // Assert
+            Assert.IsNotNull(result);
             foreach (var skill in result)
             {
                 var testItem = TestData.Skills().FirstOrDefault(s => s.Id == skill.Id);
+                Assert.AreEqual(testItem.Name, skill.Name);
+                Assert.AreEqual(testItem.XpCost, skill.XpCost);
             }
+        }
+
+        [TestMethod]
+        public async Task GetAllExceptionTest()
+        {
+            // Arrange
+            var service = new Mock<ISkillService>();
+            service.Setup(s => s.GetAll()).Throws<TaskCanceledException>();
+
+            // Act
+            await Assert.ThrowsExceptionAsync<TaskCanceledException>(
+                async () => { await service.Object.GetAll(); });
+        }
+
+        [TestMethod]
+        public async Task GetTest()
+        {
+            // Arrange
+            var skillId = 2;
+            var client = SetupMock_Skill(skillId);
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
+            var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
+                { Client = client };
+
+            // Act
+            var result = await service.GetSkill(skillId);
+
+            // Assert
+            var testItem = TestData.Skills().FirstOrDefault(s => s.Id == result.Id);
+            Assert.AreEqual(testItem.Name, result.Name);
+            Assert.AreEqual(testItem.XpCost, result.XpCost);
+        }
+
+        [TestMethod]
+        public async Task GetSkillExceptionTest()
+        {
+            // Arrange
+            var service = new Mock<ISkillService>();
+            var skillId = 1;
+            service.Setup(s => s.GetSkill(skillId)).Throws<TaskCanceledException>();
+
+            // Act
+            await Assert.ThrowsExceptionAsync<TaskCanceledException>(
+                async () => { await service.Object.GetSkill(skillId); });
+        }
+
+        [TestMethod]
+        public async Task UpdateSkillTest()
+        {
+            // Arrange
+            var client = SetupMock_Skill();
+            var config = new Mock<IConfiguration>();
+            client.BaseAddress = new Uri("https://localhost:1111/");
+            config.SetupGet(s => s["SkillsURL"]).Returns("https://localhost:1111/");
+            var service = new SkillService(null, new NullLogger<SkillService>(), config.Object)
+                { Client = client };
+
+            // Act
+            var updSkill = new SkillDTO
+                {
+            Id = 1, Name = "UpdatedSkill", XpCost = 4};
+            var result = await service.UpdateSkill(updSkill);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(updSkill.Name, result.Name);
+            Assert.AreEqual(updSkill.Id, result.Id);
+            Assert.AreEqual(updSkill.XpCost, result.XpCost);
+        }
+
+        [TestMethod]
+        public async Task UpdateSkillExceptionTest()
+        {
+            // Arrange
+            var service = new Mock<ISkillService>();
+            service.Setup(s => s.UpdateSkill(null)).Throws<TaskCanceledException>();
+
+            // Act
+            await Assert.ThrowsExceptionAsync<TaskCanceledException>(
+                async () => { await service.Object.UpdateSkill(null); });
         }
     }
 }

@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
+    /// <summary>
+    /// Character controller used for interactions involving Characters.
+    /// Requires login
+    /// </summary>
     [Authorize]
     public class CharactersController : Controller
     {
@@ -24,6 +28,14 @@ namespace LRPManagement.Controllers
         private readonly ISkillRepository _skillRepository;
         private readonly ICharacterSkillRepository _charSkillRepository;
 
+        /// <summary>
+        /// Creates an instance of CharactersController
+        /// </summary>
+        /// <param name="characterService">A class to allow communication with the Characters API</param>
+        /// <param name="characterRepository">Repository containing characters</param>
+        /// <param name="playerRepository">Repository to store players</param>
+        /// <param name="skillRepository">Repository to store skills</param>
+        /// <param name="charSkillRepository">Repository to store char skill relationship</param>
         public CharactersController(ICharacterService characterService,
             ICharacterRepository characterRepository,
             IPlayerRepository playerRepository,
@@ -38,6 +50,10 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters
+        /// <summary>
+        /// Displays a list of all characters
+        /// </summary>
+        /// <returns>View containing a list of all characters</returns>
         [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> Index()
         {
@@ -69,6 +85,11 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters/Details/5
+        /// <summary>
+        /// Displays a character's details
+        /// </summary>
+        /// <param name="id">Id of the specified character</param>
+        /// <returns>View containing character details</returns>
         public async Task<IActionResult> Details(int? id)
         {
             TempData["CharInoperativeMsg"] = "";
@@ -112,6 +133,10 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters/Create
+        /// <summary>
+        /// Create populates information in the create form
+        /// </summary>
+        /// <returns>View containing data required to populate form</returns>
         public IActionResult Create()
         {
             return View();
@@ -120,6 +145,11 @@ namespace LRPManagement.Controllers
         // POST: Characters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Takes the POST from create form
+        /// </summary>
+        /// <param name="characterDto">The character to be created</param>
+        /// <returns>Redirects to index</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PlayerId,Name,IsActive,IsRetired")]
@@ -144,12 +174,14 @@ namespace LRPManagement.Controllers
                 HandleBrokenCircuit();
             }
 
-            //await UpdateDb();
-
             return RedirectToAction(nameof(Index));
         }
 
         // GET: Characters/Edit/5
+        /// <summary>
+        /// Populates information in the edit form
+        /// </summary>
+        /// <returns>View containing data required to populate form</returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -170,6 +202,12 @@ namespace LRPManagement.Controllers
         // POST: Characters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Edits a specified character in the database
+        /// </summary>
+        /// <param name="id">Id of the character to be edited</param>
+        /// <param name="characterDTO">The edited character</param>
+        /// <returns>View</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
@@ -203,6 +241,11 @@ namespace LRPManagement.Controllers
         }
 
         // GET: Characters/Delete/5
+        /// <summary>
+        /// Populates the delete view
+        /// </summary>
+        /// <param name="id">Id for the character to be deleted</param>
+        /// <returns>Delete Confirmation containing delete target</returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -221,6 +264,11 @@ namespace LRPManagement.Controllers
         }
 
         // POST: Characters/Delete/5
+        /// <summary>
+        /// Deletes a specified character
+        /// </summary>
+        /// <param name="id">The id for the chosen character</param>
+        /// <returns>View</returns>
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -242,6 +290,11 @@ namespace LRPManagement.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> AddSkill(int? id)
         {
             if (id == null) return NotFound();
@@ -281,6 +334,12 @@ namespace LRPManagement.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Creates a characterskill
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="charSkill">The character skill to be created</param>
+        /// <returns>View</returns>
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -308,6 +367,11 @@ namespace LRPManagement.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Sets a specified character's IsRetired to TRUE
+        /// </summary>
+        /// <param name="id">Id of specified character</param>
+        /// <returns></returns>
         public async Task<IActionResult> SetRetire(int id)
         {
             var character = await _characterRepository.GetCharacter(id);
@@ -325,6 +389,11 @@ namespace LRPManagement.Controllers
             return RedirectToAction(nameof(Details), "Players", new {id = character.PlayerId});
         }
 
+        /// <summary>
+        /// Sets a specified character as active
+        /// </summary>
+        /// <param name="id">ID for the specified character</param>
+        /// <returns>Redirects to details</returns>
         public async Task<IActionResult> SetActive(int id)
         {
             var character = await _characterRepository.GetCharacter(id);
