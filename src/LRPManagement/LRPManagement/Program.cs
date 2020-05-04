@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement
 {
@@ -30,6 +31,7 @@ namespace LRPManagement
 
                     var authContext = services.GetRequiredService<AccountsContext>();
                     authContext.Database.EnsureCreated();
+                    authContext.Database.Migrate();
                 }
                 catch (Exception e)
                 {
