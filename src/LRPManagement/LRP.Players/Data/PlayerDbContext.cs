@@ -32,7 +32,7 @@ namespace LRP.Players.Data
                 (
                     new Player
                     {
-                        Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now
+                        Id = 1, FirstName = "Test", LastName = "user", IsActive = true, DateJoined = DateTime.Now, AccountRef = "test@dcurrey.co.uk"
                     }
                 );
         }
