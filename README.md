@@ -9,6 +9,11 @@ This repository contains two main projects:
 - An ASP .NET Core solution, which contains the main web app, as well as all the attached services, backend, and dockerfiles.
 - An Android application - the refereeing app.
 
+## Running
+In order to run the applications, open them in their respective IDEs (Android Studio for the Android App, and Visual Studio for .NET Core), the Android application will run with no necessary configuration, the web app requires a minor change before running.
+
+In order to run the web app and APIs, it is necessary to open the NuGet Package Manager console and run the following command in LrpManagement Project: `Update-Database -Context AccountsContext`. This will create and setup the database required for user login/identity.
+
 ## Testing
 It terms of unit testing, the ASP .NET Core projects are reasonably well tested, with the android application having only been tested in use, with no formal unit testing.
 
