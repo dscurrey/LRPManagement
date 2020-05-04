@@ -84,7 +84,6 @@ namespace LRPManagement.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-
                 if (usersEmpty)
                 {
                     await _roleManager.CreateAsync(new IdentityRole("Admin"));
