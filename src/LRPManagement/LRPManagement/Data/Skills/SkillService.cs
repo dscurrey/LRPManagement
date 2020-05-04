@@ -102,6 +102,7 @@ namespace LRPManagement.Data.Skills
             {
                 var client = GetHttpClient("StandardRequest");
                 var resp = await client.PutAsync("api/skills" + skill.Id, skill, new JsonMediaTypeFormatter());
+                return skill;
             }
             catch (TaskCanceledException ex)
             {
