@@ -17,6 +17,7 @@ namespace LRPManagement.Services
     {
         private int executionCount = 0;
         private readonly ILogger<ApiUpdaterService> _logger;
+
         private readonly int interval = 20000; // Secs * 1000
 
         private readonly IPlayerRepository _playerRepository;
@@ -312,8 +313,11 @@ namespace LRPManagement.Services
                     {
                         // Ensure that bond is not already present and necessary items are stored
                         if (await BondExists(bond.ItemId, bond.CharacterId) ||
-                            await _characterRepository.GetCharacterRef(bond.CharacterId) == null ||
-                            await _itemRepository.GetCraftable(bond.ItemId) == null) continue;
+                            await _characterRepository.GetCharacter(bond.CharacterId) == null ||
+                            await _itemRepository.GetCraftable(bond.ItemId) == null)
+                        {
+                            continue;
+                        }
 
                         _bondRepository.Insert(bond);
                         await _bondRepository.Save();
@@ -335,9 +339,11 @@ namespace LRPManagement.Services
                     {
                         // Ensure that charSKill is not already present and necessary items are stored
                         if (await CharSkillExists(charSkill.SkillId, charSkill.CharacterId) ||
-                            await _characterRepository.GetCharacterRef(charSkill.CharacterId) == null ||
+                            await _characterRepository.GetCharacter(charSkill.CharacterId) == null ||
                             await _skillRepository.GetSkill(charSkill.SkillId) == null)
+                        {
                             continue;
+                        }
 
                         _charSkillRepository.AddSkillToCharacter(charSkill.SkillId, charSkill.CharacterId);
                         await _charSkillRepository.Save();
