@@ -1,13 +1,10 @@
-﻿@model IEnumerable<LRPManagement.Models.Skill>
+﻿@model IEnumerable<LRPManagement.Models.CharacterSkill>
 
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Skill.Name)
         </th>
         <th></th>
     </tr>
@@ -17,10 +14,11 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.Skill.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.ActionLink("Details", "Details", "Skills", new { id = item.SkillId }) |
+                @Html.ActionLink("Delete", "Delete", "Bonds", new { id = item.Id })
             </td>
         </tr>
     }

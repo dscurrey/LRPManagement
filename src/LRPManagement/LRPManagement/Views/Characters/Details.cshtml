@@ -45,7 +45,7 @@
         <a asp-action="Create" asp-controller="CharacterSkills" asp-route-id="@Model.Id">Add Skill</a>
         @if (Model.Skills.Any())
         {
-            <partial name="_CharacterSkills" model="Model.Skills"/>
+            <partial name="_CharacterSkills" model="Model.Items"/>
         }
         else
         {
