@@ -1,4 +1,4 @@
-namespace LRPManagement.Models
+namespace LRPManagement.ViewModels
 {
     public class ErrorViewModel
     {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using LRPManagement.ViewModels;
 
 namespace LRPManagement.Controllers
 {
