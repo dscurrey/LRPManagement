@@ -28,7 +28,7 @@ namespace LRPManagement.Models
         [Display(Name = "Effect")]
         public string Effect { get; set; }
 
-        [Display(Name = "Materials")]
+        [Display(Name = "Material(s)")]
         public string Materials { get; set; }
 
         public virtual ICollection<Bond> Bond { get; set; }
