@@ -25,6 +25,11 @@ namespace LRPManagement.Data.Players
             return await _context.Players.Include(p => p.Characters).FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<int> GetCount()
+        {
+            return await _context.Players.CountAsync();
+        }
+
         public void InsertPlayer(Player player)
         {
             _context.Players.Add(player);

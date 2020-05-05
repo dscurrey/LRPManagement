@@ -36,6 +36,11 @@ namespace LRPManagement.Data.Skills
             return await _context.Skills.FirstOrDefaultAsync(s => s.SkillRef == id);
         }
 
+        public async Task<int> GetCount()
+        {
+            return await _context.Skills.CountAsync();
+        }
+
         public void InsertSkill(Skill skill)
         {
             _context.Skills.Add(skill);

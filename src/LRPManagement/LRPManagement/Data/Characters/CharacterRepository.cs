@@ -37,6 +37,11 @@ namespace LRPManagement.Data.Characters
             return await _context.Characters.FirstOrDefaultAsync(c => c.CharacterRef == id);
         }
 
+        public async Task<int> GetCount()
+        {
+            return await _context.Characters.CountAsync();
+        }
+
         public void InsertCharacter(Character character)
         {
             _context.Characters.Add(character);

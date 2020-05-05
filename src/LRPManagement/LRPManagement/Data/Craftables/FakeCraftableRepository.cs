@@ -25,9 +25,14 @@ namespace LRPManagement.Data.Craftables
             return await Task.FromResult(_list.FirstOrDefault(c => c.Id == id));
         }
 
-        public Task<Craftable> GetCraftableRef(int id)
+        public async Task<Craftable> GetCraftableRef(int id)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(_list.FirstOrDefault(c => c.ItemRef == id));
+        }
+
+        public async Task<int> GetCount()
+        {
+            return await Task.FromResult(_list.Count);
         }
 
         public void InsertCraftable(Craftable craftable)

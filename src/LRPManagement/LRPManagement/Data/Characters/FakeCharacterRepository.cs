@@ -24,6 +24,11 @@ namespace LRPManagement.Data.Characters
             return await Task.FromResult(_characters.FirstOrDefault(c => c.Id == id));
         }
 
+        public async Task<int> GetCount()
+        {
+            return await Task.FromResult(_characters.Count);
+        }
+
         public async Task<Character> GetCharacterRef(int id)
         {
             return await Task.FromResult(_characters.FirstOrDefault(c => c.CharacterRef == id));
