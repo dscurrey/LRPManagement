@@ -36,6 +36,11 @@ namespace LRPManagement.Data.Players
                 (_list.FirstOrDefault(p => p.PlayerRef.ToString().ToLower().Equals(id.ToLower())));
         }
 
+        public async Task<int> GetCount()
+        {
+            return await Task.FromResult(_list.Count);
+        }
+
         public void InsertPlayer(Player player)
         {
             _list.Add(player);

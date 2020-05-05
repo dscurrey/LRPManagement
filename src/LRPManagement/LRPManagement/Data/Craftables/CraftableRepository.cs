@@ -51,5 +51,10 @@ namespace LRPManagement.Data.Craftables
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task<int> GetCount()
+        {
+            return await _context.Craftables.CountAsync();
+        }
     }
 }

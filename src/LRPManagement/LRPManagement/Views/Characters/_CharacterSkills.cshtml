@@ -1,26 +1,23 @@
-﻿@model IEnumerable<LRPManagement.Models.Skill>
+﻿@model LRPManagement.ViewModels.CharacterDetailsViewModel
 
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach (var skill in Model.Skills)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => skill.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.ActionLink("Details", "Details", "Skills", new { id = skill.Id })
             </td>
         </tr>
     }

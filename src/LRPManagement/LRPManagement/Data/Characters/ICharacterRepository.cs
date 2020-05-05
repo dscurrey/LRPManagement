@@ -8,6 +8,7 @@ namespace LRPManagement.Data.Characters
     {
         Task<List<Character>> GetAll();
         Task<Character> GetCharacter(int id);
+        Task<int> GetCount();
         Task<Character> GetCharacterRef(int id);
         void InsertCharacter(Character character);
         Task DeleteCharacter(int id);

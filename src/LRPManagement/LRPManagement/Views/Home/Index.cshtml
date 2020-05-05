@@ -1,8 +1,52 @@
-﻿@{
+﻿@model LRPManagement.ViewModels.HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>LRP Management Web-Application</p>
+</div>
+<div class="col-md-4">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PlayerCount)
+                </th>
+                <th>
+                    @Model.PlayerCount
+                </th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                @Html.DisplayNameFor(model => model.CharacterCount)
+                </th>
+                <th>
+                    @Model.CharacterCount
+                </th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                @Html.DisplayNameFor(model => model.SkillCount)
+                </th>
+                <th>
+                    @Model.SkillCount
+                </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+            @Html.DisplayNameFor(model => model.ItemCount)
+            </th>
+            <th>
+                @Model.ItemCount
+            </th>
+            <th></th>
+        </tr>
+        </tbody>
+    </table>
 </div>

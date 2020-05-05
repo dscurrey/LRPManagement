@@ -10,6 +10,7 @@ namespace LRPManagement.Data.Players
         Task<Player> GetPlayer(int id);
         Task<Player> GetPlayerRef(int id);
         Task<Player> GetPlayerAccountRef(string id);
+        Task<int> GetCount();
         void InsertPlayer(Player player);
         Task DeletePlayer(int id);
         Task AnonPlayer(int id);
