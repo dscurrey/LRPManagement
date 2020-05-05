@@ -1,8 +1,10 @@
-﻿namespace LRPManagement.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LRPManagement.ViewModels
 {
     public class CharacterSkillViewModel
     {
-        public int CharId { get; set; }
-        public int SkillId { get; set; }
+        [Display(Name = "Character ID")] public int CharId { get; set; }
+        [Display(Name = "Skill ID")] public int SkillId { get; set; }
     }
 }
