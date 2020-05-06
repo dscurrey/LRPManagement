@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace LRP.Characters.Controllers
 {
-    // TODO - Authorisation
-
     [Route("api/[controller]")]
     [ApiController]
     public class CharactersController : ControllerBase
