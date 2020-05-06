@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace LRP.Skills.Data.Skills
 {
+    /// <summary>
+    /// Repository for working with skills and the database
+    /// </summary>
     public interface ISkillRepository
     {
         Task<List<Skill>> GetAll();

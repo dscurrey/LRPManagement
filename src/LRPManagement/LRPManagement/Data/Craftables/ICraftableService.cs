@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Craftables
 {
+    /// <summary>
+    /// Service for accessing and performing API operations with Craftables (Items)
+    /// </summary>
     public interface ICraftableService
     {
         Task<List<CraftableDTO>> GetAll();

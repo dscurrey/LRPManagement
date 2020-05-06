@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
+    /// <summary>
+    /// Controller for displaying and handling Skills
+    /// </summary>
     [Authorize(Policy = "StaffOnly")]
     public class SkillsController : Controller
     {
@@ -26,6 +29,7 @@ namespace LRPManagement.Controllers
         {
             try
             {
+                // Get Skills from database
                 var skills = await _skillRepository.GetAll();
                 var skillList = skills.Select
                 (
@@ -39,6 +43,7 @@ namespace LRPManagement.Controllers
             }
             catch (BrokenCircuitException)
             {
+                // Handle when API not working
                 HandleBrokenCircuit();
             }
 
@@ -52,6 +57,7 @@ namespace LRPManagement.Controllers
 
             try
             {
+                // Attempt to get skill from database
                 var skill = await _skillRepository.GetSkill(id.Value);
                 if (skill == null) return NotFound();
 
@@ -202,7 +208,7 @@ namespace LRPManagement.Controllers
 
         private void HandleBrokenCircuit()
         {
-            TempData["SkillInoperativeMsg"] = "Skill Service Currently Unavailable.";
+            // When broken ciruit, display message in views
             ViewBag.SkillError = "Skill Service is Currently Unavailable";
         }
     }

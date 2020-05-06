@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Bonds
 {
+    /// <summary>
+    /// Service for accessing and performing API operations with Bonds in the Items API
+    /// </summary>
     public class BondService : IBondService
     {
         private readonly IHttpClientFactory _clientFactory;

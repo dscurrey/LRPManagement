@@ -4,5 +4,15 @@
         <name>LRP.Skills</name>
     </assembly>
     <members>
+        <member name="T:LRP.Skills.Data.Skills.ISkillRepository">
+            <summary>
+            Repository for working with skills and the database
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.CharacterSkills.ICharacterSkillRepository">
+            <summary>
+            Repository for working with the database and CharacterSkills
+            </summary>
+        </member>
     </members>
 </doc>

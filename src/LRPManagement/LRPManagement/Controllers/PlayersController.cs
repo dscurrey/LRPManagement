@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
+    /// <summary>
+    /// Controller for displaying and working with Players
+    /// </summary>
     [Authorize]
     public class PlayersController : Controller
     {

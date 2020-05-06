@@ -10,6 +10,9 @@ using Polly;
 
 namespace LRPManagement.Controllers
 {
+    /// <summary>
+    /// Controller for Craftables (Items), altering and displaying them
+    /// </summary>
     [Authorize(Policy = "StaffOnly")]
     public class CraftablesController : Controller
     {

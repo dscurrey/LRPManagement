@@ -4,6 +4,87 @@
         <name>LRPManagement</name>
     </assembly>
     <members>
+        <member name="T:LRPManagement.Data.Bonds.BondService">
+            <summary>
+            Service for accessing and performing API operations with Bonds in the Items API
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Bonds.IBondRepository">
+            <summary>
+            Repository for accessing and performing database operations with Bonds (Character - Item link entity)
+            </summary>
+        </member>
+        <member name="M:LRPManagement.Data.Bonds.IBondRepository.GetMatch(System.Int32,System.Int32)">
+            <summary>
+            Returns the first encountered bond between the chosen character and item
+            Each character/item should only be bonded once
+            </summary>
+            <param name="charId">ID of selected Character</param>
+            <param name="itemId">ID of selected item</param>
+            <returns></returns>
+        </member>
+        <member name="T:LRPManagement.Data.Bonds.IBondService">
+            <summary>
+            Service for accessing and performing API operations with Bonds in the Items API
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.CharacterSkills.ICharacterSkillRepository">
+            <summary>
+            Repository for accessing and performing database operations with Character Skills (Character - Skill link entries)
+            </summary>
+        </member>
+        <member name="M:LRPManagement.Data.CharacterSkills.ICharacterSkillRepository.AddSkillToCharacter(System.Int32,System.Int32)">
+            <summary>
+            Creates a new CharacterSkill using Ids
+            </summary>
+            <param name="skillId">Id of the chosen skill</param>
+            <param name="charId">Id of the chosen character</param>
+        </member>
+        <member name="T:LRPManagement.Data.CharacterSkills.ICharacterSkillService">
+            <summary>
+            Service for accessing and performing API operations with characterSkills
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Characters.ICharacterRepository">
+            <summary>
+            Repository for accessing and performing database operations with Characters
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Characters.ICharacterService">
+            <summary>
+            Service for accessing and performing API operations with Characters
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Craftables.ICraftableRepository">
+            <summary>
+            Repository for accessing and performing database operations with Craftables (Items)
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Craftables.ICraftableService">
+            <summary>
+            Service for accessing and performing API operations with Craftables (Items)
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Players.IPlayerRepository">
+            <summary>
+            Repository for accessing and performing database operations with Players
+            </summary>
+        </member>
+        <member name="M:LRPManagement.Data.Players.IPlayerService.GetAll">
+            <summary>
+            Service for accessing and performing API operations with Players
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Skills.ISkillRepository">
+            <summary>
+            Repository for accessing and performing database operations with Skills
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Data.Skills.ISkillService">
+            <summary>
+            Service for accessing and performing API operations with Skills
+            </summary>
+        </member>
         <member name="T:LRPManagement.Controllers.BondsController">
             <summary>
             Bonds controller used for interactions involving Character/Item relationship.
@@ -157,6 +238,46 @@
             </summary>
             <param name="id">ID for the specified character</param>
             <returns>Redirects to details</returns>
+        </member>
+        <member name="T:LRPManagement.Controllers.CharacterSkillsController">
+            <summary>
+            Controller for managing CharacterSkills
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Controllers.CraftablesController">
+            <summary>
+            Controller for Craftables (Items), altering and displaying them
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Controllers.PlayersController">
+            <summary>
+            Controller for displaying and working with Players
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Controllers.RolesController">
+            <summary>
+            Admin controller for assigning, removing and creating roles for users of the system
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Controllers.SkillsController">
+            <summary>
+            Controller for displaying and handling Skills
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Services.ApiUpdateHostedService">
+            <summary>
+            Hosted service used to run the API Updater Service, which helps to maintain synchronicity
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Services.ApiUpdaterService">
+            <summary>
+            Service which runs in the background and pulls data from microservice APIs, ensuring synchronicity with DB.
+            </summary>
+        </member>
+        <member name="T:LRPManagement.Services.IApiScopedProcessingService">
+            <summary>
+            Interface for scoped processing service for API
+            </summary>
         </member>
     </members>
 </doc>

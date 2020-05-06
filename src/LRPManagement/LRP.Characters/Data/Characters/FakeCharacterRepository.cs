@@ -40,12 +40,11 @@ namespace LRP.Characters.Data.Characters
             return Task.CompletedTask;
         }
 
-        public Task UpdateCharacter(Character character)
+        public void UpdateCharacter(Character character)
         {
             var tgt = _characters.Find(s => s.Id == character.Id);
             _characters.Remove(tgt);
             _characters.Add(character);
-            return null;
         }
     }
 }
