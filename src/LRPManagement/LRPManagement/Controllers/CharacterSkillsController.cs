@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
+    /// <summary>
+    /// Controller for managing CharacterSkills
+    /// </summary>
     public class CharacterSkillsController : Controller
     {
         private readonly ISkillRepository _skillRepository;
@@ -97,8 +100,22 @@ namespace LRPManagement.Controllers
             if (ModelState.IsValid)
                 try
                 {
-                    var resp = await _characterSkillService.Create(charSkill);
-                    if (resp == null) return View(charSkill);
+                    var character = await _characterRepository.GetCharacter(charSkill.CharacterId);
+                    var skill = await _skillRepository.GetSkill(charSkill.SkillId);
+
+                    if (skill != null && character != null)
+                    {
+                        if (character.Xp - skill.XpCost >= 0)
+                        {
+                            // Subtract skill cost
+                            character.Xp -= skill.XpCost;
+                            var resp = await _characterSkillService.Create(charSkill);
+                            if (resp == null) return View(charSkill);
+
+                            // Update Character
+                            await _characterService.UpdateCharacter(character);
+                        }
+                    }
 
                     return RedirectToAction(nameof(Index));
                 }
