@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.CharacterSkills
 {
+    /// <summary>
+    /// Repository for working with the database and CharacterSkills
+    /// </summary>
     public interface ICharacterSkillRepository
     {
         void AddSkillToCharacter(int skillId, int charId);

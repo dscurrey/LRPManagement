@@ -4,6 +4,11 @@
         <name>LRP.Characters</name>
     </assembly>
     <members>
+        <member name="T:LRP.Characters.Controllers.CharactersController">
+            <summary>
+            Controller for Characters in the Character API
+            </summary>
+        </member>
         <member name="M:LRP.Characters.Controllers.CharactersController.GetCharacter">
             <summary>
             Action to get all characters

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Controllers
 {
+    /// <summary>
+    /// Admin controller for assigning, removing and creating roles for users of the system
+    /// </summary>
     [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {

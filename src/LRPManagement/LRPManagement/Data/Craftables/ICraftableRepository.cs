@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Craftables
 {
+    /// <summary>
+    /// Repository for accessing and performing database operations with Craftables (Items)
+    /// </summary>
     public interface ICraftableRepository
     {
         Task<List<Craftable>> GetAll();

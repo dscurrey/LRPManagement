@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace LRP.Characters.Controllers
 {
+    /// <summary>
+    /// Controller for Characters in the Character API
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CharactersController : ControllerBase
@@ -91,6 +94,7 @@ namespace LRP.Characters.Controllers
 
             var updChar = new Character
             {
+                Id = id,
                 PlayerId = character.PlayerId,
                 IsActive = character.IsActive,
                 IsRetired = character.IsRetired,
@@ -147,7 +151,7 @@ namespace LRP.Characters.Controllers
                     Xp = character.Xp
                 };
 
-                await _repository.UpdateCharacter(updCharacter);
+                _repository.UpdateCharacter(updCharacter);
                 await _repository.Save();
                 return Ok(character);
             }

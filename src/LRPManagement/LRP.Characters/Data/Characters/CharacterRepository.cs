@@ -1,6 +1,7 @@
 ﻿using LRP.Characters.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRP.Characters.Data.Characters
@@ -37,10 +38,10 @@ namespace LRP.Characters.Data.Characters
             _context.Character.Update(character);
         }
 
-        public async Task UpdateCharacter(Character character)
+        public void UpdateCharacter(Character character)
         {
-            var characterOrig = await _context.Character.FirstOrDefaultAsync(c => c.Id == character.Id);
-            _context.Entry(characterOrig).CurrentValues.SetValues(character);
+            var dbChar = _context.Character.First(c => c.Id == character.Id);
+            _context.Entry(dbChar).CurrentValues.SetValues(character);
         }
 
         public async Task Save()

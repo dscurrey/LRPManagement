@@ -36,7 +36,7 @@ namespace LRP.Characters.Data.Characters
         /// </summary>
         /// <param name="character">The updated character</param>
         /// <returns>Task</returns>
-        Task UpdateCharacter(Character character);
+        void UpdateCharacter(Character character);
 
         /// <summary>
         /// Saves changes to the DB context

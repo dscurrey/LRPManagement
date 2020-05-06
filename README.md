@@ -14,6 +14,8 @@ In order to run the applications, open them in their respective IDEs (Android St
 
 In order to run the web app and APIs, it is necessary to open the NuGet Package Manager console and run the following command in LrpManagement Project: `Update-Database -Context AccountsContext`. This will create and setup the database required for user login/identity.
 
+It is recommended that when running through Visual Studio, IIS Express is not used, Kestrel is preferred, additionally opening web browsers for the API projects should be disabled.
+
 ## Testing
 It terms of unit testing, the ASP .NET Core projects are reasonably well tested, with the android application having only been tested in use, with no formal unit testing.
 

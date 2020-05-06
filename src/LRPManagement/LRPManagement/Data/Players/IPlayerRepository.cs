@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Players
 {
+    /// <summary>
+    /// Repository for accessing and performing database operations with Players
+    /// </summary>
     public interface IPlayerRepository
     {
         Task<List<Player>> GetAll();

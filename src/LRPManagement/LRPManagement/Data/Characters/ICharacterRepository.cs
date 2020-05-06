@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Characters
 {
+    /// <summary>
+    /// Repository for accessing and performing database operations with Characters
+    /// </summary>
     public interface ICharacterRepository
     {
         Task<List<Character>> GetAll();

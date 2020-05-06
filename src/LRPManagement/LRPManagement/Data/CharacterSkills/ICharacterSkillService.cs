@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.CharacterSkills
 {
+    /// <summary>
+    /// Service for accessing and performing API operations with characterSkills
+    /// </summary>
     public interface ICharacterSkillService
     {
         Task<List<CharacterSkill>> Get();

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Data.Characters
 {
+    /// <summary>
+    /// Service for accessing and performing API operations with Characters
+    /// </summary>
     public interface ICharacterService
     {
         Task<List<CharacterDTO>> GetAll();
