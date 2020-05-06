@@ -10,7 +10,7 @@
             android:title="@string/menu_functions" />
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_placeholder"
+            android:icon="@drawable/ic_user"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_skill"
@@ -18,11 +18,11 @@
             android:title="@string/menu_skill" />
         <item
             android:id="@+id/nav_player"
-            android:icon="@drawable/ic_placeholder"
+            android:icon="@drawable/ic_user"
             android:title="@string/menu_player" />
         <item
             android:id="@+id/nav_items"
-            android:icon="@drawable/ic_placeholder"
+            android:icon="@drawable/ic_weapon"
             android:title="@string/menu_items" />
     </group>
 </menu>
