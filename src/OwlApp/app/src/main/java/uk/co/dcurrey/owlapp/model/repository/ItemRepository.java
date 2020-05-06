@@ -14,7 +14,7 @@ public enum ItemRepository
 {
     INSTANCE;
 
-    private ItemDao mItemDao;
+    private final ItemDao mItemDao;
 
     private HashMap<Integer, ItemEntity> mItems;
 
@@ -68,8 +68,8 @@ public enum ItemRepository
 
     private static class loadItemEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, ItemEntity>>
     {
-        private ItemDao mItemDao;
-        private HashMap<Integer, ItemEntity> mItemEntities;
+        private final ItemDao mItemDao;
+        private final HashMap<Integer, ItemEntity> mItemEntities;
 
 
         loadItemEntitiesAsyncTask(ItemDao itemDao, HashMap<Integer, ItemEntity> itemEntities)
@@ -90,8 +90,8 @@ public enum ItemRepository
 
     private static class insertItemEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private ItemDao mDao;
-        private ItemEntity itemEntity;
+        private final ItemDao mDao;
+        private final ItemEntity itemEntity;
 
         insertItemEntitiesAsyncTask(ItemDao itemDao, ItemEntity item)
         {
@@ -119,8 +119,8 @@ public enum ItemRepository
 
     private static class updateItemEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private ItemDao mDao;
-        private ItemEntity itemEntity;
+        private final ItemDao mDao;
+        private final ItemEntity itemEntity;
 
         updateItemEntitiesAsyncTask(ItemDao itemDao, ItemEntity item)
         {

@@ -38,8 +38,8 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     private final LayoutInflater mInflater;
     private List<PlayerEntity> mPlayers; // player Cache
     private final Context mContext;
-    SharedPreferences prefs;
-    SharedPreferences.Editor prefEditor;
+    final SharedPreferences prefs;
+    final SharedPreferences.Editor prefEditor;
 
     public PlayerListAdapter(Context context)
     {

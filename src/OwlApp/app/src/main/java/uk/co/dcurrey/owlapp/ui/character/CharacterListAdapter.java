@@ -40,8 +40,8 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     private final LayoutInflater mInflater;
     private List<CharacterEntity> mChars; // Character Cache
     private final Context mContext;
-    SharedPreferences prefs;
-    SharedPreferences.Editor prefEditor;
+    final SharedPreferences prefs;
+    final SharedPreferences.Editor prefEditor;
 
     public CharacterListAdapter(Context context)
     {

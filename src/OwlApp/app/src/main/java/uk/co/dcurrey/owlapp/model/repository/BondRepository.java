@@ -14,7 +14,7 @@ public enum BondRepository
 {
     INSTANCE;
 
-    private CharacterItemDao mCharItemDao;
+    private final CharacterItemDao mCharItemDao;
     private HashMap<Integer, CharacterItemEntity> mBonds;
 
     BondRepository()
@@ -56,8 +56,8 @@ public enum BondRepository
 
     private static class loadCharacterItemEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, CharacterItemEntity>>
     {
-        private CharacterItemDao mBondDao;
-        private HashMap<Integer, CharacterItemEntity> mBonds;
+        private final CharacterItemDao mBondDao;
+        private final HashMap<Integer, CharacterItemEntity> mBonds;
 
         loadCharacterItemEntitiesAsyncTask(CharacterItemDao dao, HashMap<Integer, CharacterItemEntity> characterItems)
         {
@@ -89,8 +89,8 @@ public enum BondRepository
 
     private static class insertCharacterItemEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private CharacterItemDao mDao;
-        private CharacterItemEntity characterItemEntity;
+        private final CharacterItemDao mDao;
+        private final CharacterItemEntity characterItemEntity;
 
         insertCharacterItemEntitiesAsyncTask(CharacterItemDao characterItemDao, CharacterItemEntity character)
         {
@@ -119,8 +119,8 @@ public enum BondRepository
 
     private static class updateCharacterItemEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private CharacterItemDao mDao;
-        private CharacterItemEntity charItemEntity;
+        private final CharacterItemDao mDao;
+        private final CharacterItemEntity charItemEntity;
 
         updateCharacterItemEntitiesAsyncTask(CharacterItemDao charItemDao, CharacterItemEntity charItem)
         {

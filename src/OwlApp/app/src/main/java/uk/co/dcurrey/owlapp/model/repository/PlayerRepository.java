@@ -14,7 +14,7 @@ public enum PlayerRepository
 {
     INSTANCE;
 
-    private PlayerDao mPlayerDao;
+    private final PlayerDao mPlayerDao;
     private HashMap<Integer, PlayerEntity> mPlayers;
 
     PlayerRepository()
@@ -65,8 +65,8 @@ public enum PlayerRepository
 
     private static class loadPlayerEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, PlayerEntity>>
     {
-        private PlayerDao mPlayerDao;
-        private HashMap<Integer, PlayerEntity> mPlayerEntities;
+        private final PlayerDao mPlayerDao;
+        private final HashMap<Integer, PlayerEntity> mPlayerEntities;
 
         loadPlayerEntitiesAsyncTask(PlayerDao playerDao, HashMap<Integer, PlayerEntity> playerEntities)
         {
@@ -86,8 +86,8 @@ public enum PlayerRepository
 
     private static class insertPlayerEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private PlayerDao mDao;
-        private PlayerEntity playerEntity;
+        private final PlayerDao mDao;
+        private final PlayerEntity playerEntity;
 
         insertPlayerEntitiesAsyncTask(PlayerDao dao, PlayerEntity player)
         {
@@ -115,8 +115,8 @@ public enum PlayerRepository
 
     private static class updatePlayerEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private PlayerDao mDao;
-        private PlayerEntity playerEntity;
+        private final PlayerDao mDao;
+        private final PlayerEntity playerEntity;
 
         updatePlayerEntitiesAsyncTask(PlayerDao playerDao, PlayerEntity player)
         {

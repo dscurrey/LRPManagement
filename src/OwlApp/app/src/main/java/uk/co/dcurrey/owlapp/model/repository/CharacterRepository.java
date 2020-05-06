@@ -14,7 +14,7 @@ public enum CharacterRepository
 {
     INSTANCE;
 
-    private CharacterDao mCharacterDao;
+    private final CharacterDao mCharacterDao;
 
     private HashMap<Integer, CharacterEntity> mCharacters;
 
@@ -57,8 +57,8 @@ public enum CharacterRepository
 
     private static class loadCharacterEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, CharacterEntity>>
     {
-        private CharacterDao mCharacterDao;
-        private HashMap<Integer, CharacterEntity> mCharacterEntities;
+        private final CharacterDao mCharacterDao;
+        private final HashMap<Integer, CharacterEntity> mCharacterEntities;
 
 
         loadCharacterEntitiesAsyncTask(CharacterDao characterDao, HashMap<Integer, CharacterEntity> CharacterEntities) {
@@ -89,8 +89,8 @@ public enum CharacterRepository
 
     private static class insertCharacterEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private CharacterDao mDao;
-        private CharacterEntity characterEntity;
+        private final CharacterDao mDao;
+        private final CharacterEntity characterEntity;
 
         insertCharacterEntitiesAsyncTask(CharacterDao characterDao, CharacterEntity character)
         {
@@ -118,8 +118,8 @@ public enum CharacterRepository
 
     private static class updateCharacterEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private CharacterDao mDao;
-        private CharacterEntity characterEntity;
+        private final CharacterDao mDao;
+        private final CharacterEntity characterEntity;
 
         updateCharacterEntitiesAsyncTask(CharacterDao characterDao, CharacterEntity character)
         {

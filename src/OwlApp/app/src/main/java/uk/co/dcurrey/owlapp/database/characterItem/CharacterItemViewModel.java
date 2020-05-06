@@ -9,8 +9,8 @@ import java.util.List;
 
 public class CharacterItemViewModel extends AndroidViewModel
 {
-    private CharacterItemRepository mRepo;
-    private LiveData<List<CharacterItemEntity>> mBonds;
+    private final CharacterItemRepository mRepo;
+    private final LiveData<List<CharacterItemEntity>> mBonds;
 
     public CharacterItemViewModel(Application application)
     {

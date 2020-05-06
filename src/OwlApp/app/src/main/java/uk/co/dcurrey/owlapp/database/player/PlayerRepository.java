@@ -10,8 +10,8 @@ import uk.co.dcurrey.owlapp.database.OwlDatabase;
 
 public class PlayerRepository
 {
-    private PlayerDao mDao;
-    private LiveData<List<PlayerEntity>> mPlayers;
+    private final PlayerDao mDao;
+    private final LiveData<List<PlayerEntity>> mPlayers;
 
     PlayerRepository(Application application)
     {

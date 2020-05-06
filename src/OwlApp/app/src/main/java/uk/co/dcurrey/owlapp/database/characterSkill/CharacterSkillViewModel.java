@@ -9,8 +9,8 @@ import java.util.List;
 
 public class CharacterSkillViewModel extends AndroidViewModel
 {
-    private CharacterSkillRepository mRepo;
-    private LiveData<List<CharacterSkillEntity>> mCharSkills;
+    private final CharacterSkillRepository mRepo;
+    private final LiveData<List<CharacterSkillEntity>> mCharSkills;
 
     CharacterSkillViewModel(Application application)
     {

@@ -10,8 +10,8 @@ import uk.co.dcurrey.owlapp.database.OwlDatabase;
 
 public class ItemRepository
 {
-    private ItemDao mItemDao;
-    private LiveData<List<ItemEntity>> mAllItems;
+    private final ItemDao mItemDao;
+    private final LiveData<List<ItemEntity>> mAllItems;
 
     public ItemRepository(Application application)
     {

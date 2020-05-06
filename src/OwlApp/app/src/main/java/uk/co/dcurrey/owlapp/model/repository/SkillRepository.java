@@ -14,7 +14,7 @@ public enum SkillRepository
 {
     INSTANCE;
 
-    private SkillDao mSkillDao;
+    private final SkillDao mSkillDao;
 
     private HashMap<Integer, SkillEntity> mSkills;
 
@@ -70,8 +70,8 @@ public enum SkillRepository
 
     private static class loadSkillEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, SkillEntity>>
     {
-        private SkillDao mSkillDao;
-        private HashMap<Integer, SkillEntity> mSkillEntities;
+        private final SkillDao mSkillDao;
+        private final HashMap<Integer, SkillEntity> mSkillEntities;
 
 
         loadSkillEntitiesAsyncTask(SkillDao skillDao, HashMap<Integer, SkillEntity> skillEntities) {
@@ -91,8 +91,8 @@ public enum SkillRepository
 
     private static class insertSkillEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private SkillDao mDao;
-        private SkillEntity skillEntity;
+        private final SkillDao mDao;
+        private final SkillEntity skillEntity;
 
         insertSkillEntitiesAsyncTask(SkillDao skillDao, SkillEntity skill)
         {
@@ -120,8 +120,8 @@ public enum SkillRepository
 
     private static class updateSkillEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private SkillDao mDao;
-        private SkillEntity skillEntity;
+        private final SkillDao mDao;
+        private final SkillEntity skillEntity;
 
         updateSkillEntitiesAsyncTask(SkillDao skillDao, SkillEntity skill)
         {

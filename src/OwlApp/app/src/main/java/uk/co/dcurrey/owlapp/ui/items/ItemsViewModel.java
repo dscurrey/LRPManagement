@@ -9,8 +9,8 @@ import uk.co.dcurrey.owlapp.database.item.ItemRepository;
 
 public class ItemsViewModel extends AndroidViewModel
 {
-    private ItemRepository mRepo;
-    private LiveData<List<ItemEntity>> mItems;
+    private final ItemRepository mRepo;
+    private final LiveData<List<ItemEntity>> mItems;
 
     public ItemsViewModel(Application application)
     {
