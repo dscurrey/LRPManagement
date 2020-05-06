@@ -27,7 +27,7 @@ namespace LRP.Characters.Data
                     new Character
                     {
                         Id = 1,
-                        Name = "Test user 1's 1st Character",
+                        Name = "Player 1, Retired",
                         IsActive = false,
                         IsRetired = true,
                         PlayerId = 1,
@@ -36,7 +36,7 @@ namespace LRP.Characters.Data
                     new Character
                     {
                         Id = 2,
-                        Name = "Test user 2's 1st Character",
+                        Name = "Player 2, Active",
                         IsActive = true,
                         IsRetired = false,
                         PlayerId = 2,
@@ -45,7 +45,16 @@ namespace LRP.Characters.Data
                     new Character
                     {
                         Id = 3,
-                        Name = "Test user 1's 2nd Character",
+                        Name = "Player 1, Active",
+                        IsActive = true,
+                        IsRetired = false,
+                        PlayerId = 1,
+                        Xp = 8
+                    },
+                    new Character
+                    {
+                        Id = 4,
+                        Name = "Player 1, Inactive",
                         IsActive = true,
                         IsRetired = false,
                         PlayerId = 1,
