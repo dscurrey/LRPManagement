@@ -3,14 +3,17 @@ package uk.co.dcurrey.owlapp.ui.character;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Comparator;
 import java.util.List;
 
 import uk.co.dcurrey.owlapp.R;
@@ -106,6 +109,10 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     public void setChars(List<CharacterEntity> characters)
     {
         mChars = characters;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
+            mChars.sort(new CharacterComparator());
+        }
         notifyDataSetChanged();
     }
 
@@ -118,5 +125,14 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         }
         else
             return 0;
+    }
+
+    class CharacterComparator implements Comparator<CharacterEntity>
+    {
+        @Override
+        public int compare(CharacterEntity a, CharacterEntity b)
+        {
+            return a.Name.compareToIgnoreCase(b.Name);
+        }
     }
 }
