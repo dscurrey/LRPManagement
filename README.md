@@ -6,8 +6,8 @@
 
 ## Overview
 This repository contains two main projects:
-- An ASP .NET Core solution, which contains the main web app, as well as all the attached services, backend, and dockerfiles.
-- An Android application - the refereeing app.
+- An ASP .NET Core solution, which contains the main web app, as well as all the attached services, backend, and dockerfiles. (`src/LRPManagement`)
+- An Android application - the refereeing app. (`src/OwlApp`)
 
 ## Running
 In order to run the applications, open them in their respective IDEs (Android Studio for the Android App, and Visual Studio for .NET Core), the Android application will run with no necessary configuration, the web app requires a minor change before running.
