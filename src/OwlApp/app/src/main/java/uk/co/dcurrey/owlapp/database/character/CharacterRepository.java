@@ -10,8 +10,8 @@ import uk.co.dcurrey.owlapp.database.OwlDatabase;
 
 public class CharacterRepository
 {
-    private CharacterDao mCharacterDao;
-    private LiveData<List<CharacterEntity>> mAllChars;
+    private final CharacterDao mCharacterDao;
+    private final LiveData<List<CharacterEntity>> mAllChars;
     private List<CharacterEntity> mUnSynced;
 
     CharacterRepository(Application application)

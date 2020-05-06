@@ -3,6 +3,7 @@ package uk.co.dcurrey.owlapp.ui.player;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Comparator;
 import java.util.List;
 
 import uk.co.dcurrey.owlapp.R;
@@ -36,8 +38,8 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     private final LayoutInflater mInflater;
     private List<PlayerEntity> mPlayers; // player Cache
     private final Context mContext;
-    SharedPreferences prefs;
-    SharedPreferences.Editor prefEditor;
+    final SharedPreferences prefs;
+    final SharedPreferences.Editor prefEditor;
 
     public PlayerListAdapter(Context context)
     {
@@ -88,6 +90,10 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     public void setPlayers(List<PlayerEntity> players)
     {
         mPlayers = players;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
+            mPlayers.sort(new PlayerComparator());
+        }
         notifyDataSetChanged();
     }
 
@@ -108,5 +114,14 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         prefEditor.putInt(mContext.getString(R.string.pref_playerId_key), playerId);
         prefEditor.apply();
         mContext.startActivity(intent);
+    }
+
+    class PlayerComparator implements Comparator<PlayerEntity>
+    {
+        @Override
+        public int compare(PlayerEntity a, PlayerEntity b)
+        {
+            return a.LastName.compareToIgnoreCase(b.LastName);
+        }
     }
 }

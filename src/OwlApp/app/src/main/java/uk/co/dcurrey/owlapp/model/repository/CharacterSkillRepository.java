@@ -14,7 +14,7 @@ public enum CharacterSkillRepository
 {
     INSTANCE;
 
-    private CharacterSkillDao mCharSkillDao;
+    private final CharacterSkillDao mCharSkillDao;
     private HashMap<Integer, CharacterSkillEntity> mCharSkills;
 
     CharacterSkillRepository()
@@ -56,8 +56,8 @@ public enum CharacterSkillRepository
 
     private static class loadCharacterSkillEntitiesAsyncTask extends AsyncTask<Void, Void, HashMap<Integer, CharacterSkillEntity>>
     {
-        private CharacterSkillDao mCharSkillDao;
-        private HashMap<Integer, CharacterSkillEntity> mCharSkills;
+        private final CharacterSkillDao mCharSkillDao;
+        private final HashMap<Integer, CharacterSkillEntity> mCharSkills;
 
         loadCharacterSkillEntitiesAsyncTask(CharacterSkillDao dao, HashMap<Integer, CharacterSkillEntity> characterSkills)
         {
@@ -89,8 +89,8 @@ public enum CharacterSkillRepository
 
     private static class insertCharacterSkillEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private CharacterSkillDao mDao;
-        private CharacterSkillEntity characterSkillEntity;
+        private final CharacterSkillDao mDao;
+        private final CharacterSkillEntity characterSkillEntity;
 
         insertCharacterSkillEntitiesAsyncTask(CharacterSkillDao characterSkillDao, CharacterSkillEntity character)
         {
@@ -119,8 +119,8 @@ public enum CharacterSkillRepository
 
     private static class updateCharacterSkillEntitiesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private CharacterSkillDao mDao;
-        private CharacterSkillEntity charSkillEntity;
+        private final CharacterSkillDao mDao;
+        private final CharacterSkillEntity charSkillEntity;
 
         updateCharacterSkillEntitiesAsyncTask(CharacterSkillDao charSkillDao, CharacterSkillEntity charSkill)
         {

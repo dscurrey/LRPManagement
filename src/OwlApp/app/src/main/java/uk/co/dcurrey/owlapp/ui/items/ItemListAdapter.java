@@ -34,8 +34,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     private final LayoutInflater mInflater;
     private List<ItemEntity> mItems;
     private final Context mContext;
-    SharedPreferences prefs;
-    SharedPreferences.Editor prefEditor;
+    final SharedPreferences prefs;
+    final SharedPreferences.Editor prefEditor;
 
     public ItemListAdapter(Context context)
     {

@@ -9,9 +9,9 @@ import java.util.List;
 
 public class CharacterViewModel extends AndroidViewModel
 {
-    private CharacterRepository mRepo;
-    private LiveData<List<CharacterEntity>> mChars;
-    private List<CharacterEntity> mUnsynced;
+    private final CharacterRepository mRepo;
+    private final LiveData<List<CharacterEntity>> mChars;
+    private final List<CharacterEntity> mUnsynced;
 
     public CharacterViewModel(Application application)
     {

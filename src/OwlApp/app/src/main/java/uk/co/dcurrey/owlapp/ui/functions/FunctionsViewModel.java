@@ -14,11 +14,11 @@ import uk.co.dcurrey.owlapp.model.repository.Repository;
 
 public class FunctionsViewModel extends ViewModel
 {
-    private MutableLiveData<String> mText;
-    private MutableLiveData<Integer> mTotalCharacters;
-    private MutableLiveData<Integer> mTotalItems;
-    private MutableLiveData<Integer> mTotalPlayers;
-    private MutableLiveData<Integer> mTotalSkills;
+    private final MutableLiveData<String> mText;
+    private final MutableLiveData<Integer> mTotalCharacters;
+    private final MutableLiveData<Integer> mTotalItems;
+    private final MutableLiveData<Integer> mTotalPlayers;
+    private final MutableLiveData<Integer> mTotalSkills;
 
     public FunctionsViewModel()
     {

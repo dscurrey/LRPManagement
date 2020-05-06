@@ -9,8 +9,8 @@ import java.util.List;
 
 public class SkillViewModel extends AndroidViewModel
 {
-    private SkillRepository mRepo;
-    private LiveData<List<SkillEntity>> mSkills;
+    private final SkillRepository mRepo;
+    private final LiveData<List<SkillEntity>> mSkills;
 
     public SkillViewModel(Application application)
     {

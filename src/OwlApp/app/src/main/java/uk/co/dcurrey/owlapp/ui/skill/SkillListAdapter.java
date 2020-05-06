@@ -34,8 +34,8 @@ public class SkillListAdapter extends RecyclerView.Adapter<SkillListAdapter.Skil
     private final LayoutInflater mInflater;
     private List<SkillEntity> mSkills;
     private final Context mContext;
-    SharedPreferences prefs;
-    SharedPreferences.Editor prefEditor;
+    final SharedPreferences prefs;
+    final SharedPreferences.Editor prefEditor;
 
     public SkillListAdapter(Context context)
     {

@@ -73,7 +73,7 @@ public abstract class OwlDatabase extends RoomDatabase
         return INSTANCE;
     }
 
-    private static OwlDatabase.Callback sOwlDatabaseCallback = new RoomDatabase.Callback()
+    private static final OwlDatabase.Callback sOwlDatabaseCallback = new RoomDatabase.Callback()
     {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db)

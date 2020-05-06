@@ -9,8 +9,8 @@ import java.util.List;
 
 public class PlayerViewModel extends AndroidViewModel
 {
-    private PlayerRepository mRepo;
-    private LiveData<List<PlayerEntity>> mPlayers;
+    private final PlayerRepository mRepo;
+    private final LiveData<List<PlayerEntity>> mPlayers;
 
     public PlayerViewModel(Application application)
     {

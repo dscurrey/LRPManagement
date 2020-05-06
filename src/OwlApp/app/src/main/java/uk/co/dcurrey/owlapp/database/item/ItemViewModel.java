@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ItemViewModel extends AndroidViewModel
 {
-    private ItemRepository mRepo;
-    private LiveData<List<ItemEntity>> mItems;
+    private final ItemRepository mRepo;
+    private final LiveData<List<ItemEntity>> mItems;
 
     public ItemViewModel(Application application)
     {
