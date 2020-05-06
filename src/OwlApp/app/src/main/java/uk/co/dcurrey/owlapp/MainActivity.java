@@ -23,7 +23,6 @@ import uk.co.dcurrey.owlapp.sync.Synchroniser;
 
 public class MainActivity extends AppCompatActivity
 {
-    // TODO - Remove editing of certain entities
     NetworkMonitor networkMonitor;
 
     private AppBarConfiguration mAppBarConfiguration;
