@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Services
 {
+    /// <summary>
+    /// Hosted service used to run the API Updater Service, which helps to maintain synchronicity
+    /// </summary>
     public class ApiUpdateHostedService : BackgroundService
     {
         private readonly ILogger<ApiUpdateHostedService> _logger;

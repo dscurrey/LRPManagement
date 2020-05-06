@@ -13,12 +13,15 @@ using System.Threading.Tasks;
 
 namespace LRPManagement.Services
 {
+    /// <summary>
+    /// Service which runs in the background and pulls data from microservice APIs, ensuring synchronicity with DB.
+    /// </summary>
     public class ApiUpdaterService : IApiScopedProcessingService
     {
         private int executionCount = 0;
         private readonly ILogger<ApiUpdaterService> _logger;
 
-        private readonly int interval = 20000; // Secs * 1000
+        private readonly int interval = 15000; // Secs * 1000
 
         private readonly IPlayerRepository _playerRepository;
         private readonly IPlayerService _playerService;
@@ -76,6 +79,7 @@ namespace LRPManagement.Services
 
                 try
                 {
+                    // Call all services and populate db
                     await GetPlayers();
                     await GetCharacters();
                     await GetSkills();
@@ -96,13 +100,16 @@ namespace LRPManagement.Services
         {
             try
             {
+                // Gets all players in Players API, if players are obtained, carry out operations
                 var players = await _playerService.GetAll();
                 if (players != null)
                 {
                     foreach (var player in players)
                     {
+                        // For each player found, check if it already exists in the db
                         var existPlayer = await _playerRepository.GetPlayerRef(player.Id);
                         if (existPlayer != null)
+                            // If exists, update if needed
                         {
                             if (existPlayer.FirstName.Equals
                                     (player.FirstName, StringComparison.CurrentCultureIgnoreCase) &&
@@ -120,6 +127,7 @@ namespace LRPManagement.Services
                         }
                         else
                         {
+                            // Else, create new player in DB
                             var newPlayer = new Player
                             {
                                 PlayerRef = player.Id,
@@ -144,14 +152,17 @@ namespace LRPManagement.Services
         {
             try
             {
+                // Get characters from api
                 var characters = await _characterService.GetAll();
                 if (characters != null)
+                    // If characters are found, check if they already exist in db
                     foreach (var character in characters)
                         if (await _playerRepository.GetPlayer(character.PlayerId) != null)
                         {
                             var existChar = await _characterRepository.GetCharacterRef(character.Id);
                             if (existChar != null)
                             {
+                                // If character exists, update if required
                                 if (character.IsRetired == existChar.IsRetired &&
                                     character.IsActive == existChar.IsActive && character.Name.Equals
                                         (existChar.Name) && character.Xp == existChar.Xp)
@@ -175,6 +186,7 @@ namespace LRPManagement.Services
                             }
                             else
                             {
+                                // Else, create new character in DB
                                 var newChar = new Character
                                 {
                                     Name = character.Name,
@@ -199,14 +211,17 @@ namespace LRPManagement.Services
         {
             try
             {
+                // Get skills from api
                 var skills = await _skillService.GetAll();
                 if (skills != null)
                 {
+                    // If skills are found, check if each exists in db
                     foreach (var skill in skills)
                     {
                         var existSkill = await _skillRepository.GetSkillRef(skill.Id);
                         if (existSkill != null)
                         {
+                            // If skill exists, update if required
                             if (skill.Name == existSkill.Name && skill.XpCost == existSkill.XpCost)
                             {
                                 continue;
@@ -225,6 +240,7 @@ namespace LRPManagement.Services
                         }
                         else
                         {
+                            // If skill doesn't exist, create new 
                             var newSkill = new Skill
                             {
                                 SkillRef = skill.Id,
@@ -249,14 +265,17 @@ namespace LRPManagement.Services
         {
             try
             {
+                // Get list of items from item API
                 var items = await _itemService.GetAll();
                 if (items != null)
                 {
+                    // Check each, to see if it already exists in DB
                     foreach (var item in items)
                     {
                         var existItem = await _itemRepository.GetCraftableRef(item.Id);
                         if (existItem != null)
                         {
+                            // If it exists, update if needed, else continue loop
                             if (item.Name.Equals(existItem.Name) && item.Requirement.Equals
                                 (existItem.Requirement) && item.Materials.Equals
                                 (existItem.Materials) && item.Effect.Equals(existItem.Effect) && item.Form.Equals
@@ -280,6 +299,7 @@ namespace LRPManagement.Services
                         }
                         else
                         {
+                            // Item doesn't exist, create new
                             var newItem = new Craftable
                             {
                                 Name = item.Name,
@@ -307,8 +327,10 @@ namespace LRPManagement.Services
         {
             try
             {
+                // Get list of bonds from Items API
                 var bonds = await _bondService.Get();
                 if (bonds != null)
+                    // Check each bond against the database
                     foreach (var bond in bonds)
                     {
                         // Ensure that bond is not already present and necessary items are stored
