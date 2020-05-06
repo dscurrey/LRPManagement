@@ -1,0 +1,45 @@
+﻿@model Player
+
+@{
+    ViewData["Title"] = "Player Details";
+}
+
+<h1>Player Details</h1>
+
+<div class="align-content-md-stretch">
+    <h4>Player</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+    </dl>
+</div>
+
+<h5>Player Characters</h5>
+@if (Model.Characters.Any())
+{
+    <div>
+        @await Html.PartialAsync("_PlayerCharacter", Model.Characters)
+    </div>
+}
+else
+{
+    <h6>No characters found</h6>
+    <a asp-action="Create" asp-controller="Characters">Create one here</a>
+    <hr/>
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

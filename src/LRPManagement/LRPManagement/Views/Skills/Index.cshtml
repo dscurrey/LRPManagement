@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DTO.SkillDTO>
+
+@{
+    ViewData["Title"] = "Skills";
+}
+
+<h1>Skill Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<p class="alert-danger">
+    @ViewBag.SkillError
+</p>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.XpCost)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.XpCost)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>No Skills Found.</h2>
+    <h3>Service may be unavailable</h3>
+}

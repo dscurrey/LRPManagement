@@ -1,0 +1,45 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/api_header">
+
+        <EditTextPreference
+            app:key="pref_item_url"
+            app:title="@string/itemurl_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="pref_items_port"
+            app:title="@string/itemport_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="pref_char_url"
+            app:title="@string/charurl_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="pref_char_port"
+            app:title="@string/charport_title"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="pref_skill_url"
+            app:title="@string/skillurl_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="pref_skill_port"
+            app:title="@string/skillport_title"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="pref_player_url"
+            app:title="@string/playerurl_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="pref_player_port"
+            app:title="@string/playerport_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

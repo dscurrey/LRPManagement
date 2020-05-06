@@ -1,0 +1,25 @@
+﻿@model LRPManagement.ViewModels.CharacterDetailsViewModel
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var skill in Model.Skills)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => skill.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Skills", new { id = skill.Id })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<DTO.PlayerDTO>
+
+@{
+    ViewData["Title"] = "Index Players";
+}
+
+<h1>Player Index</h1>
+
+<p class="alert-danger">
+    @ViewBag.PlayersError
+</p>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>No Players Found.</h2>
+    <h3>Service may be unavailable</h3>
+}

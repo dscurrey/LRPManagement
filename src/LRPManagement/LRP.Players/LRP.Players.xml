@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LRP.Players</name>
+    </assembly>
+    <members>
+        <member name="T:LRP.Players.Controllers.PlayersController">
+            <summary>
+            Bonds controller used for interactions involving Players.
+            </summary>
+        </member>
+        <member name="M:LRP.Players.Controllers.PlayersController.#ctor(LRP.Players.Data.Players.IPlayerRepository,Microsoft.Extensions.Logging.ILogger{LRP.Players.Controllers.PlayersController})">
+            <summary>
+            
+            </summary>
+            <param name="playerRepository"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:LRP.Players.Controllers.PlayersController.GetPlayer">
+            <summary>
+            Gets all players
+            </summary>
+            <returns>A list of all players</returns>
+        </member>
+        <member name="M:LRP.Players.Controllers.PlayersController.GetPlayer(System.Int32)">
+            <summary>
+            Gets a specified player
+            </summary>
+            <param name="id">Id for the chosen player</param>
+            <returns>Chosen player</returns>
+        </member>
+        <member name="M:LRP.Players.Controllers.PlayersController.PutPlayer(System.Int32,DTO.PlayerDTO)">
+            <summary>
+            Updates a specified player
+            </summary>
+            <param name="id">Id for the specified player</param>
+            <param name="player">Updated player</param>
+            <returns></returns>
+        </member>
+        <member name="M:LRP.Players.Controllers.PlayersController.PostPlayer(DTO.PlayerDTO)">
+            <summary>
+            Creates a new player
+            </summary>
+            <param name="player">New player</param>
+            <returns>Created <see cref="T:LRP.Players.Models.Player"/> object</returns>
+        </member>
+        <member name="M:LRP.Players.Controllers.PlayersController.DeletePlayer(System.Int32)">
+            <summary>
+            Deletes a specified player
+            </summary>
+            <param name="id">Id of the player to be deleted</param>
+            <returns>Deleted player</returns>
+        </member>
+    </members>
+</doc>

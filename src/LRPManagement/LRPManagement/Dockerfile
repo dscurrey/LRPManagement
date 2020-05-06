@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["LRPManagement/LRPManagement.csproj", "LRPManagement/"]
+COPY ["DTO/DTO.csproj", "DTO/"]
 RUN dotnet restore "LRPManagement/LRPManagement.csproj"
 COPY . .
 WORKDIR "/src/LRPManagement"

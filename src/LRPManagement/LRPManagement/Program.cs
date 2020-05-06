@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LRPManagement.Data;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace LRPManagement
 {
@@ -22,8 +19,19 @@ namespace LRPManagement
                 var services = scope.ServiceProvider;
                 try
                 {
+                    var env = services.GetRequiredService<IWebHostEnvironment>();
                     var context = services.GetRequiredService<LrpDbContext>();
+                    if (env.IsDevelopment())
+                    {
+                        context.Database.EnsureDeleted();
+                    }
+
+                    context.Database.EnsureCreated();
                     DbInitialiser.Initialise(context);
+
+                    var authContext = services.GetRequiredService<AccountsContext>();
+                    authContext.Database.EnsureCreated();
+                    authContext.Database.Migrate();
                 }
                 catch (Exception e)
                 {
@@ -45,6 +53,7 @@ namespace LRPManagement
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("https://*:5001");
                 });
     }
 }

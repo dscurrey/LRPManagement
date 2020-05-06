@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/OwlApp.iml" filepath="$PROJECT_DIR$/OwlApp.iml" group="OwlApp" />
+      <module fileurl="file://$PROJECT_DIR$/app/OwlApp-app.iml" filepath="$PROJECT_DIR$/app/OwlApp-app.iml" group="OwlApp/app" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="OwlApp/app" />
+      <module fileurl="file://$PROJECT_DIR$/src-OwlApp.iml" filepath="$PROJECT_DIR$/src-OwlApp.iml" group="OwlApp" />
+    </modules>
+  </component>
+</project>

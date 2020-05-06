@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LRPManagement.Models.Bond>
+
+@{
+    ViewData["Title"] = "Bond Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Bond Index</h1>
+
+<p class="alert-danger">
+    @ViewBag.BondsError
+</p>
+
+@if (Model.Any())
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Character)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Character.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>No Bonds Found.</h2>
+    <h3>Service may be unavailable</h3>
+}

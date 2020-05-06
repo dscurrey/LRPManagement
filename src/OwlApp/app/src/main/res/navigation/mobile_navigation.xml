@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="uk.co.dcurrey.owlapp.ui.character.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_skill"
+        android:name="uk.co.dcurrey.owlapp.ui.skill.SkillFragment"
+        android:label="@string/menu_skill"
+        tools:layout="@layout/fragment_skill" />
+
+    <fragment
+        android:id="@+id/nav_player"
+        android:name="uk.co.dcurrey.owlapp.ui.player.PlayerFragment"
+        android:label="@string/menu_player"
+        tools:layout="@layout/fragment_player" />
+    <fragment
+        android:id="@+id/nav_functions"
+        android:name="uk.co.dcurrey.owlapp.ui.functions.FunctionsFragment"
+        android:label="@string/menu_functions"
+        tools:layout="@layout/functions_fragment" />
+    <fragment
+        android:id="@+id/nav_items"
+        android:name="uk.co.dcurrey.owlapp.ui.items.ItemsFragment"
+        android:label="@string/menu_items"
+        tools:layout="@layout/items_fragment" />
+</navigation>
